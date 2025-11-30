@@ -1,23 +1,41 @@
-C:\Users\RAPH-EXT\gsmhub>dir frontend /a
- Volume in drive C has no label.
- Volume Serial Number is A8A8-F695
 
- Directory of C:\Users\RAPH-EXT\gsmhub\frontend
+C:\Users\RAPH-EXT\gsmhub>git status
+On branch master
+Your branch and 'Daboggieman/master' have diverged,
+and have 1 and 1 different commits each, respectively.
+  (use "git pull" if you want to integrate the remote branch with yours)
 
-30/11/2025  07:50 PM    <DIR>          .
-30/11/2025  07:50 PM    <DIR>          ..
-24/11/2025  11:55 AM                 0 .env.local
-24/11/2025  09:52 AM    <DIR>          .next
-24/11/2025  08:40 AM               465 eslint.config.mjs
-24/11/2025  09:52 AM               251 next-env.d.ts
-24/11/2025  08:40 AM               133 next.config.ts
-24/11/2025  08:59 AM    <DIR>          node_modules
-24/11/2025  08:59 AM           228,268 package-lock.json
-24/11/2025  08:55 AM               531 package.json
-24/11/2025  08:40 AM                94 postcss.config.mjs
-24/11/2025  08:55 AM    <DIR>          public
-24/11/2025  08:40 AM             1,450 README.md
-24/11/2025  09:41 AM    <DIR>          src
-24/11/2025  08:55 AM               670 tsconfig.json
-               9 File(s)        231,862 bytes
-               6 Dir(s)  452,977,385,472 bytes free
+You have unmerged paths.
+  (fix conflicts and run "git commit")
+  (use "git merge --abort" to abort the merge)
+
+Changes to be committed:
+        new file:   LICENSE
+
+Unmerged paths:
+  (use "git add <file>..." to mark resolution)
+        both added:      .gitignore
+        both added:      README.md
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+        modified:   33.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+        frontend/next-env.d.ts
+
+
+C:\Users\RAPH-EXT\gsmhub>
+
+
+
+
+
+
+
+
+
+
+
