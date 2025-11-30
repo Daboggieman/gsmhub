@@ -1,48 +1,43 @@
+import { IsBoolean, IsDateString, IsNumber, IsObject, IsString, IsOptional } from 'class-validator';
+import { Category } from 'src/modules/categories/category.schema'; // Assuming Category is also a DTO or a simple type
 import { Expose, Transform } from 'class-transformer';
 
 export class DeviceResponseDto {
   @Expose()
-  id: string;
+  @Transform(({ obj }) => obj._id.toString()) // Transform _id to id
+  id: string; // MongoDB _id is a string
 
-  @Expose()
+  @IsString()
   slug: string;
 
-  @Expose()
+  @IsString()
   brand: string;
 
-  @Expose()
+  @IsString()
   model: string;
 
-  @Expose()
-  category: string;
+  // Assuming category will be a string ID in the DTO response, or a nested DTO
+  // For now, keeping it as Category from schema for simplicity, but will likely need a CategoryResponseDto
+  @IsObject()
+  category: Category; 
 
-  @Expose()
-  category_id?: string;
+  @IsString()
+  @IsOptional()
+  imageUrl?: string;
 
-  @Expose()
-  image_url?: string;
+  @IsObject()
+  @IsOptional()
+  specs?: any;
 
-  @Expose()
-  release_date?: string;
-
-  @Expose()
+  @IsNumber()
   views: number;
 
-  @Expose()
-  is_active: boolean;
+  @IsBoolean()
+  isActive: boolean;
 
-  @Expose()
-  specs: Record<string, any>;
-
-  @Expose()
-  @Transform(({ obj }) => obj.created_at)
+  @IsDateString()
   createdAt: Date;
 
-  @Expose()
-  @Transform(({ obj }) => obj.updated_at)
+  @IsDateString()
   updatedAt: Date;
-
-  constructor(partial: Partial<DeviceResponseDto>) {
-    Object.assign(this, partial);
-  }
 }

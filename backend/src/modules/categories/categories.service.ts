@@ -1,25 +1,21 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Category } from './category.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Category, CategoryDocument } from './category.schema';
 
 @Injectable()
 export class CategoriesService {
   constructor(
-    @InjectRepository(Category)
-    private readonly categoryRepository: Repository<Category>,
+    @InjectModel(Category.name)
+    private readonly categoryModel: Model<CategoryDocument>,
   ) {}
 
   async findAll(): Promise<Category[]> {
-    return this.categoryRepository.find({
-      order: { name: 'ASC' },
-    });
+    return this.categoryModel.find().sort({ name: 'asc' }).exec();
   }
 
-  async findOne(id: number): Promise<Category> {
-    const category = await this.categoryRepository.findOne({
-      where: { id },
-    });
+  async findOne(id: string): Promise<Category> {
+    const category = await this.categoryModel.findById(id).exec();
 
     if (!category) {
       throw new NotFoundException(`Category with ID ${id} not found`);
@@ -29,9 +25,7 @@ export class CategoriesService {
   }
 
   async findBySlug(slug: string): Promise<Category> {
-    const category = await this.categoryRepository.findOne({
-      where: { slug },
-    });
+    const category = await this.categoryModel.findOne({ slug }).exec();
 
     if (!category) {
       throw new NotFoundException(`Category with slug ${slug} not found`);
@@ -41,18 +35,27 @@ export class CategoriesService {
   }
 
   async create(data: Partial<Category>): Promise<Category> {
-    const category = this.categoryRepository.create(data);
-    return this.categoryRepository.save(category);
+    const newCategory = new this.categoryModel(data);
+    return newCategory.save();
   }
 
-  async update(id: number, data: Partial<Category>): Promise<Category> {
-    const category = await this.findOne(id);
-    Object.assign(category, data);
-    return this.categoryRepository.save(category);
+  async update(id: string, data: Partial<Category>): Promise<Category> {
+    const updatedCategory = await this.categoryModel
+      .findByIdAndUpdate(id, data, { new: true })
+      .exec();
+
+    if (!updatedCategory) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
+
+    return updatedCategory;
   }
 
-  async remove(id: number): Promise<void> {
-    const category = await this.findOne(id);
-    await this.categoryRepository.remove(category);
+  async remove(id: string): Promise<void> {
+    const result = await this.categoryModel.deleteOne({ _id: id }).exec();
+
+    if (result.deletedCount === 0) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
   }
 }

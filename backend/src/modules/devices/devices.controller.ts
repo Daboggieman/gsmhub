@@ -3,6 +3,7 @@ import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DeviceResponseDto } from './dto/device-response.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('devices')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -10,67 +11,76 @@ export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
-  create(@Body() createDeviceDto: CreateDeviceDto): Promise<DeviceResponseDto> {
-    return this.devicesService.create(createDeviceDto);
+  async create(@Body() createDeviceDto: CreateDeviceDto): Promise<DeviceResponseDto> {
+    const device = await this.devicesService.create(createDeviceDto);
+    return plainToInstance(DeviceResponseDto, device);
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('skip') skip?: string,
-    @Query('take') take?: string,
+    @Query('limit') limit?: string, // Changed 'take' to 'limit'
     @Query('category') category?: string,
     @Query('brand') brand?: string,
   ): Promise<DeviceResponseDto[]> {
-    return this.devicesService.findAll({
+    const devices = await this.devicesService.findAll({
       skip: skip ? parseInt(skip) : undefined,
-      take: take ? parseInt(take) : undefined,
+      limit: limit ? parseInt(limit) : undefined, // Changed 'take' to 'limit'
       category,
       brand,
     });
+    return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get('popular')
-  getPopularDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
-    return this.devicesService.getPopularDevices(limit ? parseInt(limit) : 10);
+  async getPopularDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
+    const devices = await this.devicesService.getPopularDevices(limit ? parseInt(limit) : 10);
+    return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get('trending')
-  getTrendingDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
-    return this.devicesService.getTrendingDevices(limit ? parseInt(limit) : 10);
+  async getTrendingDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
+    const devices = await this.devicesService.getTrendingDevices(limit ? parseInt(limit) : 10);
+    return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get('category/:category')
-  getDevicesByCategory(
+  async getDevicesByCategory(
     @Param('category') category: string,
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
-    return this.devicesService.getDevicesByCategory(category, limit ? parseInt(limit) : 50);
+    const devices = await this.devicesService.getDevicesByCategory(category, limit ? parseInt(limit) : 50);
+    return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get('brand/:brand')
-  getDevicesByBrand(
+  async getDevicesByBrand(
     @Param('brand') brand: string,
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
-    return this.devicesService.getDevicesByBrand(brand, limit ? parseInt(limit) : 50);
+    const devices = await this.devicesService.getDevicesByBrand(brand, limit ? parseInt(limit) : 50);
+    return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get(':slug')
-  findBySlug(@Param('slug') slug: string): Promise<DeviceResponseDto> {
-    return this.devicesService.findBySlug(slug);
+  async findBySlug(@Param('slug') slug: string): Promise<DeviceResponseDto> {
+    const device = await this.devicesService.findBySlug(slug);
+    return plainToInstance(DeviceResponseDto, device);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string): Promise<DeviceResponseDto> {
-    return this.devicesService.findOne(id);
+  async findOne(@Param('id') id: string): Promise<DeviceResponseDto> {
+    const device = await this.devicesService.findOne(id);
+    return plainToInstance(DeviceResponseDto, device);
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
   ): Promise<DeviceResponseDto> {
-    return this.devicesService.update(id, updateDeviceDto);
+    const device = await this.devicesService.update(id, updateDeviceDto);
+    return plainToInstance(DeviceResponseDto, device);
   }
 
   @Delete(':id')

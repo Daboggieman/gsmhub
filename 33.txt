@@ -1,33 +1,57 @@
+[23:57:44] File change detected. Starting incremental compilation...
 
-C:\Users\RAPH-EXT\gsmhub>git status
-On branch master
-Your branch and 'Daboggieman/master' have diverged,
-and have 1 and 1 different commits each, respectively.
-  (use "git pull" if you want to integrate the remote branch with yours)
+[23:57:45] Found 0 errors. Watching for file changes.
 
-You have unmerged paths.
-  (fix conflicts and run "git commit")
-  (use "git merge --abort" to abort the merge)
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [NestFactory] Starting Nest application...
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] MongooseModule dependencies initialized +63ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigHostModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] HttpModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] PricesModule dependencies initialized +0ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] SearchModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] AppModule dependencies initialized +2ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] CacheModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseCoreModule dependencies initialized +6120ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +2ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] CategoriesModule dependencies initialized +5ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] DevicesModule dependencies initialized +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] AppController {/}: +40ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/, GET} route +9ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] DevicesController {/devices}: +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices, POST} route +3ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/popular, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/trending, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/category/:category, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/brand/:brand, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:slug, GET} route +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, GET} route +2ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, PATCH} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, DELETE} route +2ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] CategoriesController {/categories}: +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, GET} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories, POST} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, PATCH} route +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, DELETE} route +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] PricesController {/prices}: +0ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] SearchController {/search}: +1ms
+[Nest] 4440  - 30/11/2025, 23:57:57     LOG [NestApplication] Nest application successfully started +6ms
 
-Changes to be committed:
-        new file:   LICENSE
-
-Unmerged paths:
-  (use "git add <file>..." to mark resolution)
-        both added:      .gitignore
-        both added:      README.md
-
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git restore <file>..." to discard changes in working directory)
-        modified:   33.txt
-
-Untracked files:
-  (use "git add <file>..." to include in what will be committed)
-        frontend/next-env.d.ts
 
 
-C:\Users\RAPH-EXT\gsmhub>
+
+
+
+
+
+
+
 
 
 

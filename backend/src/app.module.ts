@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheModule } from '@nestjs/cache-manager';
-import { ConfigModule } from '@nestjs/config';
-import { mongooseConfig } from './config/mongoose.config';
+import { ConfigModule, ConfigService } from '@nestjs/config'; // Import ConfigService
+import { mongooseConfig } from './config/mongoose.config'; // Keep import for potential other uses, but URI will be from ConfigService
 import { redisConfig } from './config/redis.config';
 import { DevicesModule } from './modules/devices/devices.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -14,7 +14,13 @@ import { SearchModule } from './modules/search/search.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
-    MongooseModule.forRoot(mongooseConfig.uri),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('MONGO_URI') || 'mongodb://localhost:27017/gsmhub', // Use ConfigService to get URI
+      }),
+      inject: [ConfigService],
+    }),
     CacheModule.register(redisConfig),
     DevicesModule,
     CategoriesModule,
