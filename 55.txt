@@ -58,7 +58,7 @@ PHASE 2: DATABASE SETUP (MONGODB)
   ✓ Install Mongoose packages: npm install @nestjs/mongoose mongoose
   ✓ Configure mongoose.config.ts
   ✓ Setup connection in app.module.ts
-  □ Test database connection
+  ✓ Test database connection
 
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -89,7 +89,7 @@ PHASE 3: BACKEND CORE SETUP (NESTJS)
   ✓ Install Redis packages: npm install @nestjs/cache-manager cache-manager cache-manager-redis-store redis
   ✓ Configure redis.config.ts
   ✓ Setup Redis module in app.module.ts
-  □ Test Redis connection
+  ✓ Test Redis connection
 
 [~] 3.3 Core Configuration
   □ Setup CORS configuration
