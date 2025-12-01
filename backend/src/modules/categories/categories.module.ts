@@ -8,6 +8,6 @@ import { CategoriesController } from './categories.controller';
   imports: [MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }])],
   providers: [CategoriesService],
   controllers: [CategoriesController],
-  exports: [MongooseModule],
+  exports: [CategoriesService, MongooseModule], // Export CategoriesService
 })
 export class CategoriesModule {}

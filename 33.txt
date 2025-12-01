@@ -1,65 +1,76 @@
-[23:57:44] File change detected. Starting incremental compilation...
+[19:26:22] Starting compilation in watch mode...
 
-[23:57:45] Found 0 errors. Watching for file changes.
+src/modules/devices/devices.repository.ts:48:5 - error TS2322: Type '(Document<unknown, {}, DeviceDocument, {}, {}> & Device & Document<ObjectId, any, any, Record<string, any>, {}> & Required<...> & { ...; }) | null' is not assignable to type 'Device'.
+  Type 'null' is not assignable to type 'Device'.
 
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [NestFactory] Starting Nest application...
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] MongooseModule dependencies initialized +63ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigHostModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] HttpModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] PricesModule dependencies initialized +0ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] SearchModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] AppModule dependencies initialized +2ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigModule dependencies initialized +0ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] ConfigModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:51     LOG [InstanceLoader] CacheModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseCoreModule dependencies initialized +6120ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +2ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] MongooseModule dependencies initialized +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] CategoriesModule dependencies initialized +5ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [InstanceLoader] DevicesModule dependencies initialized +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] AppController {/}: +40ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/, GET} route +9ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] DevicesController {/devices}: +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices, POST} route +3ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/popular, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/trending, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/category/:category, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/brand/:brand, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:slug, GET} route +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, GET} route +2ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, PATCH} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/devices/:id, DELETE} route +2ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] CategoriesController {/categories}: +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, GET} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories, POST} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, PATCH} route +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RouterExplorer] Mapped {/categories/:id, DELETE} route +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] PricesController {/prices}: +0ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [RoutesResolver] SearchController {/search}: +1ms
-[Nest] 4440  - 30/11/2025, 23:57:57     LOG [NestApplication] Nest application successfully started +6ms
+48     return this.deviceModel.findById(id).populate('category').exec();
+       ~~~~~~
 
+src/modules/devices/devices.repository.ts:52:5 - error TS2322: Type '(Document<unknown, {}, DeviceDocument, {}, {}> & Device & Document<ObjectId, any, any, Record<string, any>, {}> & Required<...> & { ...; }) | null' is not assignable to type 'Device'.
+  Type 'null' is not assignable to type 'Device'.
 
+52     return this.deviceModel.findOne({ slug }).populate('category').exec();
+       ~~~~~~
 
+src/modules/devices/devices.repository.ts:56:5 - error TS2322: Type '(Document<unknown, {}, DeviceDocument, {}, {}> & Device & Document<ObjectId, any, any, Record<string, any>, {}> & Required<...> & { ...; }) | null' is not assignable to type 'Device'.
+  Type 'null' is not assignable to type 'Device'.
 
+56     return this.deviceModel.findByIdAndUpdate(id, updateDeviceData, { new: true }).populate('category').exec();
+       ~~~~~~
 
+src/modules/devices/devices.repository.ts:85:5 - error TS2322: Type '(Document<unknown, {}, DeviceDocument, {}, {}> & Device & Document<ObjectId, any, any, Record<string, any>, {}> & Required<...> & { ...; }) | null' is not assignable to type 'Device'.
+  Type 'null' is not assignable to type 'Device'.
 
+85     return device;
+       ~~~~~~
 
+src/modules/devices/devices.service.ts:9:80 - error TS2307: Cannot find module '../../../shared/src/types' or its corresponding type declarations.
 
+9 import { Category as SharedCategory, Device as SharedDevice, DeviceType } from '../../../shared/src/types';
+                                                                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+src/modules/devices/devices.service.ts:62:7 - error TS2322: Type 'ObjectId | undefined' is not assignable to type 'Category | undefined'.
+  Type 'ObjectId' is missing the following properties from type 'Category': name, slug
 
+62       category: category ? category._id : undefined,
+         ~~~~~~~~
 
+  src/modules/devices/device.schema.ts:20:3
+    20   category: Category;
+         ~~~~~~~~
+    The expected type comes from property 'category' which is declared here on type 'Partial<Device>'
 
+src/modules/devices/devices.service.ts:150:7 - error TS2322: Type 'Category' is not assignable to type 'Document<unknown, {}, CategoryDocument, {}, {}> & Category & Document<ObjectId, any, any, Record<string, any>, {}> & Required<...> & { ...; }'.
+  Type 'Category' is missing the following properties from type 'Document<unknown, {}, CategoryDocument, {}, {}>': _id, $assertPopulated, $clearModifiedPaths, $clone, and 51 more.
 
+150       categoryDocument = await this.categoriesService.upsertCategory(newCategoryData);
+          ~~~~~~~~~~~~~~~~
 
+src/modules/devices/devices.service.ts:155:17 - error TS18047: 'categoryDocument' is possibly 'null'.
 
+155       category: categoryDocument._id, // Assign the ObjectId of the category
+                    ~~~~~~~~~~~~~~~~
 
+src/modules/external-api/data-transformation.service.ts:11:8 - error TS2307: Cannot find module '../dto/gsmarena.dto' or its corresponding type declarations.
+11 } from '../dto/gsmarena.dto';
+          ~~~~~~~~~~~~~~~~~~~~~
 
+src/modules/external-api/data-transformation.service.ts:12:76 - error TS2307: Cannot find module '../../../shared/src/types' or its corresponding type declarations.
 
+12 import { Device, DeviceSpec, DeviceType, Category as SharedCategory } from '../../../shared/src/types'; // Assuming this is our internal Device interface
+                                                                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/modules/external-api/sync.service.ts:7:34 - error TS2307: Cannot find module '../../../shared/src/types' or its corresponding type declarations.
+
+7 import { Device, Category } from '../../../shared/src/types'; // Internal types
+                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+src/modules/external-api/sync.service.ts:66:56 - error TS2552: Cannot find name 'BrandsResponse'. Did you mean 'BrandListResponse'?
+
+66     const response = await this.externalApiService.get<BrandsResponse>('/brands');
+                                                          ~~~~~~~~~~~~~~
+
+[19:26:37] Found 12 errors. Watching for file changes.
 
 
 

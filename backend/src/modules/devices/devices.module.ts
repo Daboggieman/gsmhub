@@ -6,15 +6,18 @@ import { Category, CategorySchema } from '../categories/category.schema'; // Imp
 import { DevicesController } from './devices.controller';
 import { DevicesService } from './devices.service';
 import { DeviceApiService } from './device-api.service';
+import { DevicesRepository } from './devices.repository';
+import { CategoriesModule } from '../categories/categories.module'; // Import CategoriesModule
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Device.name, schema: DeviceSchema }]),
     MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }]), // Add Category MongooseModule
     HttpModule,
+    CategoriesModule, // Import CategoriesModule
   ],
-  providers: [DevicesService, DeviceApiService],
+  providers: [DevicesService, DeviceApiService, DevicesRepository],
   controllers: [DevicesController],
-  exports: [DevicesService, MongooseModule],
+  exports: [DevicesService, DevicesRepository, MongooseModule],
 })
 export class DevicesModule {}

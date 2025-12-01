@@ -58,4 +58,23 @@ export class CategoriesService {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
   }
+
+  async upsertCategory(categoryData: Partial<Category>): Promise<Category> {
+    if (!categoryData.slug) {
+      throw new Error('Category slug is required for upsert operation.');
+    }
+
+    // Attempt to find a category by slug
+    let category = await this.categoryModel.findOne({ slug: categoryData.slug }).exec();
+
+    if (category) {
+      // If category exists, update it
+      Object.assign(category, categoryData);
+      return category.save();
+    } else {
+      // If category does not exist, create a new one
+      const newCategory = new this.categoryModel(categoryData);
+      return newCategory.save();
+    }
+  }
 }

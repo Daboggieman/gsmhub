@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter'; // Import the custom filter
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'; // Import the custom interceptor
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,9 @@ async function bootstrap() {
 
   // Apply global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
+
+  // Apply global interceptors
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   // Enable CORS for development (restrict in production)
   app.enableCors({
