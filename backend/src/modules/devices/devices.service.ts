@@ -1,4 +1,5 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Device, DeviceDocument } from './device.schema';
@@ -8,17 +9,19 @@ import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DevicesRepository } from './devices.repository';
 import { Category as SharedCategory, Device as SharedDevice, DeviceType } from '@shared/types';
 import { CategoriesService } from '../categories/categories.service'; // Import CategoriesService
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class DevicesService {
   constructor(
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly devicesRepository: DevicesRepository,
     @InjectModel(Category.name)
     private readonly categoryModel: Model<CategoryDocument>,
     private readonly categoriesService: CategoriesService, // Inject CategoriesService
   ) {}
 
-  async findAll(
+  async getAllDevices(
     filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string }
   ): Promise<Device[]> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
@@ -36,10 +39,16 @@ export class DevicesService {
   }
   
   async findBySlug(slug: string): Promise<Device> {
+    const cachedDevice = await this.cacheManager.get<Device>(`device_${slug}`);
+    if (cachedDevice) {
+      return cachedDevice;
+    }
+
     const device = await this.devicesRepository.findBySlug(slug);
     if (!device) {
       throw new NotFoundException(`Device with slug ${slug} not found`);
     }
+    await this.cacheManager.set(`device_${slug}`, device, 3600); // Cache for 1 hour
     return device;
   }
 
@@ -59,10 +68,12 @@ export class DevicesService {
 
     const newDeviceData: Partial<Device> = {
       ...deviceData,
-      category: category ? category._id : undefined,
+      category: category ? (category._id as any) : undefined,
     };
     
-    return this.devicesRepository.create(newDeviceData);
+    const newDevice = await this.devicesRepository.create(newDeviceData);
+    await this.cacheManager.del('popular_devices');
+    return newDevice;
   }
 
   async update(id: string, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
@@ -89,18 +100,32 @@ export class DevicesService {
       throw new NotFoundException(`Device with ID ${id} not found`);
     }
 
+    await this.cacheManager.del(`device_${updatedDevice.slug}`);
+    await this.cacheManager.del('popular_devices');
     return updatedDevice;
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.devicesRepository.remove(id);
-    if (result.deletedCount === 0) {
-      throw new NotFoundException(`Device with ID ${id} not found`);
+    const device = await this.devicesRepository.findOne(id);
+    if (device) {
+      await this.cacheManager.del(`device_${device.slug}`);
+      await this.cacheManager.del('popular_devices');
+      const result = await this.devicesRepository.remove(id);
+      if (result.deletedCount === 0) {
+        throw new NotFoundException(`Device with ID ${id} not found`);
+      }
     }
   }
 
   async getPopularDevices(limit: number): Promise<Device[]> {
-    return this.devicesRepository.findPopular(limit);
+    const cachedPopularDevices = await this.cacheManager.get<Device[]>(`popular_devices_${limit}`);
+    if (cachedPopularDevices) {
+      return cachedPopularDevices;
+    }
+
+    const popularDevices = await this.devicesRepository.findPopular(limit);
+    await this.cacheManager.set(`popular_devices_${limit}`, popularDevices, 3600); // Cache for 1 hour
+    return popularDevices;
   }
 
   async getTrendingDevices(limit: number): Promise<Device[]> {
@@ -123,10 +148,12 @@ export class DevicesService {
     if (!device) {
       throw new NotFoundException(`Device with slug ${slug} not found`);
     }
+    await this.cacheManager.del(`device_${slug}`);
+    await this.cacheManager.del('popular_devices');
     return device;
   }
 
-  async upsertDevice(deviceData: Partial<SharedDevice>): Promise<Device> {
+  async upsertDevice(deviceData: Partial<SharedDevice>): Promise<Device | null> {
     if (!deviceData.slug) {
       throw new Error('Device slug is required for upsert operation.');
     }
@@ -141,18 +168,16 @@ export class DevicesService {
     }).exec();
 
     if (!categoryDocument) {
-      // If category doesn't exist, create it. Using the shared Category interface for partial data.
-      // Need to define a category in the shared types.
       const newCategoryData: Partial<SharedCategory> = {
         name: categoryName,
         slug: categoryName, // Assuming slug is same as name for simplicity, can be generated
       };
-      categoryDocument = await this.categoriesService.upsertCategory(newCategoryData);
+      categoryDocument = await this.categoriesService.upsertCategory(newCategoryData) as any;
     }
 
     const preparedDeviceData: Partial<Device> = {
       ...deviceData,
-      category: categoryDocument._id, // Assign the ObjectId of the category
+      category: categoryDocument!._id as any, // Assign the ObjectId of the category, non-null assertion
       model: deviceData.model || deviceData.slug, // Ensure model is present, fallback to slug
       views: deviceData.views || 0,
       isActive: deviceData.isActive ?? true,
@@ -169,6 +194,17 @@ export class DevicesService {
       // createdAt and updatedAt will be handled by Mongoose timestamps
     };
 
-    return this.devicesRepository.upsert(preparedDeviceData);
+    const upsertedDevice = await this.devicesRepository.upsert(preparedDeviceData);
+    if(upsertedDevice) {
+      await this.cacheManager.del(`device_${upsertedDevice.slug}`);
+      await this.cacheManager.del('popular_devices');
+    }
+    return upsertedDevice;
+  }
+
+  async syncDeviceFromAPI(deviceData: Partial<SharedDevice>): Promise<Device | null> {
+    // This method will leverage the existing upsertDevice method to handle the actual syncing logic.
+    // It serves as an entry point for an external API call and uses upsertDevice to persist the data.
+    return this.upsertDevice(deviceData);
   }
 }

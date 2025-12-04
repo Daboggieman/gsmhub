@@ -32,7 +32,7 @@ export class DevicesRepository {
       query.$text = { $search: filters.search };
     }
 
-    let findQuery = this.deviceModel.find(query).populate('category');
+    let findQuery = this.deviceModel.find(query).lean();
 
     if (filters?.skip) {
       findQuery = findQuery.skip(filters.skip);

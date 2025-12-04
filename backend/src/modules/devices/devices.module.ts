@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { HttpModule } from '@nestjs/axios';
 import { Device, DeviceSchema } from './device.schema';
@@ -14,7 +14,7 @@ import { CategoriesModule } from '../categories/categories.module'; // Import Ca
     MongooseModule.forFeature([{ name: Device.name, schema: DeviceSchema }]),
     MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }]), // Add Category MongooseModule
     HttpModule,
-    CategoriesModule, // Import CategoriesModule
+    forwardRef(() => CategoriesModule), // Import CategoriesModule with forwardRef
   ],
   providers: [DevicesService, DeviceApiService, DevicesRepository],
   controllers: [DevicesController],

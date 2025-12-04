@@ -11,23 +11,26 @@ export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
+  // TODO: Implement Admin Guard for authentication and authorization
   async create(@Body() createDeviceDto: CreateDeviceDto): Promise<DeviceResponseDto> {
     const device = await this.devicesService.create(createDeviceDto);
     return plainToInstance(DeviceResponseDto, device);
   }
 
   @Get()
-  async findAll(
+  async getAllDevices(
     @Query('skip') skip?: string,
-    @Query('limit') limit?: string, // Changed 'take' to 'limit'
+    @Query('limit') limit?: string,
     @Query('category') category?: string,
     @Query('brand') brand?: string,
+    @Query('search') search?: string,
   ): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.findAll({
+    const devices = await this.devicesService.getAllDevices({
       skip: skip ? parseInt(skip) : undefined,
-      limit: limit ? parseInt(limit) : undefined, // Changed 'take' to 'limit'
+      limit: limit ? parseInt(limit) : undefined,
       category,
       brand,
+      search,
     });
     return plainToInstance(DeviceResponseDto, devices);
   }
@@ -62,8 +65,11 @@ export class DevicesController {
     return plainToInstance(DeviceResponseDto, devices);
   }
 
-  @Get(':slug')
+  // Ensure this route is defined before the /:id route to avoid conflicts
+  @Get('slug/:slug')
   async findBySlug(@Param('slug') slug: string): Promise<DeviceResponseDto> {
+    // Increment view count when a device is fetched by its slug
+    await this.devicesService.increaseViewCount(slug);
     const device = await this.devicesService.findBySlug(slug);
     return plainToInstance(DeviceResponseDto, device);
   }
@@ -75,6 +81,7 @@ export class DevicesController {
   }
 
   @Patch(':id')
+  // TODO: Implement Admin Guard for authentication and authorization
   async update(
     @Param('id') id: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
@@ -84,6 +91,7 @@ export class DevicesController {
   }
 
   @Delete(':id')
+  // TODO: Implement Admin Guard for authentication and authorization
   remove(@Param('id') id: string): Promise<void> {
     return this.devicesService.remove(id);
   }

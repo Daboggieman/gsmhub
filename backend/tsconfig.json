@@ -13,18 +13,21 @@
     "target": "ES2023",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "rootDir": "./src",
+    "baseUrl": ".",
+    "rootDirs": [
+      "src",
+      "../shared/src"
+    ],
+    "paths": {
+      "@shared/*": ["../shared/src/*"],
+      "@modules/*": ["./src/modules/*"]
+    },
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": true,
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@shared/*": ["../../shared/src/*"],
-      "@modules/*": ["./src/modules/*"]
-    }
+    "noFallthroughCasesInSwitch": false
   }
 }

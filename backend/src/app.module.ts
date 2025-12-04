@@ -6,12 +6,13 @@ import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule'; // Import ScheduleModule
 import { mongooseConfig } from './config/mongoose.config';
-import { redisConfig } from './config/redis.config';
+import * as redisStore from 'cache-manager-redis-store'; // Import redisStore directly
 import { DevicesModule } from './modules/devices/devices.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { PricesModule } from './modules/prices/prices.module';
 import { SearchModule } from './modules/search/search.module';
 import { ExternalApiModule } from './modules/external-api/external-api.module';
+import { CompareModule } from './modules/compare/compare.module';
 
 @Module({
   imports: [
@@ -23,13 +24,20 @@ import { ExternalApiModule } from './modules/external-api/external-api.module';
       }),
       inject: [ConfigService],
     }),
-    CacheModule.register(redisConfig),
+    CacheModule.register({
+      store: redisStore as any,
+      url: process.env.REDIS_URI,
+      ttl: 300, // 5 minutes default TTL
+      max: 100, // maximum number of items in cache
+      isGlobal: true, // Make CacheModule global
+    }),
     ScheduleModule.forRoot(), // Add ScheduleModule here
     DevicesModule,
     CategoriesModule,
     PricesModule,
     SearchModule,
     ExternalApiModule,
+    CompareModule,
   ],
   controllers: [AppController],
   providers: [AppService],

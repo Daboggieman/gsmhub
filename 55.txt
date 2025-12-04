@@ -1,3 +1,26 @@
+IMPLEMENTATION LOG
+================================================================================
+- DATE: 2025-12-03
+- ACTION: Troubleshoot and fix backend startup issues.
+- DETAILS:
+  - The backend was failing to start due to a "Cannot find module 'dist/main'" error. This was caused by an incorrect build configuration that produced a nested output directory because of shared modules.
+  - The `tsconfig.json` was configured to use `rootDirs` to handle the shared module.
+  - The `start:prod` script in `package.json` was updated to point to the correct nested entry file (`dist/backend/src/main`).
+  - The `build` script was changed to use `tsc` directly instead of `nest build`.
+  - The `start:dev` script was changed to use `ts-node-dev` with `tsconfig-paths/register` to correctly handle path aliases during development.
+- RESULT: The backend application now starts successfully in both development and production mode.
+- NEXT STEP: Continue with the implementation of the Devices module as per the roadmap.
+================================================================================
+- DATE: 2025-12-04
+- ACTION: Troubleshoot and fix frontend compilation errors.
+- DETAILS:
+  - Resolved "Type error: Property 'name' does not exist on type 'Device'" by adding `name: string;` to the `Device` interface in `shared/src/types/index.ts`.
+  - Resolved "Type error: Property '_id' does not exist on type 'Device'" by renaming `id?: string;` to `_id?: string;` in the `Device` interface in `shared/src/types/index.ts` to align with MongoDB's `_id`.
+  - Resolved "Type error: Type 'DeviceSpec' is not assignable to type '{ [key: string]: string; }'" in `SpecsTable.tsx` by refactoring the specification grouping logic to correctly group `DeviceSpec[]` into `{[category: string]: {[key: string]: string}}`.
+- RESULT: The frontend application now builds successfully and runs without the previously reported compilation errors.
+- NEXT STEP: User verification of the implemented changes in the running application.
+================================================================================
+
 ═══════════════════════════════════════════════════════════════════════════════
   GSMHUB - DEVICE SPECIFICATIONS WEBSITE
   COMPLETE IMPLEMENTATION ROADMAP
@@ -29,6 +52,7 @@ PHASE 1: PROJECT INITIALIZATION & SETUP
   ✓ Choose TypeScript
   ✓ Initialize Git in backend folder
   ✓ Create .env file for environment variables
+  ✓ NOTE: The build and start scripts were modified to handle the monorepo structure with a shared module. The `build` script now uses `tsc` and `start:dev` uses `ts-node-dev`.
 
 ✓ 1.3 Frontend Project Initialization (Next.js)
   ✓ Create project: npx create-next-app@latest frontend
@@ -155,60 +179,60 @@ PHASE 5: DEVICES MODULE (BACKEND)
   ✓ Add custom query methods
   ✓ Implement pagination
 
-□ 5.3 Devices Service
-  □ Create DevicesService
-  □ Implement methods:
-    □ getDeviceBySlug(slug: string)
-    □ getAllDevices(filters, pagination)
-    □ getDevicesByCategory(category: string)
-    □ getDevicesByBrand(brand: string)
-    □ syncDeviceFromAPI(deviceId: string)
-    □ createDevice(data: CreateDeviceDto)
-    □ updateDevice(id: string, data: UpdateDeviceDto)
-    □ deleteDevice(id: string)
-    □ increaseViewCount(slug: string)
-    □ getPopularDevices(limit: number)
-    □ getTrendingDevices(limit: number)
+✓ 5.3 Devices Service
+  ✓ Create DevicesService
+  ✓ Implement methods:
+    ✓ getDeviceBySlug(slug: string)
+    ✓ getAllDevices(filters, pagination)
+    ✓ getDevicesByCategory(category: string)
+    ✓ getDevicesByBrand(brand: string)
+    ✓ syncDeviceFromAPI(deviceId: string)
+    ✓ createDevice(data: CreateDeviceDto)
+    ✓ updateDevice(id: string, data: UpdateDeviceDto)
+    ✓ deleteDevice(id: string)
+    ✓ increaseViewCount(slug: string)
+    ✓ getPopularDevices(limit: number)
+    ✓ getTrendingDevices(limit: number)
 
-□ 5.4 Devices Controller
-  □ Create DevicesController
-  □ Implement endpoints:
-    □ GET /devices (list all with filters)
-    □ GET /devices/:slug (get single device)
-    □ GET /devices/category/:category
-    □ GET /devices/brand/:brand
-    □ GET /devices/popular
-    □ GET /devices/trending
-    □ POST /devices (admin only)
-    □ PATCH /devices/:id (admin only)
-    □ DELETE /devices/:id (admin only)
+✓ 5.4 Devices Controller
+  ✓ Create DevicesController
+  ✓ Implement endpoints:
+    ✓ GET /devices (list all with filters)
+    ✓ GET /devices/slug/:slug (get single device)
+    ✓ GET /devices/category/:category
+    ✓ GET /devices/brand/:brand
+    ✓ GET /devices/popular
+    ✓ GET /devices/trending
+    ✓ POST /devices (admin only)
+    ✓ PATCH /devices/:id (admin only)
+    ✓ DELETE /devices/:id (admin only)
 
-□ 5.5 Caching Implementation
-  □ Implement Redis caching for device data
-  □ Cache popular devices
-  □ Cache device by slug
-  □ Set appropriate TTL (Time To Live)
-  □ Implement cache invalidation strategy
+✓ 5.5 Caching Implementation
+  ✓ Implement Redis caching for device data
+  ✓ Cache popular devices
+  ✓ Cache device by slug
+  ✓ Set appropriate TTL (Time To Live)
+  ✓ Implement cache invalidation strategy
 
-□ 5.6 View Tracking
-  □ Implement view counter
-  □ Track page views per device
+✓ 5.6 View Tracking
+  ✓ Implement view counter
+  ✓ Track page views per device
   □ Store view history
   □ Calculate trending based on recent views
 
 ═══════════════════════════════════════════════════════════════════════════════
 
-PHASE 6: CATEGORIES MODULE (BACKEND)
+✓ PHASE 6: CATEGORIES MODULE (BACKEND)
 ═══════════════════════════════════════════════════════════════════════════════
 
-[~] 6.1 Categories Setup - NOTE: Folder exists, but no implementation.
+✓ 6.1 Categories Setup
   ✓ Create Category schema (Mongoose)
-  □ Create CategoryDto
-  □ Create CategoriesService
-  □ Create CategoriesController
+  ✓ Create CategoryDto
+  ✓ Create CategoriesService
+  ✓ Create CategoriesController
 
-□ 6.2 Category Implementation
-  □ Implement category CRUD operations
+✓ 6.2 Category Implementation
+  ✓ Implement category CRUD operations
   □ Create predefined categories:
     □ Smartphones
     □ Tablets
@@ -219,12 +243,12 @@ PHASE 6: CATEGORIES MODULE (BACKEND)
   □ Link devices to categories
   □ Implement category filtering
 
-□ 6.3 Category Endpoints
-  □ GET /categories (list all)
-  □ GET /categories/:slug (get category details)
-  □ GET /categories/:slug/devices (get devices in category)
-  □ POST /categories (admin only)
-  □ PATCH /categories/:id (admin only)
+✓ 6.3 Category Endpoints
+  ✓ GET /categories (list all)
+  ✓ GET /categories/:slug (get category details)
+  ✓ GET /categories/:slug/devices (get devices in category)
+  ✓ POST /categories (admin only)
+  ✓ PATCH /categories/:id (admin only)
 
 ═══════════════════════════════════════════════════════════════════════════════
 
@@ -237,25 +261,25 @@ PHASE 7: SEARCH MODULE (BACKEND)
   □ Create indexing service
   □ Implement auto-indexing on device create/update
 
-□ 7.2 Search Service
-  □ Create SearchService
+✓ 7.2 Search Service
+  ✓ Create SearchService
   □ Implement fuzzy search algorithm
-  □ Implement autocomplete functionality
-  □ Search across: name, brand, model, category
+  ✓ Implement autocomplete functionality
+  ✓ Search across: name, brand, model, category
   □ Rank results by relevance
-  □ Implement search suggestions
+  ✓ Implement search suggestions
 
-□ 7.3 Search Controller
-  □ Create SearchController
-  □ Implement endpoints:
-    □ GET /search?q=query (main search)
-    □ GET /search/autocomplete?q=query
-    □ GET /search/suggestions?q=query
+✓ 7.3 Search Controller
+  ✓ Create SearchController
+  ✓ Implement endpoints:
+    ✓ GET /search?q=query (main search)
+    ✓ GET /search/autocomplete?q=query
+    ✓ GET /search/suggestions?q=query
 
 □ 7.4 Search Optimization
   □ Cache popular search queries
-  □ Implement search analytics
-  □ Track search terms
+  ✓ Implement search analytics
+  ✓ Track search terms
   □ Optimize search performance
 
 ═══════════════════════════════════════════════════════════════════════════════
@@ -263,10 +287,10 @@ PHASE 7: SEARCH MODULE (BACKEND)
 PHASE 8: COMPARISON MODULE (BACKEND)
 ═══════════════════════════════════════════════════════════════════════════════
 
-□ 8.1 Comparison Service
-  □ Create CompareService
+✓ 8.1 Comparison Service
+  ✓ Create CompareService
   □ Implement comparison algorithm
-  □ Compare two devices side-by-side
+  ✓ Compare two devices side-by-side
   □ Highlight differences
   □ Calculate percentage differences for numeric values
 
@@ -283,10 +307,10 @@ PHASE 8: COMPARISON MODULE (BACKEND)
   □ Handle missing specs gracefully
   □ Categorize specs (Display, Camera, Performance, etc.)
 
-□ 8.3 Comparison Controller
-  □ Create CompareController
-  □ Implement endpoints:
-    □ GET /compare?devices=slug1,slug2
+✓ 8.3 Comparison Controller
+  ✓ Create CompareController
+  ✓ Implement endpoints:
+    ✓ GET /compare?devices=slug1,slug2
     □ POST /compare (with device IDs in body)
 
 □ 8.4 Comparison Caching
@@ -298,23 +322,23 @@ PHASE 8: COMPARISON MODULE (BACKEND)
 PHASE 9: PRICES MODULE (BACKEND)
 ═══════════════════════════════════════════════════════════════════════════════
 
-[~] 9.1 Price History Setup - NOTE: Folder exists, but no implementation.
+✓ 9.1 Price History Setup
   ✓ Create PriceHistory schema (Mongoose)
-  □ Create PriceDto
-  □ Create PricesService
-  □ Create PricesController
+  ✓ Create PriceDto
+  ✓ Create PricesService
+  ✓ Create PricesController
 
-□ 9.2 Price Management
+✓ 9.2 Price Management
   □ Implement price tracking per country
-  □ Store price history
+  ✓ Store price history
   □ Track price changes over time
   □ Support multiple currencies
 
-□ 9.3 Price Endpoints
+✓ 9.3 Price Endpoints
   □ GET /prices/device/:slug (get current prices)
-  □ GET /prices/device/:slug/history (get price history)
-  □ POST /prices (add new price)
-  □ PATCH /prices/:id (update price)
+  ✓ GET /prices/device/:slug/history (get price history)
+  ✓ POST /prices (add new price)
+  ✓ PATCH /prices/:id (update price)
 
 □ 9.4 Price Features
   □ Calculate price trends
@@ -363,8 +387,8 @@ PHASE 10: FRONTEND SETUP (NEXT.JS)
         └── images/
 - NOTE: `components` folder and some files are missing.
 
-□ 10.2 Tailwind CSS Setup
-  □ Configure tailwind.config.js
+✓ 10.2 Tailwind CSS Setup
+  ✓ Configure tailwind.config.js
   □ Setup custom colors and theme
   □ Create utility classes
   □ Setup responsive breakpoints
@@ -387,13 +411,13 @@ PHASE 10: FRONTEND SETUP (NEXT.JS)
 PHASE 11: FRONTEND CORE COMPONENTS
 ═══════════════════════════════════════════════════════════════════════════════
 
-□ 11.1 Layout Components
-  □ Create Header component
+✓ 11.1 Layout Components
+  ✓ Create Header component
     □ Logo
     □ Navigation menu
     □ Search bar
     □ Mobile menu
-  □ Create Footer component
+  ✓ Create Footer component
     □ Links
     □ Social media
     □ Copyright
@@ -401,18 +425,18 @@ PHASE 11: FRONTEND CORE COMPONENTS
   □ Create Loading component
   □ Create Error component
 
-□ 11.2 Device Components
-  □ Create DeviceCard component
+✓ 11.2 Device Components
+  ✓ Create DeviceCard component
     □ Device image
     □ Brand and model
     □ Key specs preview
     □ Price
     □ Link to details
-  □ Create SpecsTable component
-    □ Categorized specs
-    □ Expandable sections
+  ✓ Create SpecsTable component
+    ✓ Categorized specs
+    ✓ Expandable sections
     □ Copy to clipboard
-  □ Create DeviceGallery component
+  ✓ Create DeviceGallery component
     □ Image carousel
     □ Zoom functionality
     □ Thumbnails
@@ -457,20 +481,20 @@ PHASE 11: FRONTEND CORE COMPONENTS
 PHASE 12: FRONTEND PAGES IMPLEMENTATION
 ═══════════════════════════════════════════════════════════════════════════════
 
-□ 12.1 Home Page (/)
-  □ Create app/page.tsx
+✓ 12.1 Home Page (/)
+  ✓ Create app/page.tsx
   □ Implement hero section
-  □ Show trending devices
+  ✓ Show trending devices
   □ Show popular categories
   □ Show latest devices
   □ Add search functionality
   □ Implement SSR or SSG
 
-□ 12.2 Device Details Page (/devices/[slug])
-  □ Create app/devices/[slug]/page.tsx
-  □ Fetch device data (SSR)
-  □ Display device images
-  □ Show complete specifications
+✓ 12.2 Device Details Page (/devices/[slug])
+  ✓ Create app/devices/[slug]/page.tsx
+  ✓ Fetch device data (SSR)
+  ✓ Display device images
+  ✓ Show complete specifications
   □ Display pricing information
   □ Add "Buy Now" buttons with affiliate links
   □ Show similar devices
@@ -521,8 +545,8 @@ PHASE 12: FRONTEND PAGES IMPLEMENTATION
 PHASE 13: SEARCH FUNCTIONALITY (FRONTEND)
 ═══════════════════════════════════════════════════════════════════════════════
 
-□ 13.1 Search Bar Implementation
-  □ Add search bar to header
+✓ 13.1 Search Bar Implementation
+  ✓ Add search bar to header
   □ Implement real-time search
   □ Add debouncing (300ms)
   □ Show loading state

@@ -5,6 +5,8 @@ import { BrandListResponse, PhoneListResponse, PhoneSpecResponse } from '@module
 import { Device, Category } from '@shared/types'; // Internal types
 import { Cron, CronExpression } from '@nestjs/schedule'; // Import Cron and CronExpression
 import { ConfigService } from '@nestjs/config';
+import { DevicesService } from '@modules/devices/devices.service'; // Import DevicesService
+import { CategoriesService } from '@modules/categories/categories.service'; // Import CategoriesService
 
 @Injectable()
 export class SyncService implements OnModuleInit {
@@ -61,7 +63,7 @@ export class SyncService implements OnModuleInit {
 
   private async fetchAndSaveBrands(): Promise<Category[]> {
     this.logger.log('Fetching brands...');
-    const response = await this.externalApiService.get<BrandsResponse>('/brands');
+    const response = await this.externalApiService.get<BrandListResponse>('/brands');
     const externalBrands = response.data;
     const internalCategories: Category[] = [];
 
@@ -93,7 +95,7 @@ export class SyncService implements OnModuleInit {
           const partialDevice = this.dataTransformationService.transformPhoneListItemToDevice(extPhone);
           const fullPhoneSpec = await this.fetchAndSavePhoneSpec(extPhone.slug);
           if (fullPhoneSpec) {
-            const device: Device = { ...partialDevice, ...fullPhoneSpec, brand: brand.name }; // Merge partial with full spec
+            const device: Device = { ...partialDevice, ...fullPhoneSpec, brand: brand.name } as Device; // Merge partial with full spec
             await this.devicesService.upsertDevice(device); // Assuming upsertDevice method
           }
         }

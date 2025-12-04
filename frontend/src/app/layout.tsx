@@ -1,16 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist } from "next/font/google"; // Removed Geist_Mono
 import "./globals.css";
+import Header from '@/components/layout/Header'; // Import Header component
+import Footer from '@/components/layout/Footer'; // Import Footer component
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+// Removed geistMono import and variable
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,9 +24,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} antialiased flex flex-col min-h-screen`} // Added flex-col and min-h-screen for sticky footer
       >
-        {children}
+        <Header />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer />
       </body>
     </html>
   );

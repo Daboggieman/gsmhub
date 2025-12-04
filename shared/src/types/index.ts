@@ -21,10 +21,11 @@ export interface DeviceSpec {
 }
 
 export interface Device {
-  id?: string; // MongoDB _id (optional for creation, assigned by DB)
+  _id?: string; // MongoDB _id (optional for creation, assigned by DB)
   slug: string;
   brand: string;
   model: string;
+  name: string;
   category: string; // Category ID as string, will be ObjectId in DB
   imageUrl?: string;
   description?: string; // Optional

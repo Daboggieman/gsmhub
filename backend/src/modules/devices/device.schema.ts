@@ -30,6 +30,30 @@ export class Device {
 
   @Prop({ default: true })
   isActive: boolean;
+
+  @Prop()
+  description?: string;
+
+  @Prop()
+  releaseDate?: string;
+
+  @Prop()
+  dimension?: string;
+
+  @Prop()
+  os?: string;
+
+  @Prop()
+  storage?: string;
+
+  @Prop()
+  displaySize?: string;
+
+  @Prop()
+  ram?: string;
+
+  @Prop()
+  battery?: string;
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);

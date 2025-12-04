@@ -10,7 +10,7 @@ import {
   TopByFansPhone
 } from '@modules/external-api/dto/gsmarena.dto';
 import { Device, DeviceSpec, DeviceType, Category as SharedCategory } from '@shared/types';
-import { generateSlug } from '@modules/common/utils/slug.util'; // Our slug utility
+import { generateSlug } from '../../common/utils/slug.util'; // Our slug utility
 
 @Injectable()
 export class DataTransformationService {

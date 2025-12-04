@@ -13,6 +13,8 @@ export class Category {
 
   @Prop()
   description?: string;
+
+  __v?: number; // Added to resolve TS2322 error
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
