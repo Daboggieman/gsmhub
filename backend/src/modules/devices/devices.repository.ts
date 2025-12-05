@@ -32,7 +32,7 @@ export class DevicesRepository {
       query.$text = { $search: filters.search };
     }
 
-    let findQuery = this.deviceModel.find(query).lean();
+    let findQuery = this.deviceModel.find(query).populate('category').lean();
 
     if (filters?.skip) {
       findQuery = findQuery.skip(filters.skip);
@@ -61,11 +61,51 @@ export class DevicesRepository {
   }
 
   async findPopular(limit: number): Promise<Device[]> {
-    return this.deviceModel.find().sort({ views: -1 }).limit(limit).populate('category').exec();
+    return this.deviceModel.aggregate([
+      {
+        $project: {
+          _id: 1,
+          slug: 1,
+          brand: 1,
+          model: 1,
+          category: 1,
+          imageUrl: 1,
+          specs: 1,
+          views: { $ifNull: ["$views", 0] }, // Ensure views is a number, default to 0 if null/undefined
+          isActive: 1,
+          description: 1,
+          releaseDate: 1,
+          dimension: 1,
+          os: 1,
+          storage: 1,
+          displaySize: 1,
+          ram: 1,
+          battery: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        }
+      },
+      { $sort: { views: -1 } },
+      { $limit: limit },
+      {
+        $lookup: {
+          from: 'categories', // The collection name for categories
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      {
+        $unwind: {
+          path: '$category',
+          preserveNullAndEmptyArrays: true, // Preserve devices that might not have a category
+        },
+      },
+    ]).exec();
   }
 
   async findTrending(limit: number): Promise<Device[]> {
-    return this.deviceModel.find().sort({ createdAt: -1 }).limit(limit).populate('category').exec();
+    return this.deviceModel.find().sort({ createdAt: -1 }).limit(limit).populate('category').lean().exec();
   }
 
   async findByCategory(categoryId: string, limit: number): Promise<Device[]> {

@@ -13,10 +13,10 @@ async function bootstrap() {
   }));
 
   // Apply global exception filter
-  // app.useGlobalFilters(new HttpExceptionFilter());
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // Apply global interceptors
-  // app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalInterceptors(new LoggingInterceptor());
 
   // Enable CORS for development (restrict in production)
   app.enableCors({

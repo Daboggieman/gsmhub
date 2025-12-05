@@ -15,7 +15,7 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ device }) => {
           {device.imageUrl ? (
             <Image
               src={device.imageUrl}
-              alt={device.name}
+              alt={`${device.brand} ${device.model}`}
               fill
               style={{ objectFit: 'contain' }}
               className="p-2"

@@ -1,27 +1,33 @@
 import React from 'react';
 import DeviceCard from '@/components/devices/DeviceCard';
 import { Device } from '@shared/types';
-
-async function getDevices(): Promise<Device[]> {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/devices`);
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch devices');
-  }
-  return res.json();
-}
+import { apiClient } from '@/lib/api';
 
 export default async function Home() {
-  const devices = await getDevices();
+  const trendingDevices = await apiClient.getTrendingDevices();
+  const popularDevices = await apiClient.getPopularDevices();
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold text-center mb-8">Welcome to GSMHub</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {devices.map((device) => (
-          <DeviceCard key={device._id} device={device} />
-        ))}
-      </div>
+
+      <section className="mb-12">
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Trending Devices</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {trendingDevices.map((device) => (
+            <DeviceCard key={device._id?.toString() || device.slug} device={device} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <h2 className="text-2xl font-bold mb-6 text-gray-800">Popular Devices</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {popularDevices.map((device) => (
+            <DeviceCard key={device._id?.toString() || device.slug} device={device} />
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

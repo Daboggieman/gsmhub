@@ -53,6 +53,10 @@ class ApiClient {
     return this.request(`/devices/popular?limit=${limit}`);
   }
 
+  async getTrendingDevices(limit: number = 10): Promise<Device[]> {
+    return this.request(`/devices/trending?limit=${limit}`);
+  }
+
   // Categories
   async getCategories(): Promise<Category[]> {
     return this.request('/categories');
