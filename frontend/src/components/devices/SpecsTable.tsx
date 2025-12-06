@@ -17,7 +17,19 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   // Group specs by category (e.g., Display, Platform, Memory)
   const categorizedSpecs: { [category: string]: { [key: string]: string } } = {};
 
-  device.specs.forEach(spec => {
+  let specsArray = [];
+  if (Array.isArray(device.specs)) {
+    specsArray = device.specs;
+  } else if (typeof device.specs === 'object' && device.specs !== null) {
+    // If it's an object, transform it into an array
+    specsArray = Object.keys(device.specs).map(key => ({
+      category: 'General', // Assign a default category
+      key: key,
+      value: device.specs[key as keyof typeof device.specs]
+    }));
+  }
+
+  specsArray.forEach(spec => {
     if (!categorizedSpecs[spec.category]) {
       categorizedSpecs[spec.category] = {};
     }

@@ -31,6 +31,8 @@ async function DevicePage({ params: promiseParams }: { params: Promise<{ slug: s
   const params = await promiseParams;
   const device = await getDevice(params.slug);
 
+  console.log('Device object:', device);
+
   if (!device) {
     notFound(); // Triggers the not-found.tsx page or a default 404
   }
