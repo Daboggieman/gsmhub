@@ -4,6 +4,11 @@ import "./globals.css";
 import Header from '@/components/layout/Header'; // Import Header component
 import Footer from '@/components/layout/Footer'; // Import Footer component
 
+// Font Awesome Configuration
+import { config } from '@fortawesome/fontawesome-svg-core';
+import '@fortawesome/fontawesome-svg-core/styles.css'; // Import Font Awesome CSS
+config.autoAddCss = false; // Prevent Font Awesome from adding CSS automatically
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
