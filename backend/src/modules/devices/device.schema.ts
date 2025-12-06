@@ -57,3 +57,4 @@ export class Device {
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);
+DeviceSchema.index({ '$**': 'text' });
