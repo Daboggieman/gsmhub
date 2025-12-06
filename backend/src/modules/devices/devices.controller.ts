@@ -24,15 +24,18 @@ export class DevicesController {
     @Query('category') category?: string,
     @Query('brand') brand?: string,
     @Query('search') search?: string,
-  ): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.getAllDevices({
+  ): Promise<{ devices: DeviceResponseDto[]; total: number }> {
+    const { devices, total } = await this.devicesService.getAllDevices({
       skip: skip ? parseInt(skip) : undefined,
       limit: limit ? parseInt(limit) : undefined,
       category,
       brand,
       search,
     });
-    return plainToInstance(DeviceResponseDto, devices);
+    return {
+      devices: plainToInstance(DeviceResponseDto, devices),
+      total,
+    };
   }
 
   @Get('popular')

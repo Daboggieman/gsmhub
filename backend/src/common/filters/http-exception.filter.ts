@@ -9,6 +9,10 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
+    // Log the full exception and stack trace
+    console.error('Exception caught in HttpExceptionFilter:', exception);
+    console.error('Request path:', request.url);
+
     const status =
       exception instanceof HttpException
         ? exception.getStatus()

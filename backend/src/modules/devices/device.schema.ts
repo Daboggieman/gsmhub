@@ -5,6 +5,20 @@ import { Category } from '../categories/category.schema';
 
 export type DeviceDocument = Device & Document;
 
+@Schema({ _id: false })
+class DeviceSpec {
+  @Prop({ required: true })
+  category: string;
+
+  @Prop({ required: true })
+  key: string;
+
+  @Prop({ required: true })
+  value: string;
+}
+
+const DeviceSpecSchema = SchemaFactory.createForClass(DeviceSpec);
+
 @Schema({ timestamps: true })
 export class Device {
   @Prop({ required: true, unique: true, index: true })
@@ -22,8 +36,8 @@ export class Device {
   @Prop()
   imageUrl?: string;
 
-  @Prop({ type: Object })
-  specs: any;
+  @Prop({ type: [DeviceSpecSchema] })
+  specs: DeviceSpec[];
 
   @Prop({ default: 0 })
   views: number;

@@ -1,6 +1,6 @@
 import { IsBoolean, IsDateString, IsNumber, IsObject, IsString, IsOptional } from 'class-validator';
-import { Category } from 'src/modules/categories/category.schema'; // Assuming Category is also a DTO or a simple type
-import { Expose, Transform } from 'class-transformer';
+import { CategoryResponseDto } from '../../categories/dto/category-response.dto';
+import { Expose, Transform, Type } from 'class-transformer';
 
 export class DeviceResponseDto {
   @Expose()
@@ -16,10 +16,8 @@ export class DeviceResponseDto {
   @IsString()
   model: string;
 
-  // Assuming category will be a string ID in the DTO response, or a nested DTO
-  // For now, keeping it as Category from schema for simplicity, but will likely need a CategoryResponseDto
-  @IsObject()
-  category: Category; 
+  @Type(() => CategoryResponseDto)
+  category: CategoryResponseDto; 
 
   @IsString()
   @IsOptional()

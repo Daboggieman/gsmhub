@@ -23,11 +23,13 @@ export class DevicesService {
 
   async getAllDevices(
     filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string }
-  ): Promise<Device[]> {
+  ): Promise<{ devices: Device[]; total: number }> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);
     }
-    return this.devicesRepository.findAll(filters);
+    const devices = await this.devicesRepository.findAll(filters);
+    const total = await this.devicesRepository.countAll(filters);
+    return { devices, total };
   }
 
   async findOne(id: string): Promise<Device> {

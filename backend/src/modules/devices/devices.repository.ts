@@ -44,12 +44,31 @@ export class DevicesRepository {
     return findQuery.exec();
   }
 
+  async countAll(filters?: {
+    category?: string;
+    brand?: string;
+    search?: string;
+  }): Promise<number> {
+    const query: any = {};
+    if (filters?.category) {
+      query.category = new Types.ObjectId(filters.category);
+    }
+    if (filters?.brand) {
+      query.brand = filters.brand;
+    }
+    if (filters?.search) {
+      query.$text = { $search: filters.search };
+    }
+
+    return this.deviceModel.countDocuments(query).exec();
+  }
+
   async findOne(id: string): Promise<Device | null> {
     return this.deviceModel.findById(id).populate('category').exec();
   }
 
   async findBySlug(slug: string): Promise<Device | null> {
-    return this.deviceModel.findOne({ slug }).populate('category').exec();
+    return this.deviceModel.findOne({ slug }).populate('category').lean().exec();
   }
 
   async update(id: string, updateDeviceData: Partial<Device>): Promise<Device | null> {

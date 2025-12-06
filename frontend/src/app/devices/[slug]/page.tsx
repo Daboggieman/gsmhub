@@ -3,32 +3,32 @@ import { notFound } from 'next/navigation';
 import { Device } from '@shared/types';
 import DeviceGallery from '@/components/devices/DeviceGallery';
 import SpecsTable from '@/components/devices/SpecsTable';
-
-interface DevicePageProps {
-  params: {
-    slug: string;
-  };
-}
+import { apiClient } from '@/lib/api'; // Import apiClient
 
 async function getDevice(slug: string): Promise<Device | null> {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/devices/slug/${slug}`);
-
-    // The backend returns a 404 which `res.ok` will correctly handle as false
-    if (!res.ok) {
-      return null;
-    }
-
-    return res.json();
+    const device = await apiClient.getDevice(slug);
+    return device;
   } catch (error) {
     console.error('Failed to fetch device:', error);
-    // Return null or handle the error as appropriate for your application
     return null;
   }
 }
 
+// Function to generate static params for SSG
+export async function generateStaticParams() {
+  // Fetch all devices from your API to get their slugs
+  const { devices } = await apiClient.getDevices();
+  
+  // Return an array of objects, each containing a slug parameter
+  return devices.map((device) => ({
+    slug: device.slug,
+  }));
+}
 
-const DevicePage: React.FC<DevicePageProps> = async ({ params }) => {
+// This is an async Server Component
+async function DevicePage({ params: promiseParams }: { params: Promise<{ slug: string }> }) {
+  const params = await promiseParams;
   const device = await getDevice(params.slug);
 
   if (!device) {
@@ -56,6 +56,6 @@ const DevicePage: React.FC<DevicePageProps> = async ({ params }) => {
       </div>
     </div>
   );
-};
+}
 
 export default DevicePage;

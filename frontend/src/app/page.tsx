@@ -15,7 +15,7 @@ export default async function Home() {
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Trending Devices</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {trendingDevices.map((device) => (
-            <DeviceCard key={device._id?.toString() || device.slug} device={device} />
+            <DeviceCard key={device.slug} device={device} />
           ))}
         </div>
       </section>
@@ -24,7 +24,7 @@ export default async function Home() {
         <h2 className="text-2xl font-bold mb-6 text-gray-800">Popular Devices</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {popularDevices.map((device) => (
-            <DeviceCard key={device._id?.toString() || device.slug} device={device} />
+            <DeviceCard key={device.slug} device={device} />
           ))}
         </div>
       </section>

@@ -1,6 +1,6 @@
 import { Device, Category, SearchResult, PriceHistory } from '../../../shared/src/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 class ApiClient {
   private baseURL: string;
@@ -46,7 +46,7 @@ class ApiClient {
   }
 
   async getDevice(slug: string): Promise<Device> {
-    return this.request(`/devices/${slug}`);
+    return this.request(`/devices/slug/${slug}`);
   }
 
   async getPopularDevices(limit: number = 10): Promise<Device[]> {

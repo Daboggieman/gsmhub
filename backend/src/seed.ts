@@ -14,7 +14,7 @@ const seedData = [
     brand: 'Apple',
     model: 'iPhone 14 Pro',
     category: 'Smartphones',
-    imageUrl: '/images/generic-phone.png',
+    imageUrl: 'https://placehold.co/600x400/2d2d2d/ffffff?text=iPhone+14+Pro',
     specs: {
       display: '6.1-inch Super Retina XDR display',
       camera: '48MP Main camera',
@@ -32,7 +32,7 @@ const seedData = [
     brand: 'Samsung',
     model: 'Galaxy S23 Ultra',
     category: 'Smartphones',
-    imageUrl: 'https://images.samsung.com/is/image/samsung/assets/global/about-us/newsroom/2023/galaxy-s23-ultra-unpacked-2023-product-image-green.jpg',
+    imageUrl: 'https://placehold.co/600x400/2d2d2d/ffffff?text=Galaxy+S23+Ultra',
     specs: {
       display: '6.8-inch Dynamic AMOLED 2X',
       camera: '200MP Wide-angle Camera',
@@ -50,7 +50,7 @@ const seedData = [
     brand: 'Google',
     model: 'Pixel 7 Pro',
     category: 'Smartphones',
-    imageUrl: '/images/generic-phone.png',
+    imageUrl: 'https://placehold.co/600x400/2d2d2d/ffffff?text=Pixel+7+Pro',
     specs: {
       display: '6.7-inch LTPO OLED',
       camera: '50MP wide, 12MP ultrawide, 48MP telephoto',
@@ -68,7 +68,7 @@ const seedData = [
     brand: 'Apple',
     model: 'MacBook Pro 16 (2023)',
     category: 'Laptops',
-    imageUrl: '/images/generic-laptop.png',
+    imageUrl: 'https://placehold.co/600x400/2d2d2d/ffffff?text=MacBook+Pro+16',
     specs: {
       display: '16.2-inch Liquid Retina XDR display',
       processor: 'M2 Pro or M2 Max',
