@@ -4,23 +4,43 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 class ApiClient {
   private baseURL: string;
+  private requestInterceptors: ((request: RequestInit) => RequestInit | Promise<RequestInit>)[] = [];
+  private responseInterceptors: ((response: Response) => Response | Promise<Response>)[] = [];
 
   constructor(baseURL: string) {
     this.baseURL = baseURL;
   }
 
+  public addRequestInterceptor(interceptor: (request: RequestInit) => RequestInit | Promise<RequestInit>) {
+    this.requestInterceptors.push(interceptor);
+  }
+
+  public addResponseInterceptor(interceptor: (response: Response) => Response | Promise<Response>) {
+    this.responseInterceptors.push(interceptor);
+  }
+
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    let modifiedOptions = options || {};
+    for (const interceptor of this.requestInterceptors) {
+      modifiedOptions = await Promise.resolve(interceptor(modifiedOptions));
+    }
+
     const url = `${this.baseURL}${endpoint}`;
-    const response = await fetch(url, {
+    let response = await fetch(url, {
       headers: {
         'Content-Type': 'application/json',
-        ...options?.headers,
+        ...modifiedOptions?.headers,
       },
-      ...options,
+      ...modifiedOptions,
     });
 
+    for (const interceptor of this.responseInterceptors) {
+      response = await Promise.resolve(interceptor(response));
+    }
+
     if (!response.ok) {
-      throw new Error(`API request failed: ${response.statusText}`);
+      const errorData = await response.json().catch(() => ({ message: response.statusText }));
+      throw new Error(errorData.message || `API request failed: ${response.statusText}`);
     }
 
     return response.json();

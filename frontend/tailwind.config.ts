@@ -7,7 +7,25 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    screens: {
+      sm: '640px',
+      md: '768px',
+      lg: '1024px',
+      xl: '1280px',
+      '2xl': '1536px',
+    },
     extend: {
+      colors: {
+        primary: '#570df8',
+        secondary: '#f000b8',
+        accent: '#37cdbe',
+        neutral: '#3d4451',
+        'base-100': '#ffffff',
+      },
+      fontFamily: {
+        sans: ['"Inter"', 'sans-serif'],
+        serif: ['"Merriweather"', 'serif'],
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
@@ -15,6 +33,15 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    function({ addUtilities }: { addUtilities: any }) {
+      const newUtilities = {
+        '.text-balance': {
+          'text-wrap': 'balance',
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };
 export default config;
