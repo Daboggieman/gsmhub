@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PriceHistory, PriceHistoryDocument } from './price-history.schema';
@@ -9,6 +9,7 @@ import { DevicesService } from '../devices/devices.service';
 export class PricesService {
   constructor(
     @InjectModel(PriceHistory.name) private priceHistoryModel: Model<PriceHistoryDocument>,
+    @Inject(forwardRef(() => DevicesService))
     private readonly devicesService: DevicesService,
   ) {}
 
@@ -37,6 +38,10 @@ export class PricesService {
 
   async getPriceHistory(deviceId: string): Promise<PriceHistory[]> {
     return this.priceHistoryModel.find({ device: deviceId }).sort({ date: -1 }).populate('device').exec();
+  }
+
+  async findLatestPriceByDeviceId(deviceId: string): Promise<PriceHistory | null> {
+    return this.priceHistoryModel.findOne({ device: deviceId }).sort({ date: -1 }).exec();
   }
 
   async update(id: string, updatePriceDto: UpdatePriceDto): Promise<PriceHistory> {

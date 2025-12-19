@@ -28,6 +28,10 @@ export class DeviceResponseDto {
   specs?: any;
 
   @IsNumber()
+  @IsOptional()
+  latestPrice?: number; // Added to include the latest price
+
+  @IsNumber()
   views: number;
 
   @IsBoolean()

@@ -8,6 +8,7 @@ import { DevicesService } from './devices.service';
 import { DeviceApiService } from './device-api.service';
 import { DevicesRepository } from './devices.repository';
 import { CategoriesModule } from '../categories/categories.module'; // Import CategoriesModule
+import { PricesModule } from '../prices/prices.module'; // Import PricesModule
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { CategoriesModule } from '../categories/categories.module'; // Import Ca
     MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }]), // Add Category MongooseModule
     HttpModule,
     forwardRef(() => CategoriesModule), // Import CategoriesModule with forwardRef
+    forwardRef(() => PricesModule), // Import PricesModule with forwardRef
   ],
   providers: [DevicesService, DeviceApiService, DevicesRepository],
   controllers: [DevicesController],

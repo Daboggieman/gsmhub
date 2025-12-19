@@ -9,6 +9,7 @@ import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DevicesRepository } from './devices.repository';
 import { Category as SharedCategory, Device as SharedDevice, DeviceType } from '@shared/types';
 import { CategoriesService } from '../categories/categories.service'; // Import CategoriesService
+import { PricesService } from '../prices/prices.service'; // Import PricesService
 import { Cache } from 'cache-manager';
 
 @Injectable()
@@ -18,8 +19,34 @@ export class DevicesService {
     private readonly devicesRepository: DevicesRepository,
     @InjectModel(Category.name)
     private readonly categoryModel: Model<CategoryDocument>,
-    private readonly categoriesService: CategoriesService, // Inject CategoriesService
+    private readonly categoriesService: CategoriesService,
+    private readonly pricesService: PricesService, // Inject PricesService
   ) {}
+
+  private async attachLatestPrice(device: Device): Promise<Device> {
+    if (device && device._id) {
+      const latestPrice = await this.pricesService.findLatestPriceByDeviceId(device._id.toString());
+      if (latestPrice) {
+        (device as any).latestPrice = latestPrice.price;
+      }
+    }
+    return device;
+  }
+
+  private async attachLatestPrices(devices: Device[]): Promise<Device[]> {
+    const devicesWithPrices = await Promise.all(
+      devices.map(async (device) => {
+        if (device && device._id) {
+          const latestPrice = await this.pricesService.findLatestPriceByDeviceId(device._id.toString());
+          if (latestPrice) {
+            (device as any).latestPrice = latestPrice.price;
+          }
+        }
+        return device;
+      }),
+    );
+    return devicesWithPrices;
+  }
 
   async getAllDevices(
     filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string }
@@ -29,7 +56,8 @@ export class DevicesService {
     }
     const devices = await this.devicesRepository.findAll(filters);
     const total = await this.devicesRepository.countAll(filters);
-    return { devices, total };
+    const devicesWithPrices = await this.attachLatestPrices(devices);
+    return { devices: devicesWithPrices, total };
   }
 
   async findOne(id: string): Promise<Device> {
@@ -37,21 +65,22 @@ export class DevicesService {
     if (!device) {
       throw new NotFoundException(`Device with ID ${id} not found`);
     }
-    return device;
+    return await this.attachLatestPrice(device);
   }
   
   async findBySlug(slug: string): Promise<Device> {
     const cachedDevice = await this.cacheManager.get<Device>(`device_${slug}`);
     if (cachedDevice) {
-      return cachedDevice;
+      return await this.attachLatestPrice(cachedDevice);
     }
 
     const device = await this.devicesRepository.findBySlug(slug);
     if (!device) {
       throw new NotFoundException(`Device with slug ${slug} not found`);
     }
-    await this.cacheManager.set(`device_${slug}`, device, 3600); // Cache for 1 hour
-    return device;
+    const deviceWithPrice = await this.attachLatestPrice(device);
+    await this.cacheManager.set(`device_${slug}`, deviceWithPrice, 3600); // Cache for 1 hour
+    return deviceWithPrice;
   }
 
   async create(createDeviceDto: CreateDeviceDto): Promise<Device> {
@@ -122,27 +151,31 @@ export class DevicesService {
   async getPopularDevices(limit: number): Promise<Device[]> {
     const cachedPopularDevices = await this.cacheManager.get<Device[]>(`popular_devices_${limit}`);
     if (cachedPopularDevices) {
-      return cachedPopularDevices;
+      return await this.attachLatestPrices(cachedPopularDevices);
     }
 
     const popularDevices = await this.devicesRepository.findPopular(limit);
-    await this.cacheManager.set(`popular_devices_${limit}`, popularDevices, 3600); // Cache for 1 hour
-    return popularDevices;
+    const popularDevicesWithPrices = await this.attachLatestPrices(popularDevices);
+    await this.cacheManager.set(`popular_devices_${limit}`, popularDevicesWithPrices, 3600); // Cache for 1 hour
+    return popularDevicesWithPrices;
   }
 
   async getTrendingDevices(limit: number): Promise<Device[]> {
-    return this.devicesRepository.findTrending(limit);
+    const trendingDevices = await this.devicesRepository.findTrending(limit);
+    return await this.attachLatestPrices(trendingDevices);
   }
 
   async getDevicesByCategory(category: string, limit: number): Promise<Device[]> {
     if (!Types.ObjectId.isValid(category)) {
       throw new NotFoundException(`Invalid Category ID: ${category}`);
     }
-    return this.devicesRepository.findByCategory(category, limit);
+    const devices = await this.devicesRepository.findByCategory(category, limit);
+    return await this.attachLatestPrices(devices);
   }
 
   async getDevicesByBrand(brand: string, limit: number): Promise<Device[]> {
-    return this.devicesRepository.findByBrand(brand, limit);
+    const devices = await this.devicesRepository.findByBrand(brand, limit);
+    return await this.attachLatestPrices(devices);
   }
 
   async increaseViewCount(slug: string): Promise<Device> {
@@ -201,7 +234,7 @@ export class DevicesService {
       await this.cacheManager.del(`device_${upsertedDevice.slug}`);
       await this.cacheManager.del('popular_devices');
     }
-    return upsertedDevice;
+    return await this.attachLatestPrice(upsertedDevice);
   }
 
   async syncDeviceFromAPI(deviceData: Partial<SharedDevice>): Promise<Device | null> {

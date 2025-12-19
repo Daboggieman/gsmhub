@@ -16,6 +16,15 @@ const Footer: React.FC = () => {
           <Link href="/privacy" className="hover:text-gray-300">
             Privacy Policy
           </Link>
+          <a href="https://twitter.com/gsmhub" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            Twitter
+          </a>
+          <a href="https://facebook.com/gsmhub" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            Facebook
+          </a>
+          <a href="https://instagram.com/gsmhub" target="_blank" rel="noopener noreferrer" className="hover:text-gray-300">
+            Instagram
+          </a>
         </div>
       </div>
     </footer>

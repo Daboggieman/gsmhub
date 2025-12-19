@@ -47,10 +47,11 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ device }) => {
             )}
             {/* Add more key specs here as needed */}
           </div>
-          {/* Price will be added later when we integrate pricing data */}
-          {/* <p className="text-lg font-bold text-green-600 mt-3">
-            {device.price ? `$${device.price.toFixed(2)}` : 'N/A'}
-          </p> */}
+          {device.latestPrice && (
+            <p className="text-lg font-bold text-green-600 mt-3">
+              Price: ${device.latestPrice.toFixed(2)}
+            </p>
+          )}
         </div>
       </div>
     </Link>

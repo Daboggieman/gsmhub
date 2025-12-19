@@ -9,6 +9,7 @@ interface SpecsTableProps {
 
 const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
+  const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
 
   if (!device || !device.specs) {
     return <p>No specifications available.</p>;
@@ -52,9 +53,45 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
     }));
   };
 
+  const handleCopyToClipboard = () => {
+    let specText = `${device.brand} ${device.model} Specifications:\n\n`;
+
+    Object.keys(categorizedSpecs).forEach(categoryName => {
+      specText += `--- ${categoryName} ---\n`;
+      Object.keys(categorizedSpecs[categoryName]).forEach(specName => {
+        specText += `${specName}: ${categorizedSpecs[categoryName][specName]}\n`;
+      });
+      specText += '\n';
+    });
+
+    navigator.clipboard.writeText(specText)
+      .then(() => {
+        setCopyFeedback('Copied!');
+        setTimeout(() => setCopyFeedback(null), 2000);
+      })
+      .catch((err) => {
+        console.error('Failed to copy text: ', err);
+        setCopyFeedback('Failed to copy!');
+        setTimeout(() => setCopyFeedback(null), 2000);
+      });
+  };
+
   return (
     <div className="bg-white shadow-md rounded-lg p-4">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Specifications</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-gray-800">Specifications</h2>
+        <button
+          onClick={handleCopyToClipboard}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 relative"
+        >
+          Copy Specs
+          {copyFeedback && (
+            <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
+              {copyFeedback}
+            </span>
+          )}
+        </button>
+      </div>
       {Object.keys(categorizedSpecs).length > 0 ? (
         Object.keys(categorizedSpecs).map((categoryName) => (
           <div key={categoryName} className="mb-6">

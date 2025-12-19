@@ -37,6 +37,7 @@ export interface Device {
   displaySize?: string;
   ram?: string;
   battery?: string;
+  latestPrice?: number; // Added latest price field
   specs: DeviceSpec[];
   views: number;
   isActive: boolean; // Renamed from is_active for consistency
