@@ -68,6 +68,45 @@ export class Device {
 
   @Prop()
   battery?: string;
+
+  @Prop()
+  latestPrice?: number;
+
+  @Prop()
+  weight?: string;
+
+  @Prop()
+  chipset?: string;
+
+  @Prop()
+  mainCamera?: string;
+
+  @Prop()
+  selfieCamera?: string;
+
+  @Prop()
+  videoResolution?: string;
+
+  @Prop()
+  versions?: string;
+
+  @Prop()
+  models?: string;
+
+  @Prop()
+  colors?: string;
+
+  @Prop()
+  sarEU?: string;
+
+  @Prop()
+  networkTechnology?: string;
+
+  @Prop()
+  reviewTeaser?: string;
+
+  @Prop({ type: [{ user: String, date: String, text: String, avatarInitials: String }] })
+  opinions?: { user: string; date: string; text: string; avatarInitials?: string }[];
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);

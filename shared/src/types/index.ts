@@ -37,6 +37,23 @@ export interface Device {
   displaySize?: string;
   ram?: string;
   battery?: string;
+  weight?: string;
+  chipset?: string;
+  mainCamera?: string;
+  selfieCamera?: string;
+  videoResolution?: string;
+  versions?: string;
+  models?: string;
+  colors?: string;
+  sarEU?: string;
+  networkTechnology?: string;
+  reviewTeaser?: string;
+  opinions?: {
+    user: string;
+    date: string;
+    text: string;
+    avatarInitials?: string;
+  }[];
   latestPrice?: number; // Added latest price field
   specs: DeviceSpec[];
   views: number;
@@ -58,9 +75,10 @@ export interface PriceHistory {
 }
 
 export interface SearchResult {
-  id: string; // MongoDB _id
+  _id: string; // MongoDB _id
   name: string;
   slug: string;
   brand: string;
   category?: string;
+  imageUrl?: string;
 }

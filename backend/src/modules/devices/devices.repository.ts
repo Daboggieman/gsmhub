@@ -20,19 +20,50 @@ export class DevicesRepository {
     category?: string;
     brand?: string;
     search?: string;
+    sort?: string;
   }): Promise<Device[]> {
     const query: any = {};
     if (filters?.category) {
       query.category = new Types.ObjectId(filters.category);
     }
     if (filters?.brand) {
-      query.brand = filters.brand;
+      query.brand = { $regex: new RegExp(filters.brand, 'i') };
     }
     if (filters?.search) {
-      query.$text = { $search: filters.search };
+      // Use text search if available, but fallback to regex for partial matches on model/brand
+      query.$or = [
+        { model: { $regex: new RegExp(filters.search, 'i') } },
+        { brand: { $regex: new RegExp(filters.search, 'i') } },
+        { $text: { $search: filters.search } }
+      ];
     }
 
     let findQuery = this.deviceModel.find(query).populate('category').lean();
+
+    // Sorting
+    if (filters?.sort) {
+      switch (filters.sort) {
+        case 'latest':
+          findQuery = findQuery.sort({ createdAt: -1 });
+          break;
+        case 'popular':
+          findQuery = findQuery.sort({ views: -1 });
+          break;
+        case 'price_low':
+          findQuery = findQuery.sort({ latestPrice: 1 });
+          break;
+        case 'price_high':
+          findQuery = findQuery.sort({ latestPrice: -1 });
+          break;
+        case 'alphabetical':
+          findQuery = findQuery.sort({ model: 1 });
+          break;
+        default:
+          findQuery = findQuery.sort({ createdAt: -1 });
+      }
+    } else {
+      findQuery = findQuery.sort({ createdAt: -1 });
+    }
 
     if (filters?.skip) {
       findQuery = findQuery.skip(filters.skip);
@@ -54,10 +85,14 @@ export class DevicesRepository {
       query.category = new Types.ObjectId(filters.category);
     }
     if (filters?.brand) {
-      query.brand = filters.brand;
+      query.brand = { $regex: new RegExp(filters.brand, 'i') };
     }
     if (filters?.search) {
-      query.$text = { $search: filters.search };
+      query.$or = [
+        { model: { $regex: new RegExp(filters.search, 'i') } },
+        { brand: { $regex: new RegExp(filters.search, 'i') } },
+        { $text: { $search: filters.search } }
+      ];
     }
 
     return this.deviceModel.countDocuments(query).exec();

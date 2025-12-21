@@ -53,6 +53,7 @@ class ApiClient {
     category?: string;
     brand?: string;
     search?: string;
+    sort?: string;
   }): Promise<{ devices: Device[]; total: number; page: number; limit: number }> {
     const queryParams = new URLSearchParams();
     if (params?.page) queryParams.append('page', params.page.toString());
@@ -60,6 +61,7 @@ class ApiClient {
     if (params?.category) queryParams.append('category', params.category);
     if (params?.brand) queryParams.append('brand', params.brand);
     if (params?.search) queryParams.append('search', params.search);
+    if (params?.sort) queryParams.append('sort', params.sort);
 
     const query = queryParams.toString();
     return this.request(`/devices${query ? `?${query}` : ''}`);

@@ -49,7 +49,7 @@ export class DevicesService {
   }
 
   async getAllDevices(
-    filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string }
+    filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string; sort?: string }
   ): Promise<{ devices: Device[]; total: number }> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);

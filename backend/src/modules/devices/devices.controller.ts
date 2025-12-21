@@ -24,6 +24,7 @@ export class DevicesController {
     @Query('category') category?: string,
     @Query('brand') brand?: string,
     @Query('search') search?: string,
+    @Query('sort') sort?: string,
   ): Promise<{ devices: DeviceResponseDto[]; total: number }> {
     const { devices, total } = await this.devicesService.getAllDevices({
       skip: skip ? parseInt(skip) : undefined,
@@ -31,6 +32,7 @@ export class DevicesController {
       category,
       brand,
       search,
+      sort,
     });
     return {
       devices: plainToInstance(DeviceResponseDto, devices),
