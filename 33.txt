@@ -1,0 +1,1 @@
+curl --request GET --url https://mobile-phones2.p.rapidapi.com/brands --header 'x-rapidapi-host: mobile-phones2.p.rapidapi.com' --header 'x-rapidapi-key: 9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40'

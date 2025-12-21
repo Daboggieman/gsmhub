@@ -11,7 +11,9 @@ import {
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
+import { CategoryResponseDto } from './dto/category-response.dto';
 import { DevicesService } from '../devices/devices.service';
+import { plainToInstance } from 'class-transformer';
 
 @Controller('categories')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -23,33 +25,36 @@ export class CategoriesController {
 
   @Post()
   // TODO: Implement Admin Guard
-  create(@Body() createCategoryDto: CreateCategoryDto) {
-    return this.categoriesService.create(createCategoryDto);
+  async create(@Body() createCategoryDto: CreateCategoryDto) {
+    const category = await this.categoriesService.create(createCategoryDto);
+    return plainToInstance(CategoryResponseDto, category);
   }
 
   @Get()
-  findAll() {
-    return this.categoriesService.findAll();
+  async findAll() {
+    const categories = await this.categoriesService.findAll();
+    return plainToInstance(CategoryResponseDto, categories);
   }
 
   @Get(':slug')
-  findOne(@Param('slug') slug: string) {
-    return this.categoriesService.findBySlug(slug);
+  async findOne(@Param('slug') slug: string) {
+    const category = await this.categoriesService.findBySlug(slug);
+    return plainToInstance(CategoryResponseDto, category);
   }
 
   @Get(':slug/devices')
-  findDevicesByCategory(@Param('slug') slug: string) {
+  async findDevicesByCategory(@Param('slug') slug: string) {
     // First, find the category by slug to get its ID
-    return this.categoriesService.findBySlug(slug).then(category => {
-      // Then, use the category ID to find devices
-      return this.devicesService.getDevicesByCategory(category._id.toString(), 50);
-    });
+    const category = await this.categoriesService.findBySlug(slug);
+    // Then, use the category ID to find devices
+    return this.devicesService.getDevicesByCategory(category._id.toString(), 50);
   }
 
   @Patch(':id')
   // TODO: Implement Admin Guard
-  update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
-    return this.categoriesService.update(id, updateCategoryDto);
+  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+    const category = await this.categoriesService.update(id, updateCategoryDto);
+    return plainToInstance(CategoryResponseDto, category);
   }
 
   @Delete(':id')

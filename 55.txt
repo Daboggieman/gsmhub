@@ -1,5 +1,15 @@
 ================================================================================
 - DATE: 2025-12-21
+- ACTION: Resolved Unique Key Console Error on Categories Page.
+- DETAILS:
+  - Fixed a React "Each child in a list should have a unique 'key' prop" warning in `frontend/src/app/categories/page.tsx`.
+  - Updated `backend/src/modules/categories/categories.controller.ts` to use `plainToInstance(CategoryResponseDto, ...)` for all endpoints, ensuring consistent string ID transformation.
+  - Improved the frontend key selection to use `category.id || category.slug || index` for guaranteed uniqueness.
+- RESULT: Console warnings eliminated and list rendering stability improved.
+- NEXT STEP: Begin Phase 15: Monetization Features or Phase 16: Admin Panel.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
 - ACTION: Completed Phase 14: SEO Optimization.
 - DETAILS:
   - Created `frontend/src/lib/seo.ts` for centralized metadata and JSON-LD generation.
@@ -859,6 +869,8 @@ PHASE 16: ADMIN PANEL (CORE MVP FEATURE - HIGH PRIORITY)
 ═══════════════════════════════════════════════════════════════════════════════
 
 ⚠️  CRITICAL MVP COMPONENT: Admin panel is crucial for long-term success. It allows for manual data correction, content management (categories, brands), and handling edge cases not covered by the API. This should be considered a core part of the MVP rather than optional.
+
+💡 NEW APPROACH: The Admin Panel will have a completely separate frontend experience from the main GSMHub site while sharing the same backend. This will be achieved using Next.js Route Groups (e.g., `/(public)` and `/(admin)`) to provide unique layouts, navigation, and styling for the dashboard.
 
 □ 16.1 Authentication
   □ Implement JWT authentication

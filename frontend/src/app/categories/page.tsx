@@ -62,7 +62,7 @@ export default async function CategoriesPage() {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
             <Link 
-              key={(category as any)._id || category.id} 
+              key={category.id || category.slug || index} 
               href={`/categories/${category.slug}`}
               className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
             >
