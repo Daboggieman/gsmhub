@@ -1,7 +1,15 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Device } from '@shared/types'; // Import the shared Device type
+import { Device } from '@shared/types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCopy,
+  faCheck,
+  faChevronDown,
+  faChevronUp,
+  faListCheck
+} from '@fortawesome/free-solid-svg-icons';
 
 interface SpecsTableProps {
   device: Device;
@@ -12,19 +20,22 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
 
   if (!device || !device.specs) {
-    return <p>No specifications available.</p>;
+    return (
+      <div className="bg-white shadow-sm rounded-2xl p-8 text-center border border-gray-100">
+        <p className="text-gray-500 font-medium">No specifications available for this device.</p>
+      </div>
+    );
   }
 
-  // Group specs by category (e.g., Display, Platform, Memory)
+  // Group specs by category
   const categorizedSpecs: { [category: string]: { [key: string]: string } } = {};
 
   let specsArray = [];
   if (Array.isArray(device.specs)) {
     specsArray = device.specs;
   } else if (typeof device.specs === 'object' && device.specs !== null) {
-    // If it's an object, transform it into an array
     specsArray = Object.keys(device.specs).map(key => ({
-      category: 'General', // Assign a default category
+      category: 'General',
       key: key,
       value: device.specs[key as keyof typeof device.specs]
     }));
@@ -38,13 +49,12 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   });
 
   useEffect(() => {
-    // Initially, expand all categories
     const initialExpansionState: { [key: string]: boolean } = {};
     Object.keys(categorizedSpecs).forEach(category => {
       initialExpansionState[category] = true;
     });
     setExpandedCategories(initialExpansionState);
-  }, [device.specs]); // Re-run if specs change
+  }, [device.specs]);
 
   const toggleCategory = (categoryName: string) => {
     setExpandedCategories(prevState => ({
@@ -71,60 +81,70 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
       })
       .catch((err) => {
         console.error('Failed to copy text: ', err);
-        setCopyFeedback('Failed to copy!');
+        setCopyFeedback('Error!');
         setTimeout(() => setCopyFeedback(null), 2000);
       });
   };
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold text-gray-800">Specifications</h2>
+    <div className="bg-white shadow-sm rounded-2xl overflow-hidden border border-gray-100">
+      <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white">
+            <FontAwesomeIcon icon={faListCheck} />
+          </div>
+          <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">Full Specifications</h2>
+        </div>
         <button
           onClick={handleCopyToClipboard}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded transition-colors duration-300 relative"
+          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded-xl border border-gray-200 transition-all shadow-sm active:scale-95 group"
         >
-          Copy Specs
-          {copyFeedback && (
-            <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-700 text-white text-xs px-2 py-1 rounded">
-              {copyFeedback}
-            </span>
-          )}
+          <FontAwesomeIcon icon={copyFeedback === 'Copied!' ? faCheck : faCopy} className={copyFeedback === 'Copied!' ? 'text-green-500' : 'text-blue-500 group-hover:scale-110 transition-transform'} />
+          <span className="text-xs uppercase tracking-wider">{copyFeedback || 'Copy Specs'}</span>
         </button>
       </div>
-      {Object.keys(categorizedSpecs).length > 0 ? (
-        Object.keys(categorizedSpecs).map((categoryName) => (
-          <div key={categoryName} className="mb-6">
-            <h3
-              className="text-xl font-semibold bg-gray-100 p-2 rounded-t-md border-b border-gray-200 cursor-pointer flex justify-between items-center"
-              onClick={() => toggleCategory(categoryName)}
-            >
-              <span>{categoryName}</span>
-              <span>{expandedCategories[categoryName] ? '-' : '+'}</span>
-            </h3>
-            {expandedCategories[categoryName] && (
-              <div className="overflow-x-auto">
-                <table className="min-w-full divide-y divide-gray-200">
-                  <tbody className="bg-white divide-y divide-gray-200">
-                    {Object.keys(categorizedSpecs[categoryName]).map((specName) => (
-                      <tr key={specName}>
-                        <td className="px-6 py-3 whitespace-nowrap text-sm font-medium text-gray-900 w-1/3">
-                          {specName}
-                        </td>
-                        <td className="px-6 py-3 whitespace-nowrap text-sm text-gray-700 w-2/3">
-                          {categorizedSpecs[categoryName][specName]}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+
+      <div className="p-2">
+        {Object.keys(categorizedSpecs).length > 0 ? (
+          Object.keys(categorizedSpecs).map((categoryName) => (
+            <div key={categoryName} className="mb-2 last:mb-0">
+              <button
+                className={`w-full flex justify-between items-center p-4 rounded-xl transition-all ${ expandedCategories[categoryName] 
+                    ? 'bg-blue-50/50 text-blue-700' 
+                    : 'bg-white hover:bg-gray-50 text-gray-700'
+                }`}
+                onClick={() => toggleCategory(categoryName)}
+              >
+                <span className="text-sm font-black uppercase tracking-widest">{categoryName}</span>
+                <FontAwesomeIcon icon={expandedCategories[categoryName] ? faChevronUp : faChevronDown} className="text-xs opacity-50" />
+              </button>
+              
+              {expandedCategories[categoryName] && (
+                <div className="px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                  <table className="w-full">
+                    <tbody className="divide-y divide-gray-50">
+                      {Object.keys(categorizedSpecs[categoryName]).map((specName) => (
+                        <tr key={specName} className="group">
+                          <td className="py-3 pr-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-1/3 align-top group-hover:text-blue-500 transition-colors">
+                            {specName}
+                          </td>
+                          <td className="py-3 text-sm text-gray-700 w-2/3 leading-relaxed">
+                            {categorizedSpecs[categoryName][specName]}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          ))
+        ) : (
+          <div className="p-8 text-center text-gray-500">
+            No detailed specifications available.
           </div>
-        ))
-      ) : (
-        <p>No detailed specifications available.</p>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -6,8 +6,11 @@ export class CompareController {
   constructor(private readonly compareService: CompareService) {}
 
   @Get()
-  compare(@Query('devices') devices: string) {
-    const [slug1, slug2] = devices.split(',');
-    return this.compareService.compareDevices(slug1, slug2);
+  async compare(@Query('devices') devices: string) {
+    const slugs = devices.split(',').filter(s => s.length > 0);
+    if (slugs.length < 2) {
+      return { message: 'Please provide at least 2 device slugs' };
+    }
+    return this.compareService.getDetailedComparison(slugs);
   }
 }

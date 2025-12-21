@@ -184,7 +184,7 @@ export default async function Home() {
                       {device.imageUrl ? (
                         <Image 
                           src={device.imageUrl} 
-                          alt={device.name} 
+                          alt={device.name || 'Device image'} 
                           fill 
                           style={{ objectFit: 'contain' }}
                           sizes="48px"

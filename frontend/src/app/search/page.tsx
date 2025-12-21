@@ -6,6 +6,7 @@ import { apiClient } from '@/lib/api';
 import { Device, Category } from '@shared/types';
 import SearchResults from '@/components/search/SearchResults';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
+import Pagination from '@/components/ui/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faSortAmountDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -17,6 +18,8 @@ const SearchPageContent = () => {
   const brand = searchParams.get('brand') || '';
   const categoryParam = searchParams.get('category') || '';
   const sort = searchParams.get('sort') || 'latest';
+  const page = Number(searchParams.get('page')) || 1;
+  const limit = 24;
 
   const [results, setResults] = useState<Device[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -45,7 +48,8 @@ const SearchPageContent = () => {
           brand: brand,
           category: categoryParam,
           sort: sort,
-          limit: 24,
+          page: page,
+          limit: limit,
         });
         setResults(data.devices);
         setTotal(data.total);
@@ -58,7 +62,7 @@ const SearchPageContent = () => {
     };
 
     fetchResults();
-  }, [query, brand, categoryParam, sort]);
+  }, [query, brand, categoryParam, sort, page]);
 
   const updateFilters = (newFilters: Record<string, string>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -69,6 +73,8 @@ const SearchPageContent = () => {
         params.delete(key);
       }
     });
+    // Reset to page 1 on filter change
+    params.delete('page');
     router.push(`/search?${params.toString()}`);
   };
 
@@ -83,6 +89,10 @@ const SearchPageContent = () => {
   ];
 
   const POPULAR_BRANDS = ['Samsung', 'Apple', 'Xiaomi', 'Google', 'OnePlus', 'Oppo', 'Vivo', 'Realme'];
+  const totalPages = Math.ceil(total / limit);
+
+  // Convert searchParams to object for Pagination component
+  const searchParamsObj = Object.fromEntries(searchParams.entries());
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50">
@@ -176,6 +186,15 @@ const SearchPageContent = () => {
             </div>
 
             <SearchResults results={results} query={query} loading={loading} />
+            
+            {!loading && total > 0 && (
+              <Pagination 
+                currentPage={page} 
+                totalPages={totalPages} 
+                baseUrl="/search"
+                searchParams={searchParamsObj}
+              />
+            )}
           </div>
         </div>
       </main>

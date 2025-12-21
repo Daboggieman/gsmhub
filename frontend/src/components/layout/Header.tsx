@@ -64,6 +64,13 @@ const Header: React.FC = () => {
               <span>Categories</span>
             </Link>
             <Link 
+              href="/brands" 
+              className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
+            >
+              <FontAwesomeIcon icon={faMobileScreenButton} className="text-blue-300" />
+              <span>Brands</span>
+            </Link>
+            <Link 
               href="/compare" 
               className="px-4 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 border border-blue-500/30 transition-all flex items-center gap-2 font-medium"
             >
@@ -113,6 +120,16 @@ const Header: React.FC = () => {
               <span className="font-bold">Browse Categories</span>
             </Link>
             <Link 
+              href="/brands" 
+              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
+              onClick={toggleMobileMenu}
+            >
+              <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-300">
+                <FontAwesomeIcon icon={faMobileScreenButton} />
+              </div>
+              <span className="font-bold">Browse Brands</span>
+            </Link>
+            <Link 
               href="/compare" 
               className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors text-blue-300"
               onClick={toggleMobileMenu}
@@ -128,7 +145,5 @@ const Header: React.FC = () => {
     </header>
   );
 };
-
-export default Header;
 
 export default Header;

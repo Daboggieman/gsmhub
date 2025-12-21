@@ -14,9 +14,11 @@ export class PricesService {
   ) {}
 
   async create(createPriceDto: CreatePriceDto): Promise<PriceHistory> {
-    // Ensure the device exists before creating a price for it
     await this.devicesService.findOne(createPriceDto.device);
-    const createdPrice = new this.priceHistoryModel(createPriceDto);
+    const createdPrice = new this.priceHistoryModel({
+      ...createPriceDto,
+      date: createPriceDto.date || new Date().toISOString()
+    });
     return createdPrice.save();
   }
 
@@ -33,15 +35,53 @@ export class PricesService {
   }
 
   async findByDevice(deviceId: string): Promise<PriceHistory[]> {
-    return this.priceHistoryModel.find({ device: deviceId }).populate('device').exec();
+    return this.priceHistoryModel.find({ device: deviceId }).sort({ date: -1 }).exec();
+  }
+
+  async getCurrentPrices(deviceId: string): Promise<PriceHistory[]> {
+    // Get the latest price for each unique country/retailer combination
+    return this.priceHistoryModel.aggregate([
+      { $match: { device: deviceId } },
+      { $sort: { date: -1 } },
+      { 
+        $group: { 
+          _id: { country: "$country", retailer: "$retailer" },
+          latestPrice: { $first: "$$ROOT" }
+        }
+      },
+      { $replaceRoot: { newRoot: "$latestPrice" } }
+    ]).exec();
   }
 
   async getPriceHistory(deviceId: string): Promise<PriceHistory[]> {
-    return this.priceHistoryModel.find({ device: deviceId }).sort({ date: -1 }).populate('device').exec();
+    return this.priceHistoryModel.find({ device: deviceId }).sort({ date: 1 }).exec();
   }
 
   async findLatestPriceByDeviceId(deviceId: string): Promise<PriceHistory | null> {
     return this.priceHistoryModel.findOne({ device: deviceId }).sort({ date: -1 }).exec();
+  }
+
+  async getPriceTrend(deviceId: string): Promise<{ trend: 'up' | 'down' | 'stable'; percentage: number }> {
+    const history = await this.priceHistoryModel
+      .find({ device: deviceId })
+      .sort({ date: -1 })
+      .limit(2)
+      .exec();
+
+    if (history.length < 2) {
+      return { trend: 'stable', percentage: 0 };
+    }
+
+    const current = history[0].price;
+    const previous = history[1].price;
+
+    if (current === previous) return { trend: 'stable', percentage: 0 };
+
+    const percentage = ((current - previous) / previous) * 100;
+    return {
+      trend: current > previous ? 'up' : 'down',
+      percentage: Math.abs(percentage)
+    };
   }
 
   async update(id: string, updatePriceDto: UpdatePriceDto): Promise<PriceHistory> {

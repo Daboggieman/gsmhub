@@ -4,8 +4,12 @@ import { Expose, Transform, Type } from 'class-transformer';
 
 export class DeviceResponseDto {
   @Expose()
-  @Transform(({ obj }) => obj._id.toString()) // Transform _id to id
-  id: string; // MongoDB _id is a string
+  @Transform(({ obj }) => obj._id ? obj._id.toString() : '')
+  _id: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj._id ? obj._id.toString() : '') 
+  id: string; // Keep alias for flexibility
 
   @IsString()
   slug: string;

@@ -1,10 +1,12 @@
 import React from 'react';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { Device, PriceHistory } from '@shared/types';
 import DeviceGallery from '@/components/devices/DeviceGallery';
 import SpecsTable from '@/components/devices/SpecsTable';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { apiClient } from '@/lib/api';
+import { generateMetadata as generateSeoMetadata, generateProductJsonLd } from '@/lib/seo';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faShoppingCart, 
@@ -56,6 +58,24 @@ async function getDeviceData(slug: string): Promise<{ device: Device; priceHisto
   }
 }
 
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const data = await getDeviceData(slug);
+  
+  if (!data) return {};
+
+  const { device } = data;
+  const description = `${device.brand} ${device.model} - Full specifications: ${device.displaySize} display, ${device.mainCamera} camera, ${device.ram} RAM, ${device.battery} battery. Latest price and features.`;
+
+  return generateSeoMetadata({
+    title: `${device.name} - Full Specifications & Price`,
+    description,
+    path: `/devices/${slug}`,
+    imageUrl: device.imageUrl,
+    type: 'product',
+  });
+}
+
 // Function to generate static params for SSG
 export async function generateStaticParams() {
   try {
@@ -77,6 +97,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
   }
 
   const { device, priceHistory, similarlyPriced } = data;
+  const jsonLd = generateProductJsonLd(device);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
@@ -94,6 +115,10 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
 
   return (
     <div className="bg-gray-100 min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container mx-auto px-4 py-8">
         <Breadcrumbs items={breadcrumbItems} />
 

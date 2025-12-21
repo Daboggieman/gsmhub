@@ -214,7 +214,7 @@ const seedData = [
     colors: 'Moonstone Gray, Platinum Silver',
     sarEU: '0.80 W/kg (body)',
     networkTechnology: 'GSM / HSPA / LTE / 5G',
-    reviewTeaser: "The Galaxy Tab S11 flagship series premiered at Berlin's IFA this year and it is available in two sizes - the 11" Tab S11 and the 14.6" Tab S11 Ultra. Today, we will explore the larger of these...",
+    reviewTeaser: "The Galaxy Tab S11 flagship series premiered at Berlin's IFA this year and it is available in two sizes - the 11\" Tab S11 and the 14.6\" Tab S11 Ultra. Today, we will explore the larger of these...",
     opinions: [
       {
         user: 'Dude',

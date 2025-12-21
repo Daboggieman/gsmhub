@@ -8,7 +8,11 @@ import { Device, SearchResult } from '@shared/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-const CompareBox: React.FC = () => {
+interface CompareBoxProps {
+  initialDevices?: Device[];
+}
+
+const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -16,6 +20,12 @@ const CompareBox: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (initialDevices.length > 0) {
+      setSelectedDevices(initialDevices);
+    }
+  }, [initialDevices]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -111,7 +121,7 @@ const CompareBox: React.FC = () => {
               >
                 <div className="relative w-12 h-12 bg-gray-100 rounded mr-3 flex-shrink-0">
                   {result.imageUrl ? (
-                    <Image src={result.imageUrl} alt={result.name} fill style={{ objectFit: 'contain' }} />
+                    <Image src={result.imageUrl} alt={result.name || 'Device thumbnail'} fill style={{ objectFit: 'contain' }} />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400">No Img</div>
                   )}
@@ -147,7 +157,7 @@ const CompareBox: React.FC = () => {
                   </button>
                   <div className="relative w-20 h-24 mb-2">
                     {device.imageUrl ? (
-                      <Image src={device.imageUrl} alt={device.name} fill style={{ objectFit: 'contain' }} />
+                      <Image src={device.imageUrl} alt={device.name || 'Selected device'} fill style={{ objectFit: 'contain' }} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
                     )}

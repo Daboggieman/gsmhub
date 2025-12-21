@@ -54,7 +54,7 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
       >
         <Image
           src={currentImageUrl}
-          alt={`${deviceName} image ${currentImageIndex + 1}`}
+          alt={`${deviceName || 'Device'} image ${currentImageIndex + 1}`}
           fill
           style={{ objectFit: 'contain' }}
           className="p-2 transition-transform duration-300 group-hover:scale-105"
@@ -94,7 +94,7 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
             >
               <Image
                 src={url}
-                alt={`${deviceName} thumbnail ${index + 1}`}
+                alt={`${deviceName || 'Device'} thumbnail ${index + 1}`}
                 fill
                 style={{ objectFit: 'cover' }}
               />
@@ -119,7 +119,7 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
           <div className="relative w-full h-full max-w-4xl max-h-[80vh]">
             <Image
               src={currentImageUrl}
-              alt={`${deviceName} zoomed image`}
+              alt={`${deviceName || 'Device'} zoomed image`}
               fill
               style={{ objectFit: 'contain' }}
               className="p-4"

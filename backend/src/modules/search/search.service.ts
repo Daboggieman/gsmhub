@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Device, DeviceDocument } from '../devices/device.schema';
 import { SearchIndex, SearchIndexDocument } from './search-index.schema';
 import { SearchQuery, SearchQueryDocument } from './search-query.schema';
+import { SearchResult } from '@shared/types';
 
 @Injectable()
 export class SearchService {
@@ -13,22 +14,44 @@ export class SearchService {
     @InjectModel(SearchQuery.name) private searchQueryModel: Model<SearchQueryDocument>,
   ) {}
 
-  async search(query: string, limit: number = 10): Promise<Device[]> {
-    // Log the search query
+  async search(query: string, limit: number = 10): Promise<SearchResult[]> {
+    if (!query) return [];
+    
+    // Log the search query for analytics
     this.logSearchQuery(query);
 
-    return this.deviceModel
-      .find({ $text: { $search: query } }, { score: { $meta: 'textScore' } })
-      .sort({ score: { $meta: 'textScore' } })
+    const searchRegex = new RegExp(query, 'i');
+
+    // Use a combination of text search and regex for better fuzzy-like matching
+    const devices = await this.deviceModel
+      .find({
+        $or: [
+          { $text: { $search: query } },
+          { name: searchRegex },
+          { brand: searchRegex },
+          { model: searchRegex }
+        ],
+        isActive: true
+      }, {
+        score: { $meta: 'textScore' }
+      })
+      .sort({ 
+        score: { $meta: 'textScore' },
+        views: -1 // Use views as tie-breaker for popularity
+      })
       .limit(limit)
       .exec();
+    
+    return this.mapToSearchResults(devices);
   }
 
-  async getAutocomplete(query: string, limit: number = 5): Promise<string[]> {
-    if (!query) {
+  async getAutocomplete(query: string, limit: number = 8): Promise<SearchResult[]> {
+    if (!query || query.length < 2) {
       return [];
     }
+    
     const searchRegex = new RegExp(query, 'i');
+    
     const devices = await this.deviceModel
       .find({
         $or: [
@@ -36,26 +59,45 @@ export class SearchService {
           { brand: searchRegex },
           { model: searchRegex },
         ],
+        isActive: true
       })
+      .sort({ views: -1 })
       .limit(limit)
       .exec();
     
-    // Return a list of device names as suggestions
-    return devices.map(device => device.name);
+    return this.mapToSearchResults(devices);
   }
 
   async getSuggestions(query: string, limit: number = 5): Promise<string[]> {
-    // For now, suggestions will be similar to autocomplete
-    return this.getAutocomplete(query, limit);
+    // Return popular queries starting with the given string
+    const suggestions = await this.searchQueryModel
+      .find({ query: new RegExp(`^${query}`, 'i') })
+      .sort({ count: -1 })
+      .limit(limit)
+      .exec();
+    
+    return suggestions.map(s => s.query);
+  }
+
+  private mapToSearchResults(devices: DeviceDocument[]): SearchResult[] {
+    return devices.map(device => ({
+      _id: device._id.toString(),
+      name: device.name,
+      slug: device.slug,
+      brand: device.brand,
+      category: (device as any).category?.name || 'Device',
+      imageUrl: device.imageUrl,
+    }));
   }
 
   private async logSearchQuery(query: string): Promise<void> {
-    const searchQuery = await this.searchQueryModel.findOne({ query });
-    if (searchQuery) {
-      searchQuery.count++;
-      await searchQuery.save();
-    } else {
-      await this.searchQueryModel.create({ query, count: 1 });
-    }
+    const normalizedQuery = query.toLowerCase().trim();
+    if (!normalizedQuery) return;
+
+    await this.searchQueryModel.findOneAndUpdate(
+      { query: normalizedQuery },
+      { $inc: { count: 1 } },
+      { upsert: true, new: true }
+    ).exec();
   }
 }

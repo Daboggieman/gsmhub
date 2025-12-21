@@ -1,60 +1,42 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
 import { apiClient } from '@/lib/api';
 import DeviceCard from '@/components/devices/DeviceCard';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
 import SortDropdown from '@/components/ui/SortDropdown';
 
-async function getCategoryData(slug: string, page: number = 1, sort: string = 'latest') {
-  try {
-    const category = await apiClient.getCategory(slug);
-    if (!category) return null;
+export const dynamic = 'force-dynamic';
 
-    // Use the category ID to fetch devices.
-    const categoryId = (category as any)._id || category.id;
+async function getAllDevices(page: number = 1, sort: string = 'latest') {
+  try {
     const limit = 24;
-    
     const { devices, total } = await apiClient.getDevices({ 
-      category: categoryId, 
-      limit,
-      page,
-      sort
+      limit, 
+      page, 
+      sort 
     });
-    return { category, devices, total, limit, page };
+    return { devices, total, limit };
   } catch (error) {
-    console.error('Failed to fetch category data:', error);
-    return null;
+    console.error('Failed to fetch devices:', error);
+    return { devices: [], total: 0, limit: 24 };
   }
 }
 
-interface CategoryPageProps {
-  params: Promise<{
-    category: string;
-  }>;
+interface DevicesPageProps {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function CategoryPage({ params: promiseParams, searchParams: promiseSearchParams }: CategoryPageProps) {
-  const params = await promiseParams;
+export default async function DevicesPage({ searchParams: promiseSearchParams }: DevicesPageProps) {
   const searchParams = await promiseSearchParams;
-  
   const page = Number(searchParams.page) || 1;
   const sort = typeof searchParams.sort === 'string' ? searchParams.sort : 'latest';
 
-  const data = await getCategoryData(params.category, page, sort);
-
-  if (!data) {
-    notFound();
-  }
-
-  const { category, devices, total, limit } = data;
+  const { devices, total, limit } = await getAllDevices(page, sort);
   const totalPages = Math.ceil(total / limit);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Categories', href: '/categories' },
-    { label: category.name, href: '#' },
+    { label: 'Phones', href: '/devices' },
   ];
 
   return (
@@ -64,10 +46,10 @@ export default async function CategoryPage({ params: promiseParams, searchParams
         
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{category.name}</h1>
-            {category.description && (
-              <p className="text-gray-600 max-w-2xl">{category.description}</p>
-            )}
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">All Devices</h1>
+            <p className="text-gray-600 max-w-2xl">
+              Browse our complete collection of mobile phones, tablets, and smart devices.
+            </p>
             <p className="text-sm text-gray-500 mt-2 font-medium">
               Showing {devices.length} of {total} devices
             </p>
@@ -89,7 +71,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
             <Pagination 
               currentPage={page} 
               totalPages={totalPages} 
-              baseUrl={`/categories/${params.category}`}
+              baseUrl="/devices"
               searchParams={searchParams}
             />
           </>
@@ -97,7 +79,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
           <div className="text-center py-24 bg-white rounded-2xl border border-gray-100 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">No devices found</h2>
             <p className="text-gray-500">
-              We couldn't find any devices in this category matching your criteria.
+              We couldn't find any devices at the moment. Please check back later.
             </p>
           </div>
         )}

@@ -190,6 +190,18 @@ export class DevicesRepository {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     ).populate('category').exec();
 
-    return updatedDevice;
-  }
-}
+        return updatedDevice;
+
+      }
+
+    
+
+      async getUniqueBrands(): Promise<string[]> {
+
+        return this.deviceModel.distinct('brand').exec();
+
+      }
+
+    }
+
+    

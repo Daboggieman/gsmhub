@@ -52,6 +52,11 @@ export class DevicesController {
     return plainToInstance(DeviceResponseDto, devices);
   }
 
+  @Get('brands')
+  async getBrands(): Promise<string[]> {
+    return this.devicesService.getBrands();
+  }
+
   @Get('category/:category')
   async getDevicesByCategory(
     @Param('category') category: string,

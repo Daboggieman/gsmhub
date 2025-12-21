@@ -6,55 +6,57 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
 import SortDropdown from '@/components/ui/SortDropdown';
 
-async function getCategoryData(slug: string, page: number = 1, sort: string = 'latest') {
+async function getBrandData(brand: string, page: number = 1, sort: string = 'latest') {
   try {
-    const category = await apiClient.getCategory(slug);
-    if (!category) return null;
-
-    // Use the category ID to fetch devices.
-    const categoryId = (category as any)._id || category.id;
     const limit = 24;
-    
     const { devices, total } = await apiClient.getDevices({ 
-      category: categoryId, 
+      brand, 
       limit,
       page,
       sort
     });
-    return { category, devices, total, limit, page };
+    
+    // Check if the brand actually exists by checking if we got any results 
+    // or if the brand is in the list of brands (simplified check)
+    if (total === 0 && page === 1) {
+       // Optional: verify brand name exists in DB
+    }
+
+    return { devices, total, limit, page };
   } catch (error) {
-    console.error('Failed to fetch category data:', error);
+    console.error('Failed to fetch brand data:', error);
     return null;
   }
 }
 
-interface CategoryPageProps {
+interface BrandPageProps {
   params: Promise<{
-    category: string;
+    brand: string;
   }>;
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
-export default async function CategoryPage({ params: promiseParams, searchParams: promiseSearchParams }: CategoryPageProps) {
+export default async function BrandPage({ params: promiseParams, searchParams: promiseSearchParams }: BrandPageProps) {
   const params = await promiseParams;
   const searchParams = await promiseSearchParams;
   
+  const decodedBrand = decodeURIComponent(params.brand);
   const page = Number(searchParams.page) || 1;
   const sort = typeof searchParams.sort === 'string' ? searchParams.sort : 'latest';
 
-  const data = await getCategoryData(params.category, page, sort);
+  const data = await getBrandData(decodedBrand, page, sort);
 
   if (!data) {
     notFound();
   }
 
-  const { category, devices, total, limit } = data;
+  const { devices, total, limit } = data;
   const totalPages = Math.ceil(total / limit);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },
-    { label: 'Categories', href: '/categories' },
-    { label: category.name, href: '#' },
+    { label: 'Brands', href: '/brands' },
+    { label: decodedBrand, href: '#' },
   ];
 
   return (
@@ -64,10 +66,10 @@ export default async function CategoryPage({ params: promiseParams, searchParams
         
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
-            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{category.name}</h1>
-            {category.description && (
-              <p className="text-gray-600 max-w-2xl">{category.description}</p>
-            )}
+            <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{decodedBrand} Devices</h1>
+            <p className="text-gray-600 max-w-2xl">
+              Explore the latest and most popular devices from {decodedBrand}.
+            </p>
             <p className="text-sm text-gray-500 mt-2 font-medium">
               Showing {devices.length} of {total} devices
             </p>
@@ -89,7 +91,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
             <Pagination 
               currentPage={page} 
               totalPages={totalPages} 
-              baseUrl={`/categories/${params.category}`}
+              baseUrl={`/brands/${params.brand}`}
               searchParams={searchParams}
             />
           </>
@@ -97,7 +99,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
           <div className="text-center py-24 bg-white rounded-2xl border border-gray-100 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">No devices found</h2>
             <p className="text-gray-500">
-              We couldn't find any devices in this category matching your criteria.
+              We couldn't find any devices for {decodedBrand} matching your criteria.
             </p>
           </div>
         )}

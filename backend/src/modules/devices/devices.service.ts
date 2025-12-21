@@ -237,9 +237,24 @@ export class DevicesService {
     return await this.attachLatestPrice(upsertedDevice);
   }
 
-  async syncDeviceFromAPI(deviceData: Partial<SharedDevice>): Promise<Device | null> {
-    // This method will leverage the existing upsertDevice method to handle the actual syncing logic.
-    // It serves as an entry point for an external API call and uses upsertDevice to persist the data.
-    return this.upsertDevice(deviceData);
+    async syncDeviceFromAPI(deviceData: Partial<SharedDevice>): Promise<Device | null> {
+
+      // This method will leverage the existing upsertDevice method to handle the actual syncing logic.
+
+      // It serves as an entry point for an external API call and uses upsertDevice to persist the data.
+
+      return this.upsertDevice(deviceData);
+
+    }
+
+  
+
+    async getBrands(): Promise<string[]> {
+
+      return this.devicesRepository.getUniqueBrands();
+
+    }
+
   }
-}
+
+  

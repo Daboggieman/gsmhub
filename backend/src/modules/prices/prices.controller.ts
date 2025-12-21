@@ -22,13 +22,18 @@ export class PricesController {
   }
 
   @Get('device/:deviceId')
-  findByDevice(@Param('deviceId') deviceId: string) {
-    return this.pricesService.findByDevice(deviceId);
+  getCurrentPrices(@Param('deviceId') deviceId: string) {
+    return this.pricesService.getCurrentPrices(deviceId);
   }
   
   @Get('device/:deviceId/history')
   getPriceHistory(@Param('deviceId') deviceId: string) {
     return this.pricesService.getPriceHistory(deviceId);
+  }
+
+  @Get('device/:deviceId/trend')
+  getPriceTrend(@Param('deviceId') deviceId: string) {
+    return this.pricesService.getPriceTrend(deviceId);
   }
 
   @Patch(':id')

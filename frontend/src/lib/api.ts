@@ -79,6 +79,14 @@ class ApiClient {
     return this.request(`/devices/trending?limit=${limit}`);
   }
 
+  async getBrands(): Promise<string[]> {
+    return this.request('/devices/brands');
+  }
+
+  async compareDevices(slugs: string[]): Promise<any> {
+    return this.request(`/compare?devices=${slugs.join(',')}`);
+  }
+
   // Categories
   async getCategories(): Promise<Category[]> {
     return this.request('/categories');
