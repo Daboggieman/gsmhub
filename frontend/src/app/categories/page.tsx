@@ -39,7 +39,8 @@ const getCategoryColor = (index: number) => {
 };
 
 export default async function CategoriesPage() {
-  const categories = await getCategories();
+  const allCategories = await getCategories();
+  const categories = allCategories.filter(c => c && c.slug);
 
   const breadcrumbItems = [
     { label: 'Home', href: '/' },

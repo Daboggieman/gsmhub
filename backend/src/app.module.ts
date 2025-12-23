@@ -13,6 +13,8 @@ import { PricesModule } from './modules/prices/prices.module';
 import { SearchModule } from './modules/search/search.module';
 import { ExternalApiModule } from './modules/external-api/external-api.module';
 import { CompareModule } from './modules/compare/compare.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -38,6 +40,8 @@ import { CompareModule } from './modules/compare/compare.module';
     SearchModule,
     ExternalApiModule,
     CompareModule,
+    AuthModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

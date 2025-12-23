@@ -1,9 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, ClassSerializerInterceptor } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DeviceResponseDto } from './dto/device-response.dto';
 import { plainToInstance } from 'class-transformer';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../users/schemas/user.schema';
 
 @Controller('devices')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -11,7 +15,8 @@ export class DevicesController {
   constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
-  // TODO: Implement Admin Guard for authentication and authorization
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   async create(@Body() createDeviceDto: CreateDeviceDto): Promise<DeviceResponseDto> {
     const device = await this.devicesService.create(createDeviceDto);
     return plainToInstance(DeviceResponseDto, device);
@@ -91,7 +96,8 @@ export class DevicesController {
   }
 
   @Patch(':id')
-  // TODO: Implement Admin Guard for authentication and authorization
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   async update(
     @Param('id') id: string,
     @Body() updateDeviceDto: UpdateDeviceDto,
@@ -101,7 +107,8 @@ export class DevicesController {
   }
 
   @Delete(':id')
-  // TODO: Implement Admin Guard for authentication and authorization
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   remove(@Param('id') id: string): Promise<void> {
     return this.devicesService.remove(id);
   }

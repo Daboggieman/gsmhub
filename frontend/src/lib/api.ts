@@ -20,19 +20,27 @@ class ApiClient {
   }
 
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     let modifiedOptions = options || {};
+    
+    modifiedOptions.headers = {
+      'Content-Type': 'application/json',
+      ...modifiedOptions.headers,
+    };
+
+    if (token) {
+      modifiedOptions.headers = {
+        ...modifiedOptions.headers,
+        'Authorization': `Bearer ${token}`,
+      };
+    }
+
     for (const interceptor of this.requestInterceptors) {
       modifiedOptions = await Promise.resolve(interceptor(modifiedOptions));
     }
 
     const url = `${this.baseURL}${endpoint}`;
-    let response = await fetch(url, {
-      headers: {
-        'Content-Type': 'application/json',
-        ...modifiedOptions?.headers,
-      },
-      ...modifiedOptions,
-    });
+    let response = await fetch(url, modifiedOptions);
 
     for (const interceptor of this.responseInterceptors) {
       response = await Promise.resolve(interceptor(response));
@@ -47,6 +55,18 @@ class ApiClient {
   }
 
   // Devices
+  async deleteDevice(id: string): Promise<void> {
+    return this.request(`/devices/${id}`, { method: 'DELETE' });
+  }
+
+  async createDevice(data: any): Promise<Device> {
+    return this.request('/devices', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async updateDevice(id: string, data: any): Promise<Device> {
+    return this.request(`/devices/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
   async getDevices(params?: {
     page?: number;
     limit?: number;
@@ -69,6 +89,10 @@ class ApiClient {
 
   async getDevice(slug: string): Promise<Device> {
     return this.request(`/devices/slug/${slug}`);
+  }
+
+  async getDeviceById(id: string): Promise<Device> {
+    return this.request(`/devices/${id}`);
   }
 
   async getPopularDevices(limit: number = 10): Promise<Device[]> {
@@ -96,6 +120,23 @@ class ApiClient {
     return this.request(`/categories/${slug}`);
   }
 
+  async getCategoryById(id: string): Promise<Category> {
+    const categories = await this.getCategories();
+    return categories.find(c => c.id === id) as Category;
+  }
+
+  async deleteCategory(id: string): Promise<void> {
+    return this.request(`/categories/${id}`, { method: 'DELETE' });
+  }
+
+  async createCategory(data: any): Promise<Category> {
+    return this.request('/categories', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async updateCategory(id: string, data: any): Promise<Category> {
+    return this.request(`/categories/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
   // Search
   async searchDevices(query: string): Promise<SearchResult[]> {
     return this.request(`/search?q=${encodeURIComponent(query)}`);
@@ -104,6 +145,11 @@ class ApiClient {
   // Price History
   async getDevicePriceHistory(deviceId: number): Promise<PriceHistory[]> {
     return this.request(`/prices/device/${deviceId}`);
+  }
+
+  // Admin
+  async getAdminStats(): Promise<{ devicesCount: number; categoriesCount: number; totalViews: number }> {
+    return this.request('/admin/stats');
   }
 }
 

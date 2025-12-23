@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
@@ -13,6 +13,16 @@ export class CategoriesService {
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const slug = createCategoryDto.slug || slugify(createCategoryDto.name);
+    
+    // Check for existing name or slug
+    const existing = await this.categoryModel.findOne({
+      $or: [{ name: createCategoryDto.name }, { slug }],
+    });
+
+    if (existing) {
+      throw new ConflictException('Category with this name or slug already exists');
+    }
+
     const createdCategory = new this.categoryModel({ ...createCategoryDto, slug });
     return createdCategory.save();
   }
@@ -41,6 +51,22 @@ export class CategoriesService {
     if (updateCategoryDto.name && !updateCategoryDto.slug) {
       updateCategoryDto.slug = slugify(updateCategoryDto.name);
     }
+
+    // Check for conflicts with other categories
+    if (updateCategoryDto.name || updateCategoryDto.slug) {
+      const conflict = await this.categoryModel.findOne({
+        _id: { $ne: id },
+        $or: [
+          ...(updateCategoryDto.name ? [{ name: updateCategoryDto.name }] : []),
+          ...(updateCategoryDto.slug ? [{ slug: updateCategoryDto.slug }] : []),
+        ],
+      });
+
+      if (conflict) {
+        throw new ConflictException('Another category with this name or slug already exists');
+      }
+    }
+
     const existingCategory = await this.categoryModel
       .findByIdAndUpdate(id, updateCategoryDto, { new: true })
       .exec();
@@ -51,8 +77,8 @@ export class CategoriesService {
   }
 
   async remove(id: string): Promise<void> {
-    const result = await this.categoryModel.deleteOne({ _id: id }).exec();
-    if (result.deletedCount === 0) {
+    const result = await this.categoryModel.findByIdAndDelete(id).exec();
+    if (!result) {
       throw new NotFoundException(`Category with ID ${id} not found`);
     }
   }
@@ -67,5 +93,9 @@ export class CategoriesService {
         { upsert: true, new: true, setDefaultsOnInsert: true }
     );
     return category;
+  }
+
+  async count(): Promise<number> {
+    return this.categoryModel.countDocuments().exec();
   }
 }

@@ -110,8 +110,8 @@ export class DevicesRepository {
     return this.deviceModel.findByIdAndUpdate(id, updateDeviceData, { new: true }).populate('category').exec();
   }
 
-  async remove(id: string): Promise<{ deletedCount?: number }> {
-    return this.deviceModel.deleteOne({ _id: id }).exec();
+  async remove(id: string): Promise<any> {
+    return this.deviceModel.findByIdAndDelete(id).exec();
   }
 
   async findPopular(limit: number): Promise<Device[]> {
@@ -197,11 +197,15 @@ export class DevicesRepository {
     
 
       async getUniqueBrands(): Promise<string[]> {
+    return this.deviceModel.distinct('brand').exec();
+  }
 
-        return this.deviceModel.distinct('brand').exec();
-
-      }
-
-    }
+  async getTotalViews(): Promise<number> {
+    const result = await this.deviceModel.aggregate([
+      { $group: { _id: null, totalViews: { $sum: '$views' } } }
+    ]).exec();
+    return result.length > 0 ? result[0].totalViews : 0;
+  }
+}
 
     

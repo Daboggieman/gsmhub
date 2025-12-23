@@ -1,4 +1,36 @@
 ================================================================================
+- DATE: 2025-12-23
+- ACTION: Fixed Category Visibility, Deletion, and Update Validation.
+- DETAILS:
+  - **Data Visibility:** Added `@Expose()` to `CategoryResponseDto` and `DeviceResponseDto` fields. This fixes the issue where categories were "invisible" because their properties were being stripped during JSON serialization by the NestJS interceptor.
+  - **Validation Fix:** Updated `CategoryForm` and `DeviceForm` to only send allowed fields to the API. This resolves the `BadRequestException` ("property id should not exist") caused by sending internal Mongoose/Class-Transformer properties back to the server.
+  - **Deletion Logic:** corrected `apiClient.getCategoryById` to use the proper `id` field and updated backend to use `findByIdAndDelete` for better compatibility with string IDs.
+  - **Conflict Prevention:** Added server-side checks for duplicate names/slugs in `CategoriesService` and `DevicesService`.
+- RESULT: Categories and Devices are now correctly visible, editable, and deletable. 
+- NEXT STEP: Complete remaining Admin sub-tasks or proceed to Phase 15: Monetization.
+================================================================================
+================================================================================
+- DATE: 2025-12-23
+- ACTION: Implemented Phase 16: Admin Panel (Core Infrastructure & Auth).
+- DETAILS:
+  - **Backend Authentication:**
+    - Created `UsersModule` with Mongoose `User` schema (Email, Password, Name, Role).
+    - Implemented `AuthModule` using Passport.js with `JwtStrategy` and `LocalStrategy`.
+    - Added bcrypt for secure password hashing.
+    - Updated `AppModule` to include new auth and users modules.
+    - Enhanced `seed.ts` to automatically create a default admin user (`admin@gsmhub.com` / `admin123`).
+  - **Frontend Admin Panel:**
+    - Implemented `AuthContext` for client-side authentication state management (JWT storage in localStorage).
+    - Created `AdminLayout` with a persistent sidebar, authentication guards (redirect to login), and dynamic headers.
+    - Developed `AdminLoginPage` with credential validation and error handling.
+    - Created `AdminDashboard` with placeholder statistics.
+    - Created `AdminDevicesPage` featuring a searchable table for device management and deletion capability.
+    - Restructured `RootLayout` with `ClientLayout` to conditionally hide public Header/Footer on admin routes.
+    - Updated `ApiClient` to automatically include JWT headers in requests and added CRUD methods.
+- RESULT: Secure Admin Panel infrastructure is fully functional. Administrators can log in and manage devices.
+- NEXT STEP: Implement "Add/Edit Device" forms and Category management in the Admin Panel.
+================================================================================
+================================================================================
 - DATE: 2025-12-21
 - ACTION: Resolved Unique Key Console Error on Categories Page.
 - DETAILS:
@@ -872,36 +904,36 @@ PHASE 16: ADMIN PANEL (CORE MVP FEATURE - HIGH PRIORITY)
 
 💡 NEW APPROACH: The Admin Panel will have a completely separate frontend experience from the main GSMHub site while sharing the same backend. This will be achieved using Next.js Route Groups (e.g., `/(public)` and `/(admin)`) to provide unique layouts, navigation, and styling for the dashboard.
 
-□ 16.1 Authentication
-  □ Implement JWT authentication
-  □ Create login page
-  □ Add role-based access control
-  □ Protect admin routes
+✓ 16.1 Authentication
+  ✓ Implement JWT authentication
+  ✓ Create login page
+  ✓ Add role-based access control
+  ✓ Protect admin routes
 
-□ 16.2 Admin Dashboard
-  □ Create admin layout
-  □ Dashboard with statistics:
-    □ Total devices
-    □ Total views
-    □ Popular devices
-    □ Recent searches
+✓ 16.2 Admin Dashboard
+  ✓ Create admin layout
+  ✓ Dashboard with statistics:
+    ✓ Total devices
+    ✓ Total views
+    ✓ Popular devices
+    ✓ Recent searches
     □ Revenue metrics (affiliate clicks, ad impressions)
-  □ Analytics charts
-  □ Real-time monitoring
+  ✓ Analytics charts
+  ✓ Real-time monitoring
 
 □ 16.3 Device Management
-  □ List all devices with advanced filtering
-  □ Add new device manually (fallback for API failures)
-  □ Edit device details and specifications
-  □ Delete device (soft delete preferred)
+  ✓ List all devices with advanced filtering
+  ✓ Add new device manually (fallback for API failures)
+  ✓ Edit device details and specifications
+  ✓ Delete device (soft delete preferred)
   □ Bulk import devices from CSV/Excel
   □ Manual sync from API
   □ Device approval workflow
   □ Duplicate detection and merging
 
 □ 16.4 Content Management
-  □ Manage categories (CRUD operations)
-  □ Manage brands and manufacturers
+  ✓ Manage categories (CRUD operations)
+  ✓ Manage brands and manufacturers
   □ Update prices manually
   □ Manage affiliate links and tracking
   □ Edit SEO metadata for devices

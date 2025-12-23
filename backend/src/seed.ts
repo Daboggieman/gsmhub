@@ -1,8 +1,10 @@
 import { connect, disconnect } from 'mongoose';
 import { config } from 'dotenv';
 import { Device, DeviceSchema } from './modules/devices/device.schema';
-import { Category, CategorySchema } from './modules/devices/../categories/category.schema';
+import { Category, CategorySchema } from './modules/categories/category.schema';
+import { User, UserSchema, UserRole } from './modules/users/schemas/user.schema';
 import * as mongoose from 'mongoose';
+import * as bcrypt from 'bcrypt';
 
 config();
 
@@ -248,6 +250,7 @@ async function seedDB() {
 
   const DeviceModel = mongoose.model('Device', DeviceSchema);
   const CategoryModel = mongoose.model('Category', CategorySchema);
+  const UserModel = mongoose.model('User', UserSchema);
   const PriceModel = mongoose.model('PriceHistory', new mongoose.Schema({
     deviceId: { type: mongoose.Schema.Types.ObjectId, ref: 'Device' },
     country: String,
@@ -257,6 +260,27 @@ async function seedDB() {
     affiliateUrl: String,
     date: { type: Date, default: Date.now }
   }));
+
+  // Clean DB (careful with Users in production, but for seed it's fine or we check existence)
+  // await UserModel.deleteMany({}); // Uncomment to reset users
+
+  // Seed Admin
+  const adminEmail = 'admin@gsmhub.com';
+  const existingAdmin = await UserModel.findOne({ email: adminEmail });
+  if (!existingAdmin) {
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash('admin123', salt);
+    await UserModel.create({
+      email: adminEmail,
+      password: hashedPassword,
+      name: 'Admin User',
+      role: UserRole.ADMIN,
+      isActive: true,
+    });
+    console.log('Admin user created');
+  } else {
+    console.log('Admin user already exists');
+  }
 
   await DeviceModel.deleteMany({});
   await CategoryModel.deleteMany({});

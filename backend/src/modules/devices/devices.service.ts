@@ -84,7 +84,13 @@ export class DevicesService {
   }
 
   async create(createDeviceDto: CreateDeviceDto): Promise<Device> {
-    const { category: categoryId, ...deviceData } = createDeviceDto;
+    const { category: categoryId, slug, ...deviceData } = createDeviceDto;
+
+    // Check for existing slug
+    const existing = await this.devicesRepository.findBySlug(slug);
+    if (existing) {
+      throw new ConflictException('Device with this slug already exists');
+    }
 
     let category: CategoryDocument | null = null;
     if (categoryId) {
@@ -99,6 +105,7 @@ export class DevicesService {
 
     const newDeviceData: Partial<Device> = {
       ...deviceData,
+      slug,
       category: category ? (category._id as any) : undefined,
     };
     
@@ -108,9 +115,17 @@ export class DevicesService {
   }
 
   async update(id: string, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
-    const { category: categoryId, ...deviceData } = updateDeviceDto;
+    const { category: categoryId, slug, ...deviceData } = updateDeviceDto;
 
-    const updatePayload: Partial<Device> = { ...deviceData };
+    // Check for slug conflict if slug is being updated
+    if (slug) {
+      const existing = await this.devicesRepository.findBySlug(slug);
+      if (existing && existing._id?.toString() !== id) {
+        throw new ConflictException('Another device with this slug already exists');
+      }
+    }
+
+    const updatePayload: Partial<Device> = { ...deviceData, slug };
 
     if (categoryId) {
       if (!Types.ObjectId.isValid(categoryId)) {
@@ -137,15 +152,12 @@ export class DevicesService {
   }
 
   async remove(id: string): Promise<void> {
-    const device = await this.devicesRepository.findOne(id);
-    if (device) {
-      await this.cacheManager.del(`device_${device.slug}`);
-      await this.cacheManager.del('popular_devices');
-      const result = await this.devicesRepository.remove(id);
-      if (result.deletedCount === 0) {
-        throw new NotFoundException(`Device with ID ${id} not found`);
-      }
+    const deletedDevice = await this.devicesRepository.remove(id);
+    if (!deletedDevice) {
+      throw new NotFoundException(`Device with ID ${id} not found`);
     }
+    await this.cacheManager.del(`device_${deletedDevice.slug}`);
+    await this.cacheManager.del('popular_devices');
   }
 
   async getPopularDevices(limit: number): Promise<Device[]> {
@@ -250,11 +262,12 @@ export class DevicesService {
   
 
     async getBrands(): Promise<string[]> {
-
-      return this.devicesRepository.getUniqueBrands();
-
-    }
-
+    return this.devicesRepository.getUniqueBrands();
   }
+
+  async getTotalViews(): Promise<number> {
+    return this.devicesRepository.getTotalViews();
+  }
+}
 
   

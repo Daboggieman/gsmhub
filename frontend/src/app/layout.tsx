@@ -1,20 +1,17 @@
 import type { Metadata } from "next";
-import { Geist } from "next/font/google"; // Removed Geist_Mono
+import { Geist } from "next/font/google";
 import "./globals.css";
-import Header from '@/components/layout/Header'; // Import Header component
-import Footer from '@/components/layout/Footer'; // Import Footer component
+import ClientLayout from "./client-layout";
 
 // Font Awesome Configuration
 import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css'; // Import Font Awesome CSS
-config.autoAddCss = false; // Prevent Font Awesome from adding CSS automatically
+import '@fortawesome/fontawesome-svg-core/styles.css';
+config.autoAddCss = false;
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
-
-// Removed geistMono import and variable
 
 export const metadata: Metadata = {
   title: {
@@ -36,13 +33,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} antialiased flex flex-col min-h-screen`} // Added flex-col and min-h-screen for sticky footer
+        className={`${geistSans.variable} antialiased flex flex-col min-h-screen`}
       >
-        <Header />
-        <main className="flex-grow">
+        <ClientLayout>
           {children}
-        </main>
-        <Footer />
+        </ClientLayout>
       </body>
     </html>
   );

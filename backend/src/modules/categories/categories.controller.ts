@@ -8,12 +8,17 @@ import {
   Delete,
   UseInterceptors,
   ClassSerializerInterceptor,
+  UseGuards,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 import { CategoryResponseDto } from './dto/category-response.dto';
 import { DevicesService } from '../devices/devices.service';
 import { plainToInstance } from 'class-transformer';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { RolesGuard } from '../auth/guards/roles.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { UserRole } from '../users/schemas/user.schema';
 
 @Controller('categories')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -24,7 +29,8 @@ export class CategoriesController {
   ) {}
 
   @Post()
-  // TODO: Implement Admin Guard
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   async create(@Body() createCategoryDto: CreateCategoryDto) {
     const category = await this.categoriesService.create(createCategoryDto);
     return plainToInstance(CategoryResponseDto, category);
@@ -33,6 +39,7 @@ export class CategoriesController {
   @Get()
   async findAll() {
     const categories = await this.categoriesService.findAll();
+    console.log(`Found ${categories.length} categories`);
     return plainToInstance(CategoryResponseDto, categories);
   }
 
@@ -51,15 +58,18 @@ export class CategoriesController {
   }
 
   @Patch(':id')
-  // TODO: Implement Admin Guard
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
     const category = await this.categoriesService.update(id, updateCategoryDto);
     return plainToInstance(CategoryResponseDto, category);
   }
 
   @Delete(':id')
-  // TODO: Implement Admin Guard
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
   remove(@Param('id') id: string) {
+    console.log(`Attempting to delete category with ID: ${id}`);
     return this.categoriesService.remove(id);
   }
 }
