@@ -62,6 +62,13 @@ export class DevicesController {
     return this.devicesService.getBrands();
   }
 
+  @Get('suggestions')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  async getFieldSuggestions(): Promise<Record<string, string[]>> {
+    return this.devicesService.getFieldSuggestions();
+  }
+
   @Get('category/:category')
   async getDevicesByCategory(
     @Param('category') category: string,

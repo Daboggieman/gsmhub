@@ -88,7 +88,7 @@ export default async function Home() {
           <aside className="w-full lg:w-1/6 order-2 lg:order-1">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
               <div className="bg-gray-50 p-3 border-b border-gray-200">
-                <h3 className="font-bold text-gray-700 uppercase text-sm tracking-wider">Phone Finder</h3>
+                <h3 className="font-bold text-gray-800 uppercase text-sm tracking-wider">Phone Finder</h3>
               </div>
               <div className="p-0">
                 <ul className="divide-y divide-gray-100">
@@ -96,17 +96,17 @@ export default async function Home() {
                     <li key={brand}>
                       <Link 
                         href={`/search?brand=${brand}`} 
-                        className="block px-4 py-2 text-sm text-gray-600 hover:bg-blue-50 hover:text-blue-600 transition-colors flex justify-between items-center"
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-600 transition-colors flex justify-between items-center"
                       >
                         {brand}
-                        <span className="text-gray-300 text-xs">›</span>
+                        <span className="text-gray-400 text-xs font-black">›</span>
                       </Link>
                     </li>
                   ))}
                   <li>
                     <Link 
                       href="/search" 
-                      className="block px-4 py-3 text-sm font-bold text-blue-600 hover:bg-blue-50 text-center"
+                      className="block px-4 py-3 text-sm font-bold text-blue-700 hover:bg-blue-50 text-center"
                     >
                       All Brands...
                     </Link>
@@ -127,10 +127,10 @@ export default async function Home() {
                   href={`/categories/${category.slug}`}
                   className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex flex-col items-center text-center hover:shadow-md transition-all"
                 >
-                  <div className="text-blue-500 mb-2 text-xl">
+                  <div className="text-blue-600 mb-2 text-xl">
                     <CategoryIcon name={category.name} />
                   </div>
-                  <span className="font-semibold text-gray-700 text-sm">{category.name}</span>
+                  <span className="font-bold text-gray-800 text-sm">{category.name}</span>
                 </Link>
               ))}
             </div>
@@ -138,11 +138,11 @@ export default async function Home() {
             {/* Latest Devices */}
             <div className="mb-8">
               <div className="flex justify-between items-center mb-4 bg-white p-3 rounded-lg shadow-sm border border-gray-200">
-                <h2 className="text-lg font-bold text-gray-800 uppercase tracking-wide">
-                  <FontAwesomeIcon icon={faMobileAlt} className="mr-2 text-blue-500" />
+                <h2 className="text-lg font-black text-gray-800 uppercase tracking-wide">
+                  <FontAwesomeIcon icon={faMobileAlt} className="mr-2 text-blue-600" />
                   Latest Devices
                 </h2>
-                <Link href="/search" className="text-blue-600 text-sm font-semibold hover:underline">
+                <Link href="/search" className="text-blue-700 text-sm font-black hover:underline">
                   See All ›
                 </Link>
               </div>
@@ -164,9 +164,9 @@ export default async function Home() {
           <aside className="w-full lg:w-2/6 order-3">
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden sticky top-4">
               <div className="bg-gray-50 p-3 border-b border-gray-200 flex items-center justify-between">
-                <h3 className="font-bold text-gray-700 uppercase text-sm tracking-wider">
-                  <FontAwesomeIcon icon={faChartLine} className="mr-2 text-red-500" />
-                  Top 10 by Daily Interest
+                <h3 className="font-bold text-gray-800 uppercase text-sm tracking-wider">
+                  <FontAwesomeIcon icon={faChartLine} className="mr-2 text-red-600" />
+                  Top 10 by Interest
                 </h3>
               </div>
               
@@ -177,7 +177,7 @@ export default async function Home() {
                     href={`/devices/${device.slug}`}
                     className="flex items-center p-3 hover:bg-gray-50 transition-colors group"
                   >
-                    <div className="w-8 text-center font-bold text-gray-400 mr-2 group-hover:text-blue-500">
+                    <div className="w-8 text-center font-bold text-gray-500 mr-2 group-hover:text-blue-600">
                       {index + 1}.
                     </div>
                     <div className="relative w-12 h-16 mr-3 bg-gray-100 rounded flex-shrink-0 p-1">
@@ -190,15 +190,15 @@ export default async function Home() {
                           sizes="48px"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-[8px] text-gray-400">No Img</div>
+                        <div className="w-full h-full flex items-center justify-center text-[8px] text-gray-500 font-bold">No Img</div>
                       )}
                     </div>
                     <div className="flex-grow min-w-0">
-                      <h4 className="font-semibold text-gray-800 text-sm truncate group-hover:text-blue-600">
+                      <h4 className="font-bold text-gray-800 text-sm truncate group-hover:text-blue-600">
                         {device.name}
                       </h4>
-                      <p className="text-xs text-gray-500 truncate">
-                        {device.views} hits
+                      <p className="text-xs text-gray-600 truncate font-medium">
+                        {device.views.toLocaleString()} hits
                       </p>
                     </div>
                   </Link>
@@ -206,7 +206,7 @@ export default async function Home() {
               </div>
               
               <div className="p-3 bg-gray-50 border-t border-gray-200 text-center">
-                <Link href="/search?filter=trending" className="text-xs font-bold text-blue-600 uppercase hover:underline">
+                <Link href="/search?filter=trending" className="text-xs font-black text-blue-700 uppercase hover:underline">
                   View Full Leaderboard
                 </Link>
               </div>

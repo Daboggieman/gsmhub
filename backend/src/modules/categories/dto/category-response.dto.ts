@@ -1,5 +1,5 @@
 import { Expose, Transform } from 'class-transformer';
-import { IsString } from 'class-validator';
+import { IsString, IsBoolean } from 'class-validator';
 
 export class CategoryResponseDto {
   @Expose()
@@ -13,4 +13,16 @@ export class CategoryResponseDto {
   @Expose()
   @IsString()
   slug: string;
+
+  @Expose()
+  @IsString()
+  description: string;
+
+  @Expose()
+  @IsString()
+  icon: string;
+
+  @Expose()
+  @IsBoolean()
+  isActive: boolean;
 }

@@ -1,11 +1,3 @@
-export function generateSlug(text: string): string {
-  return text
-    .toString()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')
-    .replace(/[^\w-]+/g, '')
-    .replace(/--+/g, '-');
-}
+import { generateSlug as sharedGenerateSlug } from '../../../../shared/src/utils/slug';
+
+export const generateSlug = sharedGenerateSlug;

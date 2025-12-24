@@ -8,7 +8,7 @@ interface SeoProps {
   description: string;
   path: string;
   imageUrl?: string;
-  type?: 'website' | 'article' | 'product';
+  type?: 'website' | 'article';
 }
 
 /**

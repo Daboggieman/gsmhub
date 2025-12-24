@@ -2,6 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Category } from '../categories/category.schema';
+import { DeviceType } from '../../../../shared/src/types';
 
 export type DeviceDocument = Device & Document;
 
@@ -21,6 +22,9 @@ const DeviceSpecSchema = SchemaFactory.createForClass(DeviceSpec);
 
 @Schema({ timestamps: true })
 export class Device {
+  @Prop({ required: true })
+  name: string;
+
   @Prop({ required: true, unique: true, index: true })
   slug: string;
 
@@ -30,11 +34,17 @@ export class Device {
   @Prop({ required: true })
   model: string;
 
+  @Prop({ type: String, enum: DeviceType, default: DeviceType.PHONE })
+  type: DeviceType;
+
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
   category: Category;
 
   @Prop()
   imageUrl?: string;
+
+  @Prop({ type: [String] })
+  images?: string[];
 
   @Prop({ type: [DeviceSpecSchema] })
   specs: DeviceSpec[];

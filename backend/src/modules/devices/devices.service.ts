@@ -265,6 +265,17 @@ export class DevicesService {
     return this.devicesRepository.getUniqueBrands();
   }
 
+  async getFieldSuggestions(): Promise<Record<string, string[]>> {
+    const fields = ['os', 'ram', 'storage', 'battery', 'chipset', 'networkTechnology', 'displaySize', 'colors', 'mainCamera', 'selfieCamera', 'dimension'];
+    const suggestions: Record<string, string[]> = {};
+    
+    await Promise.all(fields.map(async (field) => {
+      suggestions[field] = await this.devicesRepository.getUniqueFieldValues(field);
+    }));
+    
+    return suggestions;
+  }
+
   async getTotalViews(): Promise<number> {
     return this.devicesRepository.getTotalViews();
   }

@@ -107,6 +107,26 @@ class ApiClient {
     return this.request('/devices/brands');
   }
 
+  async getAdminBrands(): Promise<any[]> {
+    return this.request('/brands');
+  }
+
+  async createBrand(data: any): Promise<any> {
+    return this.request('/brands', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async updateBrand(id: string, data: any): Promise<any> {
+    return this.request(`/brands/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
+  async deleteBrand(id: string): Promise<void> {
+    return this.request(`/brands/${id}`, { method: 'DELETE' });
+  }
+
+  async getFieldSuggestions(): Promise<Record<string, string[]>> {
+    return this.request('/devices/suggestions');
+  }
+
   async compareDevices(slugs: string[]): Promise<any> {
     return this.request(`/compare?devices=${slugs.join(',')}`);
   }

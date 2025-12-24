@@ -100,4 +100,8 @@ export class SearchService {
       { upsert: true, new: true }
     ).exec();
   }
+
+  async getPopularQueries(limit: number = 10): Promise<SearchQuery[]> {
+    return this.searchQueryModel.find().sort({ count: -1 }).limit(limit).exec();
+  }
 }

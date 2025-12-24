@@ -64,6 +64,14 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           >
             Categories
           </Link>
+          <Link
+            href="/admin/brands"
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${
+              pathname.includes('/admin/brands') ? 'bg-indigo-900 border-l-4 border-white' : ''
+            }`}
+          >
+            Brands
+          </Link>
           <button
             onClick={logout}
             className="mt-10 block w-full px-6 py-3 text-left transition-colors hover:bg-red-600"

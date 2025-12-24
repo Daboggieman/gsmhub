@@ -200,6 +200,11 @@ export class DevicesRepository {
     return this.deviceModel.distinct('brand').exec();
   }
 
+  async getUniqueFieldValues(field: string): Promise<string[]> {
+    const values = await this.deviceModel.distinct(field).exec();
+    return values.filter(v => v !== null && v !== undefined && v !== '');
+  }
+
   async getTotalViews(): Promise<number> {
     const result = await this.deviceModel.aggregate([
       { $group: { _id: null, totalViews: { $sum: '$views' } } }

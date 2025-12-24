@@ -1,10 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type CategoryDocument = Category & Document;
+export type BrandDocument = Brand & Document;
 
 @Schema({ timestamps: true })
-export class Category {
+export class Brand {
   @Prop({ required: true, unique: true, index: true })
   name: string;
 
@@ -12,15 +12,16 @@ export class Category {
   slug: string;
 
   @Prop()
-  description?: string;
+  logoUrl?: string;
 
   @Prop()
-  icon?: string;
+  description?: string;
 
   @Prop({ default: true })
-  isActive: boolean;
+  isFeatured: boolean;
 
-  __v?: number; // Added to resolve TS2322 error
+  @Prop({ default: 0 })
+  deviceCount: number;
 }
 
-export const CategorySchema = SchemaFactory.createForClass(Category);
+export const BrandSchema = SchemaFactory.createForClass(Brand);

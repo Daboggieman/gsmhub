@@ -1,6 +1,7 @@
-import { IsBoolean, IsDateString, IsNumber, IsObject, IsString, IsOptional } from 'class-validator';
+import { IsBoolean, IsDateString, IsNumber, IsObject, IsString, IsOptional, IsArray, IsEnum } from 'class-validator';
 import { CategoryResponseDto } from '../../categories/dto/category-response.dto';
 import { Expose, Transform, Type } from 'class-transformer';
+import { DeviceType } from '../../../../../shared/src/types';
 
 export class DeviceResponseDto {
   @Expose()
@@ -9,10 +10,10 @@ export class DeviceResponseDto {
 
   @Expose()
   @Transform(({ obj }) => obj._id ? obj._id.toString() : '') 
-  id: string; // Keep alias for flexibility
+  id: string; 
 
   @Expose()
-  @Transform(({ obj }) => `${obj.brand} ${obj.model}`)
+  @IsString()
   name: string;
 
   @Expose()
@@ -32,19 +33,124 @@ export class DeviceResponseDto {
   category: CategoryResponseDto; 
 
   @Expose()
+  @IsEnum(DeviceType)
+  type: DeviceType;
+
+  @Expose()
   @IsString()
   @IsOptional()
   imageUrl?: string;
 
   @Expose()
-  @IsObject()
+  @IsArray()
+  @IsString({ each: true })
   @IsOptional()
-  specs?: any;
+  images?: string[];
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  description?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  releaseDate?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  dimension?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  os?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  storage?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  displaySize?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  ram?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  battery?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  weight?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  chipset?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  mainCamera?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  selfieCamera?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  videoResolution?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  versions?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  models?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  colors?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  sarEU?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  networkTechnology?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  reviewTeaser?: string;
+
+  @Expose()
+  @IsArray()
+  @IsOptional()
+  specs?: any[];
 
   @Expose()
   @IsNumber()
   @IsOptional()
-  latestPrice?: number; // Added to include the latest price
+  latestPrice?: number; 
 
   @Expose()
   @IsNumber()

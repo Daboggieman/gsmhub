@@ -62,7 +62,7 @@ export default function AdminDevicesPage() {
         <input 
           type="text" 
           placeholder="Search devices..." 
-          className="flex-1 border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none"
+          className="flex-1 border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -95,7 +95,7 @@ export default function AdminDevicesPage() {
                     <td className="px-6 py-4 font-medium text-gray-900">{device.name}</td>
                     <td className="px-6 py-4 text-gray-600">{device.brand}</td>
                     <td className="px-6 py-4 text-gray-600">
-                      {typeof device.category === 'object' ? (device.category as any).name : 'General'}
+                      {device.category && typeof device.category === 'object' ? (device.category as any).name : 'General'}
                     </td>
                     <td className="px-6 py-4 text-gray-600">{device.views?.toLocaleString()}</td>
                     <td className="px-6 py-4 space-x-3">

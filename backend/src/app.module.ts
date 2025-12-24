@@ -9,6 +9,7 @@ import { mongooseConfig } from './config/mongoose.config';
 import * as redisStore from 'cache-manager-redis-store'; // Import redisStore directly
 import { DevicesModule } from './modules/devices/devices.module';
 import { CategoriesModule } from './modules/categories/categories.module';
+import { BrandsModule } from './modules/brands/brands.module';
 import { PricesModule } from './modules/prices/prices.module';
 import { SearchModule } from './modules/search/search.module';
 import { ExternalApiModule } from './modules/external-api/external-api.module';
@@ -36,6 +37,7 @@ import { UsersModule } from './modules/users/users.module';
     ScheduleModule.forRoot(), // Add ScheduleModule here
     DevicesModule,
     CategoriesModule,
+    BrandsModule,
     PricesModule,
     SearchModule,
     ExternalApiModule,

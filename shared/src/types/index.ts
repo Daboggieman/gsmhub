@@ -3,6 +3,8 @@ export interface Category {
   name: string;
   slug: string;
   description?: string;
+  icon?: string; // Icon name or URL
+  isActive?: boolean;
 }
 
 export enum DeviceType {
