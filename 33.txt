@@ -1,1 +1,124 @@
-http GET https://gsmarenaparser.p.rapidapi.com/api/values/getspecs/Xiaomi/RedmiNote3 x-rapidapi-host:gsmarenaparser.p.rapidapi.com x-rapidapi-key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+**GET: listAllBrands**
+
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+PARAMS
+no additional params
+
+
+HEADERS
+X-RapidAPI-Host *:mobile-device-hardware-specs.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+**GET: getBrandModels**
+
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+PARAMS
+Path Params
+brand*:(input the brand)String
+
+Brand name (e.g. samsung, apple, xiaomi)
+
+HEADER
+X-RapidAPI-Host*:mobile-device-hardware-specs.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+**GET:getDeviceDetails**
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+
+PATH PARAMS
+brand
+*
+String
+
+Brand name (e.g. samsung, apple, xiaomi)
+model
+*
+String
+
+Model name/identifier for the specific device
+
+
+HEADER
+X-RapidAPI-Host*:mobile-device-hardware-specs.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+
+
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+
+
+const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://mobile-device-hardware-specs.p.rapidapi.com/Samsung/SamsunggalaxyS23ultra',
+  headers: {
+    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
+    'x-rapidapi-host': 'mobile-device-hardware-specs.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		console.log(response.data);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fetchData();
+
+
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+example response
+
+{
+  "name": "Samsung Galaxy S23 Ultra",
+  "dimensions": "163.4 x 78.1 x 8.9 mm",
+  "weight": "233 g",
+  "displayType": "Dynamic AMOLED 2X, 120Hz, HDR10+",
+  "displaySize": "6.8 inches, 114.7 cm²",
+  "resolution": "1440 x 3088 pixels, 19.3:9 ratio",
+  "chipset": "Qualcomm SM8550-AC Snapdragon 8 Gen 2",
+  "cpu": "Octa-core (1x3.36 GHz Cortex-X3 & 2x2.8 GHz Cortex-A715 & 2x2.8 GHz Cortex-A710 & 3x2.0 GHz Cortex-A510)",
+  "gpu": "Adreno 740",
+  "mainCamera": "200 MP, f/1.7, 24mm (wide), 1/1.3\", 0.6µm, multi-directional PDAF, Laser AF, OIS",
+  "selfieCamera": "12 MP, f/2.2, 26mm (wide), Dual Pixel PDAF",
+  "batteryType": "Li-Ion 5000 mAh, non-removable",
+  "colors": "Phantom Black, Green, Cream, Lavender, Graphite, Sky Blue, Lime, Red, BMW M Edition"
+}
+

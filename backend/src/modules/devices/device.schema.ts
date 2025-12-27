@@ -22,6 +22,8 @@ const DeviceSpecSchema = SchemaFactory.createForClass(DeviceSpec);
 
 @Schema({ timestamps: true })
 export class Device {
+  _id: string;
+
   @Prop({ required: true })
   name: string;
 

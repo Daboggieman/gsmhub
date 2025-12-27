@@ -1,12 +1,9 @@
 import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { ExternalApiService } from './external-api.service';
-import { DataTransformationService } from './data-transformation.service';
-import { BrandListResponse, PhoneListResponse, PhoneSpecResponse } from '@modules/external-api/dto/gsmarena.dto';
-import { Device, Category } from '@shared/types'; // Internal types
-import { Cron, CronExpression } from '@nestjs/schedule'; // Import Cron and CronExpression
-import { ConfigService } from '@nestjs/config';
-import { DevicesService } from '@modules/devices/devices.service'; // Import DevicesService
-import { CategoriesService } from '@modules/categories/categories.service'; // Import CategoriesService
+import { Cron, CronExpression } from '@nestjs/schedule';
+import { DevicesService } from '@modules/devices/devices.service';
+import { CategoriesService } from '@modules/categories/categories.service';
+import { Category } from '@modules/categories/category.schema';
 
 @Injectable()
 export class SyncService implements OnModuleInit {
@@ -14,10 +11,8 @@ export class SyncService implements OnModuleInit {
 
   constructor(
     private readonly externalApiService: ExternalApiService,
-    private readonly dataTransformationService: DataTransformationService,
     private readonly devicesService: DevicesService,
     private readonly categoriesService: CategoriesService,
-    private readonly configService: ConfigService,
   ) {}
 
   async onModuleInit() {
@@ -26,94 +21,66 @@ export class SyncService implements OnModuleInit {
   }
 
   // Cron job for periodic incremental sync
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT) // Default to daily at midnight, can be configured via env
+  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async handleCron() {
-    this.logger.debug('Called by cron job - Starting incremental sync...');
-    await this.incrementalSync();
+    this.logger.debug('Called by cron job - Starting sync...');
+    await this.fullSync();
   }
 
-  async initialDataLoad(): Promise<void> {
-    this.logger.log('Starting initial data load from external API...');
+  async fullSync(): Promise<void> {
+    this.logger.log('Starting full data sync from external API...');
     try {
       const brands = await this.fetchAndSaveBrands();
       await this.fetchAndSavePhonesByBrand(brands);
-      this.logger.log('Initial data load completed successfully.');
+      this.logger.log('Full sync completed successfully.');
     } catch (error) {
-      this.logger.error('Initial data load failed:', error.stack);
+      this.logger.error('Full sync failed:', error.stack);
     }
   }
 
-  async incrementalSync(): Promise<void> {
-    this.logger.log('Starting incremental sync from external API...');
-    try {
-      // For a truly incremental sync, we would ideally:
-      // 1. Fetch only new brands/phones or those updated since last sync.
-      //    This requires the external API to support such queries (e.g., 'since' parameter).
-      // 2. Compare fetched data with existing database entries and update only changed fields.
-
-      // As a simplified approach for this API, we will re-fetch all data and upsert,
-      // letting the upsert logic handle updates for existing records.
-      const brands = await this.fetchAndSaveBrands();
-      await this.fetchAndSavePhonesByBrand(brands);
-      this.logger.log('Incremental sync completed successfully.');
-    } catch (error) {
-      this.logger.error('Incremental sync failed:', error.stack);
-    }
-  }
-
-  private async fetchAndSaveBrands(): Promise<Category[]> {
+  private async fetchAndSaveBrands(): Promise<string[]> {
     this.logger.log('Fetching brands...');
-    const response = await this.externalApiService.get<BrandListResponse>('/brands');
-    const externalBrands = response.data;
-    const internalCategories: Category[] = [];
+    const brands = await this.externalApiService.fetchAvailableBrands();
+    const savedBrands: string[] = [];
 
-    for (const extBrand of externalBrands) {
-      const category = this.dataTransformationService.transformBrand(extBrand); // Assuming transformBrand returns Category
-      const savedCategory = await this.categoriesService.upsertCategory(category); // Assuming upsertCategory method
-      internalCategories.push(savedCategory);
+    for (const brandName of brands) {
+      // Upsert Category (Brand)
+      try {
+        await this.categoriesService.upsertCategory({ name: brandName });
+        savedBrands.push(brandName);
+      } catch (e) {
+        this.logger.warn(`Failed to upsert brand ${brandName}: ${e.message}`);
+      }
     }
-    this.logger.log(`Fetched and saved ${internalCategories.length} brands.`);
-    return internalCategories;
+    this.logger.log(`Fetched and saved ${savedBrands.length} brands.`);
+    return savedBrands;
   }
 
-  private async fetchAndSavePhonesByBrand(brands: Category[]): Promise<void> {
+  private async fetchAndSavePhonesByBrand(brands: string[]): Promise<void> {
     this.logger.log('Fetching phones by brand...');
     for (const brand of brands) {
-      this.logger.log(`Fetching phones for brand: ${brand.name}`);
-      // Assuming a paginated endpoint for phones by brand slug
-      let currentPage = 1;
-      let lastPage = 1;
-
-      do {
-        const response = await this.externalApiService.get<PhoneListResponse>(
-          `/brands/${brand.slug}?page=${currentPage}`,
-        );
-        const externalPhones = response.data.phones;
-        lastPage = response.data.last_page; // Update last page from response
-
-        for (const extPhone of externalPhones) {
-          const partialDevice = this.dataTransformationService.transformPhoneListItemToDevice(extPhone);
-          const fullPhoneSpec = await this.fetchAndSavePhoneSpec(extPhone.slug);
-          if (fullPhoneSpec) {
-            const device: Device = { ...partialDevice, ...fullPhoneSpec, brand: brand.name } as Device; // Merge partial with full spec
-            await this.devicesService.upsertDevice(device); // Assuming upsertDevice method
-          }
+      this.logger.log(`Fetching phones for brand: ${brand}`);
+      
+      try {
+        const devices = await this.externalApiService.fetchDevicesByBrand(brand);
+        
+        for (const devicePartial of devices) {
+          // Ensure category is set
+          devicePartial.category = brand;
+          
+          // Upsert Device (Catalog info only)
+          await this.devicesService.upsertDevice(devicePartial);
         }
-        currentPage++;
-      } while (currentPage <= lastPage);
+        
+        this.logger.log(`Saved ${devices.length} devices for ${brand}`);
+        
+        // Rate limit protection: Sleep 1s between brands
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+      } catch (error) {
+        this.logger.error(`Failed to fetch/save devices for brand ${brand}: ${error.message}`);
+      }
     }
     this.logger.log('Finished fetching and saving phones by brand.');
-  }
-
-  private async fetchAndSavePhoneSpec(phoneSlug: string): Promise<Partial<Device> | null> {
-    this.logger.log(`Fetching detailed specifications for phone slug: ${phoneSlug}`);
-    try {
-      const response = await this.externalApiService.get<PhoneSpecResponse>(`/${phoneSlug}`);
-      const externalSpec = response.data;
-      return this.dataTransformationService.normalizePhoneSpec(externalSpec);
-    } catch (error) {
-      this.logger.error(`Failed to fetch specs for ${phoneSlug}: ${error.message}`);
-      return null;
-    }
   }
 }

@@ -9,11 +9,12 @@ import { faPlus, faEdit, faTrash, faImage } from '@fortawesome/free-solid-svg-ic
 export default function AdminBrandsPage() {
   const [brands, setBrands] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState('');
 
   const fetchBrands = async () => {
     setIsLoading(true);
     try {
-      const data = await apiClient.getAdminBrands();
+      const data = await apiClient.getAdminBrands(search);
       setBrands(data);
     } catch (error) {
       console.error('Error fetching brands:', error);
@@ -25,6 +26,11 @@ export default function AdminBrandsPage() {
   useEffect(() => {
     fetchBrands();
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchBrands();
+  };
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this brand?')) {
@@ -52,6 +58,19 @@ export default function AdminBrandsPage() {
           Add Brand
         </Link>
       </div>
+
+      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
+        <input 
+          type="text" 
+          placeholder="Search brands..." 
+          className="flex-1 border border-gray-300 rounded-2xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-gray-900"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button type="submit" className="bg-gray-800 text-white px-6 py-2 rounded-2xl font-bold hover:bg-gray-700 transition-colors">
+          Search
+        </button>
+      </form>
 
       <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
         <div className="overflow-x-auto">

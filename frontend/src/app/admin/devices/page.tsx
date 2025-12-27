@@ -62,11 +62,11 @@ export default function AdminDevicesPage() {
         <input 
           type="text" 
           placeholder="Search devices..." 
-          className="flex-1 border border-gray-300 rounded px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900"
+          className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 font-bold"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button type="submit" className="bg-gray-800 text-white px-6 py-2 rounded hover:bg-gray-700">
+        <button type="submit" className="bg-gray-800 text-white px-6 py-2 rounded-xl font-black uppercase text-xs tracking-widest hover:bg-gray-700 transition-colors">
           Search
         </button>
       </form>

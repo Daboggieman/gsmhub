@@ -29,8 +29,15 @@ export class BrandsService {
     return newBrand.save();
   }
 
-  async findAll(): Promise<Brand[]> {
-    const brands = await this.brandModel.find().sort({ name: 1 }).exec();
+  async findAll(search?: string): Promise<Brand[]> {
+    const query: any = {};
+    if (search) {
+      query.$or = [
+        { name: { $regex: new RegExp(search, 'i') } },
+        { slug: { $regex: new RegExp(search, 'i') } },
+      ];
+    }
+    const brands = await this.brandModel.find(query).sort({ name: 1 }).exec();
     
     // Dynamically update device counts
     return Promise.all(brands.map(async (brand) => {

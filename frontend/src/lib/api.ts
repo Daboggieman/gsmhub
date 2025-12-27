@@ -107,8 +107,8 @@ class ApiClient {
     return this.request('/devices/brands');
   }
 
-  async getAdminBrands(): Promise<any[]> {
-    return this.request('/brands');
+  async getAdminBrands(search?: string): Promise<any[]> {
+    return this.request(`/brands${search ? `?search=${encodeURIComponent(search)}` : ''}`);
   }
 
   async createBrand(data: any): Promise<any> {
@@ -132,8 +132,8 @@ class ApiClient {
   }
 
   // Categories
-  async getCategories(): Promise<Category[]> {
-    return this.request('/categories');
+  async getCategories(search?: string): Promise<Category[]> {
+    return this.request(`/categories${search ? `?search=${encodeURIComponent(search)}` : ''}`);
   }
 
   async getCategory(slug: string): Promise<Category> {

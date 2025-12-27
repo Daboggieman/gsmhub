@@ -8,11 +8,12 @@ import Link from 'next/link';
 export default function AdminCategoriesPage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [search, setSearch] = useState('');
 
   const fetchCategories = async () => {
     setIsLoading(true);
     try {
-      const data = await apiClient.getCategories();
+      const data = await apiClient.getCategories(search);
       setCategories(data);
     } catch (error) {
       console.error('Error fetching categories:', error);
@@ -24,6 +25,11 @@ export default function AdminCategoriesPage() {
   useEffect(() => {
     fetchCategories();
   }, []);
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    fetchCategories();
+  };
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this category?')) {
@@ -47,6 +53,19 @@ export default function AdminCategoriesPage() {
           Add New Category
         </Link>
       </div>
+
+      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
+        <input 
+          type="text" 
+          placeholder="Search categories..." 
+          className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+        <button type="submit" className="bg-gray-800 text-white px-6 py-2 rounded-xl font-bold hover:bg-gray-700 transition-colors">
+          Search
+        </button>
+      </form>
 
       <div className="overflow-x-auto">
         <table className="w-full text-left border-collapse">

@@ -113,6 +113,14 @@ export class DevicesController {
     return plainToInstance(DeviceResponseDto, device);
   }
 
+  @Post('sync')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  async syncFromApi(@Body() body: { brand: string; model: string }): Promise<DeviceResponseDto> {
+    const device = await this.devicesService.syncDeviceFromAPI(body.brand, body.model);
+    return plainToInstance(DeviceResponseDto, device);
+  }
+
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)

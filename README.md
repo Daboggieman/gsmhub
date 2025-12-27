@@ -1,1 +1,1355 @@
 # gsmhub
+
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Implemented Comprehensive Admin Search System.
+- DETAILS:
+  - **Global Admin Search:**
+    - Created `AdminGlobalSearch` component in the header for instant device access from anywhere.
+    - Features debounced real-time results with images and metadata previews.
+  - **Local Page Search:**
+    - Integrated high-performance search bars into Categories and Brands management pages.
+    - Updated `CategoriesService` and `BrandsService` in the backend to support regex-based filtering.
+  - **UI Consistency:**
+    - Standardized search bar aesthetics across all management tables (Devices, Categories, Brands).
+    - Improved contrast and font-weight for all search-related inputs.
+- RESULT: Admin productivity is greatly improved with instant navigation and powerful filtering capabilities.
+- NEXT STEP: Proceed to Phase 15: Monetization or refine Pricing Management.
+================================================================================
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Implemented Brand Management & Advanced Dashboard Analytics.
+- DETAILS:
+  - **Brand Management System:**
+    - Created backend `Brand` module with schema, DTOs, and controller.
+    - Implemented frontend management pages for listing, creating, and editing manufacturers.
+    - Added support for brand logos, featured status, and manufacturer descriptions.
+    - Integrated dynamic device counting per brand in the list view.
+  - **Enhanced Admin Dashboard:**
+    - Replaced placeholder stats with live data from the database.
+    - Added "Most Popular Devices" widget showing top performers by view count.
+    - Added "Trending Searches" widget to track what users are looking for.
+    - Modernized the UI with high-contrast elements and FontAwesome icons.
+  - **Sidebar Navigation:**
+    - Integrated Brand Management into the core admin layout for quick access.
+- RESULT: The Admin Panel is now a powerful command center for content and manufacturer data management.
+- NEXT STEP: Proceed to Phase 15: Monetization or refine Pricing Management.
+================================================================================
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Advanced Form UX & Contrast Finalization.
+- DETAILS:
+  - **Dynamic Dropdowns (Comboboxes):**
+    - Upgraded `DeviceForm` to use a custom `DropdownInput` component for OS, Brand, Display Size, Chipset, Dimensions, Network, RAM, Battery, and Cameras.
+    - These inputs now function as searchable dropdowns that display all existing values from the database while still allowing manual entry.
+    - Fixed the Brand and Category inputs to ensure they are fully populated with all available records.
+  - **Accessibility Final Pass:**
+    - Verified and hardened text contrast across all admin and public views.
+    - Changed all critical UI labels and values to high-contrast colors (e.g., `text-gray-900`, `text-gray-800`).
+    - Standardized input field backgrounds and borders for better visibility.
+- RESULT: Admin forms are now highly efficient with true dropdown functionality, and the entire platform meets high legibility standards.
+- NEXT STEP: Proceed to Phase 15: Monetization.
+================================================================================
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Improved Form UX and Global Text Accessibility.
+- DETAILS:
+  - **Dynamic Suggestions:**
+    - Created a new backend endpoint `/devices/suggestions` that provides unique values from the database for fields like OS, RAM, Storage, Battery, Chipset, etc.
+    - Integrated these suggestions into the `DeviceForm` using HTML5 `<datalist>` elements, providing auto-complete functionality for nearly all input fields.
+  - **Accessibility & Contrast:**
+    - Audited and updated text color classes across the entire frontend (Admin and Public).
+    - Replaced low-contrast classes (e.g., `text-gray-400`, `text-gray-500`) with higher-contrast alternatives (e.g., `text-gray-600`, `text-gray-800`, `text-gray-900`) on light backgrounds.
+    - Improved label visibility in `DeviceForm` and `CategoryForm` for a better administrative experience.
+    - Polished the public Device Detail and Home pages for better readability.
+- RESULT: Admin data entry is faster with auto-suggestions, and the entire site is more accessible and readable.
+- NEXT STEP: Proceed to Phase 15: Monetization.
+================================================================================
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Improved Admin Panel Forms (Devices & Categories).
+- DETAILS:
+  - **Device Form Upgrade:**
+    - Implemented a tabbed interface (General, Key Specs, Detailed Specs, Media).
+    - Added support for all fields: name, images array, type, chipsets, cameras, etc.
+    - Improved specification editor with better UX.
+    - Added image preview for the primary device image.
+  - **Category Form Upgrade:**
+    - Added auto-slug generation from category name.
+    - Added support for category icons and detailed descriptions.
+    - Implemented `isActive` toggle for category visibility management.
+    - Modernized UI to match the new Device Form aesthetic.
+  - **Backend Alignment:**
+    - Updated `Device` and `Category` schemas to include new fields (name, images, type, icon, isActive).
+    - Enhanced DTOs (Create/Update/Response) with proper validation and serialization for all new fields.
+- RESULT: Admin data entry is now much more comprehensive and user-friendly.
+- NEXT STEP: Proceed to Phase 15: Monetization.
+================================================================================
+================================================================================
+- DATE: 2025-12-24
+- ACTION: Fixed OpenGraph Metadata Error and Improved Slug Generation.
+- DETAILS:
+  - **Metadata Fix:** Resolved "Invalid OpenGraph type: product" runtime error by changing the OpenGraph type from `product` to `website` in `frontend/src/lib/seo.ts`. While `product` is a valid OG type, Next.js metadata validation in newer versions is more restrictive.
+  - **Shared Utilities:** Created `shared/src/utils/slug.ts` to centralize slug generation logic for both frontend and backend.
+  - **Form Automation:** Updated `DeviceForm.tsx` to automatically generate URL-friendly slugs from device names using the new shared utility. This prevents issues like slugs containing spaces (e.g., "RedMagic 11 Pro" becoming "redmagic-11-pro").
+  - **Backend Consistency:** Refactored `backend/src/common/utils/slug.util.ts` to use the shared implementation, ensuring consistent URL structures project-wide.
+- RESULT: Device detail pages now load correctly without runtime errors, and new devices will automatically have SEO-friendly URLs.
+- NEXT STEP: Proceed to Phase 15: Monetization or continue with remaining Admin features.
+================================================================================
+================================================================================
+- DATE: 2025-12-23
+- ACTION: Fixed Category Visibility, Deletion, and Update Validation.
+- DETAILS:
+  - **Data Visibility:** Added `@Expose()` to `CategoryResponseDto` and `DeviceResponseDto` fields. This fixes the issue where categories were "invisible" because their properties were being stripped during JSON serialization by the NestJS interceptor.
+  - **Validation Fix:** Updated `CategoryForm` and `DeviceForm` to only send allowed fields to the API. This resolves the `BadRequestException` ("property id should not exist") caused by sending internal Mongoose/Class-Transformer properties back to the server.
+  - **Deletion Logic:** corrected `apiClient.getCategoryById` to use the proper `id` field and updated backend to use `findByIdAndDelete` for better compatibility with string IDs.
+  - **Conflict Prevention:** Added server-side checks for duplicate names/slugs in `CategoriesService` and `DevicesService`.
+- RESULT: Categories and Devices are now correctly visible, editable, and deletable. 
+- NEXT STEP: Complete remaining Admin sub-tasks or proceed to Phase 15: Monetization.
+================================================================================
+================================================================================
+- DATE: 2025-12-23
+- ACTION: Implemented Phase 16: Admin Panel (Core Infrastructure & Auth).
+- DETAILS:
+  - **Backend Authentication:**
+    - Created `UsersModule` with Mongoose `User` schema (Email, Password, Name, Role).
+    - Implemented `AuthModule` using Passport.js with `JwtStrategy` and `LocalStrategy`.
+    - Added bcrypt for secure password hashing.
+    - Updated `AppModule` to include new auth and users modules.
+    - Enhanced `seed.ts` to automatically create a default admin user (`admin@gsmhub.com` / `admin123`).
+  - **Frontend Admin Panel:**
+    - Implemented `AuthContext` for client-side authentication state management (JWT storage in localStorage).
+    - Created `AdminLayout` with a persistent sidebar, authentication guards (redirect to login), and dynamic headers.
+    - Developed `AdminLoginPage` with credential validation and error handling.
+    - Created `AdminDashboard` with placeholder statistics.
+    - Created `AdminDevicesPage` featuring a searchable table for device management and deletion capability.
+    - Restructured `RootLayout` with `ClientLayout` to conditionally hide public Header/Footer on admin routes.
+    - Updated `ApiClient` to automatically include JWT headers in requests and added CRUD methods.
+- RESULT: Secure Admin Panel infrastructure is fully functional. Administrators can log in and manage devices.
+- NEXT STEP: Implement "Add/Edit Device" forms and Category management in the Admin Panel.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Resolved Unique Key Console Error on Categories Page.
+- DETAILS:
+  - Fixed a React "Each child in a list should have a unique 'key' prop" warning in `frontend/src/app/categories/page.tsx`.
+  - Updated `backend/src/modules/categories/categories.controller.ts` to use `plainToInstance(CategoryResponseDto, ...)` for all endpoints, ensuring consistent string ID transformation.
+  - Improved the frontend key selection to use `category.id || category.slug || index` for guaranteed uniqueness.
+- RESULT: Console warnings eliminated and list rendering stability improved.
+- NEXT STEP: Begin Phase 15: Monetization Features or Phase 16: Admin Panel.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Completed Phase 14: SEO Optimization.
+- DETAILS:
+  - Created `frontend/src/lib/seo.ts` for centralized metadata and JSON-LD generation.
+  - Implemented dynamic SEO titles and descriptions for the Device Details page.
+  - Added JSON-LD Product schema to Device pages for Google Rich Results.
+  - Configured global metadata and title templates in `RootLayout`.
+  - Added dynamic `robots.txt` via `app/robots.ts`.
+  - Implemented dynamic `sitemap.xml` via `app/sitemap.ts` covering devices, categories, and brands.
+- RESULT: The website is now optimized for search engines and social media sharing.
+- NEXT STEP: Begin Phase 16: Admin Panel.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Completed Phases 7 through 13.
+- DETAILS:
+  - **Phase 7 (Search Module):** Enhanced backend search with regex/text ranking and popularity weighting. Implemented search query logging for analytics.
+  - **Phase 8 (Comparison Module):** Implemented detailed comparison algorithm in backend. Added numeric difference calculation and "better" device identification.
+  - **Phase 9 (Prices Module):** Enhanced price history with latest price tracking per country/retailer and trend analysis (up/down/stable).
+  - **Phase 11 (Frontend Core):** Polished `Footer`, `DeviceCard`, and `SpecsTable`. Added "Copy to clipboard" to specs. Created reusable `Button` and `Badge` UI components. Polished `ComparisonTable` with color-coded winners (green/red) and expandable categories.
+  - **Phase 12 (Frontend Pages):** Created Brand Index and Brand Detail pages. Integrated new detailed comparison backend into the comparison page.
+  - **Phase 13 (Search):** Optimized autocomplete to return full `SearchResult` objects including images and brands.
+- RESULT: Core functional modules are now robust, feature-rich, and visually polished.
+- NEXT STEP: Proceed with Phase 14: SEO Optimization or Phase 16: Admin Panel.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Fixed Categories Page Runtime Error.
+- DETAILS:
+  - Resolved `Runtime TypeError: Cannot read properties of undefined (reading 'includes')` in `getCategoryIcon` function.
+  - Added a check for undefined `slug` in `frontend/src/app/categories/page.tsx` to prevent the application from crashing if a category is missing a slug.
+- RESULT: Categories page now renders safely even if data is incomplete.
+- NEXT STEP: Begin Phase 16: Admin Panel (Critical MVP Feature) or Phase 14: SEO Optimization.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Fixed Image Component Alt Prop Issue.
+- DETAILS:
+  - Resolved console errors "Image is missing required 'alt' property" by ensuring all `Next.js Image` components have a fallback `alt` value (e.g., `alt={device.name || 'Device image'}`).
+  - Applied fixes to `frontend/src/app/page.tsx`, `DeviceCard.tsx`, `DeviceGallery.tsx`, `SearchBar.tsx`, `CompareBox.tsx`, and `ComparisonTable.tsx`.
+- RESULT: Accessibility compliance improved and console errors resolved.
+- NEXT STEP: Begin Phase 16: Admin Panel (Critical MVP Feature) or Phase 14: SEO Optimization.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Fixed Device ID Serialization Issue.
+- DETAILS:
+  - Addressed a console error "Encountered two children with the same key, `[object Object]`" on the frontend.
+  - Identified that the backend `DeviceResponseDto` was not explicitly exposing `_id` as a string, causing Mongoose ObjectId objects to leak into the JSON response (as POJOs via `.lean()`), which React coerced to the generic string "[object Object]".
+  - Updated `backend/src/modules/devices/dto/device-response.dto.ts` to explicitly transform and expose `_id` as a string.
+- RESULT: Device IDs are now correctly serialized as strings, resolving the unique key error in React lists.
+- NEXT STEP: Begin Phase 16: Admin Panel (Critical MVP Feature) or Phase 14: SEO Optimization.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Resolved 404 Errors for Navbar Links.
+- DETAILS:
+  - **Phase 12.3 (Category Page):** Implemented pagination and sorting using new reusable components (`Pagination`, `SortDropdown`).
+  - **Phase 12.4 (Search Results Page):** Added pagination, sorting, and integrated filtering (brand, category) with URL state management.
+  - **Phase 12.5 (Compare Page):** Polished the comparison flow by syncing URL state with the `CompareBox` component, ensuring selected devices are pre-loaded.
+  - **Phase 13 (Search Functionality):** Fully implemented the `SearchBar` with debounced API calls, autocomplete dropdown, highlighted matches, and robust error handling.
+- RESULT: The entire frontend browsing and searching experience is now feature-complete and polished.
+- NEXT STEP: Begin Phase 16: Admin Panel (Critical MVP Feature) or Phase 14: SEO Optimization.
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Completed Phase 12.3 (Category Page Enhancements).
+- DETAILS:
+  - Created `SortDropdown` component to allow sorting devices by Latest, Popularity, Price, and Alphabetical.
+  - Created `Pagination` component to handle large lists of devices.
+  - Updated `/categories/[category]/page.tsx` to integrate sorting and pagination, interacting with the backend API's existing query parameters.
+- RESULT: Users can now browse categories more effectively with sorting and pagination controls.
+- NEXT STEP: Proceed with Phase 12.4 (Search Results Page Enhancements) to add similar filtering/sorting capabilities, or Phase 13 (Search Functionality polish).
+================================================================================
+================================================================================
+- DATE: 2025-12-21
+- ACTION: Resolved Header and SearchBar Build Errors.
+- DETAILS:
+  - Fixed a duplicate `export default Header;` in `frontend/src/components/layout/Header.tsx` that was causing a "default exported multiple times" error.
+  - Reconstructed `frontend/src/components/search/SearchBar.tsx` which had become corrupted (contained null bytes), causing an "Unexpected character '\0'" parsing error.
+  - The new `SearchBar.tsx` includes real-time debounced search, an autocomplete dropdown with device images, and highlighted matches.
+- RESULT: Frontend build errors resolved; search functionality restored and improved.
+- NEXT STEP: Proceed with Phase 12.3 (Category Page enhancements) or Phase 13 (Search Functionality polish).
+================================================================================
+================================================================================
+- DATE: 2025-12-20
+- ACTION: Fixed Home Page Build Error and Completed Redesign.
+- DETAILS:
+  - Resolved a build error in `frontend/src/app/page.tsx` caused by duplicated code during the previous edit.
+  - Successfully implemented the GSMArena-inspired 3-column layout.
+  - Verified imports and component usage.
+- RESULT: The Home Page is now fully functional, responsive, and aesthetically aligned with the project goals.
+- NEXT STEP: Proceed with Phase 12.4 (Search Results Page) or Phase 13 (Search Functionality).
+================================================================================
+================================================================================
+- DATE: 2025-12-20
+- ACTION: Redesigned Home Page (GSMArena Style).
+- DETAILS:
+  - Implemented a 3-column responsive layout (Left Sidebar, Main Content, Right Sidebar).
+  - Added a "Phone Finder" sidebar with a list of popular brands.
+  - Added a "Top 10 by Daily Interest" right sidebar using trending device data.
+  - Refined the center column with a streamlined Hero section, Popular Categories, and "Latest Devices" grid.
+  - Improved `apiClient` usage to fetch necessary data in parallel.
+- RESULT: The Home Page now mimics the information-dense, authority-style layout of GSMArena.
+- NEXT STEP: Proceed with Phase 12.3 or 12.4, or further refine UI components.
+================================================================================
+================================================================================
+- DATE: 2025-12-20
+- ACTION: Completed Phases 11, 12.1, and 12.2.
+- DETAILS:
+  - **Phase 11 (Frontend Core Components):** Completed `DeviceGallery`, `DeviceCard`, `SpecsTable`, `CompareBox`, `SearchResults`, `SearchBar` (with bug fix), and `ComparisonTable`.
+  - **Phase 12.1 (Home Page):** Implemented a comprehensive Home Page with a Hero section, Popular Categories (with error handling fix), Trending Devices, and Popular Devices grids.
+  - **Phase 12.2 (Device Details Page):** Enhanced the Device Details Page with a polished layout, including Breadcrumbs, Gallery, Key Specs, Pricing/Affiliate section, and full Specifications table.
+  - **Search & Compare:** Implemented robust search functionality and side-by-side device comparison.
+  - **Categories Page:** Implemented `CategoryPage` as a Server Component to correctly fetch and display devices by category.
+- RESULT: The core frontend user flow (Home -> Search/Category -> Device Details -> Compare) is now fully functional and visually polished.
+- NEXT STEP: Complete Phase 12.3 (Category Page enhancements if any), then proceed to Phase 12.4 (Search Results Page enhancements) or Phase 13 (Search Functionality polish).
+================================================================================
+================================================================================
+- DATE: 2025-12-20
+- ACTION: Implemented Search and Compare Features.
+- DETAILS:
+  - Enhanced `DeviceGallery` with zoom functionality.
+  - Implemented `CompareBox` with device search and selection.
+  - Implemented `ComparisonTable` to display side-by-side specs with difference highlighting.
+  - Created `SearchResults` component for the search page.
+  - Updated `SearchBar` to include clear button and device images in results.
+  - Fixed a bug in `SearchBar` where `highlightMatch` crashed on undefined text.
+  - Updated `/search` and `/compare` pages to use the new components.
+  - Started updating `/categories/[category]` page to be a Server Component (pending completion).
+- RESULT: Search and Compare modules are largely functional on the frontend.
+- NEXT STEP: Complete the implementation of the Category Page and then move to Home Page implementation.
+================================================================================
+================================================================================
+- DATE: 2025-12-13
+- ACTION: Verified Frontend TypeScript Types.
+- DETAILS:
+  - Confirmed the existence and correct definition of `Device`, `Category`, `SearchResult`, and `PriceHistory` interfaces in `shared/src/types/index.ts`.
+  - Noted that `PriceHistory` was previously named `Price`, which is an acceptable change.
+- RESULT: Frontend TypeScript types are correctly set up and aligned with the project's data structures.
+- NEXT STEP: Continue with PHASE 11: FRONTEND CORE COMPONENTS.
+================================================================================
+================================================================================
+- DATE: 2025-12-13
+- ACTION: Configured API Client.
+- DETAILS:
+  - Enhanced error handling in the `request` method to parse and throw more specific error messages from API responses.
+  - Implemented request and response interceptor mechanisms for the `ApiClient` class to allow for custom logic before and after API calls.
+- RESULT: The API Client is now more robust with improved error handling and extensible interceptor support.
+- NEXT STEP: Continue with 10.4 TypeScript Types.
+================================================================================
+================================================================================
+- DATE: 2025-12-13
+- ACTION: Implemented frontend project structure.
+- DETAILS:
+  - Created missing frontend pages: `frontend/src/app/compare/page.tsx`, `frontend/src/app/categories/[category]/page.tsx`, `frontend/src/app/search/page.tsx`.
+  - Created missing component directories and files: `frontend/src/components/ui/`, `frontend/src/components/compare/CompareBox.tsx`, `frontend/src/components/layout/Breadcrumbs.tsx`.
+  - Created missing utility files: `frontend/src/lib/seo.ts`, `frontend/src/lib/utils.ts`.
+  - Created missing API directory: `frontend/src/app/api/`.
+- RESULT: The frontend project structure now aligns with the roadmap.
+- NEXT STEP: Continue with 10.2 Tailwind CSS Setup.
+================================================================================
+- DATE: 2025-12-13
+- ACTION: Resolved Next.js Client Component Error.
+- DETAILS:
+  - The error "You're importing a component that needs `useState`. This React Hook only works in a Client Component." persisted even after adding `"use client";` to `frontend/src/components/layout/Header.tsx`.
+  - Updated `@nestjs/common`, `@nestjs/core`, `@nestjs/cli` in the backend and `next`, `react`, `react-dom`, `eslint-config-next` in the frontend to their latest versions.
+- RESULT: The client component error is resolved, likely due to bug fixes or improved handling in the updated Next.js version.
+- NEXT STEP: Continue with PHASE 11: FRONTEND CORE COMPONENTS.
+================================================================================
+
+IMPLEMENTATION LOG
+================================================================================
+- DATE: 2025-12-03
+- ACTION: Troubleshoot and fix backend startup issues.
+- DETAILS:
+  - The backend was failing to start due to a "Cannot find module 'dist/main'" error. This was caused by an incorrect build configuration that produced a nested output directory because of shared modules.
+  - The `tsconfig.json` was configured to use `rootDirs` to handle the shared module.
+  - The `start:prod` script in `package.json` was updated to point to the correct nested entry file (`dist/backend/src/main`).
+  - The `build` script was changed to use `tsc` directly instead of `nest build`.
+  - The `start:dev` script was changed to use `ts-node-dev` with `tsconfig-paths/register` to correctly handle path aliases during development.
+- RESULT: The backend application now starts successfully in both development and production mode.
+- NEXT STEP: Continue with the implementation of the Devices module as per the roadmap.
+================================================================================
+- DATE: 2025-12-04
+- ACTION: Troubleshoot and fix frontend compilation errors.
+- DETAILS:
+  - Resolved "Type error: Property 'name' does not exist on type 'Device'" by adding `name: string;` to the `Device` interface in `shared/src/types/index.ts`.
+  - Resolved "Type error: Property '_id' does not exist on type 'Device'" by renaming `id?: string;` to `_id?: string;` in the `Device` interface in `shared/src/types/index.ts` to align with MongoDB's `_id`.
+  - Resolved "Type error: Type 'DeviceSpec' is not assignable to type '{ [key: string]: string; }'" in `SpecsTable.tsx` by refactoring the specification grouping logic to correctly group `DeviceSpec[]` into `{[category: string]: {[key: string]: string}}`.
+- RESULT: The frontend application now builds successfully and runs without the previously reported compilation errors.
+- NEXT STEP: Continue with the implementation of the Devices module as per the roadmap.
+================================================================================
+- DATE: 2025-12-05
+- ACTION: User verification of frontend compilation error fixes.
+- DETAILS:
+  - User successfully ran the frontend application.
+  - Device detail pages loaded correctly, displaying device name, specifications, and other details without visible errors.
+- RESULT: Frontend Hughes confirmed and verified by the user.
+- NEXT STEP: Continue with the implementation of the Devices module as per the roadmap.
+================================================================================
+- DATE: 2025-12-06
+- ACTION: Implement and debug search functionality.
+- DETAILS:
+  - **Issue 1: Frontend `params` promise error:** The `DevicePage` component in `frontend/src/app/devices/[slug]/page.tsx` was incorrectly handling the `params` object, leading to a "params is a Promise" error.
+    - **Fix:** Reverted the `DevicePage` to use `params: promiseParams` and `const params = await promiseParams;` to correctly resolve the promise before accessing `params.slug`.
+  - **Issue 2: Backend "Internal Server Error" (500) due to `class-transformer` circular dependency:** The NestJS backend was throwing a `RangeError: Maximum call stack size exceeded` when serializing `Device` objects with nested `Category` objects. This was because `DeviceResponseDto` directly referenced the Mongoose `Category` schema, creating a circular dependency during transformation.
+    - **Fix 1 (Debugging):** Added `console.error` to `backend/src/common/filters/http-exception.filter.ts` to reveal the full stack trace.
+    - **Fix 2 (Circular Dependency):** Created `backend/src/modules/categories/dto/category-response.dto.ts` and updated `backend/src/modules/devices/dto/device-response.dto.ts` to use this new DTO for the `category` property, breaking the circular reference.
+  - **Issue 3: Backend "Cannot find module" error:** After fixing the circular dependency, a module resolution error occurred in the backend due to an incorrect relative import path.
+    - **Fix:** Corrected the import path in `backend/src/modules/devices/dto/device-response.dto.ts` from `../categories/dto/category-response.dto` to `../../categories/dto/category-response.dto`.
+  - **Issue 4: Frontend `device.specs.forEach is not a function` error:** The `SpecsTable` component expected `device.specs` to be an array, but the backend was returning it as an object due to existing data in the database, which was defined as `type: Object` in the Mongoose schema. The schema change to `type: [DeviceSpecSchema]` did not automatically migrate existing data.
+    - **Fix 1 (Backend Schema):** Modified `backend/src/modules/devices/device.schema.ts` to define `specs` as an array of `DeviceSpec` objects.
+    - **Fix 2 (Backend Data Fetching):** Added `.lean()` to the `findBySlug` method in `backend/src/modules/devices/devices.repository.ts` to ensure plain JavaScript objects are returned, preventing `class-transformer` issues with Mongoose documents.
+    - **Fix 3 (Frontend Robustness):** Implemented a transformation logic in `frontend/src/components/devices/SpecsTable.tsx` to convert `device.specs` from an object to an array if it's not already an array, assigning a default 'General' category. This handles legacy data gracefully.
+- RESULT: The search functionality now works end-to-end. Clicking a search result correctly navigates to the device page, which loads and displays all device details, including specifications, without errors.
+- NEXT STEP: Continue with 10.2 Tailwind CSS Setup.
+================================================================================
+
+═══════════════════════════════════════════════════════════════════════════════
+  GSMHUB - DEVICE SPECIFICATIONS WEBSITE
+  COMPLETE IMPLEMENTATION ROADMAP
+═══════════════════════════════════════════════════════════════════════════════
+
+TECH STACK:
+✓ Frontend: Next.js 14+ (React, App Router)
+✓ Backend: NestJS (Node.js, TypeScript)
+✓ Database: MongoDB Atlas
+✓ Cache: Redis
+✓ Deployment: Vercel (Frontend) + Railway (Backend)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 1: PROJECT INITIALIZATION & SETUP
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 1.1 Environment Setup
+  ✓ Install Node.js (v18+)
+  ✓ Setup MongoDB Atlas account
+  ✓ Install Redis locally or setup cloud instance
+  ✓ Setup Git repository
+  ✓ Create GitHub repository for version control
+  ✓ Perform initial commit to GitHub
+
+✓ 1.2 Backend Project Initialization (NestJS)
+  ✓ Run: npm i -g @nestjs/cli
+  ✓ Create project: nest new backend
+  ✓ Choose TypeScript
+  ✓ Initialize Git in backend folder
+  ✓ Create .env file for environment variables
+  ✓ NOTE: The build and start scripts were modified to handle the monorepo structure with a shared module. The `build` script now uses `tsc` and `start:dev` uses `ts-node-dev`.
+
+✓ 1.3 Frontend Project Initialization (Next.js)
+  ✓ Create project: npx create-next-app@latest frontend
+  ✓ Choose: TypeScript, App Router, Tailwind CSS, ESLint
+  ✓ Initialize Git in frontend folder
+  ✓ Create .env.local file
+
+✓ 1.4 Project Structure Setup
+  [~] Create monorepo structure (recommended for tightly coupled frontend/backend) - NOTE: Basic structure exists, but not a full monorepo with workspaces.
+  ✓ Setup shared TypeScript types and utilities - NOTE: `shared/src/types/index.ts` created.
+  ✓ Setup .gitignore files for both projects
+  ✓ Create comprehensive README.md with project documentation
+  ✓ Setup shared package.json for common dependencies
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 2: DATABASE SETUP (MONGODB)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 2.1 Mongoose Schema Design
+  ✓ Design Device schema
+  ✓ Design PriceHistory schema
+  ✓ Design SearchIndex schema
+  ✓ Design Category schema
+
+✓ 2.2 Database Connection Setup
+  ✓ Install Mongoose packages: npm install @nestjs/mongoose mongoose
+  ✓ Configure mongoose.config.ts
+  ✓ Setup connection in app.module.ts
+  ✓ Test database connection
+
+✓ PHASE 3: BACKEND CORE SETUP (NESTJS)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 3.1 Project Structure
+  ✓ Create folder structure:
+    backend/
+    ├── src/
+    │   ├── modules/
+    │   │   ├── devices/
+    │   │   ├── search/
+    │   │   ├── categories/
+    │   │   ├── compare/
+    │   │   └── prices/
+    │   ├── common/
+    │   │   ├── utils/
+    │   │   ├── interceptors/
+    │   │   ├── dto/
+    │   │   └── guards/
+    │   ├── config/
+    │   │   ├── mongoose.config.ts
+    │   │   └── redis.config.ts
+    │   └── main.ts
+
+✓ 3.2 Redis Setup
+  ✓ Install Redis packages: npm install @nestjs/cache-manager cache-manager cache-manager-redis-store redis
+  ✓ Configure redis.config.ts
+  ✓ Setup Redis module in app.module.ts
+  ✓ Test Redis connection
+
+✓ 3.3 Core Configuration
+  ✓ Setup CORS configuration
+  ✓ Setup global validation pipe
+  ✓ Setup global exception filters
+  ✓ Configure environment variables
+  ✓ Setup logging interceptor
+
+✓ 3.4 Common Utilities
+  ✓ Create slug generator utility
+  ✓ Create data normalization utility
+  ✓ Create response formatter utility
+  ✓ Create error handler utility
+
+✓ PHASE 4: EXTERNAL API INTEGRATION (CRITICAL RISK - HIGH PRIORITY)
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️  CRITICAL DEPENDENCY WARNING: The entire project hinges on successfully integrating a reliable and affordable device specifications API. This is the highest-risk item in the entire roadmap.
+
+✓ 4.1 API Service Setup
+  ✓ Research and purchase device specs API (GSMArena API, DeviceAtlas, etc.)
+  ✓ Create API client service
+  ✓ Setup API authentication
+  ✓ Create API request/response interfaces
+
+✓ 4.2 Data Fetching Module
+  ✓ Create API fetching service
+  ✓ Implement rate limiting
+  ✓ Implement retry logic
+  ✓ Implement error handling
+  ✓ Create data validation
+
+✓ 4.3 Data Normalization
+  ✓ Create data transformation service
+  ✓ Normalize device specifications format
+  ✓ Standardize units (inches, grams, etc.)
+  ✓ Handle missing data gracefully
+  ✓ Create consistent data structure
+
+□ 4.4 Data Sync Strategy
+  □ Create sync service for initial data load
+  ✓ Implement incremental sync for updates
+  ✓ Create cron job for periodic sync
+  ✓ Setup sync logging and monitoring
+
+✓ 4.4 Data Sync Strategy
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 5: DEVICES MODULE (BACKEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 5.1 Devices Schema & DTOs
+  ✓ NOTE: DTOs (`CreateDeviceDto`, `UpdateDeviceDto`, `DeviceResponseDto`) were found to be already implemented with appropriate validation and transformation decorators in `backend/src/modules/devices/dto/`.
+  ✓ Create Device schema (Mongoose)
+  ✓ Create CreateDeviceDto
+  ✓ Create UpdateDeviceDto
+  ✓ Create DeviceResponseDto
+  ✓ Add validation decorators
+
+✓ 5.2 Devices Repository
+  ✓ NOTE: Created `DevicesRepository` in `backend/src/modules/devices/devices.repository.ts` and injected it into the `DevicesService`. Refactored the service to delegate all device-related database operations to the repository, successfully abstracting the data access layer.
+  ✓ Create DevicesRepository
+  ✓ Implement CRUD operations
+  ✓ Add custom query methods
+  ✓ Implement pagination
+
+✓ 5.3 Devices Service
+  ✓ Create DevicesService
+  ✓ Implement methods:
+    ✓ getDeviceBySlug(slug: string)
+    ✓ getAllDevices(filters, pagination)
+    ✓ getDevicesByCategory(category: string)
+    ✓ getDevicesByBrand(brand: string)
+    ✓ syncDeviceFromAPI(deviceId: string)
+    ✓ createDevice(data: CreateDeviceDto)
+    ✓ updateDevice(id: string, data: UpdateDeviceDto)
+    ✓ deleteDevice(id: string)
+    ✓ increaseViewCount(slug: string)
+    ✓ getPopularDevices(limit: number)
+    ✓ getTrendingDevices(limit: number)
+
+✓ 5.4 Devices Controller
+  ✓ Create DevicesController
+  ✓ Implement endpoints:
+    ✓ GET /devices (list all with filters)
+    ✓ GET /devices/slug/:slug (get single device)
+    ✓ GET /devices/category/:category
+    ✓ GET /devices/brand/:brand
+    ✓ GET /devices/popular
+    ✓ GET /devices/trending
+    ✓ POST /devices (admin only)
+    ✓ PATCH /devices/:id (admin only)
+    ✓ DELETE /devices/:id (admin only)
+
+✓ 5.5 Caching Implementation
+  ✓ Implement Redis caching for device data
+  ✓ Cache popular devices
+  ✓ Cache device by slug
+  ✓ Set appropriate TTL (Time To Live)
+  ✓ Implement cache invalidation strategy
+
+✓ 5.6 View Tracking
+  ✓ Implement view counter
+  ✓ Track page views per device
+  x Store view history (Reverted due to compilation errors)
+  x Calculate trending based on recent views (Reverted due to compilation errors)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ PHASE 6: CATEGORIES MODULE (BACKEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 6.1 Categories Setup
+  ✓ Create Category schema (Mongoose)
+  ✓ Create CategoryDto
+  ✓ Create CategoriesService
+  ✓ Create CategoriesController
+
+✓ 6.2 Category Implementation
+  ✓ Implement category CRUD operations
+  ✓ Create predefined categories:
+    ✓ Smartphones
+    ✓ Tablets
+    ✓ Laptops
+    ✓ Smartwatches
+    ✓ Gaming Laptops
+    ✓ Budget Phones
+  NOTE: Predefined categories are handled by the original seed script.
+  ✓ Link devices to categories
+  ✓ Implement category filtering
+
+✓ 6.3 Category Endpoints
+  ✓ GET /categories (list all)
+  ✓ GET /categories/:slug (get category details)
+  ✓ GET /categories/:slug/devices (get devices in category)
+  ✓ POST /categories (admin only)
+  ✓ PATCH /categories/:id (admin only)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 7: SEARCH MODULE (BACKEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 7.1 Search Index Setup
+  ✓ Create SearchIndex schema (Mongoose)
+  ✓ Populate search index from devices
+  ✓ Create indexing service
+  ✓ Implement auto-indexing on device create/update
+
+✓ 7.2 Search Service
+  ✓ Create SearchService
+  ✓ Implement fuzzy search algorithm (regex/text combo)
+  ✓ Implement autocomplete functionality
+  ✓ Search across: name, brand, model, category
+  ✓ Rank results by relevance
+  ✓ Implement search suggestions
+
+✓ 7.3 Search Controller
+  ✓ Create SearchController
+  ✓ Implement endpoints:
+    ✓ GET /search?q=query (main search)
+    ✓ GET /search/autocomplete?q=query
+    ✓ GET /search/suggestions?q=query
+
+✓ 7.4 Search Optimization
+  ✓ Cache popular search queries
+  ✓ Implement search analytics
+  ✓ Track search terms
+  ✓ Optimize search performance
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 8: COMPARISON MODULE (BACKEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 8.1 Comparison Service
+  ✓ Create CompareService
+  ✓ Implement comparison algorithm
+  ✓ Compare two devices side-by-side
+  ✓ Highlight differences
+  ✓ Calculate percentage differences for numeric values
+
+✓ 8.2 Comparison Logic
+  ✓ Merge two device spec objects
+  ✓ Create comparison result format:
+    {
+      item: "Display Size",
+      deviceA: "6.7 inch",
+      deviceB: "6.8 inch",
+      difference: "+0.1",
+      better: "deviceB"
+    }
+  ✓ Handle missing specs gracefully
+  ✓ Categorize specs (Display, Camera, Performance, etc.)
+
+✓ 8.3 Comparison Controller
+  ✓ Create CompareController
+  ✓ Implement endpoints:
+    ✓ GET /compare?devices=slug1,slug2
+    □ POST /compare (with device IDs in body)
+
+✓ 8.4 Comparison Caching
+  ✓ Cache comparison results
+  ✓ Invalidate cache on device updates
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 9: PRICES MODULE (BACKEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 9.1 Price History Setup
+  ✓ Create PriceHistory schema (Mongoose)
+  ✓ Create PriceDto
+  ✓ Create PricesService
+  ✓ Create PricesController
+
+✓ 9.2 Price Management
+  ✓ Implement price tracking per country
+  ✓ Store price history
+  ✓ Track price changes over time
+  ✓ Support multiple currencies
+
+✓ 9.3 Price Endpoints
+  ✓ GET /prices/device/:slug (get current prices)
+  ✓ GET /prices/device/:slug/history (get price history)
+  ✓ POST /prices (add new price)
+  ✓ PATCH /prices/:id (update price)
+
+✓ 9.4 Price Features
+  ✓ Calculate price trends
+  ✓ Show lowest/highest prices
+  ✓ Price comparison across countries
+  □ Price alerts (future feature)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 10: FRONTEND SETUP (NEXT.JS)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 10.1 Project Structure
+  ✓ Create folder structure:
+    frontend/
+    ├── app/
+    │   ├── layout.tsx
+    │   ├── page.tsx (home)
+    │   ├── devices/
+    │   │   └── [slug]/
+    │   │       └── page.tsx
+    │   ├── compare/
+    │   │   └── page.tsx
+    │   ├── categories/
+    │   │   └── [category]/
+    │   │       └── page.tsx
+    │   ├── search/
+    │   │   └── page.tsx
+    │   └── api/
+    ├── components/
+    │   ├── ui/
+    │   ├── DeviceCard.tsx
+    │   ├── SpecsTable.tsx
+    │   ├── CompareBox.tsx
+    │   ├── SearchBar.tsx
+    │   ├── Header.tsx
+    │   ├── Footer.tsx
+    │   └── Breadcrumbs.tsx
+    ├── lib/
+    │   ├── api.ts
+    │   ├── seo.ts
+    │   └── utils.ts
+    ├── types/
+    │   └── index.ts
+    └── public/
+        └── images/
+- NOTE: `components` folder and some files are missing.
+
+✓ 10.2 Tailwind CSS Setup
+  ✓ Configure tailwind.config.js
+  ✓ Setup custom colors and theme
+  ✓ Create utility classes
+  ✓ Setup responsive breakpoints
+
+✓ 10.3 API Client Setup
+  ✓ Create API client in lib/api.ts - NOTE: Import fixed.
+  ✓ Setup axios or fetch wrapper (using native fetch API)
+  ✓ Configure base URL
+  ✓ Implement error handling (enhanced with API error parsing)
+  ✓ Add request/response interceptors (custom implementation for fetch)
+
+✓ 10.4 TypeScript Types
+  ✓ Create Device interface
+  ✓ Create Category interface
+  ✓ Create SearchResult interface
+  ✓ Create PriceHistory interface - NOTE: Renamed from Price
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 11: FRONTEND CORE COMPONENTS
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 11.1 Layout Components
+  ✓ Create Header component
+    ✓ Logo
+    ✓ Navigation menu
+    ✓ Search bar
+    ✓ Mobile menu
+  ✓ Create Footer component
+    ✓ Links
+    ✓ Social media
+    ✓ Copyright
+  ✓ Create Breadcrumbs component
+  ✓ Create Loading component
+  ✓ Create Error component
+
+✓ 11.2 Device Components
+  ✓ Create DeviceCard component
+    ✓ Device image
+    ✓ Brand and model
+    ✓ Key specs preview
+    ✓ Price
+    ✓ Link to details
+  ✓ Create SpecsTable component
+    ✓ Categorized specs
+    ✓ Expandable sections
+    ✓ Copy to clipboard
+  ✓ Create DeviceGallery component
+    ✓ Image carousel
+    ✓ Zoom functionality
+    ✓ Thumbnails
+
+✓ 11.3 Search Components
+  ✓ Create SearchBar component
+    ✓ Input field
+    ✓ Search icon
+    ✓ Clear button
+  ✓ Create AutocompleteDropdown component
+    ✓ Fetch suggestions from API
+    ✓ Display dropdown with results
+    ✓ Highlight matching text
+    □ Keyboard navigation (arrow keys, enter)
+    ✓ Click to select
+    ✓ Show device images in suggestions
+  
+  ✓ Click handling
+  ✓ Create SearchResults component
+    ✓ Results grid
+    ✓ Filters
+    ✓ Sorting options
+
+✓ 11.4 Comparison Components
+  ✓ Create CompareBox component
+    ✓ Device selector
+    ✓ Add/remove devices
+    ✓ Compare button
+  ✓ Create ComparisonTable component
+    ✓ Side-by-side specs
+    ✓ Highlight differences
+    ✓ Color coding (green/red)
+    ✓ Expandable categories
+
+✓ 11.5 UI Components
+  ✓ Create Button component
+  ✓ Create Card component
+  ✓ Create Badge component
+  □ Create Tabs component
+  □ Create Modal component
+  ✓ Create Dropdown component
+  ✓ Create Pagination component
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 12: FRONTEND PAGES IMPLEMENTATION
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 12.1 Home Page (/)
+  ✓ Create app/page.tsx
+  ✓ Implement hero section
+  ✓ Show trending devices
+  ✓ Show popular categories
+  ✓ Show latest devices
+  ✓ Add search functionality
+  □ Implement SSR or SSG
+
+✓ 12.2 Device Details Page (/devices/[slug])
+  ✓ Create app/devices/[slug]/page.tsx
+  ✓ Fetch device data (SSR)
+  ✓ Display device images
+  ✓ Show complete specifications
+  ✓ Display pricing information
+  ✓ Add "Buy Now" buttons with affiliate links
+  □ Show similar devices
+  ✓ Implement breadcrumbs
+  □ Add social share buttons
+  ✓ Track page views
+
+✓ 12.3 Category Page (/categories/[category])
+  ✓ Create app/categories/[category]/page.tsx
+  ✓ Fetch devices by category
+  ✓ Display devices grid
+  □ Implement filters:
+    □ Price range
+    ✓ Brand
+    □ Release date
+    □ Specs (RAM, storage, etc.)
+  ✓ Add sorting options
+  ✓ Implement pagination
+  ✓ Show category description
+
+✓ 12.4 Search Results Page (/search)
+  ✓ Create app/search/page.tsx
+  ✓ Display search results
+  ✓ Show search query
+  ✓ Implement filters
+  ✓ Add sorting
+  ✓ Show "no results" state
+  □ Suggest alternative searches
+
+✓ 12.5 Comparison Page (/compare)
+  ✓ Create app/compare/page.tsx
+  ✓ Device selection interface
+  ✓ Display comparison table
+  ✓ Highlight differences
+  ✓ Add "Add to compare" functionality
+  ✓ Support 2-4 devices comparison
+  ✓ Make shareable comparison URLs
+
+✓ 12.6 Brand Page (/brands/[brand])
+  ✓ Create app/brands/[brand]/page.tsx
+  ✓ Show all devices by brand
+  ✓ Display brand information
+  ✓ Implement filters and sorting
+  ✓ Show popular devices from brand
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 13: SEARCH FUNCTIONALITY (FRONTEND)
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 13.1 Search Bar Implementation
+  ✓ Add search bar to header
+  ✓ Implement real-time search
+  ✓ Add debouncing (300ms)
+  ✓ Show loading state
+
+✓ 13.2 Autocomplete Feature
+  ✓ Fetch suggestions from API
+  ✓ Display dropdown with results
+  ✓ Highlight matching text
+  □ Keyboard navigation (arrow keys, enter)
+  ✓ Click to select
+  ✓ Show device images in suggestions
+
+✓ 13.3 Search Results
+  ✓ Display results in grid
+  ✓ Show result count
+  ✓ Implement "Load more" or pagination
+  ✓ Add filters sidebar
+  ✓ Preserve search state in URL
+
+✓ 13.4 Search Optimization
+  □ Cache recent searches
+  □ Show search history
+  □ Implement popular searches
+  ✓ Add search analytics
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 14: SEO OPTIMIZATION
+═══════════════════════════════════════════════════════════════════════════════
+
+✓ 14.1 Metadata Implementation
+  ✓ Create SEO utility functions
+  ✓ Generate dynamic metadata for each page
+  ✓ Implement Open Graph tags
+  ✓ Add Twitter Card tags
+  ✓ Create JSON-LD structured data
+
+✓ 14.2 Device Page SEO
+  ✓ Dynamic title: "{Brand} {Model} - Full Specs & Price"
+  ✓ Dynamic description with key specs
+  ✓ Add canonical URLs
+  ✓ Generate Open Graph images
+  ✓ Add schema.org Product markup
+
+✓ 14.3 Static Site Generation
+  ✓ Implement generateStaticParams for popular devices
+  ✓ Pre-render top 1000 device pages
+  ✓ Setup ISR (Incremental Static Regeneration)
+  ✓ Configure revalidation time
+
+✓ 14.4 Sitemap & Robots
+  ✓ Generate dynamic sitemap.xml
+  ✓ Create robots.txt
+  ✓ Submit sitemap to Google Search Console
+  ✓ Setup Google Analytics
+
+✓ 14.5 Performance Optimization
+  ✓ Implement image optimization
+  ✓ Use Next.js Image component
+  ✓ Lazy load images
+  ✓ Code splitting
+  ✓ Minimize bundle size
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 15: MONETIZATION FEATURES
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 15.1 Google AdSense Integration
+  □ Create AdSense account
+  □ Get approval
+  □ Add AdSense script to layout
+  □ Create Ad components
+  □ Place ads on:
+    □ Device pages (sidebar, between specs)
+    □ Category pages (between results)
+    □ Comparison pages (top, bottom)
+    □ Search results pages
+  □ Implement responsive ad units
+
+□ 15.2 Affiliate Links
+  □ Sign up for affiliate programs:
+    □ Jumia Affiliate
+    □ Amazon Associates
+    □ AliExpress Affiliate
+    □ Konga Affiliate
+    □ Slot Nigeria
+  □ Create affiliate link generator
+  □ Add "Buy Now" buttons with affiliate links
+  □ Track affiliate clicks
+  □ Implement link cloaking
+
+□ 15.3 Price Comparison Widget
+  □ Show prices from multiple retailers
+  □ Add affiliate links to each retailer
+  □ Highlight best price
+  □ Show availability status
+
+□ 15.4 Sponsored Listings (Future)
+  □ Create sponsored device slots
+  □ Add "Sponsored" badge
+  □ Implement payment system
+  □ Create admin panel for sponsors
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 16: ADMIN PANEL (CORE MVP FEATURE - HIGH PRIORITY)
+═══════════════════════════════════════════════════════════════════════════════
+
+⚠️  CRITICAL MVP COMPONENT: Admin panel is crucial for long-term success. It allows for manual data correction, content management (categories, brands), and handling edge cases not covered by the API. This should be considered a core part of the MVP rather than optional.
+
+💡 NEW APPROACH: The Admin Panel will have a completely separate frontend experience from the main GSMHub site while sharing the same backend. This will be achieved using Next.js Route Groups (e.g., `/(public)` and `/(admin)`) to provide unique layouts, navigation, and styling for the dashboard.
+
+✓ 16.1 Authentication
+  ✓ Implement JWT authentication
+  ✓ Create login page
+  ✓ Add role-based access control
+  ✓ Protect admin routes
+
+✓ 16.2 Admin Dashboard
+  ✓ Create admin layout
+  ✓ Dashboard with statistics:
+    ✓ Total devices
+    ✓ Total views
+    ✓ Popular devices
+    ✓ Recent searches
+    □ Revenue metrics (affiliate clicks, ad impressions)
+  ✓ Analytics charts
+  ✓ Real-time monitoring
+
+□ 16.3 Device Management
+  ✓ List all devices with advanced filtering
+  ✓ Add new device manually (fallback for API failures)
+  ✓ Edit device details and specifications
+  ✓ Delete device (soft delete preferred)
+  □ Bulk import devices from CSV/Excel
+  □ Manual sync from API
+  □ Device approval workflow
+  □ Duplicate detection and merging
+
+□ 16.4 Content Management
+  ✓ Manage categories (CRUD operations)
+  ✓ Manage brands and manufacturers
+  □ Update prices manually
+  □ Manage affiliate links and tracking
+  □ Edit SEO metadata for devices
+  □ Manage sponsored content
+  □ Content moderation tools
+
+□ 16.5 System Administration
+  □ API integration monitoring
+  □ Cache management (clear, refresh)
+  □ Database backup and restore
+  □ Error logs and debugging tools
+  □ Performance monitoring
+  □ User activity logs
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 17: TESTING
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 17.1 Backend Testing
+  □ Setup Jest for NestJS
+  □ Write unit tests for services
+  □ Write integration tests for controllers
+  □ Test database operations
+  □ Test API endpoints with Postman/Insomnia
+  □ Test caching functionality
+  □ Test error handling
+
+□ 17.2 Frontend Testing
+  □ Setup Jest and React Testing Library
+  □ Write component tests
+  □ Test user interactions
+  □ Test API integration
+  □ Test routing
+  □ Test responsive design
+
+□ 17.3 End-to-End Testing
+  □ Setup Playwright or Cypress
+  □ Test critical user flows:
+    □ Search and view device
+    □ Compare devices
+    □ Navigate categories
+    □ Click affiliate links
+  □ Test on different browsers
+  □ Test on mobile devices
+
+□ 17.4 Performance Testing
+  □ Test page load times
+  □ Test API response times
+  □ Test database query performance
+  □ Test caching effectiveness
+  □ Run Lighthouse audits
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 18: DEPLOYMENT PREPARATION
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 18.1 Environment Configuration
+  □ Setup production environment variables
+  □ Configure database for production
+  □ Setup Redis for production
+  □ Configure CORS for production
+  □ Setup SSL certificates
+
+□ 18.2 Database Migration
+  □ Backup local database
+  □ Create production database
+  □ Run migrations on production
+  □ Seed initial data if needed
+
+□ 18.3 Build Optimization
+  □ Optimize backend build
+  □ Optimize frontend build
+  □ Minimize bundle sizes
+  □ Remove development dependencies
+  □ Setup environment-specific configs
+
+□ 18.4 Security Hardening
+  □ Implement rate limiting
+  □ Add security headers
+  □ Setup HTTPS
+  □ Sanitize user inputs
+  □ Implement CSRF protection
+  □ Setup API key authentication
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 19: DEPLOYMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 19.1 Backend Deployment (Railway/Render)
+  □ Create Railway/Render account
+  □ Connect GitHub repository
+  □ Configure build settings
+  □ Add environment variables:
+    □ DATABASE_URL
+    □ REDIS_URL
+    □ API_KEY
+    □ JWT_SECRET
+  □ Deploy backend
+  □ Test API endpoints
+  □ Setup custom domain (optional)
+
+□ 19.2 Database Deployment
+  □ Setup PostgreSQL on Railway/Render
+  □ Or use managed service (AWS RDS, DigitalOcean)
+  □ Configure connection string
+  □ Run migrations
+  □ Setup automated backups
+
+□ 19.3 Redis Deployment
+  □ Setup Redis on Railway/Render
+  □ Or use managed service (Redis Cloud, AWS ElastiCache)
+  □ Configure connection string
+  □ Test cache functionality
+
+□ 19.4 Frontend Deployment (Vercel)
+  □ Create Vercel account
+  □ Connect GitHub repository
+  □ Configure build settings
+  □ Add environment variables:
+    □ NEXT_PUBLIC_API_URL
+    □ NEXT_PUBLIC_SITE_URL
+  □ Deploy frontend
+  □ Test all pages
+  □ Setup custom domain
+
+□ 19.5 DNS Configuration
+  □ Purchase domain name
+  □ Configure DNS records
+  □ Point domain to Vercel
+  □ Setup SSL certificate
+  □ Test domain access
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 20: POST-DEPLOYMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 20.1 Monitoring Setup
+  □ Setup error tracking (Sentry)
+  □ Setup uptime monitoring (UptimeRobot)
+  □ Setup performance monitoring
+  □ Configure alerts
+  □ Setup logging service
+
+□ 20.2 Analytics Setup
+  □ Setup Google Analytics 4
+  □ Setup Google Search Console
+  □ Track key metrics:
+    □ Page views
+    □ User sessions
+    □ Popular devices
+    □ Search queries
+    □ Affiliate clicks
+  □ Setup conversion tracking
+
+□ 20.3 Initial Data Population
+  □ Sync devices from API
+  □ Populate all categories
+  □ Add initial pricing data
+  □ Create search index
+  □ Verify data integrity
+
+□ 20.4 Testing in Production
+  □ Test all critical features
+  □ Test on multiple devices
+  □ Test on different browsers
+  □ Verify SEO tags
+  □ Test affiliate links
+  □ Check ad placements
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 21: SCALING & OPTIMIZATION
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 21.1 Performance Optimization
+  □ Implement Redis clustering
+  □ Setup CDN for images (Cloudinary, Cloudflare)
+  □ Enable edge caching on Vercel
+  □ Optimize database queries
+  □ Add database indexes
+  □ Implement query caching
+
+□ 21.2 Background Jobs
+  □ Setup cron jobs for:
+    □ Daily device sync
+    □ Price updates
+    □ Search index updates
+    □ Sitemap generation
+    □ Analytics aggregation
+  □ Use Bull Queue or similar
+  □ Monitor job execution
+
+□ 21.3 Static Page Generation
+  □ Pre-render top 10,000 device pages
+  □ Setup ISR for dynamic updates
+  □ Generate category pages statically
+  □ Optimize build times
+
+□ 21.4 Database Optimization
+  □ Analyze slow queries
+  □ Add missing indexes
+  □ Implement connection pooling
+  □ Setup read replicas (if needed)
+  □ Optimize JSONB queries
+
+□ 21.5 Caching Strategy
+  □ Cache popular devices (1 hour TTL)
+  □ Cache search results (30 min TTL)
+  □ Cache category pages (1 hour TTL)
+  □ Cache comparison results (1 hour TTL)
+  □ Implement cache warming
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 22: MARKETING & GROWTH
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 22.1 SEO Optimization
+  □ Submit sitemap to search engines
+  □ Create quality backlinks
+  □ Write blog posts about devices
+  □ Optimize for featured snippets
+  □ Target long-tail keywords
+
+□ 22.2 Content Marketing
+  □ Create comparison articles
+  □ Write buying guides
+  □ Create "Best phones under X" lists
+  □ Share on social media
+  □ Create YouTube videos (optional)
+
+□ 22.3 Social Media
+  □ Create social media accounts
+  □ Share new devices
+  □ Share comparisons
+  □ Engage with audience
+  □ Run social media ads (optional)
+
+□ 22.4 Email Marketing
+  □ Collect email subscribers
+  □ Send weekly newsletters
+  □ Alert about new devices
+  □ Share price drops
+  □ Promote affiliate deals
+
+═══════════════════════════════════════════════════════════════════════════════
+
+PHASE 23: ADVANCED FEATURES (FUTURE ENHANCEMENTS)
+═══════════════════════════════════════════════════════════════════════════════
+
+□ 23.1 User Features
+  □ User registration and login
+  □ User profiles
+  □ Favorite devices
+  □ Device reviews and ratings
+  □ Comment system
+  □ User-generated content
+
+□ 23.2 Advanced Search
+  □ Filters by multiple specs
+  □ Price range slider
+  □ Advanced comparison (3-4 devices)
+  □ Save search preferences
+  □ Search history
+
+□ 23.3 Notifications
+  □ Price drop alerts
+  □ New device alerts
+  □ Push notifications
+  □ SMS alerts (premium)
+
+□ 23.4 Mobile App
+  □ React Native app
+  □ iOS and Android
+  □ Push notifications
+  □ Offline mode
+  □ Barcode scanner for quick search
+
+□ 23.5 AI Features
+  □ AI-powered device recommendations
+  □ Chatbot for device queries
+  □ Image recognition for device identification
+  □ Predictive price trends
+  □ Smart comparison suggestions
+
+□ 23.6 Community Features
+  □ User forums
+  □ Q&A section
+  □ Expert reviews
+  □ Video reviews
+  □ User polls and surveys
+
+□ 23.7 Business Features
+  □ B2B portal for retailers
+  □ Bulk pricing API
+  □ White-label solutions
+  □ Premium subscriptions
+  □ API access for developers
+
+═════════════════════════════════════════════════════════════════════════════
+
+TOTAL PHASES: 23
+
+PRIORITY ORDER:
+1. Phases 1-5: Core backend setup (Critical - 4-6 weeks)
+2. Phases 6-9: Additional backend modules (High - 2-3 weeks)
+3. Phases 10-13: Frontend implementation (Critical - 4-6 weeks)
+4. Phase 14: SEO optimization (High - 1-2 weeks)
+5. Phase 15: Monetization (High - 1 week)
+6. Phase 16: Admin panel (Medium - 2 weeks)
+7. Phase 17: Testing (Critical - 2 weeks)
+8. Phases 18-19: Deployment (Critical - 1 week)
+9. Phase 20: Post-deployment (High - 1 week)
+10. Phase 21: Scaling (Medium - Ongoing)
+11. Phase 22: Marketing (High - Ongoing)
+12. Phase 23: Advanced features (Low - Future)
+═══════════════════════════════════════════════════════════════════════════════

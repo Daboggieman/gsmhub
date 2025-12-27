@@ -4,6 +4,7 @@ import { useAuth } from '@/lib/auth-context';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect } from 'react';
 import Link from 'next/link';
+import AdminGlobalSearch from '@/components/admin/AdminGlobalSearch';
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const { user, isLoading, logout } = useAuth();
@@ -83,13 +84,16 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
       {/* Main Content */}
       <main className="flex-1 p-10">
-        <header className="mb-8 flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-gray-800">
-            {pathname.split('/').pop()?.toUpperCase()}
-          </h2>
+        <header className="mb-8 flex items-center justify-between gap-8">
+          <div className="flex items-center gap-8 flex-1">
+            <h2 className="text-3xl font-black text-gray-900 tracking-tight shrink-0">
+              {pathname.split('/').pop()?.toUpperCase()}
+            </h2>
+            <AdminGlobalSearch />
+          </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-600">Welcome, {user.name}</span>
-            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold">
+            <span className="text-gray-700 font-bold">Welcome, {user.name}</span>
+            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold border-2 border-white shadow-sm">
               {user.name.charAt(0)}
             </div>
           </div>

@@ -5,6 +5,8 @@ export type CategoryDocument = Category & Document;
 
 @Schema({ timestamps: true })
 export class Category {
+  _id: string;
+
   @Prop({ required: true, unique: true, index: true })
   name: string;
 

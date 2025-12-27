@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
-import { slugify } from '../../common/utils/slug.util';
+import { generateSlug } from '../../common/utils/slug.util';
 
 @Injectable()
 export class CategoriesService {
@@ -12,7 +12,7 @@ export class CategoriesService {
   ) {}
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
-    const slug = createCategoryDto.slug || slugify(createCategoryDto.name);
+    const slug = createCategoryDto.slug || generateSlug(createCategoryDto.name);
     
     // Check for existing name or slug
     const existing = await this.categoryModel.findOne({
@@ -27,8 +27,15 @@ export class CategoriesService {
     return createdCategory.save();
   }
 
-  async findAll(): Promise<Category[]> {
-    return this.categoryModel.find().exec();
+  async findAll(search?: string): Promise<Category[]> {
+    const query: any = {};
+    if (search) {
+      query.$or = [
+        { name: { $regex: new RegExp(search, 'i') } },
+        { slug: { $regex: new RegExp(search, 'i') } },
+      ];
+    }
+    return this.categoryModel.find(query).sort({ name: 1 }).exec();
   }
 
   async findOne(id: string): Promise<Category> {
@@ -49,7 +56,7 @@ export class CategoriesService {
 
   async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
     if (updateCategoryDto.name && !updateCategoryDto.slug) {
-      updateCategoryDto.slug = slugify(updateCategoryDto.name);
+      updateCategoryDto.slug = generateSlug(updateCategoryDto.name);
     }
 
     // Check for conflicts with other categories

@@ -202,7 +202,7 @@ export class DevicesRepository {
 
   async getUniqueFieldValues(field: string): Promise<string[]> {
     const values = await this.deviceModel.distinct(field).exec();
-    return values.filter(v => v !== null && v !== undefined && v !== '');
+    return values.filter(v => v !== null && v !== undefined && v !== '') as string[];
   }
 
   async getTotalViews(): Promise<number> {

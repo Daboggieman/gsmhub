@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
@@ -33,8 +34,8 @@ export class BrandsController {
   }
 
   @Get()
-  async findAll() {
-    const brands = await this.brandsService.findAll();
+  async findAll(@Query('search') search?: string) {
+    const brands = await this.brandsService.findAll(search);
     return plainToInstance(BrandResponseDto, brands);
   }
 

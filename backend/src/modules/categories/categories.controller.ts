@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
@@ -37,8 +38,8 @@ export class CategoriesController {
   }
 
   @Get()
-  async findAll() {
-    const categories = await this.categoriesService.findAll();
+  async findAll(@Query('search') search?: string) {
+    const categories = await this.categoriesService.findAll(search);
     console.log(`Found ${categories.length} categories`);
     return plainToInstance(CategoryResponseDto, categories);
   }

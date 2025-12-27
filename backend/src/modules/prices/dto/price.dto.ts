@@ -51,6 +51,15 @@ export class CreatePriceDto {
   @IsString()
   @IsOptional()
   url?: string;
+
+  @ApiProperty({
+    description: 'The date of the price entry',
+    example: '2023-10-27T10:00:00Z',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  date?: string;
 }
 
 export class UpdatePriceDto {

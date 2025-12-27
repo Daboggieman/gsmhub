@@ -1,4 +1,4 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException, ConflictException, forwardRef } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -8,9 +8,10 @@ import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DevicesRepository } from './devices.repository';
 import { Category as SharedCategory, Device as SharedDevice, DeviceType } from '@shared/types';
-import { CategoriesService } from '../categories/categories.service'; // Import CategoriesService
-import { PricesService } from '../prices/prices.service'; // Import PricesService
-import { Cache } from 'cache-manager';
+import { CategoriesService } from '../categories/categories.service';
+import { PricesService } from '../prices/prices.service';
+import { ExternalApiService } from '../external-api/external-api.service';
+import type { Cache } from 'cache-manager';
 
 @Injectable()
 export class DevicesService {
@@ -20,7 +21,8 @@ export class DevicesService {
     @InjectModel(Category.name)
     private readonly categoryModel: Model<CategoryDocument>,
     private readonly categoriesService: CategoriesService,
-    private readonly pricesService: PricesService, // Inject PricesService
+    private readonly pricesService: PricesService,
+    private readonly externalApiService: ExternalApiService,
   ) {}
 
   private async attachLatestPrice(device: Device): Promise<Device> {
@@ -204,8 +206,10 @@ export class DevicesService {
     if (!deviceData.slug) {
       throw new Error('Device slug is required for upsert operation.');
     }
+    
+    // Default category to 'Smartphones' if missing
     if (!deviceData.category) {
-      throw new Error('Device category is required for upsert operation.');
+        deviceData.category = 'Smartphones';
     }
 
     // Find or create category
@@ -245,23 +249,24 @@ export class DevicesService {
     if(upsertedDevice) {
       await this.cacheManager.del(`device_${upsertedDevice.slug}`);
       await this.cacheManager.del('popular_devices');
+      return await this.attachLatestPrice(upsertedDevice);
     }
-    return await this.attachLatestPrice(upsertedDevice);
+    return null;
   }
 
-    async syncDeviceFromAPI(deviceData: Partial<SharedDevice>): Promise<Device | null> {
+  async syncDeviceFromAPI(brand: string, model: string): Promise<Device | null> {
+      try {
+        const deviceData = await this.externalApiService.fetchDeviceSpecs(brand, model);
+        if (!deviceData) {
+            throw new NotFoundException(`Device ${brand} ${model} not found in external APIs`);
+        }
+        return await this.upsertDevice(deviceData);
+      } catch (error) {
+        throw new NotFoundException(`Failed to sync device: ${error.message}`);
+      }
+  }
 
-      // This method will leverage the existing upsertDevice method to handle the actual syncing logic.
-
-      // It serves as an entry point for an external API call and uses upsertDevice to persist the data.
-
-      return this.upsertDevice(deviceData);
-
-    }
-
-  
-
-    async getBrands(): Promise<string[]> {
+  async getBrands(): Promise<string[]> {
     return this.devicesRepository.getUniqueBrands();
   }
 

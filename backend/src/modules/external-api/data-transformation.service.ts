@@ -1,196 +1,203 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Brand,
-  PhoneListItem,
-  PhoneSpec,
-  SpecDetail,
-  SearchResultPhone,
-  LatestPhone,
-  TopByInterestPhone,
-  TopByFansPhone
-} from '@modules/external-api/dto/gsmarena.dto';
-import { Device, DeviceSpec, DeviceType, Category as SharedCategory } from '@shared/types';
-import { generateSlug } from '../../common/utils/slug.util'; // Our slug utility
+import { Device, DeviceSpec, DeviceType } from '@shared/types';
+import { generateSlug } from '../../common/utils/slug.util';
 
 @Injectable()
 export class DataTransformationService {
 
-  // Transforms an external API Brand to an internal Brand structure
-  transformBrand(externalBrand: Brand): { name: string; slug: string; deviceCount: number } {
-    return {
-      name: externalBrand.brand_name,
-      slug: externalBrand.brand_slug,
-      deviceCount: parseInt(externalBrand.device_count, 10),
-      // Add other relevant fields if needed
-    };
-  }
+  // --- SHARED HELPER ---
+  
+  private addDynamicSpecs(data: any, specs: DeviceSpec[], knownKeys: Set<string>) {
+    Object.keys(data).forEach(key => {
+      if (knownKeys.has(key)) return;
 
-  // Transforms an external API PhoneListItem to an internal Device structure
-  transformPhoneListItemToDevice(phoneListItem: PhoneListItem): Partial<Device> {
-    const slug = generateSlug(phoneListItem.phone_name);
-    return {
-      model: phoneListItem.phone_name,
-      slug: slug,
-      brand: phoneListItem.brand,
-      imageUrl: phoneListItem.image, // Assuming this is a primary image
-      // Other fields will be filled by detailed spec
-      type: DeviceType.PHONE, // Default to phone for now
-      views: 0, // Default views
-      isActive: true, // Default active status
-      specs: [], // Initialize specs
-      category: '', // Category will be set later
-    };
-  }
+      const value = data[key];
+      if (value === null || value === undefined || value === '') return;
 
-  // Transforms an external API SearchResultPhone to an internal Device structure
-  transformSearchResultToDevice(searchResult: SearchResultPhone): Partial<Device> {
-    const slug = generateSlug(searchResult.phone_name);
-    return {
-      model: searchResult.phone_name,
-      slug: slug,
-      imageUrl: searchResult.image,
-      // Brand is often missing in search results, can be set later
-      type: DeviceType.PHONE,
-      views: 0,
-      isActive: true,
-      specs: [],
-      category: '',
-    };
-  }
+      // Skip internal IDs or weird API metadata
+      if (key === 'id' || key === 'slug' || key === '_id') return;
 
-  // Transforms an external API LatestPhone to an internal Device structure
-  transformLatestPhoneToDevice(latestPhone: LatestPhone): Partial<Device> {
-    const slug = generateSlug(latestPhone.phone_name);
-    return {
-      model: latestPhone.phone_name,
-      slug: slug,
-      imageUrl: latestPhone.image,
-      type: DeviceType.PHONE,
-      views: 0,
-      isActive: true,
-      specs: [],
-      category: '',
-    };
-  }
+      let category = 'General';
+      const lowerKey = key.toLowerCase();
 
-  // Transforms an external API TopByInterestPhone to an internal Device structure
-  transformTopByInterestToDevice(topPhone: TopByInterestPhone): Partial<Device> {
-    const slug = generateSlug(topPhone.phone_name);
-    return {
-      model: topPhone.phone_name,
-      slug: slug,
-      imageUrl: topPhone.image,
-      views: parseInt(topPhone.hits, 10),
-      type: DeviceType.PHONE,
-      isActive: true,
-      specs: [],
-      category: '',
-    };
-  }
+      // Intelligent Categorization based on key name
+      if (lowerKey.includes('camera') || lowerKey.includes('video') || lowerKey.includes('photo')) category = 'Camera';
+      else if (lowerKey.includes('display') || lowerKey.includes('screen') || lowerKey.includes('resolution')) category = 'Display';
+      else if (lowerKey.includes('battery') || lowerKey.includes('charge') || lowerKey.includes('charging')) category = 'Battery';
+      else if (lowerKey.includes('cpu') || lowerKey.includes('gpu') || lowerKey.includes('chipset') || lowerKey.includes('processor')) category = 'Platform';
+      else if (lowerKey.includes('memory') || lowerKey.includes('storage') || lowerKey.includes('ram') || lowerKey.includes('card')) category = 'Memory';
+      else if (lowerKey.includes('sound') || lowerKey.includes('audio') || lowerKey.includes('jack') || lowerKey.includes('speaker')) category = 'Sound';
+      else if (lowerKey.includes('network') || lowerKey.includes('wifi') || lowerKey.includes('bluetooth') || lowerKey.includes('gps') || lowerKey.includes('nfc') || lowerKey.includes('radio') || lowerKey.includes('usb')) category = 'Comms';
+      else if (lowerKey.includes('sensor')) category = 'Features';
+      else if (lowerKey.includes('body') || lowerKey.includes('dimension') || lowerKey.includes('weight') || lowerKey.includes('sim') || lowerKey.includes('build')) category = 'Body';
 
-  // Transforms an external API TopByFansPhone to an internal Device structure
-  transformTopByFansToDevice(topPhone: TopByFansPhone): Partial<Device> {
-    const slug = generateSlug(topPhone.phone_name);
-    return {
-      model: topPhone.phone_name,
-      slug: slug,
-      imageUrl: topPhone.image,
-      // fans is not directly mapped to Device schema, could be stored in specs or a separate field if needed.
-      // For now, let's just include the other required fields.
-      type: DeviceType.PHONE,
-      views: 0,
-      isActive: true,
-      specs: [],
-      category: '',
-    };
-  }
+      // Format the Key (camelCase to Title Case)
+      const formattedKey = key
+        .replace(/([A-Z])/g, ' $1') // insert space before caps
+        .replace(/^./, str => str.toUpperCase()); // capitalize first letter
 
-
-  // Normalizes an external API PhoneSpec to an internal Device structure
-  normalizePhoneSpec(phoneSpec: PhoneSpec): Partial<Device> {
-    const device: Partial<Device> = {
-      model: phoneSpec.phone_name,
-      slug: generateSlug(phoneSpec.phone_name),
-      brand: phoneSpec.brand,
-      description: '', // Can be extracted from specs if available
-      imageUrl: phoneSpec.thumbnail, // Using thumbnail as primary image
-      // images: phoneSpec.phone_images, // If we want to store multiple images
-      releaseDate: phoneSpec.release_date,
-      dimension: phoneSpec.dimension,
-      os: phoneSpec.os,
-      storage: this.standardizeStorage(phoneSpec.storage),
-      displaySize: this.extractDisplaySize(phoneSpec.spec_detail),
-      ram: this.extractRAM(phoneSpec.spec_detail),
-      battery: this.extractBattery(phoneSpec.spec_detail),
-      specs: this.transformSpecDetails(phoneSpec.spec_detail),
-      type: DeviceType.PHONE, // Default to phone, can be refined
-      views: 0, // Default views
-      isActive: true, // Default active status
-      category: '', // Category will be set later
-    };
-
-    return device;
-  }
-
-  private transformSpecDetails(specDetails: SpecDetail[]): DeviceSpec[] {
-    const transformedSpecs: DeviceSpec[] = [];
-    specDetails.forEach(specCategory => {
-      specCategory.specs.forEach(specItem => {
-        transformedSpecs.push({
-          category: specCategory.title,
-          key: specItem.key,
-          value: specItem.val.join(', '), // Join array values into a single string
-        });
-      });
+      // Handle Objects (flatten them) or Arrays
+      if (typeof value === 'object') {
+        specs.push({ category, key: formattedKey, value: JSON.stringify(value).replace(/[{"}]/g, '').replace(/,/g, ', ') });
+      } else {
+        specs.push({ category, key: formattedKey, value: String(value) });
+      }
     });
-    return transformedSpecs;
   }
 
-  private standardizeStorage(storage: string): string {
-    // Example: "128GB 6GB RAM" -> "128GB"
-    const match = storage.match(/(\d+\s*GB)/i);
-    return match ? match[0] : storage;
-  }
 
-  private extractDisplaySize(specDetails: SpecDetail[]): string {
-    const displaySpec = specDetails.find(cat => cat.title === 'Display');
-    if (displaySpec) {
-      const sizeItem = displaySpec.specs.find(item => item.key === 'Size');
-      if (sizeItem) {
-        // Example: "6.7 inches, 109.8 cm2 (~87.4% screen-to-body ratio)" -> "6.7 inches"
-        const match = sizeItem.val[0].match(/([\d.]+\s*inches)/i);
-        return match ? match[0] : sizeItem.val[0];
+  // --- PRIMARY API TRANSFORMERS (GSMArena Parser - 11.txt) ---
+
+  transformPrimaryDevice(data: any, brand: string, model: string): Partial<Device> {
+    const specs: DeviceSpec[] = [];
+    const knownKeys = new Set<string>();
+
+    const addSpec = (category: string, key: string, value: any, originalKey?: string) => {
+      if (value) {
+        specs.push({ category, key, value: String(value) });
+        if (originalKey) knownKeys.add(originalKey);
       }
-    }
-    return 'N/A';
+    };
+
+    // 1. Explicit Mappings (High Precision)
+    addSpec('Platform', 'Chipset', data.chipset, 'chipset');
+    addSpec('Platform', 'CPU', data.cpu, 'cpu');
+    addSpec('Platform', 'GPU', data.gpu, 'gpu');
+    addSpec('Platform', 'OS', data.androidVersion ? `Android ${data.androidVersion}` : null, 'androidVersion');
+    
+    addSpec('Display', 'Size', data.displaySize, 'displaySize');
+    addSpec('Display', 'Resolution', data.displayResolution, 'displayResolution');
+    addSpec('Display', 'Type', data.displayType, 'displayType');
+    
+    addSpec('Memory', 'Internal', data.internal, 'internal');
+    
+    addSpec('Main Camera', 'Specs', data.mainCameraSpecs, 'mainCameraSpecs');
+    addSpec('Main Camera', 'Features', data.mainCameraFeatures, 'mainCameraFeatures');
+    addSpec('Main Camera', 'Video', data.mainVideoSpecs, 'mainVideoSpecs');
+    
+    addSpec('Selfie Camera', 'Specs', data.selfieCameraSpecs, 'selfieCameraSpecs');
+    addSpec('Selfie Camera', 'Features', data.selfieCameraFeatures, 'selfieCameraFeatures');
+    addSpec('Selfie Camera', 'Video', data.selfieVideoSpecs, 'selfieVideoSpecs');
+    
+    addSpec('Battery', 'Capacity', data.battery, 'battery');
+    addSpec('Features', 'Sensors', data.sensors, 'sensors');
+
+    // Mark other known top-level fields to skip in dynamic loop
+    knownKeys.add('manufacturer');
+    knownKeys.add('model');
+    knownKeys.add('id');
+    knownKeys.add('_id');
+
+    // 2. Dynamic Mapping for everything else
+    this.addDynamicSpecs(data, specs, knownKeys);
+
+    return {
+      model: data.model || model,
+      brand: data.manufacturer || brand,
+      slug: generateSlug(`${data.manufacturer || brand} ${data.model || model}`),
+      imageUrl: data.img || data.image || '', 
+      type: DeviceType.PHONE,
+      specs: specs,
+      isActive: true,
+      
+      // Top-level fields
+      os: data.androidVersion ? `Android ${data.androidVersion}` : '',
+      storage: this.extractStorage(data.internal),
+      ram: this.extractRam(data.internal),
+      displaySize: data.displaySize,
+      chipset: data.chipset,
+      battery: data.battery,
+    };
   }
 
-  private extractRAM(specDetails: SpecDetail[]): string {
-    const memorySpec = specDetails.find(cat => cat.title === 'Memory');
-    if (memorySpec) {
-      const internalMemory = memorySpec.specs.find(item => item.key === 'Internal');
+  transformPrimaryDeviceList(data: any[], brand: string): Partial<Device>[] {
+    if (!Array.isArray(data)) return [];
+    
+    return data.map(item => ({
+      model: item.model,
+      brand: item.manufacturer || brand,
+      slug: generateSlug(`${item.manufacturer || brand} ${item.model}`),
+      type: DeviceType.PHONE,
+      isActive: true,
+      specs: [],
+      os: item.androidVersion ? `Android ${item.androidVersion}` : '',
+      chipset: item.chipset,
+    }));
+  }
 
-      let ram = 'N/A';
-      if (internalMemory && internalMemory.val.length > 0) {
-        // Example: "128GB 6GB RAM, 256GB 8GB RAM"
-        const ramMatches = internalMemory.val[0].match(/(\d+\s*GB\s*RAM)/i);
-        if (ramMatches) {
-          ram = ramMatches[0];
+
+  // --- SECONDARY API TRANSFORMERS (Mobile Device Hardware Specs - 33.txt) ---
+
+  transformSecondaryDevice(data: any, brand: string, model: string): Partial<Device> {
+    const specs: DeviceSpec[] = [];
+    const knownKeys = new Set<string>();
+    
+    const addSpec = (category: string, key: string, value: any, originalKey?: string) => {
+        if (value) {
+            specs.push({ category, key, value: String(value) });
+            if (originalKey) knownKeys.add(originalKey);
         }
-      }
-      return ram;
-    }
-    return 'N/A';
+    };
+
+    addSpec('Body', 'Dimensions', data.dimensions, 'dimensions');
+    addSpec('Body', 'Weight', data.weight, 'weight');
+    addSpec('Display', 'Type', data.displayType, 'displayType');
+    addSpec('Display', 'Size', data.displaySize, 'displaySize');
+    addSpec('Display', 'Resolution', data.resolution, 'resolution');
+    addSpec('Platform', 'Chipset', data.chipset, 'chipset');
+    addSpec('Platform', 'CPU', data.cpu, 'cpu');
+    addSpec('Platform', 'GPU', data.gpu, 'gpu');
+    addSpec('Main Camera', 'Specs', data.mainCamera, 'mainCamera');
+    addSpec('Selfie Camera', 'Specs', data.selfieCamera, 'selfieCamera');
+    addSpec('Battery', 'Type', data.batteryType, 'batteryType');
+    addSpec('Misc', 'Colors', data.colors, 'colors');
+
+    knownKeys.add('name');
+    knownKeys.add('brand');
+
+    // 2. Dynamic Mapping
+    this.addDynamicSpecs(data, specs, knownKeys);
+
+    return {
+      model: data.name || model,
+      brand: brand,
+      slug: generateSlug(data.name || `${brand} ${model}`),
+      imageUrl: '',
+      type: DeviceType.PHONE,
+      specs: specs,
+      isActive: true,
+
+      dimension: data.dimensions,
+      weight: data.weight,
+      displaySize: data.displaySize,
+      chipset: data.chipset,
+      battery: data.batteryType,
+    };
   }
 
-  private extractBattery(specDetails: SpecDetail[]): string {
-    const batterySpec = specDetails.find(cat => cat.title === 'Battery');
-    if (batterySpec) {
-      const typeItem = batterySpec.specs.find(item => item.key === 'Type');
-      if (typeItem) {
-        return typeItem.val[0];
-      }
-    }
-    return 'N/A';
+  transformSecondaryDeviceList(data: any[], brand: string): Partial<Device>[] {
+     if (!Array.isArray(data)) return [];
+     return data.map(item => ({
+       model: item.name || item,
+       brand: brand,
+       slug: generateSlug(`${brand} ${item.name || item}`),
+       type: DeviceType.PHONE,
+       isActive: true,
+       specs: [],
+     }));
+  }
+
+  // --- UTILS ---
+
+  private extractRam(internalString: string): string {
+    if (!internalString) return '';
+    const match = internalString.match(/(\d+\s*GB)\s*RAM/i);
+    return match ? match[1] : '';
+  }
+
+  private extractStorage(internalString: string): string {
+    if (!internalString) return '';
+    const match = internalString.match(/^(\d+\s*(?:GB|TB|MB))/i);
+    return match ? match[1] : '';
   }
 }
