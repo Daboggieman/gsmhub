@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Device, DeviceDocument } from '../devices/device.schema';
 import { SearchIndex, SearchIndexDocument } from './search-index.schema';
 import { SearchQuery, SearchQueryDocument } from './search-query.schema';
-import { SearchResult } from '@shared/types';
+import { SearchResult } from '../../../../shared/src/types';
 import { escapeRegExp } from '../../../../shared/src/utils/regex';
 
 @Injectable()

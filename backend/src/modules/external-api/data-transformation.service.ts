@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Device, DeviceSpec, DeviceType } from '@shared/types';
+import { Device, DeviceSpec, DeviceType } from '../../../../shared/src/types';
 import { generateSlug } from '../../common/utils/slug.util';
 
 @Injectable()

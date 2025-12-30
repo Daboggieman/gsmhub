@@ -96,20 +96,7 @@ describe('SearchService', () => {
       await service.search('iphone (15)');
       
       const regexArg = deviceModel.find.mock.calls[0][0].$or[1].name;
-      expect(regexArg.source).toBe('iphone \\\\(15\\\\)');
-    });
-  });
-
-  describe('getPopularQueries', () => {
-    it('should return sorted popular queries', async () => {
-      mockSearchQueryModel.exec.mockResolvedValue([{ query: 'iphone', count: 10 }]);
-      
-      const result = await service.getPopularQueries(5);
-      
-      expect(searchQueryModel.find).toHaveBeenCalled();
-      expect(searchQueryModel.sort).toHaveBeenCalledWith({ count: -1 });
-      expect(searchQueryModel.limit).toHaveBeenCalledWith(5);
-      expect(result).toEqual([{ query: 'iphone', count: 10 }]);
+      expect(regexArg.source).toBe('iphone \\(15\\)');
     });
   });
 
@@ -139,6 +126,19 @@ describe('SearchService', () => {
         query: new RegExp('^iph', 'i')
       });
       expect(result).toEqual(['iphone', 'iphone 15']);
+    });
+  });
+
+  describe('getPopularQueries', () => {
+    it('should return sorted popular queries', async () => {
+      mockSearchQueryModel.exec.mockResolvedValue([{ query: 'iphone', count: 10 }]);
+      
+      const result = await service.getPopularQueries(5);
+      
+      expect(searchQueryModel.find).toHaveBeenCalled();
+      expect(searchQueryModel.sort).toHaveBeenCalledWith({ count: -1 });
+      expect(searchQueryModel.limit).toHaveBeenCalledWith(5);
+      expect(result).toEqual([{ query: 'iphone', count: 10 }]);
     });
   });
 });
