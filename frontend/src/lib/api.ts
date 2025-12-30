@@ -171,6 +171,15 @@ class ApiClient {
   async getAdminStats(): Promise<{ devicesCount: number; categoriesCount: number; totalViews: number }> {
     return this.request('/admin/stats');
   }
+
+  // External API / Sync
+  async triggerSync(brand?: string): Promise<{ message: string }> {
+    if (brand) {
+      return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { method: 'POST' });
+    }
+    return this.request('/external-api/sync/all', { method: 'POST' });
+  }
 }
+
 
 export const apiClient = new ApiClient(API_BASE_URL);

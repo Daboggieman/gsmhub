@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
+import { APP_GUARD } from '@nestjs/core'; // Import APP_GUARD
+
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CacheModule } from '@nestjs/cache-manager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule'; // Import ScheduleModule
+import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'; // Import Throttler components
+
+
 import { mongooseConfig } from './config/mongoose.config';
 import * as redisStore from 'cache-manager-redis-store'; // Import redisStore directly
 import { DevicesModule } from './modules/devices/devices.module';
@@ -35,6 +40,11 @@ import { UsersModule } from './modules/users/users.module';
       isGlobal: true, // Make CacheModule global
     }),
     ScheduleModule.forRoot(), // Add ScheduleModule here
+    ThrottlerModule.forRoot([{
+        ttl: 60000,
+        limit: 100,
+    }]),
+
     DevicesModule,
     CategoriesModule,
     BrandsModule,
@@ -46,6 +56,13 @@ import { UsersModule } from './modules/users/users.module';
     UsersModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
+  ],
+
 })
 export class AppModule {}

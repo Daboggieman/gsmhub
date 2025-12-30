@@ -4,12 +4,15 @@ import { useEffect, useState } from 'react';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faEdit, faTrash, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faEdit, faTrash, faImage, faSync } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function AdminBrandsPage() {
   const [brands, setBrands] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSyncing, setIsSyncing] = useState<string | null>(null); // State to track which brand is syncing
   const [search, setSearch] = useState('');
+
 
   const fetchBrands = async () => {
     setIsLoading(true);
@@ -43,6 +46,21 @@ export default function AdminBrandsPage() {
     }
   };
 
+  const handleSync = async (brandName?: string) => {
+    setIsSyncing(brandName || 'all');
+    try {
+      const { message } = await apiClient.triggerSync(brandName);
+      alert(message);
+      if (brandName) fetchBrands();
+    } catch (error) {
+      console.error('Sync failed:', error);
+      alert('Sync failed. Please check the backend logs.');
+    } finally {
+      setIsSyncing(null);
+    }
+  };
+
+
   return (
     <div className="space-y-8">
       <div className="flex justify-between items-center">
@@ -57,7 +75,16 @@ export default function AdminBrandsPage() {
           <FontAwesomeIcon icon={faPlus} />
           Add Brand
         </Link>
+        <button 
+          onClick={() => handleSync()}
+          disabled={isSyncing === 'all'}
+          className="bg-gray-800 text-white px-6 py-3 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-gray-900 transition-all shadow-lg flex items-center gap-2 disabled:opacity-50"
+        >
+          <FontAwesomeIcon icon={faSync} className={isSyncing === 'all' ? 'fa-spin' : ''} />
+          Sync All
+        </button>
       </div>
+
 
       <form onSubmit={handleSearch} className="mb-6 flex gap-2">
         <input 
@@ -116,10 +143,18 @@ export default function AdminBrandsPage() {
                     </td>
                     <td className="px-8 py-4">
                       <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <Link href={`/admin/brands/edit/${brand.id}`} className="text-blue-600 hover:text-blue-800 transition-colors">
                           <FontAwesomeIcon icon={faEdit} />
                         </Link>
+                        <button 
+                          onClick={() => handleSync(brand.name)}
+                          disabled={!!isSyncing}
+                          className="text-amber-500 hover:text-amber-700 transition-colors"
+                          title="Sync Devices"
+                        >
+                          <FontAwesomeIcon icon={faSync} className={isSyncing === brand.name ? 'fa-spin' : ''} />
+                        </button>
                         <button onClick={() => handleDelete(brand.id)} className="text-red-400 hover:text-red-600 transition-colors">
+
                           <FontAwesomeIcon icon={faTrash} />
                         </button>
                       </div>

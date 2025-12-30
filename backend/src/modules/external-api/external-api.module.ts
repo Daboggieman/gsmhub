@@ -4,7 +4,9 @@ import { ExternalApiService } from './external-api.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataTransformationService } from './data-transformation.service';
 import { SyncService } from './sync.service';
+import { ExternalApiController } from './external-api.controller';
 import { DevicesModule } from '../devices/devices.module';
+
 import { CategoriesModule } from '../categories/categories.module';
 
 @Module({
@@ -20,7 +22,9 @@ import { CategoriesModule } from '../categories/categories.module';
     forwardRef(() => DevicesModule), // Circular dependency resolution
     CategoriesModule,
   ],
+  controllers: [ExternalApiController],
   providers: [ExternalApiService, DataTransformationService, SyncService],
+
   exports: [ExternalApiService, DataTransformationService, SyncService],
 })
 export class ExternalApiModule {}

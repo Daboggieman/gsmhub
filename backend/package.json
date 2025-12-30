@@ -33,6 +33,7 @@
     "@nestjs/platform-express": "^11.0.1",
     "@nestjs/schedule": "^6.0.1",
     "@nestjs/swagger": "^11.2.3",
+    "@nestjs/throttler": "^6.5.0",
     "axios": "^1.13.2",
     "bcrypt": "^6.0.0",
     "cache-manager-redis-store": "^3.0.1",
@@ -93,6 +94,10 @@
       "**/*.(t|j)s"
     ],
     "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "moduleNameMapper": {
+      "^@shared/(.*)$": "<rootDir>/../../shared/src/$1",
+      "^@modules/(.*)$": "<rootDir>/modules/$1"
+    }
   }
 }
