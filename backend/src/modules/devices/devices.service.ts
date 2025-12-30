@@ -36,18 +36,22 @@ export class DevicesService {
   }
 
   private async attachLatestPrices(devices: Device[]): Promise<Device[]> {
-    const devicesWithPrices = await Promise.all(
-      devices.map(async (device) => {
-        if (device && device._id) {
-          const latestPrice = await this.pricesService.findLatestPriceByDeviceId(device._id.toString());
-          if (latestPrice) {
-            (device as any).latestPrice = latestPrice.price;
-          }
-        }
-        return device;
-      }),
-    );
-    return devicesWithPrices;
+    if (!devices.length) return devices;
+    
+    const deviceIds = devices
+      .filter(d => d && d._id)
+      .map(d => d._id!.toString());
+    
+    if (!deviceIds.length) return devices;
+
+    const priceMap = await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
+
+    return devices.map(device => {
+      if (device && device._id && priceMap[device._id.toString()]) {
+        (device as any).latestPrice = priceMap[device._id.toString()];
+      }
+      return device;
+    });
   }
 
   async getAllDevices(

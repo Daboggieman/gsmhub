@@ -27,16 +27,20 @@ import { UsersModule } from './modules/users/users.module';
     ConfigModule.forRoot({ isGlobal: true }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('MONGO_URI') || 'mongodb://localhost:27017/gsmhub',
-      }),
+      useFactory: async (configService: ConfigService) => {
+        const uri = configService.get<string>('MONGO_URI');
+        if (!uri) {
+          throw new Error('MONGO_URI is not defined in environment variables');
+        }
+        return { uri };
+      },
       inject: [ConfigService],
     }),
     CacheModule.register({
       store: redisStore as any,
       url: process.env.REDIS_URI,
-      ttl: 300, // 5 minutes default TTL
-      max: 100, // maximum number of items in cache
+      ttl: 3600, // Increase to 1 hour default TTL
+      max: 10000, // Increase maximum number of items in cache
       isGlobal: true, // Make CacheModule global
     }),
     ScheduleModule.forRoot(), // Add ScheduleModule here

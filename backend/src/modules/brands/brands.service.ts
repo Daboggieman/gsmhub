@@ -5,6 +5,7 @@ import { Brand, BrandDocument } from './brand.schema';
 import { CreateBrandDto, UpdateBrandDto } from './dto/brand.dto';
 import { generateSlug } from '../../common/utils/slug.util';
 import { Device, DeviceDocument } from '../devices/device.schema';
+import { escapeRegExp } from '../../../../shared/src/utils/regex';
 
 @Injectable()
 export class BrandsService {
@@ -32,19 +33,28 @@ export class BrandsService {
   async findAll(search?: string): Promise<Brand[]> {
     const query: any = {};
     if (search) {
+      const safeSearch = escapeRegExp(search);
       query.$or = [
-        { name: { $regex: new RegExp(search, 'i') } },
-        { slug: { $regex: new RegExp(search, 'i') } },
+        { name: { $regex: new RegExp(safeSearch, 'i') } },
+        { slug: { $regex: new RegExp(safeSearch, 'i') } },
       ];
     }
     const brands = await this.brandModel.find(query).sort({ name: 1 }).exec();
     
-    // Dynamically update device counts
-    return Promise.all(brands.map(async (brand) => {
-      const count = await this.deviceModel.countDocuments({ brand: brand.name }).exec();
-      brand.deviceCount = count;
+    // Optimally count devices per brand using one aggregation
+    const deviceCounts = await this.deviceModel.aggregate([
+      { $group: { _id: "$brand", count: { $sum: 1 } } }
+    ]).exec();
+
+    const countMap = deviceCounts.reduce((acc, curr) => {
+      acc[curr._id] = curr.count;
+      return acc;
+    }, {} as Record<string, number>);
+
+    return brands.map(brand => {
+      brand.deviceCount = countMap[brand.name] || 0;
       return brand;
-    }));
+    });
   }
 
   async findOne(id: string): Promise<Brand> {

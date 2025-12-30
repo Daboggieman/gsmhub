@@ -4,6 +4,7 @@ import { Model } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 import { generateSlug } from '../../common/utils/slug.util';
+import { escapeRegExp } from '../../../../shared/src/utils/regex';
 
 @Injectable()
 export class CategoriesService {
@@ -30,9 +31,10 @@ export class CategoriesService {
   async findAll(search?: string): Promise<Category[]> {
     const query: any = {};
     if (search) {
+      const safeSearch = escapeRegExp(search);
       query.$or = [
-        { name: { $regex: new RegExp(search, 'i') } },
-        { slug: { $regex: new RegExp(search, 'i') } },
+        { name: { $regex: new RegExp(safeSearch, 'i') } },
+        { slug: { $regex: new RegExp(safeSearch, 'i') } },
       ];
     }
     return this.categoryModel.find(query).sort({ name: 1 }).exec();

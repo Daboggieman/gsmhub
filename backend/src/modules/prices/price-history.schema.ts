@@ -25,8 +25,9 @@ export class PriceHistory {
   @Prop()
   affiliateUrl?: string;
 
-  @Prop({ required: true, default: Date.now })
+  @Prop({ required: true, default: Date.now, index: true })
   date: Date;
 }
 
 export const PriceHistorySchema = SchemaFactory.createForClass(PriceHistory);
+PriceHistorySchema.index({ device: 1, date: -1 });

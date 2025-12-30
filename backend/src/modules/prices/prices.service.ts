@@ -61,6 +61,24 @@ export class PricesService {
     return this.priceHistoryModel.findOne({ device: deviceId }).sort({ date: -1 }).exec();
   }
 
+  async findLatestPricesByDeviceIds(deviceIds: string[]): Promise<Record<string, number>> {
+    const latestPrices = await this.priceHistoryModel.aggregate([
+      { $match: { device: { $in: deviceIds } } },
+      { $sort: { date: -1 } },
+      {
+        $group: {
+          _id: "$device",
+          latestPrice: { $first: "$price" }
+        }
+      }
+    ]).exec();
+
+    return latestPrices.reduce((acc, curr) => {
+      acc[curr._id.toString()] = curr.latestPrice;
+      return acc;
+    }, {});
+  }
+
   async getPriceTrend(deviceId: string): Promise<{ trend: 'up' | 'down' | 'stable'; percentage: number }> {
     const history = await this.priceHistoryModel
       .find({ device: deviceId })

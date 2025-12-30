@@ -50,6 +50,12 @@ export class CategoriesController {
     return plainToInstance(CategoryResponseDto, category);
   }
 
+  @Get('id/:id')
+  async findById(@Param('id') id: string) {
+    const category = await this.categoriesService.findOne(id);
+    return plainToInstance(CategoryResponseDto, category);
+  }
+
   @Get(':slug/devices')
   async findDevicesByCategory(@Param('slug') slug: string) {
     // First, find the category by slug to get its ID

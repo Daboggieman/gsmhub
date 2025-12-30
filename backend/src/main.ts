@@ -18,9 +18,12 @@ async function bootstrap() {
   // Apply global interceptors
   app.useGlobalInterceptors(new LoggingInterceptor());
 
-  // Enable CORS for development (restrict in production)
+  // Enable CORS
+  const isProduction = process.env.NODE_ENV === 'production';
   app.enableCors({
-    origin: true, // Allow all origins for development
+    origin: isProduction 
+      ? (process.env.FRONTEND_URL || 'https://gsmhub.com') 
+      : true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
   });

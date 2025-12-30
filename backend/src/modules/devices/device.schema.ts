@@ -39,7 +39,7 @@ export class Device {
   @Prop({ type: String, enum: DeviceType, default: DeviceType.PHONE })
   type: DeviceType;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category' })
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Category', index: true })
   category: Category;
 
   @Prop()
@@ -51,7 +51,7 @@ export class Device {
   @Prop({ type: [DeviceSpecSchema] })
   specs: DeviceSpec[];
 
-  @Prop({ default: 0 })
+  @Prop({ default: 0, index: true })
   views: number;
 
   @Prop({ default: true })
@@ -122,4 +122,6 @@ export class Device {
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);
+DeviceSchema.index({ createdAt: -1 });
+DeviceSchema.index({ updatedAt: -1 });
 DeviceSchema.index({ '$**': 'text' });

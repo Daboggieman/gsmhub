@@ -141,8 +141,7 @@ class ApiClient {
   }
 
   async getCategoryById(id: string): Promise<Category> {
-    const categories = await this.getCategories();
-    return categories.find(c => c.id === id) as Category;
+    return this.request(`/categories/id/${id}`);
   }
 
   async deleteCategory(id: string): Promise<void> {

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Device, DeviceDocument } from './device.schema';
+import { escapeRegExp } from '../../../../shared/src/utils/regex';
 
 @Injectable()
 export class DevicesRepository {
@@ -27,13 +28,14 @@ export class DevicesRepository {
       query.category = new Types.ObjectId(filters.category);
     }
     if (filters?.brand) {
-      query.brand = { $regex: new RegExp(filters.brand, 'i') };
+      query.brand = { $regex: new RegExp(escapeRegExp(filters.brand), 'i') };
     }
     if (filters?.search) {
       // Use text search if available, but fallback to regex for partial matches on model/brand
+      const safeSearch = escapeRegExp(filters.search);
       query.$or = [
-        { model: { $regex: new RegExp(filters.search, 'i') } },
-        { brand: { $regex: new RegExp(filters.search, 'i') } },
+        { model: { $regex: new RegExp(safeSearch, 'i') } },
+        { brand: { $regex: new RegExp(safeSearch, 'i') } },
         { $text: { $search: filters.search } }
       ];
     }
@@ -85,12 +87,13 @@ export class DevicesRepository {
       query.category = new Types.ObjectId(filters.category);
     }
     if (filters?.brand) {
-      query.brand = { $regex: new RegExp(filters.brand, 'i') };
+      query.brand = { $regex: new RegExp(escapeRegExp(filters.brand), 'i') };
     }
     if (filters?.search) {
+      const safeSearch = escapeRegExp(filters.search);
       query.$or = [
-        { model: { $regex: new RegExp(filters.search, 'i') } },
-        { brand: { $regex: new RegExp(filters.search, 'i') } },
+        { model: { $regex: new RegExp(safeSearch, 'i') } },
+        { brand: { $regex: new RegExp(safeSearch, 'i') } },
         { $text: { $search: filters.search } }
       ];
     }
@@ -167,7 +170,7 @@ export class DevicesRepository {
   }
 
   async findByBrand(brand: string, limit: number): Promise<Device[]> {
-    return this.deviceModel.find({ brand }).limit(limit).populate('category').exec();
+    return this.deviceModel.find({ brand: { $regex: new RegExp(escapeRegExp(brand), 'i') } }).limit(limit).populate('category').exec();
   }
 
   async incrementViewCount(slug: string): Promise<Device | null> {

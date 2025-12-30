@@ -4,6 +4,24 @@ This document tracks the historical progress and implementation details of the G
 
 ---
 
+## 2025-12-30: Codebase Audit & Critical Issue Resolution
+
+- **Security Hardening:**
+  - Resolved **Regex Injection (ReDoS)** vulnerability by implementing a shared `escapeRegExp` utility across all search and filter services.
+  - Removed unsafe **JWT secret and MongoDB URI fallbacks**; application now enforces strict environment variable presence.
+  - Restricted **CORS origin** in production to the specific frontend domain for enhanced security.
+- **Performance Optimization:**
+  - Fixed **N+1 Query issues** for Device Prices and Brand Device Counts using bulk database aggregations.
+  - Scaled **Cache limits** (from 100 to 10000 items) and increased default TTL to 1 hour.
+  - Optimized **Search Analytics** by implementing query length thresholds to reduce database write overhead.
+  - Added critical **database indexes** to high-traffic fields (`views`, `category`, `createdAt`, `updatedAt`, `PriceHistory.date`).
+- **Architectural Improvements:**
+  - Implemented direct `GET /categories/id/:id` endpoint for more efficient frontend lookups.
+  - Standardized device `name` population across primary and secondary API transformers.
+- **Result:** The platform is significantly more secure, faster, and scalable, resolving all major findings from the comprehensive codebase audit.
+
+---
+
 ## 2025-12-27: Redundant API Strategy & Universal Data Transformation
 
 - **Multi-API Redundancy:**

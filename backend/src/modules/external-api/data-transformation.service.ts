@@ -107,6 +107,7 @@ export class DataTransformationService {
       displaySize: data.displaySize,
       chipset: data.chipset,
       battery: data.battery,
+      name: `${data.manufacturer || brand} ${data.model || model}`,
     };
   }
 
@@ -172,6 +173,7 @@ export class DataTransformationService {
       displaySize: data.displaySize,
       chipset: data.chipset,
       battery: data.batteryType,
+      name: data.name || `${brand} ${model}`,
     };
   }
 

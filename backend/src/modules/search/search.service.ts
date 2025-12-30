@@ -5,6 +5,7 @@ import { Device, DeviceDocument } from '../devices/device.schema';
 import { SearchIndex, SearchIndexDocument } from './search-index.schema';
 import { SearchQuery, SearchQueryDocument } from './search-query.schema';
 import { SearchResult } from '@shared/types';
+import { escapeRegExp } from '../../../../shared/src/utils/regex';
 
 @Injectable()
 export class SearchService {
@@ -20,7 +21,8 @@ export class SearchService {
     // Log the search query for analytics
     this.logSearchQuery(query);
 
-    const searchRegex = new RegExp(query, 'i');
+    const safeSearch = escapeRegExp(query.trim());
+    const searchRegex = new RegExp(safeSearch, 'i');
 
     // Use a combination of text search and regex for better fuzzy-like matching
     const devices = await this.deviceModel
@@ -50,7 +52,7 @@ export class SearchService {
       return [];
     }
     
-    const searchRegex = new RegExp(query, 'i');
+    const searchRegex = new RegExp(escapeRegExp(query), 'i');
     
     const devices = await this.deviceModel
       .find({
@@ -71,7 +73,7 @@ export class SearchService {
   async getSuggestions(query: string, limit: number = 5): Promise<string[]> {
     // Return popular queries starting with the given string
     const suggestions = await this.searchQueryModel
-      .find({ query: new RegExp(`^${query}`, 'i') })
+      .find({ query: new RegExp(`^${escapeRegExp(query)}`, 'i') })
       .sort({ count: -1 })
       .limit(limit)
       .exec();
@@ -92,7 +94,7 @@ export class SearchService {
 
   private async logSearchQuery(query: string): Promise<void> {
     const normalizedQuery = query.toLowerCase().trim();
-    if (!normalizedQuery) return;
+    if (!normalizedQuery || normalizedQuery.length < 3) return;
 
     await this.searchQueryModel.findOneAndUpdate(
       { query: normalizedQuery },
