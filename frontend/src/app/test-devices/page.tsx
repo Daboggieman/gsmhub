@@ -1,24 +1,21 @@
 // src/app/test-devices/page.tsx
 
 import { apiClient } from '@/lib/api';
+import { Device } from '@/../../shared/src/types';
 
 const TestDevicesPage = async () => {
-  let devices = [];
-  let error = null;
+  let devices: Device[] = [];
+  let error: string | null = null;
 
   try {
     const response = await apiClient.getDevices();
-    console.log("API Response:", response);
     
     if (response && Array.isArray(response.devices)) {
       devices = response.devices;
     } else {
-      // Handle cases where response or response.devices is not what we expect
-      console.error("Received unexpected data structure:", response);
       error = "Received unexpected data structure from the API.";
     }
   } catch (e: any) {
-    console.error("Failed to fetch devices:", e);
     error = e.message;
   }
 

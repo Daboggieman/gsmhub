@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
+  Logger,
 } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
@@ -24,6 +25,8 @@ import { UserRole } from '../users/schemas/user.schema';
 @Controller('categories')
 @UseInterceptors(ClassSerializerInterceptor)
 export class CategoriesController {
+  private readonly logger = new Logger(CategoriesController.name);
+
   constructor(
     private readonly categoriesService: CategoriesService,
     private readonly devicesService: DevicesService,
@@ -40,7 +43,7 @@ export class CategoriesController {
   @Get()
   async findAll(@Query('search') search?: string) {
     const categories = await this.categoriesService.findAll(search);
-    console.log(`Found ${categories.length} categories`);
+    this.logger.log(`Found ${categories.length} categories`);
     return plainToInstance(CategoryResponseDto, categories);
   }
 
@@ -76,7 +79,7 @@ export class CategoriesController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   remove(@Param('id') id: string) {
-    console.log(`Attempting to delete category with ID: ${id}`);
+    this.logger.log(`Attempting to delete category with ID: ${id}`);
     return this.categoriesService.remove(id);
   }
 }

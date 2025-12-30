@@ -5,13 +5,16 @@
   - **Security Hardening:**
     - Resolved **Regex Injection (ReDoS)** vulnerability by implementing a shared `escapeRegExp` utility and applying it to all search, brand, and category filters in the backend.
     - Removed unsafe **JWT secret and MongoDB URI fallbacks**; the application now throws an error if environment variables are missing during bootstrap to prevent staging/production misconfigurations.
+    - Restricted **CORS origin** in production to the specific frontend domain for enhanced security.
   - **Performance Optimization:**
     - Fixed the **N+1 Query issue** in device listing by implementing a bulk price fetcher in `PricesService`. Device lists (Home, Category, search) now fetch all latest prices in a single database aggregation instead of individual queries.
     - Increased **Cache limits** (from 100 to 10000 items) and default TTL (to 1 hour) in `AppModule` to support larger data scales.
     - Optimized **Search Analytics** overhead by skipping logging for queries shorter than 3 characters.
-    - Added database **indexes** to `Device.views`, `Device.category`, and a compound index to `PriceHistory({device: 1, date: -1})` for faster sorting and lookups.
-  - **API Efficiency:**
+    - Added database **indexes** to `Device.views`, `Device.category`, `Device.createdAt`, and a compound index to `PriceHistory({device: 1, date: -1})` for faster sorting and lookups.
+  - **Architectural Cleanup:**
     - Implemented a direct `GET /categories/id/:id` endpoint and updated the frontend `ApiClient` to use it, avoiding unnecessary full-list fetches.
+    - Fixed **TypeScript lint errors** in `JwtStrategy` and frontend `ApiClient` by ensuring environment variables are strictly handled with proper fallbacks.
+    - Resolved **Port Conflict**: Changed backend default port to `3001` (from `3000`) to avoid overlapping with Next.js, and updated the frontend `ApiClient` fallback accordingly.
 - RESULT: The platform is significantly more secure, faster, and scalable. All critical audit findings have been resolved.
 - NEXT STEP: Proceed to Phase 15 (Monetization) or Phase 17 (Comprehensive Automated Testing).
 ================================================================================
