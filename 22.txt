@@ -1,49 +1,53 @@
-The data is based on gsmarena site
-1. List Brands
+Phase 17: Comprehensive Automated Testing
+This phase focuses on establishing a robust automated testing suite to ensure project stability and prevent regressions as new features are added.
 
-[ENDPOINT] /brands
-
-[GET] https://api-mobilespecs.azharimm.dev/brands
-
-2. List Phones
-
-[ENDPOINT] /brands/{brand_slug}
-
-[GET] https://api-mobilespecs.azharimm.dev/brands/apple-phones-48?page=2
-
-Query params
-params 	desc 	required
-page 	page of the data 	no
-3. Phone Specifications
-
-[ENDPOINT] /brands/{brand_slug}/{phone_slug}
-
-[GET] https://api-mobilespecs.azharimm.dev/apple_iphone_12_pro_max-10237
-
-4. Search
-
-[ENDPOINT] /search
-
-[GET] http://api-mobilespecs.azharimm.dev/search?query= iPhone 12 pro max
-
-Query params
-params 	desc 	required
-query 	search query 	yes
-5. Latest
-
-[ENDPOINT] /latest
-
-[GET] https://api-mobilespecs.azharimm.dev/latest
-
-6. Top By Interest
-
-[ENDPOINT] /top-by-interest
-
-[GET] https://api-mobilespecs.azharimm.dev/top-by-interest
-
-7. Top By Fans
-
-[ENDPOINT] /top-by-fans
-
-[GET] https://api-mobilespecs.azharimm.dev/top-by-fans
-
+Proposed Changes
+Backend (NestJS)
+[NEW] 
+search.service.spec.ts
+Unit tests for SearchService:
+Fuzzy search logic.
+Ranking reliability.
+Search analytics logging.
+[NEW] 
+external-api.service.spec.ts
+Unit tests for ExternalApiService:
+Multi-API redundancy and failover.
+Response transformation.
+[NEW] 
+sync.service.spec.ts
+Unit tests for SyncService:
+Incremental sync logic.
+Error handling during sync.
+[MODIFY] 
+app.e2e-spec.ts
+Add E2E tests for:
+Global search endpoints.
+Device detail fetching.
+Admin-only route protection.
+Frontend (Next.js)
+[NEW] 
+vitest.config.ts
+Configuration for Vitest, React Testing Library, and jsdom.
+[NEW] 
+SpecsTable.test.tsx
+Component tests for specification grouping and display.
+[NEW] 
+SearchBar.test.tsx
+Component tests for debounced searching and result rendering.
+[NEW] 
+DeviceCard.test.tsx
+Component tests for price display and navigation.
+Shared Utilities
+[NEW] 
+slug.spec.ts
+Unit tests for consistent slug generation.
+Verification Plan
+Automated Tests
+Backend
+Run unit tests: pnpm run test in backend directory.
+Run E2E tests: pnpm run test:e2e in backend directory.
+Frontend
+Run tests: pnpm run test in frontend directory (after setup).
+Shared
+Run tests: npm run test in shared directory (if configured) or via backend tests if imported.
