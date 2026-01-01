@@ -1,7 +1,7 @@
 import React from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { Device, PriceHistory } from '@shared/types';
+import { Device, PriceHistory } from '../../../../../shared/src/types';
 import DeviceGallery from '@/components/devices/DeviceGallery';
 import SpecsTable from '@/components/devices/SpecsTable';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';

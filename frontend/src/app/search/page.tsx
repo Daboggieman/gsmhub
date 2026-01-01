@@ -3,7 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
 import { apiClient } from '@/lib/api';
-import { Device, Category } from '@shared/types';
+import { Device, Category } from '../../../../shared/src/types';
 import SearchResults from '@/components/search/SearchResults';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';

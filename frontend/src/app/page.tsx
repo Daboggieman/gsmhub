@@ -1,6 +1,6 @@
 import React from 'react';
 import DeviceCard from '@/components/devices/DeviceCard';
-import { Device } from '@shared/types';
+import { Device } from '../../../shared/src/types';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
 import Image from 'next/image';

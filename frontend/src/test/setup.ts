@@ -1,8 +1,7 @@
 import '@testing-library/jest-dom';
-import React from 'react';
 import { vi } from 'vitest';
 
-// Mock Next.js navigation
+// Minimal mock for navigation
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: vi.fn(),
@@ -16,15 +15,11 @@ vi.mock('next/navigation', () => ({
   usePathname: () => '',
 }));
 
-// Mock Next.js Image
+// No TSX/JSX in this file for now to isolate transformer issues
 vi.mock('next/image', () => ({
-  default: ({ src, alt }: { src: string; alt: string }) => {
-    // eslint-disable-next-line @next/next/no-img-element
-    return <img src={src} alt={alt} />;
-  },
+  default: () => 'Mocked Image',
 }));
 
-// Mock FontAwesomeIcon
 vi.mock('@fortawesome/react-fontawesome', () => ({
-  FontAwesomeIcon: ({ icon }: any) => <span data-testid="fa-icon" data-icon={icon?.iconName} />,
+  FontAwesomeIcon: () => 'Mocked Icon',
 }));

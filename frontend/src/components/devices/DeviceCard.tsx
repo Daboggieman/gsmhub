@@ -1,7 +1,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Device } from '@shared/types';
+import { Device } from '../../../../shared/src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faDisplay, 

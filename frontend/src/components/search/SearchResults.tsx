@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { Device } from '@shared/types';
+import { Device } from '../../../../../shared/src/types';
 import DeviceCard from '../devices/DeviceCard';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

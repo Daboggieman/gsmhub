@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faExchangeAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '@/lib/api';
-import { Device, SearchResult } from '@shared/types';
+import { Device, SearchResult } from '../../../../../shared/src/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 

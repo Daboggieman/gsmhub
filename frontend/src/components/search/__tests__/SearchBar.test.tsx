@@ -1,10 +1,10 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import SearchBar from '../SearchBar';
-import { apiClient } from '../../lib/api';
+import { apiClient } from '../../../lib/api';
 
 // Mock the API client
-vi.mock('../../lib/api', () => ({
+vi.mock('../../../lib/api', () => ({
   apiClient: {
     searchDevices: vi.fn(),
   },
@@ -13,6 +13,11 @@ vi.mock('../../lib/api', () => ({
 describe('SearchBar', () => {
   beforeEach(() => {
     vi.clearAllMocks();
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   it('renders search input correctly', () => {
@@ -37,10 +42,12 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText(/search for phones/i);
     fireEvent.change(input, { target: { value: 'iphone' } });
 
+    await vi.advanceTimersByTimeAsync(300);
+
     await waitFor(() => {
       expect(screen.getByText('iPhone 15')).toBeInTheDocument();
       expect(screen.getByText('Suggested Devices')).toBeInTheDocument();
-    }, { timeout: 1000 });
+    });
   });
 
   it('shows "no devices found" message when API returns empty', async () => {
@@ -50,9 +57,11 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText(/search for phones/i);
     fireEvent.change(input, { target: { value: 'nonexistent' } });
 
+    await vi.advanceTimersByTimeAsync(300);
+
     await waitFor(() => {
       expect(screen.getByText(/no devices found/i)).toBeInTheDocument();
-    }, { timeout: 1000 });
+    });
   });
 
   it('clears results when clearing input', async () => {

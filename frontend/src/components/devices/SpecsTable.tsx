@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Device } from '@shared/types';
+import { Device } from '../../../../../shared/src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
