@@ -58,6 +58,13 @@ export interface Device {
   }[];
   latestPrice?: number; // Added latest price field
   specs: DeviceSpec[];
+
+  // Numeric values for filtering
+  ramValue?: number;
+  storageValue?: number;
+  batteryValue?: number;
+  displaySizeValue?: number;
+
   views: number;
   isActive: boolean; // Renamed from is_active for consistency
   createdAt?: string;
@@ -66,7 +73,8 @@ export interface Device {
 }
 
 export interface PriceHistory {
-  id?: string; // MongoDB _id
+  _id?: string; // MongoDB _id
+  id?: string; // Compatibility
   deviceId: string; // Device ID as string
   country: string;
   price: number;

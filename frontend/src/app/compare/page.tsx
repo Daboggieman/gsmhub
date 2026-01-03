@@ -7,6 +7,7 @@ import { Device } from '../../../../shared/src/types';
 import ComparisonTable from '@/components/compare/ComparisonTable';
 import CompareBox from '@/components/compare/CompareBox';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
+import AdUnit from '@/components/ads/AdUnit';
 
 const ComparePageContent = () => {
   const searchParams = useSearchParams();
@@ -50,10 +51,12 @@ const ComparePageContent = () => {
     <div className="flex flex-col min-h-screen bg-gray-50/50">
       <main className="flex-grow container mx-auto px-4 py-8">
         <Breadcrumbs items={breadcrumbItems} />
-        
+
         <div className="mb-12">
           <CompareBox initialDevices={devices} />
         </div>
+
+        <AdUnit slot="compare-top" format="horizontal" className="mb-8" />
 
         {loading ? (
           <div className="flex flex-col justify-center items-center py-32 bg-white rounded-3xl shadow-sm border border-gray-100">

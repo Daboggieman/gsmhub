@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { APP_GUARD } from '@nestjs/core'; // Import APP_GUARD
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'; // Import APP_GUARD, APP_INTERCEPTOR
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -21,6 +21,8 @@ import { ExternalApiModule } from './modules/external-api/external-api.module';
 import { CompareModule } from './modules/compare/compare.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
+import { AuditLogModule } from './modules/audit-log/audit-log.module';
+import { AuditLogInterceptor } from './modules/audit-log/audit-log.interceptor';
 
 @Module({
   imports: [
@@ -45,8 +47,8 @@ import { UsersModule } from './modules/users/users.module';
     }),
     ScheduleModule.forRoot(), // Add ScheduleModule here
     ThrottlerModule.forRoot([{
-        ttl: 60000,
-        limit: 100,
+      ttl: 60000,
+      limit: 100,
     }]),
 
     DevicesModule,
@@ -58,6 +60,7 @@ import { UsersModule } from './modules/users/users.module';
     CompareModule,
     AuthModule,
     UsersModule,
+    AuditLogModule,
   ],
   controllers: [AppController],
   providers: [
@@ -66,7 +69,11 @@ import { UsersModule } from './modules/users/users.module';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: AuditLogInterceptor,
+    },
   ],
 
 })
-export class AppModule {}
+export class AppModule { }

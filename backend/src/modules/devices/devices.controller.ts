@@ -12,7 +12,7 @@ import { UserRole } from '../users/schemas/user.schema';
 @Controller('devices')
 @UseInterceptors(ClassSerializerInterceptor)
 export class DevicesController {
-  constructor(private readonly devicesService: DevicesService) {}
+  constructor(private readonly devicesService: DevicesService) { }
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
@@ -24,20 +24,44 @@ export class DevicesController {
 
   @Get()
   async getAllDevices(
-    @Query('skip') skip?: string,
-    @Query('limit') limit?: string,
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10,
     @Query('category') category?: string,
     @Query('brand') brand?: string,
-    @Query('search') search?: string,
+    @Query('search') search?: string, // Changed from 'q' to 'search' to match repo/service, verify frontend usage!
     @Query('sort') sort?: string,
-  ): Promise<{ devices: DeviceResponseDto[]; total: number }> {
+    @Query('minRam') minRam?: number,
+    @Query('maxRam') maxRam?: number,
+    @Query('minStorage') minStorage?: number,
+    @Query('maxStorage') maxStorage?: number,
+    @Query('minBattery') minBattery?: number,
+    @Query('maxBattery') maxBattery?: number,
+    @Query('minDisplay') minDisplay?: number,
+    @Query('maxDisplay') maxDisplay?: number,
+    @Query('minPrice') minPrice?: number,
+    @Query('maxPrice') maxPrice?: number,
+  ) {
+    limit = limit > 50 ? 50 : limit;
+
+    const parseNum = (val: any) => val ? Number(val) : undefined;
+
     const { devices, total } = await this.devicesService.getAllDevices({
-      skip: skip ? parseInt(skip) : undefined,
-      limit: limit ? parseInt(limit) : undefined,
+      skip: (page - 1) * limit,
+      limit,
       category,
       brand,
       search,
       sort,
+      minRam: parseNum(minRam),
+      maxRam: parseNum(maxRam),
+      minStorage: parseNum(minStorage),
+      maxStorage: parseNum(maxStorage),
+      minBattery: parseNum(minBattery),
+      maxBattery: parseNum(maxBattery),
+      minDisplay: parseNum(minDisplay),
+      maxDisplay: parseNum(maxDisplay),
+      minPrice: parseNum(minPrice),
+      maxPrice: parseNum(maxPrice),
     });
     return {
       devices: plainToInstance(DeviceResponseDto, devices),

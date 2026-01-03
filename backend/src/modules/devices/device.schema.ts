@@ -78,8 +78,14 @@ export class Device {
   @Prop()
   ram?: string;
 
+  @Prop({ index: true })
+  ramValue?: number; // RAM in GB
+
   @Prop()
   battery?: string;
+
+  @Prop({ index: true })
+  batteryValue?: number; // Battery in mAh
 
   @Prop()
   latestPrice?: number;
@@ -116,6 +122,12 @@ export class Device {
 
   @Prop()
   reviewTeaser?: string;
+
+  @Prop({ index: true })
+  storageValue?: number; // Storage in GB
+
+  @Prop({ index: true })
+  displaySizeValue?: number; // Display size in inches
 
   @Prop({ type: [{ user: String, date: String, text: String, avatarInitials: String }] })
   opinions?: { user: string; date: string; text: string; avatarInitials?: string }[];

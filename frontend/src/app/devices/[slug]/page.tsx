@@ -7,18 +7,20 @@ import SpecsTable from '@/components/devices/SpecsTable';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { apiClient } from '@/lib/api';
 import { generateMetadata as generateSeoMetadata, generateProductJsonLd } from '@/lib/seo';
+import PriceComparison from '@/components/prices/PriceComparison';
+import AdUnit from '@/components/ads/AdUnit';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faShoppingCart, 
-  faExternalLinkAlt, 
-  faHistory, 
-  faCheckCircle, 
-  faExpand, 
-  faCamera, 
-  faMicrochip, 
-  faBatteryFull, 
-  faMemory, 
-  faWeightHanging, 
+import {
+  faShoppingCart,
+  faExternalLinkAlt,
+  faHistory,
+  faCheckCircle,
+  faExpand,
+  faCamera,
+  faMicrochip,
+  faBatteryFull,
+  faMemory,
+  faWeightHanging,
   faCog,
   faNetworkWired,
   faNewspaper,
@@ -28,6 +30,7 @@ import {
   faImages,
   faBalanceScale
 } from '@fortawesome/free-solid-svg-icons';
+import FavoriteButton from '@/components/users/FavoriteButton';
 
 async function getDeviceData(slug: string): Promise<{ device: Device; priceHistory: PriceHistory[]; similarlyPriced: Device[] } | null> {
   try {
@@ -37,7 +40,7 @@ async function getDeviceData(slug: string): Promise<{ device: Device; priceHisto
     const deviceId = (device as any)._id || device._id;
     let priceHistory: PriceHistory[] = [];
     let similarlyPriced: Device[] = [];
-    
+
     if (deviceId) {
       try {
         const [prices, allDevices] = await Promise.all([
@@ -61,7 +64,7 @@ async function getDeviceData(slug: string): Promise<{ device: Device; priceHisto
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const data = await getDeviceData(slug);
-  
+
   if (!data) return {};
 
   const { device } = data;
@@ -103,7 +106,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
     { label: 'Home', href: '/' },
     { label: 'Devices', href: '/search' },
     { label: device.name, href: '#' },
-  ];
+  ].map(item => ({ ...item, name: item.label })); // Adapt to BreadcrumbItem type
 
   const subNavItems = [
     { label: 'Review', icon: faNewspaper, href: '#review' },
@@ -114,7 +117,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
   ];
 
   return (
-    <div className="bg-gray-100 min-h-screen">
+    <div className="bg-gray-100 min-h-screen pb-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -133,32 +136,30 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
         {/* GSMArena Style Sub-Nav */}
         <div className="mt-6 flex overflow-x-auto no-scrollbar bg-white rounded-xl shadow-sm border border-gray-200 p-1">
           {subNavItems.map((item, i) => (
-            <a 
-              key={i} 
-              href={item.href} 
+            <a
+              key={i}
+              href={item.href}
               className="flex-shrink-0 px-6 py-3 flex items-center text-sm font-bold text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
             >
               <FontAwesomeIcon icon={item.icon} className="mr-2 opacity-70" />
               {item.label}
             </a>
           ))}
-          <button className="ml-auto px-6 py-3 text-red-600 hover:bg-red-50 rounded-lg transition-all font-bold text-sm flex items-center">
-            <FontAwesomeIcon icon={faHeart} className="mr-2" />
-            Become a fan
-          </button>
+          <div className="ml-auto px-4 flex items-center">
+            <FavoriteButton deviceId={device._id?.toString() || (device as any)._id?.toString()} />
+          </div>
         </div>
 
         <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
-          
           {/* Left Column: Gallery & Sidebar Stats */}
           <div className="lg:col-span-1 space-y-6">
             <div id="gallery">
-              <DeviceGallery 
-                imageUrls={device.images && device.images.length > 0 ? device.images : [device.imageUrl].filter(Boolean) as string[]} 
-                deviceName={device.name} 
+              <DeviceGallery
+                imageUrls={device.images && device.images.length > 0 ? device.images : [device.imageUrl].filter(Boolean) as string[]}
+                deviceName={device.name}
               />
             </div>
-            
+
             {/* Quick Stats Sidebar */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-100 overflow-hidden">
               <div className="bg-gray-50 p-4 border-b border-gray-100">
@@ -198,46 +199,12 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
                 </div>
               )}
             </div>
-
-            {/* Benchmark Tests */}
-            {device.specs.some(s => s.category === 'Tests') && (
-              <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-                <div className="bg-gray-50 p-4 border-b border-gray-100">
-                  <h3 className="font-bold text-gray-700 uppercase text-xs tracking-widest">Our Tests</h3>
-                </div>
-                <div className="p-0 divide-y divide-gray-50">
-                  {device.specs.filter(s => s.category === 'Tests').map((test, i) => (
-                    <div key={i} className="p-4 flex justify-between items-center">
-                      <span className="text-sm text-gray-600">{test.key}</span>
-                      <span className="text-sm font-black text-blue-600">{test.value}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Similarly Priced */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              <div className="bg-gray-50 p-4 border-b border-gray-100">
-                <h3 className="font-bold text-gray-700 uppercase text-xs tracking-widest">Similarly Priced</h3>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {similarlyPriced.map((item, i) => (
-                  <a key={i} href={`/devices/${item.slug}`} className="p-4 flex items-center hover:bg-blue-50 transition-colors group">
-                    <div className="w-10 h-10 bg-gray-100 rounded mr-3 relative flex-shrink-0">
-                      {item.imageUrl && <img src={item.imageUrl} alt="" className="w-full h-full object-contain p-1" />}
-                    </div>
-                    <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 truncate">{item.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+            <AdUnit slot="device-details-sidebar" className="rounded-xl overflow-hidden" />
           </div>
 
           {/* Right Column: Main Info */}
           <div className="lg:col-span-2 space-y-8">
             <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
-              
               {/* Header Info */}
               <div className="flex flex-wrap justify-between items-start gap-4 mb-8">
                 <div>
@@ -302,43 +269,10 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
 
               {/* Buying Options */}
               <div id="prices" className="mb-10">
-                <h3 className="text-xl font-black text-gray-800 mb-6 flex items-center">
-                  <FontAwesomeIcon icon={faShoppingCart} className="mr-3 text-green-600" />
-                  Market Prices
-                </h3>
-                <div className="space-y-3">
-                  {priceHistory.length > 0 ? (
-                    priceHistory.filter(p => p.affiliateUrl).map((price, i) => (
-                      <div key={i} className="flex items-center justify-between p-5 border border-gray-100 rounded-2xl hover:border-blue-400 transition-all hover:shadow-md bg-gray-50">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center mr-4 border border-gray-100">
-                            <FontAwesomeIcon icon={faCheckCircle} className="text-green-600" />
-                          </div>
-                          <div>
-                            <span className="font-black text-gray-800">{price.retailer || 'Partner Store'}</span>
-                            <span className="text-xs text-gray-500 block font-bold uppercase tracking-tighter">{price.country} • Updated today</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-6">
-                          <span className="text-2xl font-black text-gray-900">${price.price.toFixed(2)}</span>
-                          <a 
-                            href={price.affiliateUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl font-black flex items-center transition-all transform hover:-translate-y-0.5"
-                          >
-                            Buy Now <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 text-xs" />
-                          </a>
-                        </div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="p-8 bg-gray-50 rounded-2xl border border-dashed border-gray-200 text-center text-gray-600 font-bold">
-                      No retailer links available for this device yet.
-                    </div>
-                  )}
-                </div>
+                <PriceComparison prices={priceHistory} deviceName={device.name} />
               </div>
+
+              <AdUnit slot="device-details-mid" className="rounded-2xl overflow-hidden" />
 
               {/* Network Technology */}
               {device.networkTechnology && (
@@ -392,13 +326,27 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
               </div>
             )}
 
-            {/* Disclaimer */}
-            <div className="p-6 bg-yellow-50 rounded-2xl border border-yellow-100 flex items-start gap-4">
-              <FontAwesomeIcon icon={faExclamationTriangle} className="text-yellow-700 mt-1" />
-              <p className="text-sm text-yellow-900 leading-relaxed font-medium">
-                <span className="font-black uppercase text-[10px] block mb-1">Disclaimer</span>
-                We can not guarantee that the information on this page is 100% correct. <a href="#" className="underline font-bold">Read more</a>
-              </p>
+            {/* Similarly Priced */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mt-8">
+              <div className="bg-gray-50 p-4 border-b border-gray-100">
+                <h3 className="font-bold text-gray-700 uppercase text-xs tracking-widest">Similarly Priced</h3>
+              </div>
+              <div className="divide-y divide-gray-50">
+                {similarlyPriced.map((item, i) => (
+                  <a key={i} href={`/devices/${item.slug}`} className="p-4 flex items-center hover:bg-blue-50 transition-colors group">
+                    <div className="w-10 h-10 bg-gray-100 rounded mr-3 relative flex-shrink-0">
+                      {item.imageUrl && (
+                        <img
+                          src={item.imageUrl}
+                          alt={item.name}
+                          className="object-contain p-1 w-full h-full"
+                        />
+                      )}
+                    </div>
+                    <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 truncate">{item.name}</span>
+                  </a>
+                ))}
+              </div>
             </div>
           </div>
         </div>

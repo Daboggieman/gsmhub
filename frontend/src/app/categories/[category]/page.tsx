@@ -5,6 +5,7 @@ import DeviceCard from '@/components/devices/DeviceCard';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
 import SortDropdown from '@/components/ui/SortDropdown';
+import AdUnit from '@/components/ads/AdUnit';
 
 async function getCategoryData(slug: string, page: number = 1, sort: string = 'latest') {
   try {
@@ -14,9 +15,9 @@ async function getCategoryData(slug: string, page: number = 1, sort: string = 'l
     // Use the category ID to fetch devices.
     const categoryId = (category as any)._id || category.id;
     const limit = 24;
-    
-    const { devices, total } = await apiClient.getDevices({ 
-      category: categoryId, 
+
+    const { devices, total } = await apiClient.getDevices({
+      category: categoryId,
       limit,
       page,
       sort
@@ -38,7 +39,7 @@ interface CategoryPageProps {
 export default async function CategoryPage({ params: promiseParams, searchParams: promiseSearchParams }: CategoryPageProps) {
   const params = await promiseParams;
   const searchParams = await promiseSearchParams;
-  
+
   const page = Number(searchParams.page) || 1;
   const sort = typeof searchParams.sort === 'string' ? searchParams.sort : 'latest';
 
@@ -61,7 +62,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
     <div className="flex flex-col min-h-screen bg-gray-50/50">
       <main className="flex-grow container mx-auto px-4 py-8">
         <Breadcrumbs items={breadcrumbItems} />
-        
+
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-extrabold text-gray-900 mb-2">{category.name}</h1>
@@ -72,7 +73,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
               Showing {devices.length} of {total} devices
             </p>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <SortDropdown />
           </div>
@@ -85,13 +86,14 @@ export default async function CategoryPage({ params: promiseParams, searchParams
                 <DeviceCard key={device._id} device={device} />
               ))}
             </div>
-            
-            <Pagination 
-              currentPage={page} 
-              totalPages={totalPages} 
+
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
               baseUrl={`/categories/${params.category}`}
               searchParams={searchParams}
             />
+            <AdUnit slot="category-list-bottom" format="horizontal" className="mt-8" />
           </>
         ) : (
           <div className="text-center py-24 bg-white rounded-2xl border border-gray-100 shadow-sm">

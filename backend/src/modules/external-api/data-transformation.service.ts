@@ -6,7 +6,7 @@ import { generateSlug } from '../../common/utils/slug.util';
 export class DataTransformationService {
 
   // --- SHARED HELPER ---
-  
+
   private addDynamicSpecs(data: any, specs: DeviceSpec[], knownKeys: Set<string>) {
     Object.keys(data).forEach(key => {
       if (knownKeys.has(key)) return;
@@ -64,21 +64,21 @@ export class DataTransformationService {
     addSpec('Platform', 'CPU', data.cpu, 'cpu');
     addSpec('Platform', 'GPU', data.gpu, 'gpu');
     addSpec('Platform', 'OS', data.androidVersion ? `Android ${data.androidVersion}` : null, 'androidVersion');
-    
+
     addSpec('Display', 'Size', data.displaySize, 'displaySize');
     addSpec('Display', 'Resolution', data.displayResolution, 'displayResolution');
     addSpec('Display', 'Type', data.displayType, 'displayType');
-    
+
     addSpec('Memory', 'Internal', data.internal, 'internal');
-    
+
     addSpec('Main Camera', 'Specs', data.mainCameraSpecs, 'mainCameraSpecs');
     addSpec('Main Camera', 'Features', data.mainCameraFeatures, 'mainCameraFeatures');
     addSpec('Main Camera', 'Video', data.mainVideoSpecs, 'mainVideoSpecs');
-    
+
     addSpec('Selfie Camera', 'Specs', data.selfieCameraSpecs, 'selfieCameraSpecs');
     addSpec('Selfie Camera', 'Features', data.selfieCameraFeatures, 'selfieCameraFeatures');
     addSpec('Selfie Camera', 'Video', data.selfieVideoSpecs, 'selfieVideoSpecs');
-    
+
     addSpec('Battery', 'Capacity', data.battery, 'battery');
     addSpec('Features', 'Sensors', data.sensors, 'sensors');
 
@@ -95,25 +95,29 @@ export class DataTransformationService {
       model: data.model || model,
       brand: data.manufacturer || brand,
       slug: generateSlug(`${data.manufacturer || brand} ${data.model || model}`),
-      imageUrl: data.img || data.image || '', 
+      imageUrl: data.img || data.image || '',
       type: DeviceType.PHONE,
       specs: specs,
       isActive: true,
-      
+
       // Top-level fields
       os: data.androidVersion ? `Android ${data.androidVersion}` : '',
       storage: this.extractStorage(data.internal),
+      storageValue: this.extractStorageValue(data.internal),
       ram: this.extractRam(data.internal),
+      ramValue: this.extractRamValue(data.internal),
       displaySize: data.displaySize,
+      displaySizeValue: this.extractDisplaySizeValue(data.displaySize),
       chipset: data.chipset,
       battery: data.battery,
+      batteryValue: this.extractBatteryValue(data.battery),
       name: `${data.manufacturer || brand} ${data.model || model}`,
     };
   }
 
   transformPrimaryDeviceList(data: any[], brand: string): Partial<Device>[] {
     if (!Array.isArray(data)) return [];
-    
+
     return data.map(item => ({
       model: item.model,
       brand: item.manufacturer || brand,
@@ -132,12 +136,12 @@ export class DataTransformationService {
   transformSecondaryDevice(data: any, brand: string, model: string): Partial<Device> {
     const specs: DeviceSpec[] = [];
     const knownKeys = new Set<string>();
-    
+
     const addSpec = (category: string, key: string, value: any, originalKey?: string) => {
-        if (value) {
-            specs.push({ category, key, value: String(value) });
-            if (originalKey) knownKeys.add(originalKey);
-        }
+      if (value) {
+        specs.push({ category, key, value: String(value) });
+        if (originalKey) knownKeys.add(originalKey);
+      }
     };
 
     addSpec('Body', 'Dimensions', data.dimensions, 'dimensions');
@@ -171,22 +175,24 @@ export class DataTransformationService {
       dimension: data.dimensions,
       weight: data.weight,
       displaySize: data.displaySize,
+      displaySizeValue: this.extractDisplaySizeValue(data.displaySize),
       chipset: data.chipset,
       battery: data.batteryType,
+      batteryValue: this.extractBatteryValue(data.batteryType),
       name: data.name || `${brand} ${model}`,
     };
   }
 
   transformSecondaryDeviceList(data: any[], brand: string): Partial<Device>[] {
-     if (!Array.isArray(data)) return [];
-     return data.map(item => ({
-       model: item.name || item,
-       brand: brand,
-       slug: generateSlug(`${brand} ${item.name || item}`),
-       type: DeviceType.PHONE,
-       isActive: true,
-       specs: [],
-     }));
+    if (!Array.isArray(data)) return [];
+    return data.map(item => ({
+      model: item.name || item,
+      brand: brand,
+      slug: generateSlug(`${brand} ${item.name || item}`),
+      type: DeviceType.PHONE,
+      isActive: true,
+      specs: [],
+    }));
   }
 
   // --- UTILS ---
@@ -201,5 +207,34 @@ export class DataTransformationService {
     if (!internalString) return '';
     const match = internalString.match(/^(\d+\s*(?:GB|TB|MB))/i);
     return match ? match[1] : '';
+  }
+
+  private extractStorageValue(internalString: string): number {
+    if (!internalString) return 0;
+    const match = internalString.match(/(\d+)\s*(GB|TB|MB)/i);
+    if (!match) return 0;
+    let val = parseInt(match[1]);
+    const unit = match[2].toUpperCase();
+    if (unit === 'TB') val *= 1024;
+    if (unit === 'MB') val /= 1024;
+    return val;
+  }
+
+  private extractRamValue(internalString: string): number {
+    if (!internalString) return 0;
+    const match = internalString.match(/(\d+)\s*GB\s*RAM/i);
+    return match ? parseInt(match[1]) : 0;
+  }
+
+  private extractBatteryValue(batteryString: string): number {
+    if (!batteryString) return 0;
+    const match = batteryString.match(/(\d+)\s*mAh/i);
+    return match ? parseInt(match[1]) : 0;
+  }
+
+  private extractDisplaySizeValue(displayString: string): number {
+    if (!displayString) return 0;
+    const match = displayString.match(/(\d+(\.\d+)?)\s*inches/i);
+    return match ? parseFloat(match[1]) : 0;
   }
 }

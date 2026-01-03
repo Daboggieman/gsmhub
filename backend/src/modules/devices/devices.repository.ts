@@ -8,7 +8,7 @@ import { escapeRegExp } from '../../../../shared/src/utils/regex';
 export class DevicesRepository {
   constructor(
     @InjectModel(Device.name) private deviceModel: Model<DeviceDocument>,
-  ) {}
+  ) { }
 
   async create(createDeviceData: Partial<Device>): Promise<Device> {
     const newDevice = new this.deviceModel(createDeviceData);
@@ -22,6 +22,16 @@ export class DevicesRepository {
     brand?: string;
     search?: string;
     sort?: string;
+    minRam?: number;
+    maxRam?: number;
+    minStorage?: number;
+    maxStorage?: number;
+    minBattery?: number;
+    maxBattery?: number;
+    minDisplay?: number;
+    maxDisplay?: number;
+    minPrice?: number;
+    maxPrice?: number;
   }): Promise<Device[]> {
     const query: any = {};
     if (filters?.category) {
@@ -38,6 +48,37 @@ export class DevicesRepository {
         { brand: { $regex: new RegExp(safeSearch, 'i') } },
         { $text: { $search: filters.search } }
       ];
+    }
+
+    // Range Filters
+    if (filters?.minRam || filters?.maxRam) {
+      query.ramValue = {};
+      if (filters.minRam) query.ramValue.$gte = filters.minRam;
+      if (filters.maxRam) query.ramValue.$lte = filters.maxRam;
+    }
+
+    if (filters?.minStorage || filters?.maxStorage) {
+      query.storageValue = {};
+      if (filters.minStorage) query.storageValue.$gte = filters.minStorage;
+      if (filters.maxStorage) query.storageValue.$lte = filters.maxStorage;
+    }
+
+    if (filters?.minBattery || filters?.maxBattery) {
+      query.batteryValue = {};
+      if (filters.minBattery) query.batteryValue.$gte = filters.minBattery;
+      if (filters.maxBattery) query.batteryValue.$lte = filters.maxBattery;
+    }
+
+    if (filters?.minDisplay || filters?.maxDisplay) {
+      query.displaySizeValue = {};
+      if (filters.minDisplay) query.displaySizeValue.$gte = filters.minDisplay;
+      if (filters.maxDisplay) query.displaySizeValue.$lte = filters.maxDisplay;
+    }
+
+    if (filters?.minPrice || filters?.maxPrice) {
+      query.latestPrice = {};
+      if (filters.minPrice) query.latestPrice.$gte = filters.minPrice;
+      if (filters.maxPrice) query.latestPrice.$lte = filters.maxPrice;
     }
 
     let findQuery = this.deviceModel.find(query).populate('category').lean();
@@ -193,13 +234,13 @@ export class DevicesRepository {
       { upsert: true, new: true, setDefaultsOnInsert: true }
     ).populate('category').exec();
 
-        return updatedDevice;
+    return updatedDevice;
 
-      }
+  }
 
-    
 
-      async getUniqueBrands(): Promise<string[]> {
+
+  async getUniqueBrands(): Promise<string[]> {
     return this.deviceModel.distinct('brand').exec();
   }
 
@@ -216,4 +257,3 @@ export class DevicesRepository {
   }
 }
 
-    

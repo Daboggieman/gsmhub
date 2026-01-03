@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./client-layout";
+import PWARegistration from "@/components/pwa/PWARegistration";
 
 // Font Awesome Configuration
 import { config } from '@fortawesome/fontawesome-svg-core';
@@ -23,6 +24,13 @@ export const metadata: Metadata = {
   authors: [{ name: "GSMHub Team" }],
   creator: "GSMHub",
   publisher: "GSMHub",
+  manifest: "/manifest.json",
+  themeColor: "#2563eb",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "GSMHub",
+  },
 };
 
 export default function RootLayout({
@@ -35,9 +43,17 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} antialiased flex flex-col min-h-screen`}
       >
+        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+          />
+        )}
         <ClientLayout>
           {children}
         </ClientLayout>
+        <PWARegistration />
       </body>
     </html>
   );

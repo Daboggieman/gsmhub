@@ -1,0 +1,45 @@
+GSMHub Codebase Audit Report
+1. Security Analysis
+Medium Risk
+Sensitive Data Exposure: 
+AuthService
+ and 
+UsersService
+ return user objects including hashed passwords. While hashed, these should be excluded from API responses using @Exclude() or explicit DTOs.
+JWT Storage: Frontend stores auth_token in localStorage, which is vulnerable to XSS.
+Recommendation: Use HttpOnly cookies for session tokens.
+Password Selection: Mongoose UserSchema should ideally set select: false for the password field to prevent accidental inclusion in queries.
+Low Risk
+CORS Configuration: In production, it defaults to https://gsmhub.com if FRONTEND_URL is missing. Ensure this variable is strictly set in all environments.
+Rate Limiting: Currently set to 100 requests per minute globally. This is good but monitor for false positives during peak traffic.
+2. Performance & Scalability
+Database
+Aggregation Efficiency: 
+PricesService
+ uses $group and $sort aggregations. Ensure there is a compound index on { device: 1, date: -1 } to optimize these.
+Text Search: The $text index on devices is broad. Monitor performance if the database grows beyond 100k records.
+Frontend
+SSG Limitations: 
+generateStaticParams
+ for devices is limited to the first 100. This is a good "partial SSG" strategy, but a fallback strategy (like blocking) should be verified.
+Image Optimization: Inconsistent use of next/image. Some components use raw <img> tags, missing out on Next.js's automatic optimization and WebP conversion.
+Caching: Redis is used for popular devices and single slugs. This is excellent for performance.
+3. Code Quality & Maintenance
+Typos and Logical Inconsistencies
+API Client Type Mismatch: apiClient.getDevicePriceHistory expects a number in TypeScript, but the system uses MongoDB ObjectId (strings).
+JSX Nesting: 
+frontend/src/app/devices/[slug]/page.tsx
+ has redundant closing div tags and potential nesting issues in the sidebar section.
+Inconsistent ID handling: Some places use _id, others 
+id
+. Standardizing on one if possible (via class-transformer or Mongoose virtuals) would reduce friction.
+Architectural Suggestions
+Validation: Consider moving from standard class-validator to Zod for even tighter runtime type safety, especially in the shared package.
+Shared Package: The shared package is utilized but could be expanded to include common validation logic (Zod schemas) shared between NestJS and Next.js.
+4. Suggested Features & Enhancements
+User System Enhancement: Add "Favorite/Fan" functionality (backend is ready, but frontend Become a fan button is a placeholder).
+Advanced Filtering: Add multi-criteria filtering (e.g., "AMOLED + 5000mAh + under $500") on the search/listing pages.
+Comparison Improvement: Add "Difference Highlighting" to the comparison table to make it easier to see what changed between models.
+Price Alerts: Allow users to subscribe to price drops for specific models.
+Service Worker / PWA: Enable offline spec viewing for recently browsed phones.
+Admin Audit Log: Track changes made by admins for better accountability.

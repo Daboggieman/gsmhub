@@ -43,35 +43,38 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <nav className="mt-6">
           <Link
             href="/admin/dashboard"
-            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${
-              pathname === '/admin/dashboard' ? 'bg-indigo-900 border-l-4 border-white' : ''
-            }`}
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${pathname === '/admin/dashboard' ? 'bg-indigo-900 border-l-4 border-white' : ''
+              }`}
           >
             Dashboard
           </Link>
           <Link
             href="/admin/devices"
-            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${
-              pathname.includes('/admin/devices') ? 'bg-indigo-900 border-l-4 border-white' : ''
-            }`}
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${pathname.includes('/admin/devices') ? 'bg-indigo-900 border-l-4 border-white' : ''
+              }`}
           >
             Devices
           </Link>
           <Link
             href="/admin/categories"
-            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${
-              pathname.includes('/admin/categories') ? 'bg-indigo-900 border-l-4 border-white' : ''
-            }`}
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${pathname.includes('/admin/categories') ? 'bg-indigo-900 border-l-4 border-white' : ''
+              }`}
           >
             Categories
           </Link>
           <Link
             href="/admin/brands"
-            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${
-              pathname.includes('/admin/brands') ? 'bg-indigo-900 border-l-4 border-white' : ''
-            }`}
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${pathname.includes('/admin/brands') ? 'bg-indigo-900 border-l-4 border-white' : ''
+              }`}
           >
             Brands
+          </Link>
+          <Link
+            href="/admin/audit-logs"
+            className={`block px-6 py-3 transition-colors hover:bg-indigo-700 ${pathname.includes('/admin/audit-logs') ? 'bg-indigo-900 border-l-4 border-white' : ''
+              }`}
+          >
+            Audit Logs
           </Link>
           <button
             onClick={logout}

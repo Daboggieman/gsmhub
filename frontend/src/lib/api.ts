@@ -11,6 +11,10 @@ class ApiClient {
     this.baseURL = baseURL;
   }
 
+  async getProfile(): Promise<any> {
+    return this.request('/auth/profile');
+  }
+
   public addRequestInterceptor(interceptor: (request: RequestInit) => RequestInit | Promise<RequestInit>) {
     this.requestInterceptors.push(interceptor);
   }
@@ -20,20 +24,19 @@ class ApiClient {
   }
 
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
-    const token = typeof window !== 'undefined' ? localStorage.getItem('auth_token') : null;
     let modifiedOptions = options || {};
-    
+
     modifiedOptions.headers = {
       'Content-Type': 'application/json',
       ...modifiedOptions.headers,
     };
 
-    if (token) {
-      modifiedOptions.headers = {
-        ...modifiedOptions.headers,
-        'Authorization': `Bearer ${token}`,
-      };
-    }
+    modifiedOptions.headers = {
+      'Content-Type': 'application/json',
+      ...modifiedOptions.headers,
+    };
+
+    modifiedOptions.credentials = 'include';
 
     for (const interceptor of this.requestInterceptors) {
       modifiedOptions = await Promise.resolve(interceptor(modifiedOptions));
@@ -74,6 +77,16 @@ class ApiClient {
     brand?: string;
     search?: string;
     sort?: string;
+    minPrice?: number;
+    maxPrice?: number;
+    minRam?: number;
+    maxRam?: number;
+    minStorage?: number;
+    maxStorage?: number;
+    minBattery?: number;
+    maxBattery?: number;
+    minDisplay?: number;
+    maxDisplay?: number;
   }): Promise<{ devices: Device[]; total: number; page: number; limit: number }> {
     const queryParams = new URLSearchParams();
     if (params?.page) queryParams.append('page', params.page.toString());
@@ -82,6 +95,18 @@ class ApiClient {
     if (params?.brand) queryParams.append('brand', params.brand);
     if (params?.search) queryParams.append('search', params.search);
     if (params?.sort) queryParams.append('sort', params.sort);
+
+    // Advanced Filters
+    if (params?.minPrice) queryParams.append('minPrice', params.minPrice.toString());
+    if (params?.maxPrice) queryParams.append('maxPrice', params.maxPrice.toString());
+    if (params?.minRam) queryParams.append('minRam', params.minRam.toString());
+    if (params?.maxRam) queryParams.append('maxRam', params.maxRam.toString());
+    if (params?.minStorage) queryParams.append('minStorage', params.minStorage.toString());
+    if (params?.maxStorage) queryParams.append('maxStorage', params.maxStorage.toString());
+    if (params?.minBattery) queryParams.append('minBattery', params.minBattery.toString());
+    if (params?.maxBattery) queryParams.append('maxBattery', params.maxBattery.toString());
+    if (params?.minDisplay) queryParams.append('minDisplay', params.minDisplay.toString());
+    if (params?.maxDisplay) queryParams.append('maxDisplay', params.maxDisplay.toString());
 
     const query = queryParams.toString();
     return this.request(`/devices${query ? `?${query}` : ''}`);
@@ -162,7 +187,7 @@ class ApiClient {
   }
 
   // Price History
-  async getDevicePriceHistory(deviceId: number): Promise<PriceHistory[]> {
+  async getDevicePriceHistory(deviceId: string): Promise<PriceHistory[]> {
     return this.request(`/prices/device/${deviceId}`);
   }
 
@@ -171,8 +196,28 @@ class ApiClient {
     return this.request('/admin/stats');
   }
 
+  // Users
+  async toggleFavorite(deviceId: string): Promise<{ isFavorited: boolean }> {
+    return this.request(`/users/favorites/${deviceId}`, { method: 'POST' });
+  }
+
+  async getFavorites(): Promise<Device[]> {
+    return this.request('/users/favorites');
+  }
+
+  async getAuditLogs(params: { page?: number; limit?: number; userId?: string; action?: string; targetType?: string }): Promise<{ logs: any[]; total: number; page: number; limit: number }> {
+    const searchParams = new URLSearchParams();
+    if (params.page) searchParams.set('page', params.page.toString());
+    if (params.limit) searchParams.set('limit', params.limit.toString());
+    if (params.userId) searchParams.set('userId', params.userId);
+    if (params.action) searchParams.set('action', params.action);
+    if (params.targetType) searchParams.set('targetType', params.targetType);
+
+    return this.request(`/admin/audit-logs?${searchParams.toString()}`);
+  }
+
   // External API / Sync
-  async triggerSync(brand?: string): Promise<{ message: string }> {
+  async syncDevices(brand?: string): Promise<any> {
     if (brand) {
       return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { method: 'POST' });
     }

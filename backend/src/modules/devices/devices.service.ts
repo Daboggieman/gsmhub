@@ -23,7 +23,7 @@ export class DevicesService {
     private readonly categoriesService: CategoriesService,
     private readonly pricesService: PricesService,
     private readonly externalApiService: ExternalApiService,
-  ) {}
+  ) { }
 
   private async attachLatestPrice(device: Device): Promise<Device> {
     if (device && device._id) {
@@ -37,11 +37,11 @@ export class DevicesService {
 
   private async attachLatestPrices(devices: Device[]): Promise<Device[]> {
     if (!devices.length) return devices;
-    
+
     const deviceIds = devices
       .filter(d => d && d._id)
       .map(d => d._id!.toString());
-    
+
     if (!deviceIds.length) return devices;
 
     const priceMap = await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
@@ -55,7 +55,24 @@ export class DevicesService {
   }
 
   async getAllDevices(
-    filters?: { skip?: number; limit?: number; category?: string; brand?: string; search?: string; sort?: string }
+    filters?: {
+      skip?: number;
+      limit?: number;
+      category?: string;
+      brand?: string;
+      search?: string;
+      sort?: string;
+      minRam?: number;
+      maxRam?: number;
+      minStorage?: number;
+      maxStorage?: number;
+      minBattery?: number;
+      maxBattery?: number;
+      minDisplay?: number;
+      maxDisplay?: number;
+      minPrice?: number;
+      maxPrice?: number;
+    }
   ): Promise<{ devices: Device[]; total: number }> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);
@@ -73,7 +90,7 @@ export class DevicesService {
     }
     return await this.attachLatestPrice(device);
   }
-  
+
   async findBySlug(slug: string): Promise<Device> {
     const cachedDevice = await this.cacheManager.get<Device>(`device_${slug}`);
     if (cachedDevice) {
@@ -114,7 +131,7 @@ export class DevicesService {
       slug,
       category: category ? (category._id as any) : undefined,
     };
-    
+
     const newDevice = await this.devicesRepository.create(newDeviceData);
     await this.cacheManager.del('popular_devices');
     return newDevice;
@@ -210,10 +227,10 @@ export class DevicesService {
     if (!deviceData.slug) {
       throw new Error('Device slug is required for upsert operation.');
     }
-    
+
     // Default category to 'Smartphones' if missing
     if (!deviceData.category) {
-        deviceData.category = 'Smartphones';
+      deviceData.category = 'Smartphones';
     }
 
     // Find or create category
@@ -250,7 +267,7 @@ export class DevicesService {
     };
 
     const upsertedDevice = await this.devicesRepository.upsert(preparedDeviceData);
-    if(upsertedDevice) {
+    if (upsertedDevice) {
       await this.cacheManager.del(`device_${upsertedDevice.slug}`);
       await this.cacheManager.del('popular_devices');
       return await this.attachLatestPrice(upsertedDevice);
@@ -259,15 +276,15 @@ export class DevicesService {
   }
 
   async syncDeviceFromAPI(brand: string, model: string): Promise<Device | null> {
-      try {
-        const deviceData = await this.externalApiService.fetchDeviceSpecs(brand, model);
-        if (!deviceData) {
-            throw new NotFoundException(`Device ${brand} ${model} not found in external APIs`);
-        }
-        return await this.upsertDevice(deviceData);
-      } catch (error) {
-        throw new NotFoundException(`Failed to sync device: ${error.message}`);
+    try {
+      const deviceData = await this.externalApiService.fetchDeviceSpecs(brand, model);
+      if (!deviceData) {
+        throw new NotFoundException(`Device ${brand} ${model} not found in external APIs`);
       }
+      return await this.upsertDevice(deviceData);
+    } catch (error) {
+      throw new NotFoundException(`Failed to sync device: ${error.message}`);
+    }
   }
 
   async getBrands(): Promise<string[]> {
@@ -277,11 +294,11 @@ export class DevicesService {
   async getFieldSuggestions(): Promise<Record<string, string[]>> {
     const fields = ['os', 'ram', 'storage', 'battery', 'chipset', 'networkTechnology', 'displaySize', 'colors', 'mainCamera', 'selfieCamera', 'dimension'];
     const suggestions: Record<string, string[]> = {};
-    
+
     await Promise.all(fields.map(async (field) => {
       suggestions[field] = await this.devicesRepository.getUniqueFieldValues(field);
     }));
-    
+
     return suggestions;
   }
 
@@ -290,4 +307,3 @@ export class DevicesService {
   }
 }
 
-  

@@ -1,4 +1,24 @@
 ================================================================================
+- DATE: 2026-01-03
+- ACTION: Implemented- Successfully migrated JWT storage to HttpOnly cookies.
+- Resolved code corruption and JSX errors in `[slug]/page.tsx` and `ComparisonTable.tsx`.
+- Refactored `ApiClient` to support advanced filtering (RAM, Price, etc.) and fixed duplicate method signatures.
+- Fixed TypeScript errors related to `isolatedModules` and missing `mongoose` imports in the backend.
+- Standardized `PriceHistory` type across the shared library and frontend.
+
+ACTION: Bug fixes and codebase stabilization completed.
+GOAL: Ensure application runs without syntax or type errors.
+NEXT STEP: User to confirm installation of missing backend dependencies (`cookie-parser`).
+    - Added a `logout` endpoint to clear the authentication cookie.
+    - Modified `JwtStrategy` to extract the token from cookies instead of the `Authorization` header.
+  - **Frontend Session Management:**
+    - Refactored `ApiClient` to use `credentials: 'include'` for all requests, ensuring cookies are sent automatically.
+    - Removed manual token storage and retrieval from `localStorage` in `AuthContext` and `api.ts`.
+    - Updated `AuthContext` to verify user session on app load by calling `apiClient.getProfile()`.
+- RESULT: Authentication is now significantly more secure, protecting users against XSS-based token theft.
+- NEXT STEP: Proceed to Phase 17 (Comprehensive Automated Testing).
+================================================================================
+================================================================================
 - DATE: 2025-12-30
 - ACTION: Completed Comprehensive Codebase Audit & Critical Issue Resolution.
 - DETAILS:
@@ -17,6 +37,24 @@
     - Resolved **Port Conflict**: Changed backend default port to `3001` (from `3000`) to avoid overlapping with Next.js, and updated the frontend `ApiClient` fallback accordingly.
 - RESULT: The platform is significantly more secure, faster, and scalable. All critical audit findings have been resolved.
 - NEXT STEP: Proceed to Phase 15 (Monetization) or Phase 17 (Comprehensive Automated Testing).
+================================================================================
+================================================================================
+- DATE: 2026-01-02
+- ACTION: Implemented Phase 15: Monetization (AdSense & Affiliate System).
+- DETAILS:
+  - **Google AdSense Integration:**
+    - Developed a reusable `AdUnit` component that handles environment-based (NEXT_PUBLIC_ADSENSE_ID) script injection and placeholders for development.
+    - Strategically placed ad units:
+      - **Home Page**: Global top banner above the header (in `client-layout.tsx`).
+      - **Device Details**: Sidebar and mid-content banners.
+      - **Categories**: Bottom banner for listing pages.
+      - **Comparison**: Top banner for comparison results.
+  - **Affiliate & Price Comparison:**
+    - Built a robust `PriceComparison` component to display multi-retailer pricing with "Buy Now" affiliate buttons.
+    - Implemented "Best Deal" logic to automatically highlight the lowest price among listed retailers.
+    - Added global affiliate disclosure compliance.
+- RESULT: The platform now has a complete monetization infrastructure ready for revenue generation.
+- NEXT STEP: Proceed to Phase 17 (Comprehensive Automated Testing).
 ================================================================================
 ================================================================================
 - DATE: 2025-12-27
@@ -404,7 +442,6 @@ TECH STACK:
 ✓ Backend: NestJS (Node.js, TypeScript)
 ✓ Database: MongoDB Atlas
 ✓ Cache: Redis
-✓ Deployment: Vercel (Frontend) + Railway (Backend)
 
 ═══════════════════════════════════════════════════════════════════════════════
 

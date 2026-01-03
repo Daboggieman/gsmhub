@@ -1,11 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
+import * as cookieParser from 'cookie-parser';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter'; // Import the custom filter
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor'; // Import the custom interceptor
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
     forbidNonWhitelisted: true,
@@ -21,8 +23,8 @@ async function bootstrap() {
   // Enable CORS
   const isProduction = process.env.NODE_ENV === 'production';
   app.enableCors({
-    origin: isProduction 
-      ? (process.env.FRONTEND_URL || 'https://gsmhub.com') 
+    origin: isProduction
+      ? (process.env.FRONTEND_URL || 'https://gsmhub.com')
       : true,
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
     credentials: true,
