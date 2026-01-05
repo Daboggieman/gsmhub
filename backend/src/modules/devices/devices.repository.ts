@@ -41,12 +41,13 @@ export class DevicesRepository {
       query.brand = { $regex: new RegExp(escapeRegExp(filters.brand), 'i') };
     }
     if (filters?.search) {
-      // Use text search if available, but fallback to regex for partial matches on model/brand
+      // Use regex for partial matches on name, model, and brand
+      // We removed $text search to avoid "text index not found" errors and incompatibility with $or
       const safeSearch = escapeRegExp(filters.search);
       query.$or = [
+        { name: { $regex: new RegExp(safeSearch, 'i') } },
         { model: { $regex: new RegExp(safeSearch, 'i') } },
-        { brand: { $regex: new RegExp(safeSearch, 'i') } },
-        { $text: { $search: filters.search } }
+        { brand: { $regex: new RegExp(safeSearch, 'i') } }
       ];
     }
 

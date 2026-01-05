@@ -40,6 +40,12 @@ const nextConfig: NextConfig = {
         port: '',
         pathname: '/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'fdn2.gsmarena.com',
+        port: '',
+        pathname: '/**',
+      },
     ],
   },
   /* config options here */

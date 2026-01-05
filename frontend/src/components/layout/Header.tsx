@@ -30,16 +30,14 @@ const Header: React.FC = () => {
         <div className="flex justify-between items-center gap-4 lg:gap-8">
           {/* Logo */}
           <Link href="/" className="flex-shrink-0">
-            <div className="bg-white p-1 rounded-lg">
-              <Image
-                src="/images/logo.svg"
-                alt="GSMHub Logo"
-                width={120}
-                height={40}
-                className="h-8 w-auto"
-                priority
-              />
-            </div>
+            <Image
+              src="/images/logo.svg"
+              alt="GSMHub Logo"
+              width={140}
+              height={40}
+              className="h-10 w-auto"
+              priority
+            />
           </Link>
 
           {/* Desktop Search */}
@@ -49,29 +47,29 @@ const Header: React.FC = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-1">
-            <Link 
-              href="/devices" 
+            <Link
+              href="/devices"
               className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
             >
               <FontAwesomeIcon icon={faMobileScreenButton} className="text-blue-300" />
               <span>Phones</span>
             </Link>
-            <Link 
-              href="/categories" 
+            <Link
+              href="/categories"
               className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
             >
               <FontAwesomeIcon icon={faLayerGroup} className="text-blue-300" />
               <span>Categories</span>
             </Link>
-            <Link 
-              href="/brands" 
+            <Link
+              href="/brands"
               className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
             >
               <FontAwesomeIcon icon={faMobileScreenButton} className="text-blue-300" />
               <span>Brands</span>
             </Link>
-            <Link 
-              href="/compare" 
+            <Link
+              href="/compare"
               className="px-4 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 border border-blue-500/30 transition-all flex items-center gap-2 font-medium"
             >
               <FontAwesomeIcon icon={faScaleBalanced} />
@@ -80,8 +78,8 @@ const Header: React.FC = () => {
           </nav>
 
           {/* Mobile Menu Button */}
-          <button 
-            onClick={toggleMobileMenu} 
+          <button
+            onClick={toggleMobileMenu}
             className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors text-2xl"
             aria-label="Toggle Menu"
           >
@@ -99,8 +97,8 @@ const Header: React.FC = () => {
       {isMobileMenuOpen && (
         <div className="lg:hidden bg-[#0d1440] border-t border-white/10 animate-in slide-in-from-top duration-300">
           <nav className="container mx-auto p-4 flex flex-col space-y-2">
-            <Link 
-              href="/devices" 
+            <Link
+              href="/devices"
               className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
               onClick={toggleMobileMenu}
             >
@@ -109,8 +107,8 @@ const Header: React.FC = () => {
               </div>
               <span className="font-bold">Phones & Devices</span>
             </Link>
-            <Link 
-              href="/categories" 
+            <Link
+              href="/categories"
               className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
               onClick={toggleMobileMenu}
             >
@@ -119,8 +117,8 @@ const Header: React.FC = () => {
               </div>
               <span className="font-bold">Browse Categories</span>
             </Link>
-            <Link 
-              href="/brands" 
+            <Link
+              href="/brands"
               className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
               onClick={toggleMobileMenu}
             >
@@ -129,8 +127,8 @@ const Header: React.FC = () => {
               </div>
               <span className="font-bold">Browse Brands</span>
             </Link>
-            <Link 
-              href="/compare" 
+            <Link
+              href="/compare"
               className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors text-blue-300"
               onClick={toggleMobileMenu}
             >

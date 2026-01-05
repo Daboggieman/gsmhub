@@ -1,4 +1,34 @@
 ================================================================================
+- DATE: 2026-01-05
+- ACTION: Resolved Frontend Search, Layout & Build Errors.
+- DETAILS:
+  - **Search Fix**: Resolved 500 Internal Server Error by switching from `$text` to regex search in `DevicesRepository`.
+  - **Icon Fix**: Replaced logo with a professional white-text SVG for better contrast on the blue header.
+  - **Build Fix**: Resolved "Parsing ecmascript source code failed" and "Cannot find module" errors in `PriceComparison.tsx` by fixing syntax and relative import paths.
+  - **Admin Access**: Provided default admin credentials (`admin@gsmhub.com` / `admin123`).
+- RESULT: Application is stable, search is functional, and branding is visible.
+- NEXT STEP: User to verify final changes and proceed with testing.
+================================================================================
+================================================================================
+- DATE: 2026-01-03
+- ACTION: Resolved Frontend Build & Runtime Errors.
+- DETAILS:
+  - **Configuration**: Updated `next.config.ts` to whitelist `fdn2.gsmarena.com`, resolving image loading errors.
+  - **Metadata**: Fixed `themeColor` warnings in `layout.tsx` by moving it to the `viewport` export (Next.js 14+ requirement).
+- RESULT: Frontend application should now compile and render without configuration errors.
+- NEXT STEP: Full system verification.
+================================================================================
+================================================================================
+- DATE: 2026-01-03
+- ACTION: Resolved Backend Bootstrap Issues (JWT & Cookie-Parser).
+- DETAILS:
+  - **Security Fix**: Resolved backend crash by adding `JWT_SECRET` to `.env` as required by `JwtStrategy`.
+  - **Middleware Fix**: Resolved `TypeError: cookieParser is not a function` in `main.ts` by updating the import to a default import.
+  - **Redis Fix**: Corrected `REDIS_URI` format in `.env` (removed `redis-cli -u` prefix).
+- RESULT: Backend application starts successfully.
+- NEXT STEP: Proceed to testing feature implementations.
+================================================================================
+================================================================================
 - DATE: 2026-01-03
 - ACTION: Implemented- Successfully migrated JWT storage to HttpOnly cookies.
 - Resolved code corruption and JSX errors in `[slug]/page.tsx` and `ComparisonTable.tsx`.

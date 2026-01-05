@@ -1,5 +1,5 @@
 import React from 'react';
-import { PriceHistory } from '../../../../../shared/src/types';
+import { PriceHistory } from '../../../../shared/src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt, faTag, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -83,7 +83,8 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({ prices, deviceName })
                                         )}
                                     </td>
                                 </tr>
-                            ))}
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
