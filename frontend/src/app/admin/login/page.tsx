@@ -19,6 +19,7 @@ export default function AdminLoginPage() {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
 
@@ -32,7 +33,7 @@ export default function AdminLoginPage() {
         throw new Error('Unauthorized access');
       }
 
-      login(data.access_token, data.user);
+      login(data.user);
     } catch (err: any) {
       setError(err.message);
     } finally {

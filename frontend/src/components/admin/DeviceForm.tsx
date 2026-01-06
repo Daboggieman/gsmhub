@@ -6,13 +6,13 @@ import { generateSlug } from '../../../../shared/src/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faInfoCircle, 
-  faMicrochip, 
-  faCamera, 
-  faImages, 
-  faPlus, 
-  faTrash, 
+import {
+  faInfoCircle,
+  faMicrochip,
+  faCamera,
+  faImages,
+  faPlus,
+  faTrash,
   faEye,
   faCheckCircle,
   faTimesCircle
@@ -88,9 +88,9 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target as any;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-    
+
     setFormData((prev) => ({ ...prev, [name]: val }));
-    
+
     if (name === 'slug') {
       setIsAutoSlug(false);
     }
@@ -138,9 +138,9 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
 
     // Filter out internal fields and ensure payload is clean
     const { _id, id, createdAt, updatedAt, views, ...rest } = formData as any;
-    
+
     try {
-      const deviceId = initialData?.id || initialData?._id;
+      const deviceId = (initialData as any)?.id || (initialData as any)?._id;
       if (isEdit && deviceId) {
         await apiClient.updateDevice(deviceId, rest);
       } else {
@@ -159,11 +159,10 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     <button
       type="button"
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-6 py-4 border-b-2 font-bold transition-all ${
-        activeTab === id 
-          ? 'border-blue-600 text-blue-600 bg-blue-50/50' 
+      className={`flex items-center gap-2 px-6 py-4 border-b-2 font-bold transition-all ${activeTab === id
+          ? 'border-blue-600 text-blue-600 bg-blue-50/50'
           : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50'
-      }`}
+        }`}
     >
       <FontAwesomeIcon icon={icon} className={activeTab === id ? 'text-blue-600' : 'text-gray-500'} />
       {label}
@@ -176,18 +175,18 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     </datalist>
   );
 
-  const SuggestibleInput = ({ 
-    label, 
-    name, 
-    value, 
-    suggestions: items, 
+  const SuggestibleInput = ({
+    label,
+    name,
+    value,
+    suggestions: items,
     placeholder,
     type = "text"
-  }: { 
-    label: string, 
-    name: string, 
-    value: string, 
-    suggestions?: string[], 
+  }: {
+    label: string,
+    name: string,
+    value: string,
+    suggestions?: string[],
     placeholder?: string,
     type?: string
   }) => (
@@ -297,7 +296,7 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
                   >
                     <option value="">Select Category...</option>
                     {categories.map((c) => (
-                      <option key={c.id || c._id} value={c.id || c._id}>{c.name}</option>
+                      <option key={c.id || (c as any)._id} value={c.id || (c as any)._id}>{c.name}</option>
                     ))}
                   </select>
                 </div>
@@ -531,9 +530,8 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-12 py-4 rounded-2xl shadow-xl font-black text-white uppercase tracking-widest transition-all transform hover:-translate-y-1 ${
-              isSubmitting ? 'bg-gray-400 scale-95 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-blue-200'
-            }`}
+            className={`px-12 py-4 rounded-2xl shadow-xl font-black text-white uppercase tracking-widest transition-all transform hover:-translate-y-1 ${isSubmitting ? 'bg-gray-400 scale-95 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-blue-200'
+              }`}
           >
             {isSubmitting ? 'Syncing...' : isEdit ? 'Update Device' : 'Publish Device'}
           </button>

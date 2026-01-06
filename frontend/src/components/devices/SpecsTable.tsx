@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Device } from '../../../../../shared/src/types';
+import { Device } from '../../../../shared/src/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -30,14 +30,14 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   // Group specs by category
   const categorizedSpecs: { [category: string]: { [key: string]: string } } = {};
 
-  let specsArray = [];
+  let specsArray: any[] = [];
   if (Array.isArray(device.specs)) {
     specsArray = device.specs;
   } else if (typeof device.specs === 'object' && device.specs !== null) {
     specsArray = Object.keys(device.specs).map(key => ({
       category: 'General',
       key: key,
-      value: device.specs[key as keyof typeof device.specs]
+      value: (device.specs as any)[key]
     }));
   }
 
@@ -109,16 +109,16 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
           Object.keys(categorizedSpecs).map((categoryName) => (
             <div key={categoryName} className="mb-2 last:mb-0">
               <button
-                className={`w-full flex justify-between items-center p-4 rounded-xl transition-all ${ expandedCategories[categoryName] 
-                    ? 'bg-blue-50/50 text-blue-700' 
-                    : 'bg-white hover:bg-gray-50 text-gray-700'
-                }`}
+                className={`w-full flex justify-between items-center p-4 rounded-xl transition-all ${expandedCategories[categoryName]
+                  ? 'bg-blue-50/50 text-blue-700'
+                  : 'bg-white hover:bg-gray-50 text-gray-700'
+                  }`}
                 onClick={() => toggleCategory(categoryName)}
               >
                 <span className="text-sm font-black uppercase tracking-widest">{categoryName}</span>
                 <FontAwesomeIcon icon={expandedCategories[categoryName] ? faChevronUp : faChevronDown} className="text-xs opacity-50" />
               </button>
-              
+
               {expandedCategories[categoryName] && (
                 <div className="px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                   <table className="w-full">

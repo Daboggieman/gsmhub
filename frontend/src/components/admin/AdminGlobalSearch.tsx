@@ -5,7 +5,7 @@ import { apiClient } from '@/lib/api';
 import { SearchResult } from '../../../../shared/src/types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faMobileAlt, faTags, faIndustry, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faMobileAlt, faTags, faIndustry, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 
 export default function AdminGlobalSearch() {
@@ -66,7 +66,7 @@ export default function AdminGlobalSearch() {
         />
         <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
         {query && (
-          <button 
+          <button
             onClick={() => setQuery('')}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
           >

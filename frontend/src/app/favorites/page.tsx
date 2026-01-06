@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
 export default function FavoritesPage() {
-    const { user, loading: authLoading } = useAuth();
+    const { user, isLoading: authLoading } = useAuth();
     const [favorites, setFavorites] = useState<Device[]>([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
@@ -39,8 +39,8 @@ export default function FavoritesPage() {
     }, [user, authLoading, router]);
 
     const breadcrumbItems = [
-        { label: 'Home', href: '/' },
-        { label: 'My Favorites', href: '/favorites' },
+        { name: 'Home', href: '/' },
+        { name: 'My Favorites', href: '/favorites' },
     ];
 
     if (authLoading || (loading && user)) {

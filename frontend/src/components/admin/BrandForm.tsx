@@ -28,16 +28,16 @@ export default function BrandForm({ initialData, isEdit = false }: BrandFormProp
 
   useEffect(() => {
     if (isAutoSlug && !isEdit && formData.name) {
-      setFormData(prev => ({ ...prev, slug: generateSlug(formData.name) }));
+      setFormData((prev: typeof formData) => ({ ...prev, slug: generateSlug(formData.name) }));
     }
   }, [formData.name, isAutoSlug, isEdit]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target as any;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-    
-    setFormData((prev) => ({ ...prev, [name]: val }));
-    
+
+    setFormData((prev: typeof formData) => ({ ...prev, [name]: val }));
+
     if (name === 'slug') {
       setIsAutoSlug(false);
     }
@@ -175,9 +175,8 @@ export default function BrandForm({ initialData, isEdit = false }: BrandFormProp
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-12 py-4 rounded-2xl shadow-xl font-black text-white uppercase tracking-widest transition-all transform hover:-translate-y-1 ${
-              isSubmitting ? 'bg-gray-400 scale-95' : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-blue-100'
-            }`}
+            className={`px-12 py-4 rounded-2xl shadow-xl font-black text-white uppercase tracking-widest transition-all transform hover:-translate-y-1 ${isSubmitting ? 'bg-gray-400 scale-95' : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-blue-100'
+              }`}
           >
             {isSubmitting ? 'Saving...' : isEdit ? 'Update Brand' : 'Create Brand'}
           </button>

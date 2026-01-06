@@ -43,8 +43,8 @@ export default async function CategoriesPage() {
   const categories = allCategories.filter(c => c && c.slug);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Categories', href: '/categories' },
+    { name: 'Home', href: '/' },
+    { name: 'Categories', href: '/categories' },
   ];
 
   return (
@@ -62,25 +62,25 @@ export default async function CategoriesPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {categories.map((category, index) => (
-            <Link 
-              key={category.id || category.slug || index} 
+            <Link
+              key={category.id || category.slug || index}
               href={`/categories/${category.slug}`}
               className="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 hover:-translate-y-1"
             >
               <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-2xl mb-6 transition-colors duration-300 ${getCategoryColor(index)}`}>
                 <FontAwesomeIcon icon={getCategoryIcon(category.slug)} />
               </div>
-              
+
               <h2 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
                 {category.name}
               </h2>
-              
+
               {category.description && (
                 <p className="text-sm text-gray-500 line-clamp-2">
                   {category.description}
                 </p>
               )}
-              
+
               <div className="mt-4 flex items-center text-sm font-semibold text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity transform translate-x-[-10px] group-hover:translate-x-0 duration-300">
                 Browse Devices &rarr;
               </div>

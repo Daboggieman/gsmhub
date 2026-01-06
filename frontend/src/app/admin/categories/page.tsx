@@ -46,8 +46,8 @@ export default function AdminCategoriesPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold">Manage Categories</h3>
-        <Link 
-          href="/admin/categories/new" 
+        <Link
+          href="/admin/categories/new"
           className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
         >
           Add New Category
@@ -55,9 +55,9 @@ export default function AdminCategoriesPage() {
       </div>
 
       <form onSubmit={handleSearch} className="mb-6 flex gap-2">
-        <input 
-          type="text" 
-          placeholder="Search categories..." 
+        <input
+          type="text"
+          placeholder="Search categories..."
           className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -78,12 +78,12 @@ export default function AdminCategoriesPage() {
           </thead>
           <tbody>
             {isLoading ? (
-              <tr><td colSpan={3} className="px-6 py-4 text-center">Loading...</td></tr>
+              <tr key="loading-row"><td colSpan={3} className="px-6 py-4 text-center">Loading...</td></tr>
             ) : categories.length === 0 ? (
-              <tr><td colSpan={3} className="px-6 py-4 text-center">No categories found.</td></tr>
+              <tr key="empty-row"><td colSpan={3} className="px-6 py-4 text-center">No categories found.</td></tr>
             ) : (
               categories.map((category) => (
-                <tr key={category.id} className="border-b border-gray-100 hover:bg-gray-50">
+                <tr key={category.id || (category as any)._id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-gray-900">{category.name}</td>
                   <td className="px-6 py-4 text-gray-600">{category.slug}</td>
                   <td className="px-6 py-4 space-x-3">

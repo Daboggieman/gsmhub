@@ -49,7 +49,7 @@ export default function AdminBrandsPage() {
   const handleSync = async (brandName?: string) => {
     setIsSyncing(brandName || 'all');
     try {
-      const { message } = await apiClient.triggerSync(brandName);
+      const { message } = await apiClient.syncDevices(brandName);
       alert(message);
       if (brandName) fetchBrands();
     } catch (error) {
@@ -68,14 +68,14 @@ export default function AdminBrandsPage() {
           <h3 className="text-3xl font-black text-gray-900">Brand Management</h3>
           <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest mt-1">Manage manufacturers and logos</p>
         </div>
-        <Link 
-          href="/admin/brands/new" 
+        <Link
+          href="/admin/brands/new"
           className="bg-blue-600 text-white px-6 py-3 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-blue-700 transition-all shadow-lg shadow-blue-100 flex items-center gap-2"
         >
           <FontAwesomeIcon icon={faPlus} />
           Add Brand
         </Link>
-        <button 
+        <button
           onClick={() => handleSync()}
           disabled={isSyncing === 'all'}
           className="bg-gray-800 text-white px-6 py-3 rounded-2xl font-black uppercase text-xs tracking-widest hover:bg-gray-900 transition-all shadow-lg flex items-center gap-2 disabled:opacity-50"
@@ -87,9 +87,9 @@ export default function AdminBrandsPage() {
 
 
       <form onSubmit={handleSearch} className="mb-6 flex gap-2">
-        <input 
-          type="text" 
-          placeholder="Search brands..." 
+        <input
+          type="text"
+          placeholder="Search brands..."
           className="flex-1 border border-gray-300 rounded-2xl px-4 py-2 focus:ring-2 focus:ring-blue-500 outline-none text-gray-900"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -114,12 +114,12 @@ export default function AdminBrandsPage() {
             </thead>
             <tbody className="divide-y divide-gray-50">
               {isLoading ? (
-                <tr><td colSpan={6} className="px-8 py-10 text-center font-bold text-gray-400">Loading manufacturers...</td></tr>
+                <tr key="loading-row"><td colSpan={6} className="px-8 py-10 text-center font-bold text-gray-400">Loading manufacturers...</td></tr>
               ) : brands.length === 0 ? (
-                <tr><td colSpan={6} className="px-8 py-10 text-center font-bold text-gray-400 uppercase tracking-widest">No brands registered</td></tr>
+                <tr key="empty-row"><td colSpan={6} className="px-8 py-10 text-center font-bold text-gray-400 uppercase tracking-widest">No brands registered</td></tr>
               ) : (
                 brands.map((brand) => (
-                  <tr key={brand.id} className="hover:bg-blue-50/30 transition-colors group">
+                  <tr key={brand.id || brand._id} className="hover:bg-blue-50/30 transition-colors group">
                     <td className="px-8 py-4">
                       <div className="w-12 h-12 bg-gray-100 rounded-xl flex items-center justify-center overflow-hidden p-2 border border-gray-50">
                         {brand.logoUrl ? (
@@ -141,11 +141,12 @@ export default function AdminBrandsPage() {
                         {brand.isFeatured ? 'Featured' : 'Standard'}
                       </span>
                     </td>
-                    <td className="px-8 py-4">
-                      <div className="flex gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <td className="px-8 py-4 text-right">
+                      <div className="flex justify-end gap-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Link href={`/admin/brands/${brand.id}`} className="text-blue-500 hover:text-blue-700 transition-colors" title="Edit Brand">
                           <FontAwesomeIcon icon={faEdit} />
                         </Link>
-                        <button 
+                        <button
                           onClick={() => handleSync(brand.name)}
                           disabled={!!isSyncing}
                           className="text-amber-500 hover:text-amber-700 transition-colors"

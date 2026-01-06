@@ -42,9 +42,9 @@ const ComparePageContent = () => {
   const devices = comparisonData?.devices || [];
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Compare', href: '/compare' },
-    { label: devices.length > 0 ? devices.map((d: any) => d.name).join(' vs ') : 'Select Devices', href: '#' },
+    { name: 'Home', href: '/' },
+    { name: 'Compare', href: '/compare' },
+    { name: devices.length > 0 ? devices.map((d: any) => d.name).join(' vs ') : 'Select Devices', href: '#' },
   ];
 
   return (

@@ -47,7 +47,7 @@ export class AuditLogInterceptor implements NestInterceptor {
                     }
 
                     this.auditLogService.create({
-                        user: user._id,
+                        user: user._id || user.userId, // Support both populated user and JWT payload
                         action,
                         targetType,
                         targetId: String(targetId),

@@ -133,13 +133,13 @@ export default function AuditLogsPage() {
                         </thead>
                         <tbody className="divide-y divide-gray-50">
                             {loading ? (
-                                <tr>
+                                <tr key="loading-row">
                                     <td colSpan={5} className="p-12 text-center">
                                         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
                                     </td>
                                 </tr>
                             ) : logs.length === 0 ? (
-                                <tr>
+                                <tr key="empty-row">
                                     <td colSpan={5} className="p-12 text-center text-gray-500 font-bold">No logs found matching your filters.</td>
                                 </tr>
                             ) : logs.map((log) => (

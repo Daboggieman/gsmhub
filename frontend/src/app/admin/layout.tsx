@@ -95,9 +95,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <AdminGlobalSearch />
           </div>
           <div className="flex items-center space-x-4">
-            <span className="text-gray-700 font-bold">Welcome, {user.name}</span>
+            <span className="text-gray-700 font-bold">Welcome, {user.name || user.email}</span>
             <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-800 font-bold border-2 border-white shadow-sm">
-              {user.name.charAt(0)}
+              {(user.name || user.email || 'A').charAt(0).toUpperCase()}
             </div>
           </div>
         </header>

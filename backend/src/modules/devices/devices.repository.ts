@@ -134,9 +134,9 @@ export class DevicesRepository {
     if (filters?.search) {
       const safeSearch = escapeRegExp(filters.search);
       query.$or = [
+        { name: { $regex: new RegExp(safeSearch, 'i') } },
         { model: { $regex: new RegExp(safeSearch, 'i') } },
-        { brand: { $regex: new RegExp(safeSearch, 'i') } },
-        { $text: { $search: filters.search } }
+        { brand: { $regex: new RegExp(safeSearch, 'i') } }
       ];
     }
 

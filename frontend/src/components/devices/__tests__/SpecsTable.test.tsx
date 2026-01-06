@@ -20,26 +20,16 @@ const mockDevice: Device = {
   category: 'Smartphones',
   views: 1000,
   specs: [
-    {
-      category: 'Display',
-      items: [
-        { name: 'Resolution', value: '2556 x 1179' },
-        { name: 'Type', value: 'OLED' }
-      ]
-    },
-    {
-      category: 'Platform',
-      items: [
-        { name: 'OS', value: 'iOS 17' }
-      ]
-    }
+    { category: 'Display', key: 'Resolution', value: '2556 x 1179' },
+    { category: 'Display', key: 'Type', value: 'OLED' },
+    { category: 'Platform', key: 'OS', value: 'iOS 17' }
   ]
 };
 
 describe('SpecsTable', () => {
   it('renders all spec categories and items', () => {
     render(<SpecsTable device={mockDevice} />);
-    
+
     expect(screen.getByText('Display')).toBeInTheDocument();
     expect(screen.getByText('Resolution')).toBeInTheDocument();
     expect(screen.getByText('2556 x 1179')).toBeInTheDocument();
@@ -50,10 +40,10 @@ describe('SpecsTable', () => {
 
   it('filters specs when searching', () => {
     render(<SpecsTable device={mockDevice} />);
-    
+
     const searchInput = screen.getByPlaceholderText(/search specs/i);
     fireEvent.change(searchInput, { target: { value: 'Resolution' } });
-    
+
     expect(screen.getByText('Resolution')).toBeInTheDocument();
     expect(screen.queryByText('Platform')).not.toBeInTheDocument();
     expect(screen.queryByText('OS')).not.toBeInTheDocument();
@@ -61,10 +51,10 @@ describe('SpecsTable', () => {
 
   it('shows no results message when no specs match search', () => {
     render(<SpecsTable device={mockDevice} />);
-    
+
     const searchInput = screen.getByPlaceholderText(/search specs/i);
     fireEvent.change(searchInput, { target: { value: 'nonexistent' } });
-    
+
     expect(screen.getByText(/no matching specifications found/i)).toBeInTheDocument();
   });
 });

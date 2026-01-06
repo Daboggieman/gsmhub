@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faExchangeAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '@/lib/api';
-import { Device, SearchResult } from '../../../../../shared/src/types';
+import { Device, SearchResult } from '../../../../shared/src/types';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
@@ -105,9 +105,9 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
             value={query}
             onChange={(e) => handleSearch(e.target.value)}
           />
-          <FontAwesomeIcon 
-            icon={loading ? faExchangeAlt : faSearch} 
-            className={`absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 ${loading ? 'animate-spin' : ''}`} 
+          <FontAwesomeIcon
+            icon={loading ? faExchangeAlt : faSearch}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 ${loading ? 'animate-spin' : ''}`}
           />
         </div>
 
@@ -141,15 +141,14 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
         {[0, 1, 2].map((index) => {
           const device = selectedDevices[index];
           return (
-            <div 
-              key={index} 
-              className={`relative h-48 rounded-xl border-2 border-dashed flex flex-col items-center justify-center p-4 transition-all ${
-                device ? 'border-blue-200 bg-blue-50' : 'border-gray-200 bg-gray-50'
-              }`}
+            <div
+              key={index}
+              className={`relative h-48 rounded-xl border-2 border-dashed flex flex-col items-center justify-center p-4 transition-all ${device ? 'border-blue-200 bg-blue-50' : 'border-gray-200 bg-gray-50'
+                }`}
             >
               {device ? (
                 <>
-                  <button 
+                  <button
                     onClick={() => removeDevice(device.slug)}
                     className="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
                   >
@@ -180,11 +179,10 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
       <button
         onClick={handleCompare}
         disabled={selectedDevices.length < 2}
-        className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-md ${
-          selectedDevices.length >= 2 
-            ? 'bg-blue-600 hover:bg-blue-700 text-white transform hover:-translate-y-1' 
+        className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-md ${selectedDevices.length >= 2
+            ? 'bg-blue-600 hover:bg-blue-700 text-white transform hover:-translate-y-1'
             : 'bg-gray-200 text-gray-400 cursor-not-allowed'
-        }`}
+          }`}
       >
         Compare {selectedDevices.length} Devices
       </button>

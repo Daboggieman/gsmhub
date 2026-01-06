@@ -10,10 +10,10 @@ export const dynamic = 'force-dynamic';
 async function getAllDevices(page: number = 1, sort: string = 'latest') {
   try {
     const limit = 24;
-    const { devices, total } = await apiClient.getDevices({ 
-      limit, 
-      page, 
-      sort 
+    const { devices, total } = await apiClient.getDevices({
+      limit,
+      page,
+      sort
     });
     return { devices, total, limit };
   } catch (error) {
@@ -35,15 +35,15 @@ export default async function DevicesPage({ searchParams: promiseSearchParams }:
   const totalPages = Math.ceil(total / limit);
 
   const breadcrumbItems = [
-    { label: 'Home', href: '/' },
-    { label: 'Phones', href: '/devices' },
+    { name: 'Home', href: '/' },
+    { name: 'Phones', href: '/devices' },
   ];
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-50/50">
       <main className="flex-grow container mx-auto px-4 py-8">
         <Breadcrumbs items={breadcrumbItems} />
-        
+
         <div className="mb-8 flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
             <h1 className="text-3xl font-extrabold text-gray-900 mb-2">All Devices</h1>
@@ -54,7 +54,7 @@ export default async function DevicesPage({ searchParams: promiseSearchParams }:
               Showing {devices.length} of {total} devices
             </p>
           </div>
-          
+
           <div className="flex items-center gap-3">
             <SortDropdown />
           </div>
@@ -67,10 +67,10 @@ export default async function DevicesPage({ searchParams: promiseSearchParams }:
                 <DeviceCard key={device._id} device={device} />
               ))}
             </div>
-            
-            <Pagination 
-              currentPage={page} 
-              totalPages={totalPages} 
+
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
               baseUrl="/devices"
               searchParams={searchParams}
             />

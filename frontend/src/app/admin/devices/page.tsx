@@ -50,8 +50,8 @@ export default function AdminDevicesPage() {
     <div>
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-xl font-semibold">Manage Devices</h3>
-        <Link 
-          href="/admin/devices/new" 
+        <Link
+          href="/admin/devices/new"
           className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
         >
           Add New Device
@@ -59,9 +59,9 @@ export default function AdminDevicesPage() {
       </div>
 
       <form onSubmit={handleSearch} className="mb-6 flex gap-2">
-        <input 
-          type="text" 
-          placeholder="Search devices..." 
+        <input
+          type="text"
+          placeholder="Search devices..."
           className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900 font-bold"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -84,14 +84,14 @@ export default function AdminDevicesPage() {
           </thead>
           <tbody>
             {isLoading ? (
-              <tr><td colSpan={5} className="px-6 py-4 text-center">Loading...</td></tr>
+              <tr key="loading-row"><td colSpan={5} className="px-6 py-4 text-center">Loading...</td></tr>
             ) : devices.length === 0 ? (
-              <tr><td colSpan={5} className="px-6 py-4 text-center">No devices found.</td></tr>
+              <tr key="empty-row"><td colSpan={5} className="px-6 py-4 text-center">No devices found.</td></tr>
             ) : (
               devices.map((device) => {
                 const deviceId = device.id || device._id;
                 return (
-                  <tr key={deviceId} className="border-b border-gray-100 hover:bg-gray-50">
+                  <tr key={deviceId || index} className="border-b border-gray-100 hover:bg-gray-50">
                     <td className="px-6 py-4 font-medium text-gray-900">{device.name}</td>
                     <td className="px-6 py-4 text-gray-600">{device.brand}</td>
                     <td className="px-6 py-4 text-gray-600">
@@ -116,14 +116,14 @@ export default function AdminDevicesPage() {
           Showing {devices.length} of {total} devices
         </p>
         <div className="flex gap-2">
-          <button 
+          <button
             disabled={page === 1}
             onClick={() => setPage(page - 1)}
             className="px-4 py-2 border rounded hover:bg-gray-50 disabled:opacity-50"
           >
             Previous
           </button>
-          <button 
+          <button
             disabled={devices.length < 10}
             onClick={() => setPage(page + 1)}
             className="px-4 py-2 border rounded hover:bg-gray-50 disabled:opacity-50"
