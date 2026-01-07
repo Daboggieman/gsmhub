@@ -1,4 +1,7 @@
 import { Inject, Injectable, NotFoundException, ConflictException, forwardRef } from '@nestjs/common';
+import * as fs from 'fs';
+import * as csv from 'csv-parser';
+import { Readable } from 'stream';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
@@ -73,14 +76,36 @@ export class DevicesService {
       minPrice?: number;
       maxPrice?: number;
     }
-  ): Promise<{ devices: Device[]; total: number }> {
+  ): Promise<{ devices: Device[]; total: number; suggestions?: string[] }> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);
     }
     const devices = await this.devicesRepository.findAll(filters);
     const total = await this.devicesRepository.countAll(filters);
     const devicesWithPrices = await this.attachLatestPrices(devices);
-    return { devices: devicesWithPrices, total };
+
+    let suggestions: string[] = [];
+    if (total === 0 && filters?.search) {
+      suggestions = await this.findSearchSuggestions(filters.search);
+    }
+
+    return { devices: devicesWithPrices, total, suggestions };
+  }
+
+  private async findSearchSuggestions(query: string): Promise<string[]> {
+    const brands = await this.getBrands();
+    const suggestions: string[] = [];
+
+    // Check if query is close to any brand names
+    const lowerQuery = query.toLowerCase();
+    for (const brand of brands) {
+      if (brand.toLowerCase().includes(lowerQuery) || lowerQuery.includes(brand.toLowerCase())) {
+        suggestions.push(brand);
+      }
+    }
+
+    // Limit suggestions to 5
+    return suggestions.slice(0, 5);
   }
 
   async findOne(id: string): Promise<Device> {
@@ -304,6 +329,96 @@ export class DevicesService {
 
   async getTotalViews(): Promise<number> {
     return this.devicesRepository.getTotalViews();
+  }
+
+  async bulkImport(filePath: string): Promise<{ success: number; failed: number; errors: string[] }> {
+    const results: any[] = [];
+    const errors: string[] = [];
+    let successCount = 0;
+    let failedCount = 0;
+
+    return new Promise((resolve, reject) => {
+      fs.createReadStream(filePath)
+        .pipe(csv())
+        .on('data', (data) => results.push(data))
+        .on('error', (error) => {
+          errors.push(`CSV Parsing Error: ${error.message}`);
+          resolve({ success: successCount, failed: failedCount, errors });
+        })
+        .on('end', async () => {
+          for (const row of results) {
+            try {
+              // Map CSV columns to Device template if needed, or assume they match CreateDeviceDto
+              // Example mapping for affiliateLinks and specs if they are JSON strings in CSV
+              if (row.affiliateLinks && typeof row.affiliateLinks === 'string') {
+                try {
+                  row.affiliateLinks = JSON.parse(row.affiliateLinks);
+                } catch (e) {
+                  row.affiliateLinks = [];
+                }
+              }
+              if (row.specs && typeof row.specs === 'string') {
+                try {
+                  row.specs = JSON.parse(row.specs);
+                } catch (e) {
+                  row.specs = [];
+                }
+              }
+
+              await this.upsertDevice(row);
+              successCount++;
+            } catch (error) {
+              failedCount++;
+              errors.push(`Failed to import ${row.name || 'Unknown'}: ${error.message}`);
+            }
+          }
+          // Clean up the temp file
+          fs.unlinkSync(filePath);
+          resolve({ success: successCount, failed: failedCount, errors });
+        });
+    });
+  }
+
+  async findSimilar(id: string, limit: number = 5): Promise<Device[]> {
+    const device = await this.findOne(id);
+    if (!device) {
+      throw new NotFoundException(`Device with ID ${id} not found`);
+    }
+
+    const price = device.latestPrice || 0;
+    const categoryId = (device.category as any)?._id || device.category;
+
+    const filters: any = {
+      category: categoryId ? categoryId.toString() : undefined,
+      limit,
+    };
+
+    if (price > 0) {
+      filters.minPrice = price * 0.8;
+      filters.maxPrice = price * 1.2;
+    }
+
+    let similarDevices = await this.devicesRepository.findAll(filters);
+
+    // Filter out the current device
+    similarDevices = similarDevices.filter(d => d._id?.toString() !== id);
+
+    // If we don't have enough similar devices by price, just get by category
+    if (similarDevices.length < limit && categoryId) {
+      const moreDevices = await this.devicesRepository.findAll({
+        category: categoryId.toString(),
+        limit: limit + 1, // Get one extra to account for potential exclusion
+      });
+
+      for (const d of moreDevices) {
+        if (similarDevices.length >= limit) break;
+        if (d._id?.toString() !== id && !similarDevices.some(sd => sd._id?.toString() === d._id?.toString())) {
+          similarDevices.push(d);
+        }
+      }
+    }
+
+    return await this.attachLatestPrices(similarDevices);
   }
 }
 

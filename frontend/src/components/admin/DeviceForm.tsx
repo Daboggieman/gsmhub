@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Device, Category, DeviceType } from '../../../../shared/src/types';
-import { generateSlug } from '../../../../shared/src/utils/slug';
+import { Device, Category, DeviceType } from '@shared/types';
+import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +15,9 @@ import {
   faTrash,
   faEye,
   faCheckCircle,
-  faTimesCircle
+  faTimesCircle,
+  faGlobe,
+  faShoppingCart
 } from '@fortawesome/free-solid-svg-icons';
 
 interface DeviceFormProps {
@@ -23,7 +25,7 @@ interface DeviceFormProps {
   isEdit?: boolean;
 }
 
-type Tab = 'general' | 'specs_key' | 'specs_all' | 'media';
+type Tab = 'general' | 'specs_key' | 'specs_all' | 'media' | 'seo_affiliates';
 
 export default function DeviceForm({ initialData, isEdit = false }: DeviceFormProps) {
   const router = useRouter();
@@ -47,6 +49,9 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     description: '',
     isActive: true,
     specs: [],
+    seoTitle: '',
+    seoDescription: '',
+    affiliateLinks: [],
     ...initialData,
   });
 
@@ -131,6 +136,25 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     setFormData({ ...formData, images: newImages });
   };
 
+  const handleAffiliateChange = (index: number, field: string, value: any) => {
+    const newLinks = [...(formData.affiliateLinks || [])];
+    newLinks[index] = { ...newLinks[index], [field]: value };
+    setFormData({ ...formData, affiliateLinks: newLinks });
+  };
+
+  const addAffiliateLink = () => {
+    setFormData({
+      ...formData,
+      affiliateLinks: [...(formData.affiliateLinks || []), { platform: '', url: '', price: 0 }],
+    });
+  };
+
+  const removeAffiliateLink = (index: number) => {
+    const newLinks = [...(formData.affiliateLinks || [])];
+    newLinks.splice(index, 1);
+    setFormData({ ...formData, affiliateLinks: newLinks });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -159,7 +183,7 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     <button
       type="button"
       onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 px-6 py-4 border-b-2 font-bold transition-all ${activeTab === id
+      className={`flex items-center gap-2 px-6 py-4 border-b-2 font-bold transition-all whitespace-nowrap ${activeTab === id
           ? 'border-blue-600 text-blue-600 bg-blue-50/50'
           : 'border-transparent text-gray-600 hover:text-gray-800 hover:bg-gray-50'
         }`}
@@ -211,7 +235,8 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
         <TabButton id="general" label="General Info" icon={faInfoCircle} />
         <TabButton id="specs_key" label="Key Specs" icon={faMicrochip} />
         <TabButton id="specs_all" label="Detailed Specs" icon={faCamera} />
-        <TabButton id="media" label="Media & SEO" icon={faImages} />
+        <TabButton id="media" label="Media & Review" icon={faImages} />
+        <TabButton id="seo_affiliates" label="SEO & Affiliates" icon={faGlobe} />
       </div>
 
       <form onSubmit={handleSubmit} className="p-8">
@@ -457,7 +482,7 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
           </div>
         </div>
 
-        {/* Tab 4: Media & SEO */}
+        {/* Tab 4: Media & Review */}
         <div className={activeTab === 'media' ? 'block space-y-10' : 'hidden'}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
             <div className="space-y-6">
@@ -505,7 +530,7 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
                 ))}
               </div>
               <div className="pt-6 border-t border-gray-100">
-                <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Review Teaser (SEO)</label>
+                <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Review Teaser (Visible on Page)</label>
                 <textarea
                   name="reviewTeaser"
                   rows={4}
@@ -514,6 +539,106 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
                   placeholder="The Samsung Galaxy S24 Ultra is a monster of a phone..."
                   className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-medium border p-3 italic text-gray-700"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Tab 5: SEO & Affiliates */}
+        <div className={activeTab === 'seo_affiliates' ? 'block space-y-10' : 'hidden'}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+            {/* SEO Section */}
+            <div className="space-y-6 bg-gray-50 p-6 rounded-3xl border border-gray-100">
+              <h3 className="text-lg font-black text-gray-900 flex items-center gap-2 mb-4">
+                <FontAwesomeIcon icon={faGlobe} className="text-blue-600" />
+                SEO Metadata
+              </h3>
+              <div>
+                <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Meta Title</label>
+                <input
+                  type="text"
+                  name="seoTitle"
+                  value={formData.seoTitle || ''}
+                  onChange={handleChange}
+                  placeholder="Custom SEO Title"
+                  className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-bold border p-3 text-gray-900 bg-white"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Meta Description</label>
+                <textarea
+                  name="seoDescription"
+                  rows={4}
+                  value={formData.seoDescription || ''}
+                  onChange={handleChange}
+                  placeholder="Custom Meta Description"
+                  className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-medium border p-3 text-gray-800 bg-white"
+                />
+              </div>
+            </div>
+
+            {/* Affiliates Section */}
+            <div className="space-y-6">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-lg font-black text-gray-900 flex items-center gap-2">
+                  <FontAwesomeIcon icon={faShoppingCart} className="text-orange-500" />
+                  Affiliate Links
+                </h3>
+                <button
+                  type="button"
+                  onClick={addAffiliateLink}
+                  className="text-blue-600 font-black text-xs uppercase hover:underline"
+                >
+                  + Add Retailer
+                </button>
+              </div>
+              <div className="space-y-4 max-h-[400px] overflow-y-auto pr-2 no-scrollbar">
+                {formData.affiliateLinks?.map((link, index) => (
+                  <div key={index} className="bg-white p-4 rounded-2xl border border-gray-200 shadow-sm space-y-3 relative group">
+                    <button
+                      type="button"
+                      onClick={() => removeAffiliateLink(index)}
+                      className="absolute top-4 right-4 text-red-400 hover:text-red-600 opacity-0 group-hover:opacity-100 transition-all"
+                    >
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-[10px] font-black text-gray-500 uppercase mb-1">Platform</label>
+                        <input
+                          placeholder="Jumia, Amazon..."
+                          value={link.platform}
+                          onChange={(e) => handleAffiliateChange(index, 'platform', e.target.value)}
+                          className="w-full rounded-lg border-gray-300 text-sm font-bold border p-2 text-gray-900"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] font-black text-gray-500 uppercase mb-1">Price ($)</label>
+                        <input
+                          type="number"
+                          placeholder="499.00"
+                          value={link.price}
+                          onChange={(e) => handleAffiliateChange(index, 'price', parseFloat(e.target.value))}
+                          className="w-full rounded-lg border-gray-300 text-sm font-bold border p-2 text-gray-900"
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <label className="block text-[10px] font-black text-gray-500 uppercase mb-1">Affiliate URL</label>
+                      <input
+                        placeholder="https://retailer.com/product/..."
+                        value={link.url}
+                        onChange={(e) => handleAffiliateChange(index, 'url', e.target.value)}
+                        className="w-full rounded-lg border-gray-300 text-sm font-medium border p-2 text-gray-700"
+                      />
+                    </div>
+                  </div>
+                ))}
+                {(!formData.affiliateLinks || formData.affiliateLinks.length === 0) && (
+                  <div className="py-8 text-center bg-gray-50 rounded-2xl border border-gray-100">
+                    <p className="text-gray-400 font-bold text-xs uppercase tracking-widest">No affiliate links added</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

@@ -9,6 +9,8 @@ import { apiClient } from '@/lib/api';
 import { generateMetadata as generateSeoMetadata, generateProductJsonLd } from '@/lib/seo';
 import PriceComparison from '@/components/prices/PriceComparison';
 import AdUnit from '@/components/ads/AdUnit';
+import SocialShare from '@/components/devices/SocialShare';
+import SimilarDevices from '@/components/devices/SimilarDevices';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShoppingCart,
@@ -32,29 +34,23 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import FavoriteButton from '@/components/users/FavoriteButton';
 
-async function getDeviceData(slug: string): Promise<{ device: Device; priceHistory: PriceHistory[]; similarlyPriced: Device[] } | null> {
+async function getDeviceData(slug: string): Promise<{ device: Device; priceHistory: PriceHistory[] } | null> {
   try {
     const device = await apiClient.getDevice(slug);
     if (!device) return null;
 
     const deviceId = (device as any)._id || device._id;
     let priceHistory: PriceHistory[] = [];
-    let similarlyPriced: Device[] = [];
 
     if (deviceId) {
       try {
-        const [prices, allDevices] = await Promise.all([
-          apiClient.getDevicePriceHistory(deviceId),
-          apiClient.getDevices({ limit: 5 }) // Simplification for "similarly priced"
-        ]);
-        priceHistory = prices;
-        similarlyPriced = allDevices.devices.filter(d => d.slug !== slug);
+        priceHistory = await apiClient.getDevicePriceHistory(deviceId);
       } catch (err) {
         console.error('Failed to fetch auxiliary device data:', err);
       }
     }
 
-    return { device, priceHistory, similarlyPriced };
+    return { device, priceHistory };
   } catch (error) {
     console.error('Failed to fetch device data:', error);
     return null;
@@ -71,8 +67,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const description = `${device.brand} ${device.model} - Full specifications: ${device.displaySize} display, ${device.mainCamera} camera, ${device.ram} RAM, ${device.battery} battery. Latest price and features.`;
 
   return generateSeoMetadata({
-    title: `${device.name} - Full Specifications & Price`,
-    description,
+    title: device.seoTitle || `${device.name} - Full Specifications & Price`,
+    description: device.seoDescription || description,
     path: `/devices/${slug}`,
     imageUrl: device.imageUrl,
     type: 'website',
@@ -99,7 +95,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
     notFound();
   }
 
-  const { device, priceHistory, similarlyPriced } = data;
+  const { device, priceHistory } = data;
   const jsonLd = generateProductJsonLd(device);
 
   const breadcrumbItems = [
@@ -115,6 +111,8 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
     { label: 'Compare', icon: faBalanceScale, href: '/compare' },
     { label: 'Opinions', icon: faCommentDots, href: '#opinions' },
   ];
+
+  const currentUrl = typeof window !== 'undefined' ? window.location.href : `https://gsmhub.com/devices/${device.slug}`;
 
   return (
     <div className="bg-gray-100 min-h-screen pb-12">
@@ -226,7 +224,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
               </div>
 
               {/* Highlights Bar */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-0 border border-gray-100 rounded-2xl overflow-hidden mb-10 shadow-sm">
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-0 border border-gray-100 rounded-2xl overflow-hidden mb-6 shadow-sm">
                 <div className="p-5 flex flex-col items-center justify-center text-center border-r border-b md:border-b-0 border-gray-50 hover:bg-blue-50 transition-colors">
                   <FontAwesomeIcon icon={faExpand} className="text-blue-600 mb-3 text-2xl" />
                   <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">Display</span>
@@ -253,6 +251,27 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
                   <span className="text-sm font-black text-gray-900">{device.battery || '—'}</span>
                 </div>
               </div>
+
+              {/* Social Share Component */}
+              <SocialShare url={currentUrl} title={`Check out the ${device.name} specifications on GSMHub!`} />
+
+              {/* Affiliate Buttons (Priority) */}
+              {(device as any).affiliateLinks && (device as any).affiliateLinks.length > 0 && (
+                <div className="flex flex-wrap gap-4 mb-10">
+                  {(device as any).affiliateLinks.map((link: any, i: number) => (
+                    <a
+                      key={i}
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 min-w-[150px] bg-orange-500 hover:bg-orange-600 text-white font-black py-4 px-6 rounded-xl flex items-center justify-center transition-all shadow-md hover:shadow-lg shadow-orange-100"
+                    >
+                      <FontAwesomeIcon icon={faShoppingCart} className="mr-3" />
+                      Buy on {link.platform} {link.price ? `($${link.price})` : ''}
+                    </a>
+                  ))}
+                </div>
+              )}
 
               {/* Review Teaser */}
               {device.reviewTeaser && (
@@ -326,28 +345,9 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
               </div>
             )}
 
-            {/* Similarly Priced */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mt-8">
-              <div className="bg-gray-50 p-4 border-b border-gray-100">
-                <h3 className="font-bold text-gray-700 uppercase text-xs tracking-widest">Similarly Priced</h3>
-              </div>
-              <div className="divide-y divide-gray-50">
-                {similarlyPriced.map((item, i) => (
-                  <a key={i} href={`/devices/${item.slug}`} className="p-4 flex items-center hover:bg-blue-50 transition-colors group">
-                    <div className="w-10 h-10 bg-gray-100 rounded mr-3 relative flex-shrink-0">
-                      {item.imageUrl && (
-                        <img
-                          src={item.imageUrl}
-                          alt={item.name}
-                          className="object-contain p-1 w-full h-full"
-                        />
-                      )}
-                    </div>
-                    <span className="text-sm font-bold text-gray-800 group-hover:text-blue-600 truncate">{item.name}</span>
-                  </a>
-                ))}
-              </div>
-            </div>
+            {/* Similar Devices Section */}
+            <SimilarDevices deviceId={device._id?.toString() || (device as any).id?.toString()} />
+
           </div>
         </div>
       </div>

@@ -131,6 +131,15 @@ export class Device {
 
   @Prop({ type: [{ user: String, date: String, text: String, avatarInitials: String }] })
   opinions?: { user: string; date: string; text: string; avatarInitials?: string }[];
+
+  @Prop()
+  seoTitle?: string;
+
+  @Prop()
+  seoDescription?: string;
+
+  @Prop({ type: [{ platform: String, url: String, price: Number }] })
+  affiliateLinks?: { platform: string; url: string; price?: number }[];
 }
 
 export const DeviceSchema = SchemaFactory.createForClass(Device);

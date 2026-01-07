@@ -34,12 +34,32 @@ export class AppController {
       this.searchService.getPopularQueries(5),
     ]);
     
+    // Mock Revenue Data (Placeholder until real integrations)
+    const revenueData = [
+      { name: 'Jan', revenue: 4000, ads: 2400 },
+      { name: 'Feb', revenue: 3000, ads: 1398 },
+      { name: 'Mar', revenue: 2000, ads: 9800 },
+      { name: 'Apr', revenue: 2780, ads: 3908 },
+      { name: 'May', revenue: 1890, ads: 4800 },
+      { name: 'Jun', revenue: 2390, ads: 3800 },
+      { name: 'Jul', revenue: 3490, ads: 4300 },
+    ];
+
+    const affiliatePerformance = [
+      { name: 'Jumia', value: 400 },
+      { name: 'Amazon', value: 300 },
+      { name: 'Konga', value: 300 },
+      { name: 'Slot', value: 200 },
+    ];
+    
     return {
       devicesCount,
       categoriesCount,
       totalViews,
       topDevices,
       topSearches,
+      revenueData,
+      affiliatePerformance,
     };
   }
 }

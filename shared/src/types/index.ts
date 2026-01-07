@@ -70,6 +70,15 @@ export interface Device {
   createdAt?: string;
   updatedAt?: string;
   type: DeviceType;
+
+  // SEO & Affiliates
+  seoTitle?: string;
+  seoDescription?: string;
+  affiliateLinks?: {
+    platform: string;
+    url: string;
+    price?: number;
+  }[];
 }
 
 export interface PriceHistory {

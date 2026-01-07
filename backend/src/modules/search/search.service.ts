@@ -21,14 +21,15 @@ export class SearchService {
     // Log the search query for analytics
     this.logSearchQuery(query);
 
-    const safeSearch = escapeRegExp(query.trim());
+    const trimmedQuery = query.trim();
+    const safeSearch = escapeRegExp(trimmedQuery);
     const searchRegex = new RegExp(safeSearch, 'i');
 
     // Use a combination of text search and regex for better fuzzy-like matching
-    const devices = await this.deviceModel
+    let devices = await this.deviceModel
       .find({
         $or: [
-          { $text: { $search: query } },
+          { $text: { $search: trimmedQuery } },
           { name: searchRegex },
           { brand: searchRegex },
           { model: searchRegex }
@@ -43,6 +44,26 @@ export class SearchService {
       })
       .limit(limit)
       .exec();
+    
+    // Fallback: If no results, try broader search (split query into words)
+    if (devices.length === 0 && trimmedQuery.includes(' ')) {
+      const words = trimmedQuery.split(/\s+/).filter(w => w.length > 2);
+      if (words.length > 0) {
+        devices = await this.deviceModel
+          .find({
+            $or: words.map(word => ({
+              $or: [
+                { name: new RegExp(escapeRegExp(word), 'i') },
+                { brand: new RegExp(escapeRegExp(word), 'i') }
+              ]
+            })),
+            isActive: true
+          })
+          .sort({ views: -1 })
+          .limit(limit)
+          .exec();
+      }
+    }
     
     return this.mapToSearchResults(devices);
   }

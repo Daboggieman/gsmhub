@@ -54,7 +54,16 @@ class ApiClient {
       throw new Error(errorData.message || `API request failed: ${response.statusText}`);
     }
 
-    return response.json();
+    if (response.status === 204) {
+      return {} as T;
+    }
+
+    const contentType = response.headers.get('content-type');
+    if (contentType && contentType.includes('application/json')) {
+      return response.json();
+    }
+
+    return {} as T;
   }
 
   // Devices
@@ -126,6 +135,24 @@ class ApiClient {
 
   async getTrendingDevices(limit: number = 10): Promise<Device[]> {
     return this.request(`/devices/trending?limit=${limit}`);
+  }
+
+  async getSimilarDevices(id: string, limit: number = 5): Promise<Device[]> {
+    return this.request(`/devices/${id}/similar?limit=${limit}`);
+  }
+
+  async bulkImportDevices(file: File): Promise<{ success: number; failed: number; errors: string[] }> {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    // We need to bypass the default JSON Content-Type for FormData
+    const options: RequestInit = {
+      method: 'POST',
+      body: formData,
+      headers: {}, // Let the browser set the boundary
+    };
+
+    return this.request('/devices/bulk-import', options);
   }
 
   async getBrands(): Promise<string[]> {

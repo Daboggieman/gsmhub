@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, ClassSerializerInterceptor, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, ClassSerializerInterceptor, UseGuards, UploadedFile } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
@@ -137,12 +138,29 @@ export class DevicesController {
     return plainToInstance(DeviceResponseDto, device);
   }
 
+  @Get(':id/similar')
+  async getSimilar(
+    @Param('id') id: string,
+    @Query('limit') limit: number = 5,
+  ): Promise<DeviceResponseDto[]> {
+    const devices = await this.devicesService.findSimilar(id, limit);
+    return plainToInstance(DeviceResponseDto, devices);
+  }
+
   @Post('sync')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   async syncFromApi(@Body() body: { brand: string; model: string }): Promise<DeviceResponseDto> {
     const device = await this.devicesService.syncDeviceFromAPI(body.brand, body.model);
     return plainToInstance(DeviceResponseDto, device);
+  }
+
+  @Post('bulk-import')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN)
+  @UseInterceptors(FileInterceptor('file', { dest: './uploads' }))
+  async bulkImport(@UploadedFile() file: Express.Multer.File) {
+    return this.devicesService.bulkImport(file.path);
   }
 
   @Delete(':id')

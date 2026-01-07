@@ -113,4 +113,16 @@ export class CreateDeviceDto {
   @IsBoolean()
   @IsOptional()
   isActive?: boolean;
+
+  @IsString()
+  @IsOptional()
+  seoTitle?: string;
+
+  @IsString()
+  @IsOptional()
+  seoDescription?: string;
+
+  @IsArray()
+  @IsOptional()
+  affiliateLinks?: { platform: string; url: string; price?: number }[];
 }

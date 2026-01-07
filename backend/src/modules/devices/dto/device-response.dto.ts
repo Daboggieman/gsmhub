@@ -9,8 +9,8 @@ export class DeviceResponseDto {
   _id: string;
 
   @Expose()
-  @Transform(({ obj }) => obj._id ? obj._id.toString() : '') 
-  id: string; 
+  @Transform(({ obj }) => obj._id ? obj._id.toString() : '')
+  id: string;
 
   @Expose()
   @IsString()
@@ -30,7 +30,7 @@ export class DeviceResponseDto {
 
   @Expose()
   @Type(() => CategoryResponseDto)
-  category: CategoryResponseDto; 
+  category: CategoryResponseDto;
 
   @Expose()
   @IsEnum(DeviceType)
@@ -150,7 +150,7 @@ export class DeviceResponseDto {
   @Expose()
   @IsNumber()
   @IsOptional()
-  latestPrice?: number; 
+  latestPrice?: number;
 
   @Expose()
   @IsNumber()
@@ -167,4 +167,19 @@ export class DeviceResponseDto {
   @Expose()
   @IsDateString()
   updatedAt: Date;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  seoTitle?: string;
+
+  @Expose()
+  @IsString()
+  @IsOptional()
+  seoDescription?: string;
+
+  @Expose()
+  @IsArray()
+  @IsOptional()
+  affiliateLinks?: { platform: string; url: string; price?: number }[];
 }
