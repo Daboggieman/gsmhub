@@ -56,29 +56,31 @@ export class SyncService implements OnModuleInit {
     return savedBrands;
   }
 
-  private async fetchAndSavePhonesByBrand(brands: string[]): Promise<void> {
+  async fetchAndSavePhonesByBrand(brands: string[]): Promise<void> {
     this.logger.log('Fetching phones by brand...');
     for (const brand of brands) {
       this.logger.log(`Fetching phones for brand: ${brand}`);
-      
+
       try {
-        const devices = await this.externalApiService.fetchDevicesByBrand(brand);
-        
+        const devices =
+          await this.externalApiService.fetchDevicesByBrand(brand);
+
         for (const devicePartial of devices) {
           // Ensure category is set
           devicePartial.category = brand;
-          
+
           // Upsert Device (Catalog info only)
           await this.devicesService.upsertDevice(devicePartial);
         }
-        
-        this.logger.log(`Saved ${devices.length} devices for ${brand}`);
-        
-        // Rate limit protection: Sleep 1s between brands
-        await new Promise(resolve => setTimeout(resolve, 1000));
 
+        this.logger.log(`Saved ${devices.length} devices for ${brand}`);
+
+        // Rate limit protection: Sleep 1s between brands
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (error) {
-        this.logger.error(`Failed to fetch/save devices for brand ${brand}: ${error.message}`);
+        this.logger.error(
+          `Failed to fetch/save devices for brand ${brand}: ${error.message}`,
+        );
       }
     }
     this.logger.log('Finished fetching and saving phones by brand.');

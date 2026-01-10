@@ -5,7 +5,7 @@ import { apiClient } from '@/lib/api';
 import { Device, Category } from '@shared/types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlus, faUpload, faFileCsv, faCheckCircle, faTimesCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faPlus, faUpload, faFileCsv, faCheckCircle, faTimesCircle, faSpinner, faSync } from '@fortawesome/free-solid-svg-icons';
 
 export default function AdminDevicesPage() {
   const [devices, setDevices] = useState<Device[]>([]);
@@ -14,6 +14,8 @@ export default function AdminDevicesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [isImporting, setIsImporting] = useState(false);
+  const [syncingId, setSyncingId] = useState<string | null>(null);
+  const [isSyncingAll, setIsSyncingAll] = useState(false);
   const [importStatus, setImportStatus] = useState<{ success: number; failed: number; errors: string[] } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -51,6 +53,38 @@ export default function AdminDevicesPage() {
     }
   };
 
+  const handleSync = async (device: Device) => {
+    const deviceId = (device as any).id || device._id;
+    if (!deviceId) return;
+    
+    setSyncingId(deviceId);
+    try {
+      await apiClient.syncDevice(device.brand, device.model);
+      alert(`${device.name} synchronized successfully with External API`);
+      fetchDevices();
+    } catch (error: any) {
+      alert(`Sync Failed: ${error.message}`);
+    } finally {
+      setSyncingId(null);
+    }
+  };
+
+  const handleSyncByBrand = async () => {
+    const brand = prompt('Enter brand name to sync (e.g., Apple, Samsung):');
+    if (!brand) return;
+
+    setIsSyncingAll(true);
+    try {
+      await apiClient.syncDevices(brand);
+      alert(`Sync task for ${brand} started. New devices will appear shortly.`);
+      fetchDevices();
+    } catch (error: any) {
+      alert(`Bulk Sync Failed: ${error.message}`);
+    } finally {
+      setIsSyncingAll(false);
+    }
+  };
+
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
@@ -77,6 +111,14 @@ export default function AdminDevicesPage() {
           <p className="text-gray-500 font-bold uppercase text-[10px] tracking-widest mt-1">Manage your catalog of smartphones and tablets</p>
         </div>
         <div className="flex gap-3">
+          <button
+            onClick={handleSyncByBrand}
+            disabled={isSyncingAll}
+            className="flex items-center gap-2 bg-white border-2 border-gray-200 text-gray-700 px-6 py-3 rounded-2xl font-black uppercase text-xs tracking-widest hover:border-indigo-600 hover:text-indigo-600 transition-all shadow-sm disabled:opacity-50"
+          >
+            {isSyncingAll ? <FontAwesomeIcon icon={faSpinner} spin /> : <FontAwesomeIcon icon={faSync} />}
+            Sync Brand
+          </button>
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isImporting}
@@ -161,7 +203,7 @@ export default function AdminDevicesPage() {
                 <tr><td colSpan={5} className="px-6 py-12 text-center text-gray-400 font-bold uppercase tracking-widest text-xs">No devices found</td></tr>
               ) : (
                 devices.map((device, index) => {
-                  const deviceId = device.id || device._id;
+                  const deviceId = (device as any).id || device._id;
                   return (
                     <tr key={deviceId || index} className="group hover:bg-blue-50/30 transition-colors">
                       <td className="px-6 py-4">
@@ -191,6 +233,13 @@ export default function AdminDevicesPage() {
                       </td>
                       <td className="px-6 py-4 text-right">
                         <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-all">
+                          <button
+                            onClick={() => handleSync(device)}
+                            disabled={syncingId === deviceId}
+                            className="bg-white border border-gray-200 text-indigo-600 px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:bg-indigo-50 transition-all disabled:opacity-50"
+                          >
+                            {syncingId === deviceId ? <FontAwesomeIcon icon={faSpinner} spin /> : 'Sync'}
+                          </button>
                           <Link
                             href={`/admin/devices/edit/${deviceId}`}
                             className="bg-white border border-gray-200 text-gray-700 px-4 py-2 rounded-xl text-[10px] font-black uppercase hover:border-blue-600 hover:text-blue-600 transition-all"

@@ -219,7 +219,7 @@ class ApiClient {
   }
 
   // Admin
-  async getAdminStats(): Promise<{ devicesCount: number; categoriesCount: number; totalViews: number }> {
+  async getAdminStats(): Promise<any> {
     return this.request('/admin/stats');
   }
 
@@ -249,6 +249,26 @@ class ApiClient {
       return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { method: 'POST' });
     }
     return this.request('/external-api/sync/all', { method: 'POST' });
+  }
+
+  async syncDevice(brand: string, model: string): Promise<any> {
+    return this.request('/devices/sync', { 
+      method: 'POST', 
+      body: JSON.stringify({ brand, model }) 
+    });
+  }
+
+  // Prices
+  async createPrice(data: any): Promise<PriceHistory> {
+    return this.request('/prices', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async updatePrice(id: string, data: any): Promise<PriceHistory> {
+    return this.request(`/prices/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
+  async deletePrice(id: string): Promise<void> {
+    return this.request(`/prices/${id}`, { method: 'DELETE' });
   }
 }
 

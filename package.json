@@ -4,5 +4,11 @@
     "@nestjs/typeorm": "^11.0.0",
     "pg": "^8.16.3",
     "typeorm": "^0.3.27"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^25.0.5",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
   }
 }

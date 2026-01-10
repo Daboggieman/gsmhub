@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
@@ -14,17 +18,24 @@ export class CategoriesService {
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const slug = createCategoryDto.slug || generateSlug(createCategoryDto.name);
-    
+
     // Check for existing name or slug
-    const existing = await this.categoryModel.findOne({
-      $or: [{ name: createCategoryDto.name }, { slug }],
-    });
+    const existing = await this.categoryModel
+      .findOne({
+        $or: [{ name: createCategoryDto.name }, { slug }],
+      })
+      .exec();
 
     if (existing) {
-      throw new ConflictException('Category with this name or slug already exists');
+      throw new ConflictException(
+        'Category with this name or slug already exists',
+      );
     }
 
-    const createdCategory = new this.categoryModel({ ...createCategoryDto, slug });
+    const createdCategory = new this.categoryModel({
+      ...createCategoryDto,
+      slug,
+    });
     return createdCategory.save();
   }
 
@@ -56,23 +67,34 @@ export class CategoriesService {
     return category;
   }
 
-  async update(id: string, updateCategoryDto: UpdateCategoryDto): Promise<Category> {
+  async update(
+    id: string,
+    updateCategoryDto: UpdateCategoryDto,
+  ): Promise<Category> {
     if (updateCategoryDto.name && !updateCategoryDto.slug) {
       updateCategoryDto.slug = generateSlug(updateCategoryDto.name);
     }
 
     // Check for conflicts with other categories
     if (updateCategoryDto.name || updateCategoryDto.slug) {
-      const conflict = await this.categoryModel.findOne({
-        _id: { $ne: id },
-        $or: [
-          ...(updateCategoryDto.name ? [{ name: updateCategoryDto.name }] : []),
-          ...(updateCategoryDto.slug ? [{ slug: updateCategoryDto.slug }] : []),
-        ],
-      });
+      const conflict = await this.categoryModel
+        .findOne({
+          _id: { $ne: id },
+          $or: [
+            ...(updateCategoryDto.name
+              ? [{ name: updateCategoryDto.name }]
+              : []),
+            ...(updateCategoryDto.slug
+              ? [{ slug: updateCategoryDto.slug }]
+              : []),
+          ],
+        })
+        .exec();
 
       if (conflict) {
-        throw new ConflictException('Another category with this name or slug already exists');
+        throw new ConflictException(
+          'Another category with this name or slug already exists',
+        );
       }
     }
 
@@ -92,15 +114,20 @@ export class CategoriesService {
     }
   }
 
-  async upsertCategory(categoryData: Partial<Category>): Promise<CategoryDocument> {
+  async upsertCategory(
+    categoryData: Partial<Category>,
+  ): Promise<CategoryDocument> {
     if (!categoryData.slug) {
-        throw new Error('Category slug is required for upsert operation.');
+      throw new Error('Category slug is required for upsert operation.');
     }
-    const category = await this.categoryModel.findOneAndUpdate(
+    const category = await this.categoryModel
+      .findOneAndUpdate(
         { slug: categoryData.slug },
         { $set: categoryData },
-        { upsert: true, new: true, setDefaultsOnInsert: true }
-    );
+        { $set: categoryData },
+        { upsert: true, new: true, setDefaultsOnInsert: true },
+      )
+      .exec();
     return category;
   }
 

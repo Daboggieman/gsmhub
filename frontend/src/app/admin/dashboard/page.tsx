@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from 'react';
 import { apiClient } from '@/lib/api';
@@ -14,7 +14,7 @@ import {
   faArrowRight,
   faDollarSign,
   faShoppingCart,
-  faTrendingUp
+  faTurnUp
 } from '@fortawesome/free-solid-svg-icons';
 import {
   BarChart,

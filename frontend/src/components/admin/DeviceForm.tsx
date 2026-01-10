@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { Device, Category, DeviceType } from '@shared/types';
+import { Device, Category, DeviceType, PriceHistory } from '@shared/types';
 import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -25,7 +25,7 @@ interface DeviceFormProps {
   isEdit?: boolean;
 }
 
-type Tab = 'general' | 'specs_key' | 'specs_all' | 'media' | 'seo_affiliates';
+type Tab = 'general' | 'specs_key' | 'specs_all' | 'media' | 'seo_affiliates' | 'pricing';
 
 export default function DeviceForm({ initialData, isEdit = false }: DeviceFormProps) {
   const router = useRouter();
@@ -36,6 +36,15 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [isAutoSlug, setIsAutoSlug] = useState(!isEdit);
+  const [prices, setPrices] = useState<PriceHistory[]>([]);
+  const [isPriceLoading, setIsPriceLoading] = useState(false);
+  const [newPrice, setNewPrice] = useState({
+    price: 0,
+    currency: 'USD',
+    country: 'USA',
+    retailer: '',
+    url: '',
+  });
 
   const [formData, setFormData] = useState<Partial<Device>>({
     name: '',
@@ -88,6 +97,21 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
       }
     };
     fetchData();
+
+    if (isEdit && (initialData?.id || (initialData as any)?._id)) {
+      const fetchPrices = async () => {
+        setIsPriceLoading(true);
+        try {
+          const data = await apiClient.getDevicePriceHistory((initialData as any).id || (initialData as any)._id);
+          setPrices(data);
+        } catch (err) {
+          console.error('Failed to load prices', err);
+        } finally {
+          setIsPriceLoading(false);
+        }
+      };
+      fetchPrices();
+    }
   }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
@@ -153,6 +177,37 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
     const newLinks = [...(formData.affiliateLinks || [])];
     newLinks.splice(index, 1);
     setFormData({ ...formData, affiliateLinks: newLinks });
+  };
+
+  const handleAddPrice = async () => {
+    const id = (initialData as any).id || (initialData as any)._id;
+    if (!id) return;
+    
+    try {
+      await apiClient.createPrice({
+        ...newPrice,
+        device: id,
+      });
+      // Refresh prices
+      const data = await apiClient.getDevicePriceHistory(id);
+      setPrices(data);
+      setNewPrice({ price: 0, currency: 'USD', country: 'USA', retailer: '', url: '' });
+    } catch (err: any) {
+      alert(`Failed to add price: ${err.message}`);
+    }
+  };
+
+  const handleDeletePrice = async (priceId: string) => {
+    if (!confirm('Delete this price entry?')) return;
+    const id = (initialData as any).id || (initialData as any)._id;
+    
+    try {
+      await apiClient.deletePrice(priceId);
+      const data = await apiClient.getDevicePriceHistory(id);
+      setPrices(data);
+    } catch (err: any) {
+      alert(`Failed to delete price: ${err.message}`);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -237,6 +292,7 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
         <TabButton id="specs_all" label="Detailed Specs" icon={faCamera} />
         <TabButton id="media" label="Media & Review" icon={faImages} />
         <TabButton id="seo_affiliates" label="SEO & Affiliates" icon={faGlobe} />
+        {isEdit && <TabButton id="pricing" label="Retail Prices" icon={faShoppingCart} />}
       </div>
 
       <form onSubmit={handleSubmit} className="p-8">
@@ -244,6 +300,122 @@ export default function DeviceForm({ initialData, isEdit = false }: DeviceFormPr
           <div className="mb-8 flex items-center gap-3 bg-red-50 p-4 text-red-700 rounded-xl border border-red-100 animate-shake">
             <FontAwesomeIcon icon={faTimesCircle} />
             <span className="font-bold">{error}</span>
+          </div>
+        )}
+
+        {/* Tab 6: Retail Prices (Manual Overrides) */}
+        {isEdit && (
+          <div className={activeTab === 'pricing' ? 'block space-y-10' : 'hidden'}>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+              {/* Add New Price Form */}
+              <div className="md:col-span-1 space-y-6 bg-blue-50/50 p-6 rounded-3xl border border-blue-100">
+                <h3 className="text-lg font-black text-blue-900 flex items-center gap-2 mb-4">
+                  <FontAwesomeIcon icon={faPlus} className="text-blue-600" />
+                  Add Local Price
+                </h3>
+                <div className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-black text-blue-500 uppercase tracking-widest mb-1">Price</label>
+                    <input
+                      type="number"
+                      value={newPrice.price}
+                      onChange={(e) => setNewPrice({ ...newPrice, price: parseFloat(e.target.value) })}
+                      className="w-full rounded-xl border p-2 font-bold"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <div>
+                      <label className="block text-xs font-black text-blue-500 uppercase tracking-widest mb-1">Currency</label>
+                      <input
+                        type="text"
+                        value={newPrice.currency}
+                        onChange={(e) => setNewPrice({ ...newPrice, currency: e.target.value })}
+                        className="w-full rounded-xl border p-2 font-bold uppercase"
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-xs font-black text-blue-500 uppercase tracking-widest mb-1">Country</label>
+                      <input
+                        type="text"
+                        value={newPrice.country}
+                        onChange={(e) => setNewPrice({ ...newPrice, country: e.target.value })}
+                        className="w-full rounded-xl border p-2 font-bold"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-black text-blue-500 uppercase tracking-widest mb-1">Retailer</label>
+                    <input
+                      type="text"
+                      value={newPrice.retailer}
+                      onChange={(e) => setNewPrice({ ...newPrice, retailer: e.target.value })}
+                      placeholder="e.g. Slot, Jumia"
+                      className="w-full rounded-xl border p-2 font-bold"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-black text-blue-500 uppercase tracking-widest mb-1">Store URL</label>
+                    <input
+                      type="text"
+                      value={newPrice.url}
+                      onChange={(e) => setNewPrice({ ...newPrice, url: e.target.value })}
+                      className="w-full rounded-xl border p-2 font-bold"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={handleAddPrice}
+                    className="w-full py-3 bg-blue-600 text-white rounded-xl font-black uppercase text-xs tracking-widest hover:bg-blue-700 transition-all"
+                  >
+                    Add Price Entry
+                  </button>
+                </div>
+              </div>
+
+              {/* Price List */}
+              <div className="md:col-span-2 space-y-4">
+                <h3 className="text-lg font-black text-gray-900 flex items-center gap-2 mb-4">
+                  <FontAwesomeIcon icon={faHistory} className="text-gray-400" />
+                  Price Records
+                </h3>
+                {isPriceLoading ? (
+                  <div className="py-12 text-center text-gray-400 font-bold uppercase tracking-widest animate-pulse">Loading Price Data...</div>
+                ) : prices.length === 0 ? (
+                  <div className="py-12 text-center bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                    <p className="text-gray-400 font-bold uppercase tracking-widest">No manual prices recorded</p>
+                  </div>
+                ) : (
+                  <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 no-scrollbar">
+                    {prices.map((p: any) => (
+                      <div key={p._id || p.id} className="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-2xl shadow-sm hover:border-blue-200 transition-all">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 bg-gray-50 rounded-lg flex items-center justify-center text-blue-600 font-black">
+                            {p.currency === 'USD' ? '$' : p.currency}
+                          </div>
+                          <div>
+                            <p className="font-black text-gray-900">{p.price.toLocaleString()} {p.currency}</p>
+                            <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">{p.retailer || 'Unknown Retailer'} • {p.country}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] font-bold text-gray-300 uppercase">{new Date(p.date || (p as any).createdAt).toLocaleDateString()}</span>
+                          <button
+                            type="button"
+                            onClick={() => handleDeletePrice(p._id || p.id)}
+                            className="text-red-400 hover:text-red-600 p-2"
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+                <p className="mt-4 text-[10px] text-gray-400 font-bold italic">
+                  * These prices appear in the "Prices" section of the public device page and contribute to price history charts.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
