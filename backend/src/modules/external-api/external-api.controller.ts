@@ -2,6 +2,7 @@ import {
   Controller,
   Post,
   Param,
+  Body,
   UseGuards,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -18,11 +19,10 @@ export class ExternalApiController {
   @Post('sync/all')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async syncAll() {
-    // Fire and forget or await?
-    // Awaiting might timeout the request if there are many available brands.
-    // just run it in background and return a message.
-    this.syncService.fullSync().catch((err) => {
+  async syncAll(
+    @Body() options: { providers?: string[]; forceUpdate?: boolean },
+  ) {
+    this.syncService.fullSync(options).catch((err) => {
       console.error('Manual Full Sync Failed:', err);
     });
     return { message: 'Full sync started in background' };
@@ -31,8 +31,11 @@ export class ExternalApiController {
   @Post('sync/brand/:brand')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async syncBrand(@Param('brand') brand: string) {
-    await this.syncService.fetchAndSavePhonesByBrand([brand]);
-    return { message: `Sync completed for brand: ${brand}` };
+  async syncBrand(
+    @Param('brand') brand: string,
+    @Body() options: { providers?: string[]; forceUpdate?: boolean },
+  ) {
+    await this.syncService.fetchAndSavePhonesByBrand([brand], true, options);
+    return { message: `Deep sync completed for brand: ${brand}` };
   }
 }

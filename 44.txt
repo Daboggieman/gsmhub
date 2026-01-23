@@ -1,0 +1,1247 @@
+**GET: listBrands**
+
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+PARAMS
+no additional params
+
+
+HEADERS
+X-RapidAPI-Host *:mobile-phones2.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+node-axios
+
+
+const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://mobile-phones2.p.rapidapi.com/brands',
+  headers: {
+    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
+    'x-rapidapi-host': 'mobile-phones2.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		console.log(response.data);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fetchData();
+
+
+
+
+example response
+
+____________________[
+  {
+    "name": "Nokia",
+    "id": 1
+  },
+  {
+    "name": "Ericsson",
+    "id": 2
+  },
+  {
+    "name": "Siemens",
+    "id": 3
+  },
+  {
+    "name": "Motorola",
+    "id": 4
+  },
+  {
+    "name": "alcatel",
+    "id": 5
+  },
+  {
+    "name": "Panasonic",
+    "id": 6
+  },
+  {
+    "name": "Sony",
+    "id": 7
+  },
+  {
+    "name": "Mitsubishi",
+    "id": 8
+  },
+  {
+    "name": "Samsung",
+    "id": 9
+  },
+  {
+    "name": "Bosch",
+    "id": 10
+  },
+  {
+    "name": "Philips",
+    "id": 11
+  },
+  {
+    "name": "NEC",
+    "id": 12
+  },
+  {
+    "name": "Sagem",
+    "id": 13
+  },
+  {
+    "name": "Maxon",
+    "id": 14
+  },
+  {
+    "name": "Benefon",
+    "id": 15
+  },
+  {
+    "name": "Telit",
+    "id": 16
+  },
+  {
+    "name": "Kyocera",
+    "id": 17
+  },
+  {
+    "name": "Sendo",
+    "id": 18
+  },
+  {
+    "name": "Sony Ericsson",
+    "id": 19
+  },
+  {
+    "name": "LG",
+    "id": 20
+  },
+  {
+    "name": "Tel.Me.",
+    "id": 21
+  },
+  {
+    "name": "Neonode",
+    "id": 22
+  },
+  {
+    "name": "Sharp",
+    "id": 23
+  },
+  {
+    "name": "Chea",
+    "id": 24
+  },
+  {
+    "name": "Mitac",
+    "id": 25
+  },
+  {
+    "name": "Sewon",
+    "id": 26
+  },
+  {
+    "name": "Palm",
+    "id": 27
+  },
+  {
+    "name": "Amoi",
+    "id": 28
+  },
+  {
+    "name": "Innostream",
+    "id": 29
+  },
+  {
+    "name": "O2",
+    "id": 30
+  },
+  {
+    "name": "BenQ",
+    "id": 31
+  },
+  {
+    "name": "Pantech",
+    "id": 32
+  },
+  {
+    "name": "Haier",
+    "id": 33
+  },
+  {
+    "name": "Bird",
+    "id": 34
+  },
+  {
+    "name": "i-mate",
+    "id": 35
+  },
+  {
+    "name": "BlackBerry",
+    "id": 36
+  },
+  {
+    "name": "VK Mobile",
+    "id": 37
+  },
+  {
+    "name": "Qtek",
+    "id": 38
+  },
+  {
+    "name": "Vertu",
+    "id": 39
+  },
+  {
+    "name": "Eten",
+    "id": 40
+  },
+  {
+    "name": "HP",
+    "id": 41
+  },
+  {
+    "name": "BenQ-Siemens",
+    "id": 42
+  },
+  {
+    "name": "XCute",
+    "id": 43
+  },
+  {
+    "name": "Toshiba",
+    "id": 44
+  },
+  {
+    "name": "HTC",
+    "id": 45
+  },
+  {
+    "name": "Asus",
+    "id": 46
+  },
+  {
+    "name": "Gigabyte",
+    "id": 47
+  },
+  {
+    "name": "Apple",
+    "id": 48
+  },
+  {
+    "name": "Thuraya",
+    "id": 49
+  },
+  {
+    "name": "Fujitsu Siemens",
+    "id": 50
+  },
+  {
+    "name": "WND",
+    "id": 51
+  },
+  {
+    "name": "i-mobile",
+    "id": 52
+  },
+  {
+    "name": "Vodafone",
+    "id": 53
+  },
+  {
+    "name": "Sonim",
+    "id": 54
+  },
+  {
+    "name": "T-Mobile",
+    "id": 55
+  },
+  {
+    "name": "MWg",
+    "id": 56
+  },
+  {
+    "name": "AT&T",
+    "id": 57
+  },
+  {
+    "name": "Huawei",
+    "id": 58
+  },
+  {
+    "name": "Acer",
+    "id": 59
+  },
+  {
+    "name": "iNQ",
+    "id": 60
+  },
+  {
+    "name": "Dell",
+    "id": 61
+  },
+  {
+    "name": "ZTE",
+    "id": 62
+  },
+  {
+    "name": "Modu",
+    "id": 63
+  },
+  {
+    "name": "Microsoft",
+    "id": 64
+  },
+  {
+    "name": "Garmin-Asus",
+    "id": 65
+  },
+  {
+    "name": "Micromax",
+    "id": 66
+  },
+  {
+    "name": "BLU",
+    "id": 67
+  },
+  {
+    "name": "Spice",
+    "id": 68
+  },
+  {
+    "name": "Icemobile",
+    "id": 69
+  },
+  {
+    "name": "verykool",
+    "id": 70
+  },
+  {
+    "name": "Orange",
+    "id": 71
+  },
+  {
+    "name": "Plum",
+    "id": 72
+  },
+  {
+    "name": "Lenovo",
+    "id": 73
+  },
+  {
+    "name": "Meizu",
+    "id": 74
+  },
+  {
+    "name": "Celkon",
+    "id": 75
+  },
+  {
+    "name": "Amazon",
+    "id": 76
+  },
+  {
+    "name": "Casio",
+    "id": 77
+  },
+  {
+    "name": "Yezz",
+    "id": 78
+  },
+  {
+    "name": "NIU",
+    "id": 79
+  },
+  {
+    "name": "Xiaomi",
+    "id": 80
+  },
+  {
+    "name": "Parla",
+    "id": 81
+  },
+  {
+    "name": "Oppo",
+    "id": 82
+  },
+  {
+    "name": "Karbonn",
+    "id": 83
+  },
+  {
+    "name": "Jolla",
+    "id": 84
+  },
+  {
+    "name": "XOLO",
+    "id": 85
+  },
+  {
+    "name": "Prestigio",
+    "id": 86
+  },
+  {
+    "name": "Maxwest",
+    "id": 87
+  },
+  {
+    "name": "Allview",
+    "id": 88
+  },
+  {
+    "name": "Cat",
+    "id": 89
+  },
+  {
+    "name": "Archos",
+    "id": 90
+  },
+  {
+    "name": "Unnecto",
+    "id": 91
+  },
+  {
+    "name": "Gionee",
+    "id": 92
+  },
+  {
+    "name": "Emporia",
+    "id": 93
+  },
+  {
+    "name": "Lava",
+    "id": 94
+  },
+  {
+    "name": "OnePlus",
+    "id": 95
+  },
+  {
+    "name": "Wiko",
+    "id": 96
+  },
+  {
+    "name": "Nvidia",
+    "id": 97
+  },
+  {
+    "name": "vivo",
+    "id": 98
+  },
+  {
+    "name": "Yota",
+    "id": 99
+  },
+  {
+    "name": "YU",
+    "id": 100
+  },
+  {
+    "name": "Posh",
+    "id": 101
+  },
+  {
+    "name": "Intex",
+    "id": 102
+  },
+  {
+    "name": "QMobile",
+    "id": 103
+  },
+  {
+    "name": "EE",
+    "id": 104
+  },
+  {
+    "name": "Coolpad",
+    "id": 105
+  },
+  {
+    "name": "Energizer",
+    "id": 106
+  },
+  {
+    "name": "Google",
+    "id": 107
+  },
+  {
+    "name": "BQ",
+    "id": 108
+  },
+  {
+    "name": "LeEco",
+    "id": 109
+  },
+  {
+    "name": "",
+    "id": 110
+  },
+  {
+    "name": "Blackview",
+    "id": 116
+  },
+  {
+    "name": "Razer",
+    "id": 117
+  },
+  {
+    "name": "Realme",
+    "id": 118
+  },
+  {
+    "name": "Infinix",
+    "id": 119
+  },
+  {
+    "name": "Tecno",
+    "id": 120
+  },
+  {
+    "name": "Honor",
+    "id": 121
+  },
+  {
+    "name": "TCL",
+    "id": 123
+  },
+  {
+    "name": "Ulefone",
+    "id": 124
+  },
+  {
+    "name": "Fairphone",
+    "id": 127
+  },
+  {
+    "name": "Nothing",
+    "id": 128
+  },
+  {
+    "name": "Doogee",
+    "id": 129
+  },
+  {
+    "name": "Cubot",
+    "id": 130
+  },
+  {
+    "name": "itel",
+    "id": 131
+  },
+  {
+    "name": "Oukitel",
+    "id": 132
+  },
+  {
+    "name": "HMD",
+    "id": 133
+  },
+  {
+    "name": "Oscal",
+    "id": 134
+  },
+  {
+    "name": "Umidigi",
+    "id": 135
+  },
+  {
+    "name": "RugOne",
+    "id": 136
+  }
+]_______________________________________________________________________________
+___________________________________________________________________________________________________
+
+**GET: getPhonesByBrands**
+
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+PARAMS
+Path Params
+brand_id*:(input the id of the brand)number
+
+Brand id (e.g. 1, 10, 15, 31)
+
+HEADER
+X-RapidAPI-Host*:mobile-phones2.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+NODE-axios
+
+const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://mobile-phones2.p.rapidapi.com/%7Bbrand_id%7D/phones',
+  headers: {
+    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
+    'x-rapidapi-host': 'mobile-phones2.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		console.log(response.data);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fetchData();
+
+
+example response
+
+{
+  "data": [
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_11_air-14430",
+      "phone_name": "nubia RedMagic 11 Air",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-redmagic-11-air.jpg",
+      "description": "ZTE nubia RedMagic 11 Air 5G Android smartphone. Announced Jan 2026. Features 6.85″  display, Snapdragon 8 Elite chipset, 7000 mAh battery, 512 GB storage, 16 GB RAM, Corning Gorilla Glass 7i."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_pad-14354",
+      "phone_name": "Pad",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-pad-5g-x1102n.jpg",
+      "description": "ZTE Pad 5G X1102N Android tablet. Announced Nov 2025. Features 11.0″  display, Unisoc T8100 chipset, 7670 mAh battery, 256 GB storage, 6 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_fold-14324",
+      "phone_name": "Nubia Fold",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-fold.jpg",
+      "description": "ZTE Nubia Fold 5G Android smartphone. Announced Dec 2025. Features 8.0″  display, Snapdragon 8 Elite chipset, 6560 mAh battery, 256 GB storage, 12 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_flip3-14325",
+      "phone_name": "nubia Flip3",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nibia-flip3-.jpg",
+      "description": "ZTE nubia Flip3 5G Android smartphone. Announced Dec 2025. Features 6.9″  display, Dimensity 7400X chipset, 4610 mAh battery, 256 GB storage, 8 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_v80_pro-14305",
+      "phone_name": "Blade V80 Pro",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-blade-nubia-v80-pro.jpg",
+      "description": "ZTE Blade V80 Pro Android smartphone. Announced Nov 2025. Features 6.75″  display, Unisoc T7280 chipset, 5000 mAh battery, 256 GB storage, 8 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_v80_design-14291",
+      "phone_name": "Blade V80 Design",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-blade-nubia-v80-design.jpg",
+      "description": "ZTE Blade V80 Design Android smartphone. Announced Nov 2025. Features 6.75″  display, Unisoc T7280 chipset, 5000 mAh battery, 256 GB storage, 8 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_11_pro-14277",
+      "phone_name": "nubia RedMagic 11 Pro",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-11-pro-plus.jpg",
+      "description": "ZTE nubia RedMagic 11 Pro 5G INT Android smartphone. Announced Nov 2025. Features 6.85″  display, Snapdragon 8 Elite Gen 5 chipset, 7500 mAh battery, 1024 GB storage, 24 GB RAM, Corning Gorilla Glass."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_z80_ultra-14247",
+      "phone_name": "nubia Z80 Ultra",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-z80-ultra.jpg",
+      "description": "ZTE nubia Z80 Ultra 5G Android smartphone. Announced Oct 2025. Features 6.85″  display, Snapdragon 8 Elite Gen 5 chipset, 7200 mAh battery, 1024 GB storage, 16 GB RAM, Unspecified."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_11_pro+-14238",
+      "phone_name": "nubia RedMagic 11 Pro+",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-11-pro-plus.jpg",
+      "description": "ZTE nubia RedMagic 11 Pro+ 5G Android smartphone. Announced Oct 2025. Features 6.85″  display, Snapdragon 8 Elite Gen 5 chipset, 7500 mAh battery, 1024 GB storage, 24 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_11_pro_(china)-14239",
+      "phone_name": "nubia RedMagic 11 Pro (China)",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-11-pro.jpg",
+      "description": "ZTE nubia RedMagic 11 Pro 5G Android smartphone. Announced Oct 2025. Features 6.85″  display, Snapdragon 8 Elite Gen 5 chipset, 8000 mAh battery, 512 GB storage, 16 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_air-14123",
+      "phone_name": "nubia Air",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-air.jpg",
+      "description": "ZTE nubia Air 5G Android smartphone. Announced Sep 2025. Features 6.78″  display, Unisoc T8300 chipset, 5000 mAh battery, 256 GB storage, 8 GB RAM, Corning Gorilla Glass 7i."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_a36-13966",
+      "phone_name": "Blade A36",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-a36.jpg",
+      "description": "ZTE Blade A36 Android smartphone. Announced Jun 2025. Features 6.75″  display, Unisoc T7200 chipset, 5000 mAh battery, 64 GB storage, 4 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_a56-13948",
+      "phone_name": "Blade A56",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-blade-a56-.jpg",
+      "description": "ZTE Blade A56 Android smartphone. Announced Jun 2025. Features 6.75″  display, Unisoc T7200 chipset, 5000 mAh battery, 128 GB storage, 4 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_astra-13939",
+      "phone_name": "nubia RedMagic Astra",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-tablet-3-pro.jpg",
+      "description": "ZTE RedMagic Tablet 3 Pro Android tablet. Announced Jun 2025. Features 9.06″  display, Snapdragon 8 Elite chipset, 8200 mAh battery, 1024 GB storage, 24 GB RAM, Corning Gorilla Glass (unspecified version)."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_a76_4g-14290",
+      "phone_name": "Blade A76 4G",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-blade-a76-4g.jpg",
+      "description": "ZTE Blade A76 Android smartphone. Announced Oct 2025. Features 6.75″  display, 5000 mAh battery, 128 GB storage, 4 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_blade_a76-13932",
+      "phone_name": "Blade A76",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-blade-a76.jpg",
+      "description": "ZTE Blade A76 5G Android smartphone. Announced Jun 2025. Features 6.75″  display, Unisoc T8300 chipset, 5000 mAh battery, 128 GB storage, 6 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_10spro+-13905",
+      "phone_name": "nubia RedMagic 10SPro+",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-10s-pro-plus.jpg",
+      "description": "ZTE nubia RedMagic 10SPro+ 5G Android smartphone. Announced May 2025. Features 6.85″  display, Snapdragon 8 Elite chipset, 7500 mAh battery, 1024 GB storage, 24 GB RAM."
+    },
+    {
+      "brand_id": 62,
+      "brand_name": "ZTE",
+      "id": "zte_nubia_redmagic_10s_pro-13906",
+      "phone_name": "nubia RedMagic 10S Pro",
+      "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-red-magic-10s-pro.jpg",
+      "description": "ZTE nubia RedMagic 10SPro 5G Android smartphone. Announced May 2025. Features 6.85″  display, Snapdragon 8 Elite chipset, 7050 mAh battery, 1024 GB storage, 24 GB RAM, Corning Gorilla Glass (unspecified version)."
+    }
+  ],
+  "total_pages": 0,
+  "current_page": 0
+}
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+**GET:getPhoneDetails**
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+
+PATH PARAMS
+id*
+Number
+
+
+HEADER
+X-RapidAPI-Host*:mobile-phones2.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+
+NODE-AXIOS  
+
+const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://mobile-phones2.p.rapidapi.com/phones/%7Bid%7D',
+  headers: {
+    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
+    'x-rapidapi-host': 'mobile-phones2.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		console.log(response.data);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fetchData();
+
+
+example response
+
+{
+  "spotlight": {
+    "releaseDate": "Released 2018, September 21",
+    "body": "208g, 7.7mm thickness",
+    "os": "iOS 12, up to iOS 16.4",
+    "storage": "64GB/256GB/512GB storage, no card slot",
+    "display_size": "6.5\"",
+    "display_resolution": "1242x2688 pixels",
+    "camera_pixels": "12 MP",
+    "video_pixels": "2160p",
+    "ram_size": "4 GB RAM",
+    "chipset": "Apple A12 Bionic",
+    "battery_size": "3174 mAh",
+    "battery_type": "Li-Ion",
+    "popularity": " 21%"
+  },
+  "all_specs": {
+    "Network": [
+      {
+        "title": "Technology",
+        "info": "GSM / CDMA / HSPA / EVDO / LTE"
+      },
+      {
+        "title": "2G bands",
+        "info": "GSM 850 / 900 / 1800 / 1900 - SIM 1 & SIM 2 (dual-SIM) - for China"
+      },
+      {
+        "title": " ",
+        "info": "CDMA 800 / 1900 "
+      },
+      {
+        "title": "3G bands",
+        "info": "HSDPA 850 / 900 / 1700(AWS) / 1900 / 2100 "
+      },
+      {
+        "title": " ",
+        "info": "CDMA2000 1xEV-DO "
+      },
+      {
+        "title": "4G bands",
+        "info": "1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 17, 18, 19, 20, 25, 26, 28, 29, 30, 32, 34, 38, 39, 40, 41, 46, 66 - A2101"
+      },
+      {
+        "title": " ",
+        "info": "1, 2, 3, 4, 5, 7, 8, 12, 13, 14, 17, 18, 19, 20, 25, 26, 29, 30, 32, 34, 38, 39, 40, 41, 46, 66, 71 - A1921, A2104"
+      },
+      {
+        "title": "Speed",
+        "info": "HSPA 42.2/5.76 Mbps, LTE-A (4CA) Cat16 1024/150 Mbps, EV-DO Rev.A 3.1 Mbps"
+      }
+    ],
+    "Launch": [
+      {
+        "title": "Announced",
+        "info": "2018, September 12"
+      },
+      {
+        "title": "Status",
+        "info": "Available. Released 2018, September 21"
+      }
+    ],
+    "Body": [
+      {
+        "title": "Dimensions",
+        "info": "157.5 x 77.4 x 7.7 mm (6.20 x 3.05 x 0.30 in)"
+      },
+      {
+        "title": "Weight",
+        "info": "208 g (7.34 oz)"
+      },
+      {
+        "title": "Build",
+        "info": "Glass front (Corning-made glass), glass back (Corning-made glass), stainless steel frame"
+      },
+      {
+        "title": "SIM",
+        "info": "Nano-SIM and eSIM or Dual SIM (Nano-SIM, dual stand-by) - for China"
+      },
+      {
+        "title": " ",
+        "info": "IP68 dust/water resistant (up to 2m for 30 min)\nApple Pay (Visa, MasterCard, AMEX certified)"
+      }
+    ],
+    "Display": [
+      {
+        "title": "Type",
+        "info": "Super Retina OLED, HDR10, Dolby Vision, 625 nits (HBM)"
+      },
+      {
+        "title": "Size",
+        "info": "6.5 inches, 102.9 cm2 (~84.4% screen-to-body ratio)"
+      },
+      {
+        "title": "Resolution",
+        "info": "1242 x 2688 pixels, 19.5:9 ratio (~458 ppi density)"
+      },
+      {
+        "title": "Protection",
+        "info": "Scratch-resistant glass"
+      },
+      {
+        "title": " ",
+        "info": "3D Touch"
+      }
+    ],
+    "Platform": [
+      {
+        "title": "OS",
+        "info": "iOS 12, upgradable to iOS 16.4"
+      },
+      {
+        "title": "Chipset",
+        "info": "Apple A12 Bionic (7 nm)"
+      },
+      {
+        "title": "CPU",
+        "info": "Hexa-core (2x2.5 GHz Vortex + 4x1.6 GHz Tempest)"
+      },
+      {
+        "title": "GPU",
+        "info": "Apple GPU (4-core graphics)"
+      }
+    ],
+    "Memory": [
+      {
+        "title": "Card slot",
+        "info": "No"
+      },
+      {
+        "title": "Internal",
+        "info": "64GB 4GB RAM, 256GB 4GB RAM, 512GB 4GB RAM"
+      },
+      {
+        "title": " ",
+        "info": "NVMe"
+      }
+    ],
+    "Main Camera": [
+      {
+        "title": "Dual",
+        "info": "12 MP, f/1.8, 26mm (wide), 1/2.55\", 1.4µm, dual pixel PDAF, OIS\n12 MP, f/2.4, 52mm (telephoto), 1/3.4\", 1.0µm, PDAF, OIS, 2x optical zoom"
+      },
+      {
+        "title": "Features",
+        "info": "Quad-LED dual-tone flash, HDR (photo/panorama)"
+      },
+      {
+        "title": "Video",
+        "info": "4K@24/30/60fps, 1080p@30/60/120/240fps, HDR, stereo sound rec."
+      }
+    ],
+    "Selfie camera": [
+      {
+        "title": "Single",
+        "info": "7 MP, f/2.2, 32mm (standard)\nSL 3D, (depth/biometrics sensor)"
+      },
+      {
+        "title": "Features",
+        "info": "HDR"
+      },
+      {
+        "title": "Video",
+        "info": "1080p@30/60fps, gyro-EIS"
+      }
+    ],
+    "Sound": [
+      {
+        "title": "Loudspeaker ",
+        "info": "Yes, with stereo speakers"
+      },
+      {
+        "title": "3.5mm jack ",
+        "info": "No"
+      }
+    ],
+    "Comms": [
+      {
+        "title": "WLAN",
+        "info": "Wi-Fi 802.11 a/b/g/n/ac, dual-band, hotspot"
+      },
+      {
+        "title": "Bluetooth",
+        "info": "5.0, A2DP, LE"
+      },
+      {
+        "title": "Positioning",
+        "info": "GPS, GLONASS, GALILEO, QZSS"
+      },
+      {
+        "title": "NFC",
+        "info": "Yes"
+      },
+      {
+        "title": "Radio",
+        "info": "No"
+      },
+      {
+        "title": "USB",
+        "info": "Lightning, USB 2.0"
+      }
+    ],
+    "Features": [
+      {
+        "title": "Sensors",
+        "info": "Face ID, accelerometer, gyro, proximity, compass, barometer"
+      }
+    ],
+    "Battery": [
+      {
+        "title": "Type",
+        "info": "Li-Ion 3174 mAh, non-removable (12.08 Wh)"
+      },
+      {
+        "title": "Charging",
+        "info": "15W wired, PD2.0, 50% in 30 min (advertised)\nWireless (Qi)"
+      }
+    ],
+    "Misc": [
+      {
+        "title": "Colors",
+        "info": "Space Gray, Silver, Gold"
+      },
+      {
+        "title": "Models",
+        "info": "A1921, A2101, A2102, A2104, Phone11,6"
+      },
+      {
+        "title": "SAR",
+        "info": "1.16 W/kg (head)     1.17 W/kg (body)     "
+      },
+      {
+        "title": "SAR EU",
+        "info": "0.99 W/kg (head)     0.99 W/kg (body)     "
+      },
+      {
+        "title": "Price",
+        "info": "About 570 EUR"
+      }
+    ],
+    "Tests": [
+      {
+        "title": "Performance",
+        "info": "\nAnTuTu: 353210 (v7)\nGeekBench: 11432 (v4.4)\nGFXBench: 47fps (ES 3.1 onscreen)"
+      },
+      {
+        "title": "Display",
+        "info": "\nContrast ratio: Infinite (nominal), 4.516 (sunlight)"
+      },
+      {
+        "title": "Camera",
+        "info": "\nPhoto / Video"
+      },
+      {
+        "title": "Loudspeaker",
+        "info": "\nVoice 70dB / Noise 74dB / Ring 84dB\n\n"
+      },
+      {
+        "title": "Audio quality",
+        "info": "\nNoise -93.7dB / Crosstalk -82.8dB"
+      },
+      {
+        "title": "Battery life",
+        "info": "\n\nEndurance rating 79h\n\n"
+      },
+      {
+        "title": "",
+        "info": ""
+      }
+    ]
+  }
+}
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________
+
+**GET:searchPhones**
+
+
+App:default-application_11408269
+X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
+Request URL:rapidapi.com
+
+
+Query Params
+q*
+String
+
+HEADER
+X-RapidAPI-Host*:mobile-phones2.p.rapidapi.com
+
+AUTHORIZATION
+No additional authorizations needed
+
+NODE-AXIOS
+
+const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://mobile-phones2.p.rapidapi.com/search',
+  headers: {
+    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
+    'x-rapidapi-host': 'mobile-phones2.p.rapidapi.com'
+  }
+};
+
+async function fetchData() {
+	try {
+		const response = await axios.request(options);
+		console.log(response.data);
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+fetchData();
+
+example response
+
+[
+  {
+    "id": "zte_nubia_neo-12435",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Neo",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-5g.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_music-12851",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Music",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-music.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_focus-12849",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Focus",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-focus-5g.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_flip-12844",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Flip",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-flip-5g-.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_flip2-13625",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Flip2",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-flip2-.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_z50-12031",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia Z50",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-z50.jpg",
+    "brand_id": 62
+  },
+  {
+    "id": "zte_nubia_x-9347",
+    "score": 6.703448870880157,
+    "terms": [
+      "nubia"
+    ],
+    "match": {
+      "nubia": [
+        "phone_name"
+      ]
+    },
+    "brand_name": "ZTE",
+    "phone_name": "nubia X",
+    "image_url": "https://fdn2.gsmarena.com/vv/bigpic/zte-nubia-x.jpg",
+    "brand_id": 62
+  }
+]
+___________________________________________________________________________________________________
+___________________________________________________________________________________________________

@@ -9,39 +9,61 @@ export class ExternalApiService {
   private readonly logger = new Logger(ExternalApiService.name);
   private readonly rapidApiKey: string;
 
-  // Primary API Config (GSMArena Parser)
   private readonly primaryHost: string;
   private readonly primaryUrl: string;
 
-  // Secondary API Config (Mobile Device Hardware Specs)
   private readonly secondaryHost: string;
   private readonly secondaryUrl: string;
+
+  private readonly tertiaryHost: string;
+  private readonly tertiaryUrl: string;
 
   constructor(
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
     private readonly transformer: DataTransformationService,
   ) {
-    this.transformer = transformer; // Although not strictly necessary with private readonly, helps clarify intent
     this.rapidApiKey = this.configService.get<string>('RAPIDAPI_KEY') || '';
 
-    // Defaults for Primary (GSMArena Parser)
-    this.primaryHost = this.configService.get<string>('PRIMARY_API_HOST', 'gsmarenaparser.p.rapidapi.com');
-    this.primaryUrl = this.configService.get<string>('PRIMARY_API_URL', 'https://gsmarenaparser.p.rapidapi.com');
+    this.primaryHost = this.configService.get<string>(
+      'PRIMARY_API_HOST',
+      'phone-specs-explorer-api.p.rapidapi.com',
+    );
+    this.primaryUrl = this.configService.get<string>(
+      'PRIMARY_API_URL',
+      'https://phone-specs-explorer-api.p.rapidapi.com',
+    );
 
-    // Defaults for Secondary (Mobile Device Hardware Specs)
-    this.secondaryHost = this.configService.get<string>('SECONDARY_API_HOST', 'mobile-device-hardware-specs.p.rapidapi.com');
-    this.secondaryUrl = this.configService.get<string>('SECONDARY_API_URL', 'https://mobile-device-hardware-specs.p.rapidapi.com');
+    this.secondaryHost = this.configService.get<string>(
+      'SECONDARY_API_HOST',
+      'gsmarenaparser.p.rapidapi.com',
+    );
+    this.secondaryUrl = this.configService.get<string>(
+      'SECONDARY_API_URL',
+      'https://gsmarenaparser.p.rapidapi.com',
+    );
+
+    this.tertiaryHost = this.configService.get<string>(
+      'TERTIARY_API_HOST',
+      'mobile-phones2.p.rapidapi.com',
+    );
+    this.tertiaryUrl = this.configService.get<string>(
+      'TERTIARY_API_URL',
+      'https://mobile-phones2.p.rapidapi.com',
+    );
 
     if (!this.rapidApiKey) {
-      this.logger.warn('RAPIDAPI_KEY is not set. External API calls will fail.');
+      this.logger.warn(
+        'RAPIDAPI_KEY is not set. External API calls will fail.',
+      );
     }
   }
 
-  /**
-   * General method to make RapidAPI requests
-   */
-  private async makeRequest(url: string, host: string, params: any = {}): Promise<any> {
+  private async makeRequest(
+    url: string,
+    host: string,
+    params: any = {},
+  ): Promise<any> {
     try {
       const response = await firstValueFrom(
         this.httpService.get(url, {
@@ -50,137 +72,227 @@ export class ExternalApiService {
             'X-RapidAPI-Host': host,
           },
           params,
-        })
+        }),
       );
       return response.data;
     } catch (error) {
       const status = error.response?.status;
       const message = error.response?.data?.message || error.message;
       this.logger.error(`Request to ${host} failed: ${status} - ${message}`);
-      throw new HttpException(`External API Error: ${message}`, status || HttpStatus.BAD_GATEWAY);
+      throw new HttpException(
+        `External API Error from ${host}: ${message}`,
+        status || HttpStatus.BAD_GATEWAY,
+      );
     }
   }
 
-  /**
-   * Fetch device specs with fallback strategy
-   * Primary: /api/values/getspecs/{brand}/{model}
-   * Secondary: /{brand}/{model}
-   */
-  async fetchDeviceSpecs(brand: string, model: string): Promise<any> {
-    // 1. Try Primary API
-    try {
-      this.logger.log(`Fetching specs for ${brand} ${model} from Primary API...`);
-      // Note: Primary API expects clean brand/model names, sometimes case-sensitive or requires spaces?
-      // Based on snippet: Xiaomi/RedmiNote3. It seems to remove spaces from model?
-      // Let's assume standard encoding first.
-      const primaryData = await this.makeRequest(
-        `${this.primaryUrl}/api/values/getspecs/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`,
-        this.primaryHost
-      );
-      
-      if (primaryData) {
-        return this.transformer.transformPrimaryDevice(primaryData, brand, model);
+  // --- FETCH BRANDS ---
+
+  async fetchAvailableBrands(
+    providers: string[] = ['primary', 'secondary', 'tertiary'],
+  ): Promise<string[]> {
+    const allBrandsSet = new Set<string>();
+
+    if (providers.includes('primary')) {
+      try {
+        const data = await this.makeRequest(
+          `${this.primaryUrl}/2162/get+brands`,
+          this.primaryHost,
+        );
+        const brands = data?.data || [];
+        brands.forEach((b: any) => allBrandsSet.add(b.name));
+      } catch (e) {
+        this.logger.warn(`Primary brand fetch failed: ${e.message}`);
       }
-    } catch (primaryError) {
-      this.logger.warn(`Primary API failed for ${brand} ${model}. Trying Secondary...`);
     }
 
-    // 2. Try Secondary API
-    try {
-      this.logger.log(`Fetching specs for ${brand} ${model} from Secondary API...`);
-      // Secondary API snippet: Samsung/SamsunggalaxyS23ultra (Brand/BrandModel concatenated?)
-      // Snippet URL: .../Samsung/SamsunggalaxyS23ultra.
-      // This is tricky. We might need to adjust the model string for the secondary API.
-      // For now, passing standard brand/model.
-      const secondaryData = await this.makeRequest(
-        `${this.secondaryUrl}/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`,
-        this.secondaryHost
-      );
-
-      if (secondaryData) {
-        return this.transformer.transformSecondaryDevice(secondaryData, brand, model);
+    if (providers.includes('secondary')) {
+      try {
+        const data = await this.makeRequest(
+          `${this.secondaryUrl}/api/values/availablebrands`,
+          this.secondaryHost,
+        );
+        if (Array.isArray(data)) data.forEach((b) => allBrandsSet.add(b));
+      } catch (e) {
+        this.logger.warn(`Secondary brand fetch failed: ${e.message}`);
       }
-    } catch (secondaryError) {
-      this.logger.error(`Secondary API also failed for ${brand} ${model}.`);
-      throw new HttpException('Device not found in any provider', HttpStatus.NOT_FOUND);
     }
+
+    if (providers.includes('tertiary')) {
+      try {
+        const data = await this.makeRequest(
+          `${this.tertiaryUrl}/brands`,
+          this.tertiaryHost,
+        );
+        const brands = Array.isArray(data) ? data : data?.data || [];
+        brands.forEach((b: any) => allBrandsSet.add(b.name || b));
+      } catch (e) {
+        this.logger.warn(`Tertiary brand fetch failed: ${e.message}`);
+      }
+    }
+
+    return Array.from(allBrandsSet);
   }
 
-  /**
-   * Fetch devices by brand with fallback strategy
-   * Primary: /api/values/getdevices/{brand}
-   * Secondary: /{brand}
-   */
-  async fetchDevicesByBrand(brand: string): Promise<any[]> {
-    // 1. Try Primary API
-    try {
-      this.logger.log(`Fetching devices for ${brand} from Primary API...`);
-      const primaryData = await this.makeRequest(
-        `${this.primaryUrl}/api/values/getdevices/${encodeURIComponent(brand)}`,
-        this.primaryHost
-      );
+  // --- FETCH DEVICES BY BRAND ---
 
-      if (primaryData) {
-         // Primary response is usually a raw list, needs mapping
-         return this.transformer.transformPrimaryDeviceList(primaryData, brand);
+  async fetchDevicesByBrand(
+    brandName: string,
+    providers: string[] = ['primary', 'secondary', 'tertiary'],
+  ): Promise<any[]> {
+    let results: any[] = [];
+
+    if (providers.includes('primary')) {
+      try {
+        // Find Brand ID first
+        const brands = await this.makeRequest(
+          `${this.primaryUrl}/2162/get+brands`,
+          this.primaryHost,
+        );
+        const brand = brands?.data?.find(
+          (b: any) => b.name.toLowerCase() === brandName.toLowerCase(),
+        );
+        if (brand) {
+          const data = await this.makeRequest(
+            `${this.primaryUrl}/2163/get+phone+by+brand`,
+            this.primaryHost,
+            { brand_id: brand.id },
+          );
+          results = this.transformer.transformPrimaryDeviceList(
+            data,
+            brandName,
+          );
+          if (results.length > 0) return results;
+        }
+      } catch (e) {
+        this.logger.warn(
+          `Primary device list fetch failed for ${brandName}: ${e.message}`,
+        );
       }
-    } catch (error) {
-      this.logger.warn(`Primary API failed for brand ${brand}. Trying Secondary...`);
     }
 
-    // 2. Try Secondary API
-    try {
-      this.logger.log(`Fetching devices for ${brand} from Secondary API...`);
-      const secondaryData = await this.makeRequest(
-        `${this.secondaryUrl}/${encodeURIComponent(brand)}`,
-        this.secondaryHost
-      );
-
-      if (secondaryData) {
-         return this.transformer.transformSecondaryDeviceList(secondaryData, brand);
+    if (providers.includes('secondary')) {
+      try {
+        const data = await this.makeRequest(
+          `${this.secondaryUrl}/api/values/getdevices/${encodeURIComponent(brandName)}`,
+          this.secondaryHost,
+        );
+        results = this.transformer.transformSecondaryDeviceList(
+          data,
+          brandName,
+        );
+        if (results.length > 0) return results;
+      } catch (e) {
+        this.logger.warn(
+          `Secondary device list fetch failed for ${brandName}: ${e.message}`,
+        );
       }
-    } catch (error) {
-      this.logger.error(`Secondary API also failed for brand ${brand}.`);
-      throw new HttpException('Brand devices not found', HttpStatus.NOT_FOUND);
     }
-    
-    return [];
+
+    if (providers.includes('tertiary')) {
+      try {
+        const brands = await this.makeRequest(
+          `${this.tertiaryUrl}/brands`,
+          this.tertiaryHost,
+        );
+        const brand = brands?.find(
+          (b: any) => b.name?.toLowerCase() === brandName.toLowerCase(),
+        );
+        if (brand?.id) {
+          const data = await this.makeRequest(
+            `${this.tertiaryUrl}/${brand.id}/phones`,
+            this.tertiaryHost,
+          );
+          results = this.transformer.transformTertiaryDeviceList(
+            data,
+            brandName,
+          );
+          if (results.length > 0) return results;
+        }
+      } catch (e) {
+        this.logger.warn(
+          `Tertiary device list fetch failed for ${brandName}: ${e.message}`,
+        );
+      }
+    }
+
+    return results;
   }
 
-  /**
-   * Fetch all available brands
-   */
-  async fetchAvailableBrands(): Promise<string[]> {
-    // 1. Try Primary API
-    try {
-      this.logger.log('Fetching available brands from Primary API...');
-      const primaryData = await this.makeRequest(
-        `${this.primaryUrl}/api/values/availablebrands`,
-        this.primaryHost
-      );
-      if (Array.isArray(primaryData)) {
-        return primaryData;
+  // --- FETCH DEVICE SPECS ---
+
+  async fetchDeviceSpecs(
+    brand: string,
+    model: string,
+    providers: string[] = ['primary', 'secondary', 'tertiary'],
+  ): Promise<any> {
+    if (providers.includes('primary')) {
+      try {
+        // Search for phone ID first (or try slugified format)
+        // 11.txt shows apple_iphone_15_pro_max
+        const phoneId = `${brand.toLowerCase()}_${model.toLowerCase().replace(/\s+/g, '_')}`;
+        const data = await this.makeRequest(
+          `${this.primaryUrl}/2164/get+phone+details`,
+          this.primaryHost,
+          { phone_id: phoneId },
+        );
+        if (data?.success)
+          return this.transformer.transformPrimaryDevice(data, brand, model);
+      } catch (e) {
+        this.logger.warn(
+          `Primary specs fetch failed for ${brand} ${model}: ${e.message}`,
+        );
       }
-    } catch (error) {
-      this.logger.warn('Primary API failed to fetch brands. Trying Secondary...');
     }
 
-    // 2. Try Secondary API
-    try {
-      this.logger.log('Fetching available brands from Secondary API...');
-      const secondaryData = await this.makeRequest(
-        `${this.secondaryUrl}/brands`, // Assuming /brands endpoint for secondary
-        this.secondaryHost
-      );
-      // Secondary API response might need mapping if it's not a plain string array
-      // 33.txt says "GET: listAllBrands"
-      if (Array.isArray(secondaryData)) {
-        return secondaryData.map((b: any) => b.brand_name || b.name || b);
+    if (providers.includes('secondary')) {
+      try {
+        const data = await this.makeRequest(
+          `${this.secondaryUrl}/api/values/getspecs/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`,
+          this.secondaryHost,
+        );
+        if (data)
+          return this.transformer.transformSecondaryDevice(data, brand, model);
+      } catch (e) {
+        this.logger.warn(
+          `Secondary specs fetch failed for ${brand} ${model}: ${e.message}`,
+        );
       }
-    } catch (error) {
-      this.logger.error('Failed to fetch brands from all providers.');
     }
 
-    return [];
+    if (providers.includes('tertiary')) {
+      try {
+        // Mobile Phones2 search mapping
+        const searchResults = await this.makeRequest(
+          `${this.tertiaryUrl}/search`,
+          this.tertiaryHost,
+          { q: `${brand} ${model}` },
+        );
+        const match = Array.isArray(searchResults)
+          ? searchResults.find((r) =>
+              r.phone_name?.toLowerCase().includes(model.toLowerCase()),
+            )
+          : null;
+        const phoneId =
+          match?.id ||
+          `${brand.toLowerCase()}_${model.toLowerCase().replace(/\s+/g, '_')}`;
+
+        const data = await this.makeRequest(
+          `${this.tertiaryUrl}/phones/${phoneId}`,
+          this.tertiaryHost,
+        );
+        if (data)
+          return this.transformer.transformTertiaryDevice(data, brand, model);
+      } catch (e) {
+        this.logger.warn(
+          `Tertiary specs fetch failed for ${brand} ${model}: ${e.message}`,
+        );
+      }
+    }
+
+    throw new HttpException(
+      'Device specifications not found in any selected provider',
+      HttpStatus.NOT_FOUND,
+    );
   }
 }

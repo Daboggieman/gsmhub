@@ -27,26 +27,33 @@ export class SyncService implements OnModuleInit {
     await this.fullSync();
   }
 
-  async fullSync(): Promise<void> {
+  async fullSync(
+    options: { providers?: string[]; forceUpdate?: boolean } = {},
+  ): Promise<void> {
     this.logger.log('Starting full data sync from external API...');
     try {
-      const brands = await this.fetchAndSaveBrands();
-      await this.fetchAndSavePhonesByBrand(brands);
+      const brands = await this.fetchAndSaveBrands(options.providers);
+      // For full sync, we might want to do a deep sync for each brand
+      await this.fetchAndSavePhonesByBrand(brands, true, options);
       this.logger.log('Full sync completed successfully.');
     } catch (error) {
       this.logger.error('Full sync failed:', error.stack);
     }
   }
 
-  private async fetchAndSaveBrands(): Promise<string[]> {
+  private async fetchAndSaveBrands(providers?: string[]): Promise<string[]> {
     this.logger.log('Fetching brands...');
-    const brands = await this.externalApiService.fetchAvailableBrands();
+    const brands =
+      await this.externalApiService.fetchAvailableBrands(providers);
     const savedBrands: string[] = [];
 
     for (const brandName of brands) {
       // Upsert Category (Brand)
       try {
-        await this.categoriesService.upsertCategory({ name: brandName });
+        await this.categoriesService.upsertCategory({
+          name: brandName,
+          slug: generateSlug(brandName),
+        });
         savedBrands.push(brandName);
       } catch (e) {
         this.logger.warn(`Failed to upsert brand ${brandName}: ${e.message}`);
@@ -56,24 +63,60 @@ export class SyncService implements OnModuleInit {
     return savedBrands;
   }
 
-  async fetchAndSavePhonesByBrand(brands: string[]): Promise<void> {
-    this.logger.log('Fetching phones by brand...');
+  async fetchAndSavePhonesByBrand(
+    brands: string[],
+    deepSync: boolean = false,
+    options: { providers?: string[]; forceUpdate?: boolean } = {},
+  ): Promise<void> {
+    this.logger.log(`Fetching phones by brand... DeepSync: ${deepSync}`);
     for (const brand of brands) {
       this.logger.log(`Fetching phones for brand: ${brand}`);
 
       try {
-        const devices =
-          await this.externalApiService.fetchDevicesByBrand(brand);
+        const devices = await this.externalApiService.fetchDevicesByBrand(
+          brand,
+          options.providers,
+        );
+
+        this.logger.log(
+          `Found ${devices.length} devices for ${brand}. Syncing detailed data...`,
+        );
 
         for (const devicePartial of devices) {
-          // Ensure category is set
-          devicePartial.category = brand;
-
-          // Upsert Device (Catalog info only)
-          await this.devicesService.upsertDevice(devicePartial);
+          try {
+            if (deepSync) {
+              // Fetch full specs for each device
+              this.logger.debug(
+                `Deep syncing specs for ${brand} ${devicePartial.model}...`,
+              );
+              const fullDevice = await this.externalApiService.fetchDeviceSpecs(
+                brand,
+                devicePartial.model,
+                options.providers,
+              );
+              if (fullDevice) {
+                fullDevice.category = brand;
+                await this.devicesService.upsertDevice(fullDevice, {
+                  forceUpdate: options.forceUpdate,
+                });
+              }
+            } else {
+              // Catalog info only
+              devicePartial.category = brand;
+              await this.devicesService.upsertDevice(devicePartial, {
+                forceUpdate: options.forceUpdate,
+              });
+            }
+          } catch (deviceError) {
+            this.logger.warn(
+              `Failed to sync device ${devicePartial.model}: ${deviceError.message}`,
+            );
+          }
         }
 
-        this.logger.log(`Saved ${devices.length} devices for ${brand}`);
+        this.logger.log(
+          `Successfully processed ${devices.length} devices for ${brand}`,
+        );
 
         // Rate limit protection: Sleep 1s between brands
         await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -86,3 +129,5 @@ export class SyncService implements OnModuleInit {
     this.logger.log('Finished fetching and saving phones by brand.');
   }
 }
+
+import { generateSlug } from '../../common/utils/slug.util';

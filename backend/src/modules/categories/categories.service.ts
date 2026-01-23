@@ -124,7 +124,6 @@ export class CategoriesService {
       .findOneAndUpdate(
         { slug: categoryData.slug },
         { $set: categoryData },
-        { $set: categoryData },
         { upsert: true, new: true, setDefaultsOnInsert: true },
       )
       .exec();

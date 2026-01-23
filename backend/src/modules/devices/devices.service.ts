@@ -1,4 +1,10 @@
-import { Inject, Injectable, NotFoundException, ConflictException, forwardRef } from '@nestjs/common';
+import {
+  Inject,
+  Injectable,
+  NotFoundException,
+  ConflictException,
+  forwardRef,
+} from '@nestjs/common';
 import * as fs from 'fs';
 import * as csv from 'csv-parser';
 import { Readable } from 'stream';
@@ -10,7 +16,11 @@ import { Category, CategoryDocument } from '../categories/category.schema';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DevicesRepository } from './devices.repository';
-import { Category as SharedCategory, Device as SharedDevice, DeviceType } from '@shared/types';
+import {
+  Category as SharedCategory,
+  Device as SharedDevice,
+  DeviceType,
+} from '@shared/types';
 import { CategoriesService } from '../categories/categories.service';
 import { PricesService } from '../prices/prices.service';
 import { ExternalApiService } from '../external-api/external-api.service';
@@ -26,11 +36,13 @@ export class DevicesService {
     private readonly categoriesService: CategoriesService,
     private readonly pricesService: PricesService,
     private readonly externalApiService: ExternalApiService,
-  ) { }
+  ) {}
 
   private async attachLatestPrice(device: Device): Promise<Device> {
     if (device && device._id) {
-      const latestPrice = await this.pricesService.findLatestPriceByDeviceId(device._id.toString());
+      const latestPrice = await this.pricesService.findLatestPriceByDeviceId(
+        device._id.toString(),
+      );
       if (latestPrice) {
         (device as any).latestPrice = latestPrice.price;
       }
@@ -42,14 +54,15 @@ export class DevicesService {
     if (!devices.length) return devices;
 
     const deviceIds = devices
-      .filter(d => d && d._id)
-      .map(d => d._id!.toString());
+      .filter((d) => d && d._id)
+      .map((d) => d._id!.toString());
 
     if (!deviceIds.length) return devices;
 
-    const priceMap = await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
+    const priceMap =
+      await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
 
-    return devices.map(device => {
+    return devices.map((device) => {
       if (device && device._id && priceMap[device._id.toString()]) {
         (device as any).latestPrice = priceMap[device._id.toString()];
       }
@@ -57,26 +70,24 @@ export class DevicesService {
     });
   }
 
-  async getAllDevices(
-    filters?: {
-      skip?: number;
-      limit?: number;
-      category?: string;
-      brand?: string;
-      search?: string;
-      sort?: string;
-      minRam?: number;
-      maxRam?: number;
-      minStorage?: number;
-      maxStorage?: number;
-      minBattery?: number;
-      maxBattery?: number;
-      minDisplay?: number;
-      maxDisplay?: number;
-      minPrice?: number;
-      maxPrice?: number;
-    }
-  ): Promise<{ devices: Device[]; total: number; suggestions?: string[] }> {
+  async getAllDevices(filters?: {
+    skip?: number;
+    limit?: number;
+    category?: string;
+    brand?: string;
+    search?: string;
+    sort?: string;
+    minRam?: number;
+    maxRam?: number;
+    minStorage?: number;
+    maxStorage?: number;
+    minBattery?: number;
+    maxBattery?: number;
+    minDisplay?: number;
+    maxDisplay?: number;
+    minPrice?: number;
+    maxPrice?: number;
+  }): Promise<{ devices: Device[]; total: number; suggestions?: string[] }> {
     if (filters?.category && !Types.ObjectId.isValid(filters.category)) {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);
     }
@@ -99,7 +110,10 @@ export class DevicesService {
     // Check if query is close to any brand names
     const lowerQuery = query.toLowerCase();
     for (const brand of brands) {
-      if (brand.toLowerCase().includes(lowerQuery) || lowerQuery.includes(brand.toLowerCase())) {
+      if (
+        brand.toLowerCase().includes(lowerQuery) ||
+        lowerQuery.includes(brand.toLowerCase())
+      ) {
         suggestions.push(brand);
       }
     }
@@ -169,7 +183,9 @@ export class DevicesService {
     if (slug) {
       const existing = await this.devicesRepository.findBySlug(slug);
       if (existing && existing._id?.toString() !== id) {
-        throw new ConflictException('Another device with this slug already exists');
+        throw new ConflictException(
+          'Another device with this slug already exists',
+        );
       }
     }
 
@@ -184,11 +200,17 @@ export class DevicesService {
         throw new NotFoundException(`Category with ID ${categoryId} not found`);
       }
       updatePayload.category = categoryDoc._id as any;
-    } else if (updateDeviceDto.hasOwnProperty('category') && categoryId === null) {
+    } else if (
+      updateDeviceDto.hasOwnProperty('category') &&
+      categoryId === null
+    ) {
       updatePayload.category = null as any;
     }
 
-    const updatedDevice = await this.devicesRepository.update(id, updatePayload);
+    const updatedDevice = await this.devicesRepository.update(
+      id,
+      updatePayload,
+    );
 
     if (!updatedDevice) {
       throw new NotFoundException(`Device with ID ${id} not found`);
@@ -209,14 +231,21 @@ export class DevicesService {
   }
 
   async getPopularDevices(limit: number): Promise<Device[]> {
-    const cachedPopularDevices = await this.cacheManager.get<Device[]>(`popular_devices_${limit}`);
+    const cachedPopularDevices = await this.cacheManager.get<Device[]>(
+      `popular_devices_${limit}`,
+    );
     if (cachedPopularDevices) {
       return await this.attachLatestPrices(cachedPopularDevices);
     }
 
     const popularDevices = await this.devicesRepository.findPopular(limit);
-    const popularDevicesWithPrices = await this.attachLatestPrices(popularDevices);
-    await this.cacheManager.set(`popular_devices_${limit}`, popularDevicesWithPrices, 3600); // Cache for 1 hour
+    const popularDevicesWithPrices =
+      await this.attachLatestPrices(popularDevices);
+    await this.cacheManager.set(
+      `popular_devices_${limit}`,
+      popularDevicesWithPrices,
+      3600,
+    ); // Cache for 1 hour
     return popularDevicesWithPrices;
   }
 
@@ -225,11 +254,17 @@ export class DevicesService {
     return await this.attachLatestPrices(trendingDevices);
   }
 
-  async getDevicesByCategory(category: string, limit: number): Promise<Device[]> {
+  async getDevicesByCategory(
+    category: string,
+    limit: number,
+  ): Promise<Device[]> {
     if (!Types.ObjectId.isValid(category)) {
       throw new NotFoundException(`Invalid Category ID: ${category}`);
     }
-    const devices = await this.devicesRepository.findByCategory(category, limit);
+    const devices = await this.devicesRepository.findByCategory(
+      category,
+      limit,
+    );
     return await this.attachLatestPrices(devices);
   }
 
@@ -248,9 +283,65 @@ export class DevicesService {
     return device;
   }
 
-  async upsertDevice(deviceData: Partial<SharedDevice>): Promise<Device | null> {
+  async upsertDevice(
+    deviceData: Partial<SharedDevice>,
+    options: { forceUpdate?: boolean } = {},
+  ): Promise<Device | null> {
     if (!deviceData.slug) {
       throw new Error('Device slug is required for upsert operation.');
+    }
+
+    // Check if device already exists
+    const existingDevice = await this.devicesRepository.findBySlug(
+      deviceData.slug,
+    );
+
+    if (existingDevice && !options.forceUpdate) {
+      this.logger.log(
+        `Device ${deviceData.slug} already exists. Filling gaps...`,
+      );
+
+      const updatePayload: any = {};
+      const fieldsToEnrich = [
+        'description',
+        'releaseDate',
+        'dimension',
+        'os',
+        'storage',
+        'displaySize',
+        'ram',
+        'battery',
+        'chipset',
+        'imageUrl',
+      ];
+
+      fieldsToEnrich.forEach((field) => {
+        if (!existingDevice[field] && deviceData[field]) {
+          updatePayload[field] = deviceData[field];
+        }
+      });
+
+      // Enrich specs (add missing specs by key)
+      if (deviceData.specs && deviceData.specs.length > 0) {
+        const existingSpecKeys = new Set(
+          existingDevice.specs?.map((s) => s.key) || [],
+        );
+        const newSpecs = deviceData.specs.filter(
+          (s) => !existingSpecKeys.has(s.key),
+        );
+        if (newSpecs.length > 0) {
+          updatePayload.specs = [...(existingDevice.specs || []), ...newSpecs];
+        }
+      }
+
+      if (Object.keys(updatePayload).length > 0) {
+        return await this.devicesRepository.update(
+          existingDevice._id!.toString(),
+          updatePayload,
+        );
+      }
+
+      return existingDevice as Device;
     }
 
     // Default category to 'Smartphones' if missing
@@ -260,16 +351,20 @@ export class DevicesService {
 
     // Find or create category
     const categoryName = deviceData.category; // Assuming deviceData.category comes as category name or slug
-    let categoryDocument = await this.categoryModel.findOne({
-      $or: [{ name: categoryName }, { slug: categoryName }],
-    }).exec();
+    let categoryDocument = await this.categoryModel
+      .findOne({
+        $or: [{ name: categoryName }, { slug: categoryName }],
+      })
+      .exec();
 
     if (!categoryDocument) {
       const newCategoryData: Partial<SharedCategory> = {
         name: categoryName,
         slug: categoryName, // Assuming slug is same as name for simplicity, can be generated
       };
-      categoryDocument = await this.categoriesService.upsertCategory(newCategoryData) as any;
+      categoryDocument = (await this.categoriesService.upsertCategory(
+        newCategoryData,
+      )) as any;
     }
 
     const preparedDeviceData: Partial<Device> = {
@@ -291,7 +386,8 @@ export class DevicesService {
       // createdAt and updatedAt will be handled by Mongoose timestamps
     };
 
-    const upsertedDevice = await this.devicesRepository.upsert(preparedDeviceData);
+    const upsertedDevice =
+      await this.devicesRepository.upsert(preparedDeviceData);
     if (upsertedDevice) {
       await this.cacheManager.del(`device_${upsertedDevice.slug}`);
       await this.cacheManager.del('popular_devices');
@@ -300,13 +396,25 @@ export class DevicesService {
     return null;
   }
 
-  async syncDeviceFromAPI(brand: string, model: string): Promise<Device | null> {
+  async syncDeviceFromAPI(
+    brand: string,
+    model: string,
+    options: { providers?: string[]; forceUpdate?: boolean } = {},
+  ): Promise<Device | null> {
     try {
-      const deviceData = await this.externalApiService.fetchDeviceSpecs(brand, model);
+      const deviceData = await this.externalApiService.fetchDeviceSpecs(
+        brand,
+        model,
+        options.providers,
+      );
       if (!deviceData) {
-        throw new NotFoundException(`Device ${brand} ${model} not found in external APIs`);
+        throw new NotFoundException(
+          `Device ${brand} ${model} not found in selected external APIs`,
+        );
       }
-      return await this.upsertDevice(deviceData);
+      return await this.upsertDevice(deviceData, {
+        forceUpdate: options.forceUpdate,
+      });
     } catch (error) {
       throw new NotFoundException(`Failed to sync device: ${error.message}`);
     }
@@ -317,12 +425,27 @@ export class DevicesService {
   }
 
   async getFieldSuggestions(): Promise<Record<string, string[]>> {
-    const fields = ['os', 'ram', 'storage', 'battery', 'chipset', 'networkTechnology', 'displaySize', 'colors', 'mainCamera', 'selfieCamera', 'dimension'];
+    const fields = [
+      'os',
+      'ram',
+      'storage',
+      'battery',
+      'chipset',
+      'networkTechnology',
+      'displaySize',
+      'colors',
+      'mainCamera',
+      'selfieCamera',
+      'dimension',
+    ];
     const suggestions: Record<string, string[]> = {};
 
-    await Promise.all(fields.map(async (field) => {
-      suggestions[field] = await this.devicesRepository.getUniqueFieldValues(field);
-    }));
+    await Promise.all(
+      fields.map(async (field) => {
+        suggestions[field] =
+          await this.devicesRepository.getUniqueFieldValues(field);
+      }),
+    );
 
     return suggestions;
   }
@@ -331,7 +454,9 @@ export class DevicesService {
     return this.devicesRepository.getTotalViews();
   }
 
-  async bulkImport(filePath: string): Promise<{ success: number; failed: number; errors: string[] }> {
+  async bulkImport(
+    filePath: string,
+  ): Promise<{ success: number; failed: number; errors: string[] }> {
     const results: any[] = [];
     const errors: string[] = [];
     let successCount = 0;
@@ -350,7 +475,10 @@ export class DevicesService {
             try {
               // Map CSV columns to Device template if needed, or assume they match CreateDeviceDto
               // Example mapping for affiliateLinks and specs if they are JSON strings in CSV
-              if (row.affiliateLinks && typeof row.affiliateLinks === 'string') {
+              if (
+                row.affiliateLinks &&
+                typeof row.affiliateLinks === 'string'
+              ) {
                 try {
                   row.affiliateLinks = JSON.parse(row.affiliateLinks);
                 } catch (e) {
@@ -369,7 +497,9 @@ export class DevicesService {
               successCount++;
             } catch (error) {
               failedCount++;
-              errors.push(`Failed to import ${row.name || 'Unknown'}: ${error.message}`);
+              errors.push(
+                `Failed to import ${row.name || 'Unknown'}: ${error.message}`,
+              );
             }
           }
           // Clean up the temp file
@@ -401,7 +531,7 @@ export class DevicesService {
     let similarDevices = await this.devicesRepository.findAll(filters);
 
     // Filter out the current device
-    similarDevices = similarDevices.filter(d => d._id?.toString() !== id);
+    similarDevices = similarDevices.filter((d) => d._id?.toString() !== id);
 
     // If we don't have enough similar devices by price, just get by category
     if (similarDevices.length < limit && categoryId) {
@@ -412,7 +542,10 @@ export class DevicesService {
 
       for (const d of moreDevices) {
         if (similarDevices.length >= limit) break;
-        if (d._id?.toString() !== id && !similarDevices.some(sd => sd._id?.toString() === d._id?.toString())) {
+        if (
+          d._id?.toString() !== id &&
+          !similarDevices.some((sd) => sd._id?.toString() === d._id?.toString())
+        ) {
           similarDevices.push(d);
         }
       }
@@ -421,4 +554,3 @@ export class DevicesService {
     return await this.attachLatestPrices(similarDevices);
   }
 }
-

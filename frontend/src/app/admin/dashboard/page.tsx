@@ -14,7 +14,8 @@ import {
   faArrowRight,
   faDollarSign,
   faShoppingCart,
-  faTurnUp
+  faTurnUp,
+  faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 import {
   BarChart,
@@ -91,7 +92,7 @@ export default function AdminDashboard() {
           { icon: faMobileAlt, label: 'Inventory', value: stats.devicesCount, sub: 'Active Units', color: 'blue' },
           { icon: faTags, label: 'Taxonomy', value: stats.categoriesCount, sub: 'Segments', color: 'emerald' },
           { icon: faEye, label: 'Engagement', value: stats.totalViews, sub: 'Page Views', color: 'purple' },
-          { icon: faTrendingUp, label: 'Growth', value: '+12.5%', sub: 'Last 30 Days', color: 'orange' },
+          { icon: faArrowUp, label: 'Growth', value: '+12.5%', sub: 'Last 30 Days', color: 'orange' },
         ].map((item, i) => (
           <div key={i} className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-xl hover:shadow-gray-100 transition-all duration-300">
             <div className="relative z-10 flex flex-col gap-4">

@@ -244,17 +244,23 @@ class ApiClient {
   }
 
   // External API / Sync
-  async syncDevices(brand?: string): Promise<any> {
+  async syncDevices(brand?: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<any> {
     if (brand) {
-      return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { method: 'POST' });
+      return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { 
+        method: 'POST',
+        body: JSON.stringify(options)
+      });
     }
-    return this.request('/external-api/sync/all', { method: 'POST' });
+    return this.request('/external-api/sync/all', { 
+      method: 'POST',
+      body: JSON.stringify(options)
+    });
   }
 
-  async syncDevice(brand: string, model: string): Promise<any> {
+  async syncDevice(brand: string, model: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<any> {
     return this.request('/devices/sync', { 
       method: 'POST', 
-      body: JSON.stringify({ brand, model }) 
+      body: JSON.stringify({ brand, model, ...options }) 
     });
   }
 

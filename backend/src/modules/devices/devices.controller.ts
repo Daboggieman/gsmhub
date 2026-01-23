@@ -1,4 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, ClassSerializerInterceptor, UseGuards, UploadedFile } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+  UseInterceptors,
+  ClassSerializerInterceptor,
+  UseGuards,
+  UploadedFile,
+} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DevicesService } from './devices.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
@@ -13,12 +26,14 @@ import { UserRole } from '../users/schemas/user.schema';
 @Controller('devices')
 @UseInterceptors(ClassSerializerInterceptor)
 export class DevicesController {
-  constructor(private readonly devicesService: DevicesService) { }
+  constructor(private readonly devicesService: DevicesService) {}
 
   @Post()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async create(@Body() createDeviceDto: CreateDeviceDto): Promise<DeviceResponseDto> {
+  async create(
+    @Body() createDeviceDto: CreateDeviceDto,
+  ): Promise<DeviceResponseDto> {
     const device = await this.devicesService.create(createDeviceDto);
     return plainToInstance(DeviceResponseDto, device);
   }
@@ -44,7 +59,7 @@ export class DevicesController {
   ) {
     limit = limit > 50 ? 50 : limit;
 
-    const parseNum = (val: any) => val ? Number(val) : undefined;
+    const parseNum = (val: any) => (val ? Number(val) : undefined);
 
     const { devices, total } = await this.devicesService.getAllDevices({
       skip: (page - 1) * limit,
@@ -71,14 +86,22 @@ export class DevicesController {
   }
 
   @Get('popular')
-  async getPopularDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.getPopularDevices(limit ? parseInt(limit) : 10);
+  async getPopularDevices(
+    @Query('limit') limit?: string,
+  ): Promise<DeviceResponseDto[]> {
+    const devices = await this.devicesService.getPopularDevices(
+      limit ? parseInt(limit) : 10,
+    );
     return plainToInstance(DeviceResponseDto, devices);
   }
 
   @Get('trending')
-  async getTrendingDevices(@Query('limit') limit?: string): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.getTrendingDevices(limit ? parseInt(limit) : 10);
+  async getTrendingDevices(
+    @Query('limit') limit?: string,
+  ): Promise<DeviceResponseDto[]> {
+    const devices = await this.devicesService.getTrendingDevices(
+      limit ? parseInt(limit) : 10,
+    );
     return plainToInstance(DeviceResponseDto, devices);
   }
 
@@ -99,7 +122,10 @@ export class DevicesController {
     @Param('category') category: string,
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.getDevicesByCategory(category, limit ? parseInt(limit) : 50);
+    const devices = await this.devicesService.getDevicesByCategory(
+      category,
+      limit ? parseInt(limit) : 50,
+    );
     return plainToInstance(DeviceResponseDto, devices);
   }
 
@@ -108,7 +134,10 @@ export class DevicesController {
     @Param('brand') brand: string,
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.getDevicesByBrand(brand, limit ? parseInt(limit) : 50);
+    const devices = await this.devicesService.getDevicesByBrand(
+      brand,
+      limit ? parseInt(limit) : 50,
+    );
     return plainToInstance(DeviceResponseDto, devices);
   }
 
@@ -150,8 +179,23 @@ export class DevicesController {
   @Post('sync')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async syncFromApi(@Body() body: { brand: string; model: string }): Promise<DeviceResponseDto> {
-    const device = await this.devicesService.syncDeviceFromAPI(body.brand, body.model);
+  async syncFromApi(
+    @Body()
+    body: {
+      brand: string;
+      model: string;
+      providers?: string[];
+      forceUpdate?: boolean;
+    },
+  ): Promise<DeviceResponseDto> {
+    const device = await this.devicesService.syncDeviceFromAPI(
+      body.brand,
+      body.model,
+      {
+        providers: body.providers,
+        forceUpdate: body.forceUpdate,
+      },
+    );
     return plainToInstance(DeviceResponseDto, device);
   }
 
