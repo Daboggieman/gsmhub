@@ -227,9 +227,9 @@ export default function AdminBrandsPage() {
                   </td>
                 </tr>
               ) : (
-                brands.map((brand) => (
+                brands.map((brand, index) => (
                   <tr
-                    key={brand.id || brand._id}
+                    key={brand.id || brand._id || brand.slug || index}
                     className="group transition-colors hover:bg-blue-50/30"
                   >
                     <td className="px-8 py-4">

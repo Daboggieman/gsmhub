@@ -120,14 +120,28 @@ export class CategoriesService {
     if (!categoryData.slug) {
       throw new Error('Category slug is required for upsert operation.');
     }
-    const category = await this.categoryModel
-      .findOneAndUpdate(
-        { slug: categoryData.slug },
-        { $set: categoryData },
-        { upsert: true, new: true, setDefaultsOnInsert: true },
-      )
-      .exec();
-    return category;
+    try {
+      const category = await this.categoryModel
+        .findOneAndUpdate(
+          { slug: categoryData.slug },
+          { $set: categoryData },
+          { upsert: true, new: true, setDefaultsOnInsert: true },
+        )
+        .exec();
+      return category;
+    } catch (error) {
+      if (error.code === 11000) {
+        // Name conflict: Try to find by name and update
+        return this.categoryModel
+          .findOneAndUpdate(
+            { name: categoryData.name },
+            { $set: categoryData },
+            { upsert: true, new: true, setDefaultsOnInsert: true },
+          )
+          .exec();
+      }
+      throw error;
+    }
   }
 
   async count(): Promise<number> {

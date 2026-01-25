@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ConflictException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Brand, BrandDocument } from './brand.schema';
@@ -16,7 +20,7 @@ export class BrandsService {
 
   async create(createBrandDto: CreateBrandDto): Promise<Brand> {
     const slug = createBrandDto.slug || generateSlug(createBrandDto.name);
-    
+
     const existing = await this.brandModel.findOne({ slug }).exec();
     if (existing) {
       throw new ConflictException('Brand with this slug already exists');
@@ -30,6 +34,21 @@ export class BrandsService {
     return newBrand.save();
   }
 
+  async upsertBrand(brandData: Partial<Brand>): Promise<Brand> {
+    const slug = brandData.slug || generateSlug(brandData.name || '');
+    if (!slug) throw new Error('Brand slug generation failed');
+
+    const brand = await this.brandModel
+      .findOneAndUpdate(
+        { slug },
+        { $set: { ...brandData, slug } },
+        { upsert: true, new: true, setDefaultsOnInsert: true },
+      )
+      .exec();
+
+    return brand as Brand;
+  }
+
   async findAll(search?: string): Promise<Brand[]> {
     const query: any = {};
     if (search) {
@@ -40,18 +59,21 @@ export class BrandsService {
       ];
     }
     const brands = await this.brandModel.find(query).sort({ name: 1 }).exec();
-    
+
     // Optimally count devices per brand using one aggregation
-    const deviceCounts = await this.deviceModel.aggregate([
-      { $group: { _id: "$brand", count: { $sum: 1 } } }
-    ]).exec();
+    const deviceCounts = await this.deviceModel
+      .aggregate([{ $group: { _id: '$brand', count: { $sum: 1 } } }])
+      .exec();
 
-    const countMap = deviceCounts.reduce((acc, curr) => {
-      acc[curr._id] = curr.count;
-      return acc;
-    }, {} as Record<string, number>);
+    const countMap = deviceCounts.reduce(
+      (acc, curr) => {
+        acc[curr._id] = curr.count;
+        return acc;
+      },
+      {} as Record<string, number>,
+    );
 
-    return brands.map(brand => {
+    return brands.map((brand) => {
       brand.deviceCount = countMap[brand.name] || 0;
       return brand;
     });
@@ -74,11 +96,9 @@ export class BrandsService {
       updateBrandDto.slug = generateSlug(updateBrandDto.name);
     }
 
-    const updated = await this.brandModel.findByIdAndUpdate(
-      id,
-      { $set: updateBrandDto },
-      { new: true }
-    ).exec();
+    const updated = await this.brandModel
+      .findByIdAndUpdate(id, { $set: updateBrandDto }, { new: true })
+      .exec();
 
     if (!updated) throw new NotFoundException('Brand not found');
     return updated;

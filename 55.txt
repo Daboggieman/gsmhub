@@ -1,4 +1,19 @@
 ================================================================================
+- DATE: 2026-01-25
+- ACTION: Implemented "Smart Sync" & Resolved Backend Sync Crashes.
+- DETAILS:
+  - **Smart Sync Strategy**:
+    - Added database existence checks: Skips API calls for existing devices.
+    - Implemented session limits: Caps "Deep Sync" fetches to 5 per session to preserve tight monthly quotas.
+    - Added request throttling: 5s delay between API hits to respect rate limits.
+  - **Bug Fixes**:
+    - Resolved "Cast to string failed" by fixing brand name extraction logic.
+    - Corrected swapped API transformers for Primary and Secondary providers.
+    - Resolved database collision in categories/brands collection during sync.
+- RESULT: Optimized sync process that respects API quotas and prevents backend crashes.
+- NEXT STEP: User to perform clean rebuild (`pnpm run build`) and verify sync.
+================================================================================
+================================================================================
 - DATE: 2026-01-23
 - ACTION: Implemented 3-Tier API Redundancy & "Fill Gaps" Enrichment.
 - DETAILS:

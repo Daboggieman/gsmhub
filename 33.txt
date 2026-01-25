@@ -1,124 +1,417 @@
-**GET: listAllBrands**
+Available Endpoints
+üîç Device Specifications
+Get All Device Specifications
 
+Retrieve comprehensive specifications for all supported devices.
 
-
-App:default-application_11408269
-X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
-Request URL:rapidapi.com
-
-PARAMS
-no additional params
-
-
-HEADERS
-X-RapidAPI-Host *:mobile-device-hardware-specs.p.rapidapi.com
-
-AUTHORIZATION
-No additional authorizations needed
-
-
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
-
-**GET: getBrandModels**
-
-
-
-App:default-application_11408269
-X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
-Request URL:rapidapi.com
-
-PARAMS
-Path Params
-brand*:(input the brand)String
-
-Brand name (e.g. samsung, apple, xiaomi)
-
-HEADER
-X-RapidAPI-Host*:mobile-device-hardware-specs.p.rapidapi.com
-
-AUTHORIZATION
-No additional authorizations needed
-
-
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
-
-**GET:getDeviceDetails**
-
-
-App:default-application_11408269
-X-RapidAPI-Key:9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40
-Request URL:rapidapi.com
-
-
-PATH PARAMS
-brand
-*
-String
-
-Brand name (e.g. samsung, apple, xiaomi)
-model
-*
-String
-
-Model name/identifier for the specific device
-
-
-HEADER
-X-RapidAPI-Host*:mobile-device-hardware-specs.p.rapidapi.com
-
-AUTHORIZATION
-No additional authorizations needed
-
-
-
-
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
-
-
-
-const axios = require('axios');
+Endpoint: GET /api/values/getalldevicespecs
+JavaScript Example
 
 const options = {
   method: 'GET',
-  url: 'https://mobile-device-hardware-specs.p.rapidapi.com/Samsung/SamsunggalaxyS23ultra',
   headers: {
-    'x-rapidapi-key': '9e8c9cadddmsha38b1663e3f17c4p1c6485jsn403a25015c40',
-    'x-rapidapi-host': 'mobile-device-hardware-specs.p.rapidapi.com'
+    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
   }
 };
 
-async function fetchData() {
-	try {
-		const response = await axios.request(options);
-		console.log(response.data);
-	} catch (error) {
-		console.error(error);
-	}
+fetch('https://your-api-host.rapidapi.com/api/values/getalldevicespecs', options)
+  .then(response =&gt; response.json())
+  .then(response =&gt; console.log(response))
+  .catch(err =&gt; console.error(err));
+
+Python Example
+
+import requests
+
+url = "https://your-api-host.rapidapi.com/api/values/getalldevicespecs"
+
+headers = {
+    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
 }
 
-fetchData();
+response = requests.get(url, headers=headers)
+print(response.json())
 
+C# Example
 
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
-example response
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+
+class Program
+{
+    private static readonly HttpClient client = new HttpClient();
+    
+    static async Task Main()
+    {
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
+        
+        string response = await client.GetStringAsync("https://your-api-host.rapidapi.com/api/values/getalldevicespecs");
+        var deviceSpecs = JsonConvert.DeserializeObject(response);
+        Console.WriteLine(deviceSpecs);
+    }
+}
+
+Sample Response
+
+[
+  {
+    "id": 1,
+    "manufacturer": "Samsung",
+    "model": "Galaxy S21",
+    "chipset": "Exynos 2100",
+    "androidVersion": "11",
+    "battery": "4000 mAh",
+    "cpu": "Octa-core (1x2.9 GHz Cortex-X1 & 3x2.80 GHz Cortex-A78 & 4x2.2 GHz Cortex-A55)",
+    "displayResolution": "1080 x 2400 pixels",
+    "displaySize": "6.2 inches",
+    "displayType": "Dynamic AMOLED 2X",
+    "gpu": "Mali-G78 MP14",
+    "internal": "128GB 8GB RAM, 256GB 8GB RAM",
+    "mainCameraFeatures": "LED flash, auto-HDR, panorama",
+    "mainCameraSpecs": "64 MP + 12 MP + 12 MP",
+    "mainVideoSpecs": "4K@30/60fps, 1080p@30/60/240fps",
+    "selfieCameraFeatures": "Dual video call, Auto-HDR",
+    "selfieCameraSpecs": "10 MP",
+    "selfieVideoSpecs": "4K@30/60fps, 1080p@30fps",
+    "sensors": "Fingerprint, accelerometer, gyro, proximity, compass, barometer"
+  }
+]
+
+Get Device Specifications by Manufacturer and Model
+
+Retrieve detailed specifications for a specific device.
+
+Endpoint: GET /api/values/getspecs/{manufacturer}/{model}
+JavaScript Example
+
+const manufacturer = 'Samsung';
+const model = 'Galaxy S21';
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
+  }
+};
+
+fetch(`https://your-api-host.rapidapi.com/api/values/getspecs/${manufacturer}/${model}`, options)
+  .then(response =&gt; response.json())
+  .then(response =&gt; console.log(response))
+  .catch(err =&gt; console.error(err));
+
+Python Example
+
+import requests
+
+manufacturer = "Samsung"
+model = "Galaxy S21"
+url = f"https://your-api-host.rapidapi.com/api/values/getspecs/{manufacturer}/{model}"
+
+headers = {
+    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+
+C# Example
+
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class Program
+{
+    private static readonly HttpClient client = new HttpClient();
+    
+    static async Task Main()
+    {
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
+        
+        string manufacturer = "Samsung";
+        string model = "Galaxy S21";
+        string url = $"https://your-api-host.rapidapi.com/api/values/getspecs/{manufacturer}/{model}";
+        
+        string response = await client.GetStringAsync(url);
+        Console.WriteLine(response);
+    }
+}
+
+Sample Response
 
 {
-  "name": "Samsung Galaxy S23 Ultra",
-  "dimensions": "163.4 x 78.1 x 8.9 mm",
-  "weight": "233 g",
-  "displayType": "Dynamic AMOLED 2X, 120Hz, HDR10+",
-  "displaySize": "6.8 inches, 114.7 cm≤",
-  "resolution": "1440 x 3088 pixels, 19.3:9 ratio",
-  "chipset": "Qualcomm SM8550-AC Snapdragon 8 Gen 2",
-  "cpu": "Octa-core (1x3.36 GHz Cortex-X3 & 2x2.8 GHz Cortex-A715 & 2x2.8 GHz Cortex-A710 & 3x2.0 GHz Cortex-A510)",
-  "gpu": "Adreno 740",
-  "mainCamera": "200 MP, f/1.7, 24mm (wide), 1/1.3\", 0.6µm, multi-directional PDAF, Laser AF, OIS",
-  "selfieCamera": "12 MP, f/2.2, 26mm (wide), Dual Pixel PDAF",
-  "batteryType": "Li-Ion 5000 mAh, non-removable",
-  "colors": "Phantom Black, Green, Cream, Lavender, Graphite, Sky Blue, Lime, Red, BMW M Edition"
+  "id": 1,
+  "manufacturer": "Samsung",
+  "model": "Galaxy S21",
+  "chipset": "Exynos 2100",
+  "androidVersion": "11",
+  "battery": "4000 mAh",
+  "cpu": "Octa-core (1x2.9 GHz Cortex-X1 & 3x2.80 GHz Cortex-A78 & 4x2.2 GHz Cortex-A55)",
+  "displayResolution": "1080 x 2400 pixels",
+  "displaySize": "6.2 inches",
+  "displayType": "Dynamic AMOLED 2X",
+  "gpu": "Mali-G78 MP14",
+  "internal": "128GB 8GB RAM, 256GB 8GB RAM",
+  "mainCameraFeatures": "LED flash, auto-HDR, panorama",
+  "mainCameraSpecs": "64 MP + 12 MP + 12 MP",
+  "mainVideoSpecs": "4K@30/60fps, 1080p@30/60/240fps",
+  "selfieCameraFeatures": "Dual video call, Auto-HDR",
+  "selfieCameraSpecs": "10 MP",
+  "selfieVideoSpecs": "4K@30/60fps, 1080p@30fps",
+  "sensors": "Fingerprint, accelerometer, gyro, proximity, compass, barometer"
 }
 
+Get Devices by Brand
+
+Retrieve all devices from a specific manufacturer/brand.
+
+Endpoint: GET /api/values/getdevices/{brand}
+JavaScript Example
+
+const brand = 'Samsung';
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
+  }
+};
+
+fetch(`https://your-api-host.rapidapi.com/api/values/getdevices/${brand}`, options)
+  .then(response =&gt; response.json())
+  .then(response =&gt; console.log(response))
+  .catch(err =&gt; console.error(err));
+
+Python Example
+
+import requests
+
+brand = "Samsung"
+url = f"https://your-api-host.rapidapi.com/api/values/getdevices/{brand}"
+
+headers = {
+    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+
+C# Example
+
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class Program
+{
+    private static readonly HttpClient client = new HttpClient();
+    
+    static async Task Main()
+    {
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
+        
+        string brand = "Samsung";
+        string url = $"https://your-api-host.rapidapi.com/api/values/getdevices/{brand}";
+        
+        string response = await client.GetStringAsync(url);
+        Console.WriteLine(response);
+    }
+}
+
+Sample Response
+
+[
+  {
+    "id": 1,
+    "manufacturer": "Samsung",
+    "model": "Galaxy S21",
+    "chipset": "Exynos 2100",
+    "androidVersion": "11"
+  },
+  {
+    "id": 2,
+    "manufacturer": "Samsung",
+    "model": "Galaxy Note 20",
+    "chipset": "Exynos 990",
+    "androidVersion": "10"
+  }
+]
+
+Get Devices by SoC (System on Chip)
+
+Find all devices that use a specific chipset/SoC.
+
+Endpoint: GET /api/values/devicesbysoc/{soc}
+JavaScript Example
+
+const soc = 'Snapdragon 888';
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
+  }
+};
+
+fetch(`https://your-api-host.rapidapi.com/api/values/devicesbysoc/${encodeURIComponent(soc)}`, options)
+  .then(response =&gt; response.json())
+  .then(response =&gt; console.log(response))
+  .catch(err =&gt; console.error(err));
+
+Python Example
+
+import requests
+from urllib.parse import quote
+
+soc = "Snapdragon 888"
+url = f"https://your-api-host.rapidapi.com/api/values/devicesbysoc/{quote(soc)}"
+
+headers = {
+    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+
+C# Example
+
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+using System.Web;
+
+class Program
+{
+    private static readonly HttpClient client = new HttpClient();
+    
+    static async Task Main()
+    {
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
+        
+        string soc = "Snapdragon 888";
+        string encodedSoc = HttpUtility.UrlEncode(soc);
+        string url = $"https://your-api-host.rapidapi.com/api/values/devicesbysoc/{encodedSoc}";
+        
+        string response = await client.GetStringAsync(url);
+        Console.WriteLine(response);
+    }
+}
+
+Sample Response
+
+[
+  {
+    "id": 3,
+    "manufacturer": "OnePlus",
+    "model": "9 Pro",
+    "chipset": "Snapdragon 888",
+    "androidVersion": "11"
+  },
+  {
+    "id": 4,
+    "manufacturer": "Xiaomi",
+    "model": "Mi 11",
+    "chipset": "Snapdragon 888",
+    "androidVersion": "11"
+  }
+]
+
+Get Available Brands
+
+Retrieve a list of all available device manufacturers/brands.
+
+Endpoint: GET /api/values/availablebrands
+JavaScript Example
+
+const options = {
+  method: 'GET',
+  headers: {
+    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
+    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
+  }
+};
+
+fetch('https://your-api-host.rapidapi.com/api/values/availablebrands', options)
+  .then(response =&gt; response.json())
+  .then(response =&gt; console.log(response))
+  .catch(err =&gt; console.error(err));
+
+Python Example
+
+import requests
+
+url = "https://your-api-host.rapidapi.com/api/values/availablebrands"
+
+headers = {
+    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
+    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
+}
+
+response = requests.get(url, headers=headers)
+print(response.json())
+
+C# Example
+
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
+
+class Program
+{
+    private static readonly HttpClient client = new HttpClient();
+    
+    static async Task Main()
+    {
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
+        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
+        
+        string response = await client.GetStringAsync("https://your-api-host.rapidapi.com/api/values/availablebrands");
+        Console.WriteLine(response);
+    }
+}
+
+Sample Response
+
+[
+  "Samsung",
+  "Apple",
+  "OnePlus",
+  "Xiaomi",
+  "Google",
+  "Huawei",
+  "Oppo",
+  "Vivo",
+  "Realme",
+  "Motorola"
+]
+
+üîë Authentication
+
+All requests require RapidAPI authentication headers:
+
+    X-RapidAPI-Key: Your RapidAPI subscription key
+    X-RapidAPI-Host: The API host provided by RapidAPI
+
+üìä Response Format
+
+All endpoints return JSON responses with appropriate HTTP status codes:
+
+    200: Success
+    400: Bad Request
+    404: Not Found
+    429: Rate Limit Exceeded
+    500: Internal Server Error

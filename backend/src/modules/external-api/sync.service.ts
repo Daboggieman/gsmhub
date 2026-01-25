@@ -4,6 +4,7 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { DevicesService } from '@modules/devices/devices.service';
 import { CategoriesService } from '@modules/categories/categories.service';
 import { Category } from '@modules/categories/category.schema';
+import { BrandsService } from '@modules/brands/brands.service';
 
 @Injectable()
 export class SyncService implements OnModuleInit {
@@ -13,6 +14,7 @@ export class SyncService implements OnModuleInit {
     private readonly externalApiService: ExternalApiService,
     private readonly devicesService: DevicesService,
     private readonly categoriesService: CategoriesService,
+    private readonly brandsService: BrandsService,
   ) {}
 
   async onModuleInit() {
@@ -48,9 +50,14 @@ export class SyncService implements OnModuleInit {
     const savedBrands: string[] = [];
 
     for (const brandName of brands) {
-      // Upsert Category (Brand)
+      if (typeof brandName !== 'string' || !brandName.trim()) {
+        this.logger.warn(
+          `Skipping invalid brand entry: ${JSON.stringify(brandName)}`,
+        );
+        continue;
+      }
       try {
-        await this.categoriesService.upsertCategory({
+        await this.brandsService.upsertBrand({
           name: brandName,
           slug: generateSlug(brandName),
         });
@@ -59,8 +66,14 @@ export class SyncService implements OnModuleInit {
         this.logger.warn(`Failed to upsert brand ${brandName}: ${e.message}`);
       }
     }
-    this.logger.log(`Fetched and saved ${savedBrands.length} brands.`);
+    this.logger.log(
+      `Fetched and saved ${savedBrands.length} brands (to Brands collection).`,
+    );
     return savedBrands;
+  }
+
+  private async sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   async fetchAndSavePhonesByBrand(
@@ -69,6 +82,10 @@ export class SyncService implements OnModuleInit {
     options: { providers?: string[]; forceUpdate?: boolean } = {},
   ): Promise<void> {
     this.logger.log(`Fetching phones by brand... DeepSync: ${deepSync}`);
+
+    let deepSyncCount = 0;
+    const SESSION_DEEP_SYNC_LIMIT = 5; // To preserve monthly quota
+
     for (const brand of brands) {
       this.logger.log(`Fetching phones for brand: ${brand}`);
 
@@ -83,12 +100,40 @@ export class SyncService implements OnModuleInit {
         );
 
         for (const devicePartial of devices) {
+          const slug =
+            devicePartial.slug ||
+            generateSlug(`${brand} ${devicePartial.model}`);
+
+          // SMART CHECK: Skip if exists and not forceUpdate
+          if (!options.forceUpdate) {
+            const existing = await this.devicesService
+              .findBySlug(slug)
+              .catch(() => null);
+            if (existing) {
+              this.logger.debug(`Skipping existing device: ${slug}`);
+              continue;
+            }
+          }
+
           try {
             if (deepSync) {
-              // Fetch full specs for each device
+              if (deepSyncCount >= SESSION_DEEP_SYNC_LIMIT) {
+                this.logger.warn(
+                  `Deep sync limit reached for this session (${SESSION_DEEP_SYNC_LIMIT}). Skipping detailed fetch for ${devicePartial.model}.`,
+                );
+                // Still upsert the partial if it doesn't exist
+                devicePartial.category = brand;
+                await this.devicesService.upsertDevice(devicePartial, options);
+                continue;
+              }
+
               this.logger.debug(
                 `Deep syncing specs for ${brand} ${devicePartial.model}...`,
               );
+
+              // RATE LIMIT PROTECTION: 5s delay before ANY detail fetch
+              await this.sleep(5000);
+
               const fullDevice = await this.externalApiService.fetchDeviceSpecs(
                 brand,
                 devicePartial.model,
@@ -96,16 +141,13 @@ export class SyncService implements OnModuleInit {
               );
               if (fullDevice) {
                 fullDevice.category = brand;
-                await this.devicesService.upsertDevice(fullDevice, {
-                  forceUpdate: options.forceUpdate,
-                });
+                await this.devicesService.upsertDevice(fullDevice, options);
+                deepSyncCount++;
               }
             } else {
               // Catalog info only
               devicePartial.category = brand;
-              await this.devicesService.upsertDevice(devicePartial, {
-                forceUpdate: options.forceUpdate,
-              });
+              await this.devicesService.upsertDevice(devicePartial, options);
             }
           } catch (deviceError) {
             this.logger.warn(
@@ -118,8 +160,8 @@ export class SyncService implements OnModuleInit {
           `Successfully processed ${devices.length} devices for ${brand}`,
         );
 
-        // Rate limit protection: Sleep 1s between brands
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        // Rate limit protection: Sleep 2s between brands
+        await this.sleep(2000);
       } catch (error) {
         this.logger.error(
           `Failed to fetch/save devices for brand ${brand}: ${error.message}`,

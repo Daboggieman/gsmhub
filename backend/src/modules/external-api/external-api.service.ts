@@ -96,11 +96,10 @@ export class ExternalApiService {
     if (providers.includes('primary')) {
       try {
         const data = await this.makeRequest(
-          `${this.primaryUrl}/2162/get+brands`,
+          `${this.primaryUrl}/api/values/availablebrands`,
           this.primaryHost,
         );
-        const brands = data?.data || [];
-        brands.forEach((b: any) => allBrandsSet.add(b.name));
+        if (Array.isArray(data)) data.forEach((b) => allBrandsSet.add(b));
       } catch (e) {
         this.logger.warn(`Primary brand fetch failed: ${e.message}`);
       }
@@ -109,10 +108,16 @@ export class ExternalApiService {
     if (providers.includes('secondary')) {
       try {
         const data = await this.makeRequest(
-          `${this.secondaryUrl}/api/values/availablebrands`,
+          `${this.secondaryUrl}/2162/get+brands`,
           this.secondaryHost,
         );
-        if (Array.isArray(data)) data.forEach((b) => allBrandsSet.add(b));
+        const brands = data?.data || [];
+        brands.forEach((b: any) => {
+          const name = b.name || (typeof b === 'string' ? b : '');
+          if (name && name.trim() !== '') {
+            allBrandsSet.add(name);
+          }
+        });
       } catch (e) {
         this.logger.warn(`Secondary brand fetch failed: ${e.message}`);
       }
@@ -125,7 +130,12 @@ export class ExternalApiService {
           this.tertiaryHost,
         );
         const brands = Array.isArray(data) ? data : data?.data || [];
-        brands.forEach((b: any) => allBrandsSet.add(b.name || b));
+        brands.forEach((b: any) => {
+          const name = b.name || (typeof b === 'string' ? b : '');
+          if (name && name.trim() !== '') {
+            allBrandsSet.add(name);
+          }
+        });
       } catch (e) {
         this.logger.warn(`Tertiary brand fetch failed: ${e.message}`);
       }
@@ -144,26 +154,12 @@ export class ExternalApiService {
 
     if (providers.includes('primary')) {
       try {
-        // Find Brand ID first
-        const brands = await this.makeRequest(
-          `${this.primaryUrl}/2162/get+brands`,
+        const data = await this.makeRequest(
+          `${this.primaryUrl}/api/values/getdevices/${encodeURIComponent(brandName)}`,
           this.primaryHost,
         );
-        const brand = brands?.data?.find(
-          (b: any) => b.name.toLowerCase() === brandName.toLowerCase(),
-        );
-        if (brand) {
-          const data = await this.makeRequest(
-            `${this.primaryUrl}/2163/get+phone+by+brand`,
-            this.primaryHost,
-            { brand_id: brand.id },
-          );
-          results = this.transformer.transformPrimaryDeviceList(
-            data,
-            brandName,
-          );
-          if (results.length > 0) return results;
-        }
+        results = this.transformer.transformPrimaryDeviceList(data, brandName);
+        if (results.length > 0) return results;
       } catch (e) {
         this.logger.warn(
           `Primary device list fetch failed for ${brandName}: ${e.message}`,
@@ -173,15 +169,26 @@ export class ExternalApiService {
 
     if (providers.includes('secondary')) {
       try {
-        const data = await this.makeRequest(
-          `${this.secondaryUrl}/api/values/getdevices/${encodeURIComponent(brandName)}`,
+        // Find Brand ID first
+        const brands = await this.makeRequest(
+          `${this.secondaryUrl}/2162/get+brands`,
           this.secondaryHost,
         );
-        results = this.transformer.transformSecondaryDeviceList(
-          data,
-          brandName,
+        const brand = brands?.data?.find(
+          (b: any) => b.name.toLowerCase() === brandName.toLowerCase(),
         );
-        if (results.length > 0) return results;
+        if (brand) {
+          const data = await this.makeRequest(
+            `${this.secondaryUrl}/2163/get+phone+by+brand`,
+            this.secondaryHost,
+            { brand_id: brand.id },
+          );
+          results = this.transformer.transformSecondaryDeviceList(
+            data,
+            brandName,
+          );
+          if (results.length > 0) return results;
+        }
       } catch (e) {
         this.logger.warn(
           `Secondary device list fetch failed for ${brandName}: ${e.message}`,
@@ -228,15 +235,11 @@ export class ExternalApiService {
   ): Promise<any> {
     if (providers.includes('primary')) {
       try {
-        // Search for phone ID first (or try slugified format)
-        // 11.txt shows apple_iphone_15_pro_max
-        const phoneId = `${brand.toLowerCase()}_${model.toLowerCase().replace(/\s+/g, '_')}`;
         const data = await this.makeRequest(
-          `${this.primaryUrl}/2164/get+phone+details`,
+          `${this.primaryUrl}/api/values/getspecs/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`,
           this.primaryHost,
-          { phone_id: phoneId },
         );
-        if (data?.success)
+        if (data)
           return this.transformer.transformPrimaryDevice(data, brand, model);
       } catch (e) {
         this.logger.warn(
@@ -247,11 +250,14 @@ export class ExternalApiService {
 
     if (providers.includes('secondary')) {
       try {
+        // Search for phone ID first (or try slugified format)
+        const phoneId = `${brand.toLowerCase()}_${model.toLowerCase().replace(/\s+/g, '_')}`;
         const data = await this.makeRequest(
-          `${this.secondaryUrl}/api/values/getspecs/${encodeURIComponent(brand)}/${encodeURIComponent(model)}`,
+          `${this.secondaryUrl}/2164/get+phone+details`,
           this.secondaryHost,
+          { phone_id: phoneId },
         );
-        if (data)
+        if (data?.success)
           return this.transformer.transformSecondaryDevice(data, brand, model);
       } catch (e) {
         this.logger.warn(

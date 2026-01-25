@@ -37,6 +37,8 @@ export default function AdminDevicesPage() {
     forceUpdate: false,
   })
 
+  const fileInputRef = useRef<HTMLInputElement>(null)
+
   const fetchDevices = async () => {
     setIsLoading(true)
     try {
@@ -443,7 +445,7 @@ export default function AdminDevicesPage() {
               Prev
             </button>
             <button
-              disabled={devices.length < 10}
+              disabled={page * 10 >= total}
               onClick={() => setPage(page + 1)}
               className="rounded-xl border-2 border-gray-100 bg-white px-6 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:border-blue-600 disabled:border-gray-100 disabled:opacity-30"
             >

@@ -8,6 +8,7 @@ import { ExternalApiController } from './external-api.controller';
 import { DevicesModule } from '../devices/devices.module';
 
 import { CategoriesModule } from '../categories/categories.module';
+import { BrandsModule } from '../brands/brands.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { CategoriesModule } from '../categories/categories.module';
     }),
     forwardRef(() => DevicesModule), // Circular dependency resolution
     CategoriesModule,
+    BrandsModule,
   ],
   controllers: [ExternalApiController],
   providers: [ExternalApiService, DataTransformationService, SyncService],
