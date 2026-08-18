@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Device } from '../../../../shared/src/types';
+import { Device } from '@shared/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faCopy,
@@ -18,6 +18,7 @@ interface SpecsTableProps {
 const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>({});
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   if (!device || !device.specs) {
     return (
@@ -47,6 +48,17 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
     }
     categorizedSpecs[spec.category][spec.key] = spec.value;
   });
+
+  const normalizedQuery = searchQuery.trim().toLowerCase();
+  const filteredSpecs = Object.fromEntries(
+    Object.entries(categorizedSpecs)
+      .map(([category, specs]) => [category, Object.fromEntries(
+        Object.entries(specs).filter(([name, value]) =>
+          !normalizedQuery || `${category} ${name} ${value}`.toLowerCase().includes(normalizedQuery)
+        )
+      )])
+      .filter(([, specs]) => Object.keys(specs as object).length > 0)
+  ) as typeof categorizedSpecs;
 
   useEffect(() => {
     const initialExpansionState: { [key: string]: boolean } = {};
@@ -105,8 +117,18 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
       </div>
 
       <div className="p-2">
-        {Object.keys(categorizedSpecs).length > 0 ? (
-          Object.keys(categorizedSpecs).map((categoryName) => (
+        <div className="px-4 pb-3">
+          <input
+            type="search"
+            placeholder="Search specs"
+            aria-label="Search specs"
+            value={searchQuery}
+            onChange={(event) => setSearchQuery(event.target.value)}
+            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+          />
+        </div>
+        {Object.keys(filteredSpecs).length > 0 ? (
+          Object.keys(filteredSpecs).map((categoryName) => (
             <div key={categoryName} className="mb-2 last:mb-0">
               <button
                 className={`w-full flex justify-between items-center p-4 rounded-xl transition-all ${expandedCategories[categoryName]
@@ -123,13 +145,13 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
                 <div className="px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
                   <table className="w-full">
                     <tbody className="divide-y divide-gray-50">
-                      {Object.keys(categorizedSpecs[categoryName]).map((specName) => (
+                      {Object.keys(filteredSpecs[categoryName]).map((specName) => (
                         <tr key={specName} className="group">
                           <td className="py-3 pr-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-1/3 align-top group-hover:text-blue-500 transition-colors">
                             {specName}
                           </td>
                           <td className="py-3 text-sm text-gray-700 w-2/3 leading-relaxed">
-                            {categorizedSpecs[categoryName][specName]}
+                            {filteredSpecs[categoryName][specName]}
                           </td>
                         </tr>
                       ))}
@@ -141,7 +163,7 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
           ))
         ) : (
           <div className="p-8 text-center text-gray-500">
-            No detailed specifications available.
+            {normalizedQuery ? 'No matching specifications found.' : 'No detailed specifications available.'}
           </div>
         )}
       </div>

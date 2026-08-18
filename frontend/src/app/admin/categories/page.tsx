@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { apiClient } from '@/lib/api';
-import { Category } from '../../../../shared/src/types';
+import { Category } from '@shared/types';
 import Link from 'next/link';
 
 export default function AdminCategoriesPage() {

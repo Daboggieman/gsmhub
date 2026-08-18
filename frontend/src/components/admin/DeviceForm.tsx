@@ -116,12 +116,13 @@ export default function DeviceForm({
     }
     fetchData()
 
-    if (isEdit && (initialData?.id || (initialData as any)?._id)) {
+    if (isEdit && initialData?._id) {
+      const deviceId = initialData._id
       const fetchPrices = async () => {
         setIsPriceLoading(true)
         try {
           const data = await apiClient.getDevicePriceHistory(
-            (initialData as any).id || (initialData as any)._id,
+            deviceId,
           )
           setPrices(data)
         } catch (err) {
@@ -521,11 +522,12 @@ export default function DeviceForm({
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
             <div className="space-y-6">
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label htmlFor="device-name" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
                   Display Name
                 </label>
                 <input
                   type="text"
+                  id="device-name"
                   name="name"
                   required
                   value={formData.name || ''}
@@ -536,11 +538,12 @@ export default function DeviceForm({
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-brand" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
                     Brand
                   </label>
                   <select
                     name="brand"
+                    id="device-brand"
                     required
                     value={formData.brand || ''}
                     onChange={handleChange}
@@ -562,12 +565,13 @@ export default function DeviceForm({
                   </p>
                 </div>
                 <div>
-                  <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-model" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
                     Model
                   </label>
                   <input
                     type="text"
                     name="model"
+                    id="device-model"
                     required
                     value={formData.model || ''}
                     onChange={handleChange}
@@ -593,11 +597,12 @@ export default function DeviceForm({
             <div className="space-y-6">
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-category" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
                     Category
                   </label>
                   <select
                     name="category"
+                    id="device-category"
                     required
                     value={
                       typeof formData.category === 'string'
@@ -1136,7 +1141,7 @@ export default function DeviceForm({
               ? 'Syncing...'
               : isEdit
                 ? 'Update Device'
-                : 'Publish Device'}
+                : 'Save & Publish Device'}
           </button>
         </div>
       </form>

@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 interface BreadcrumbItem {
-  name: string;
+  name?: string;
+  label?: string;
   href: string;
 }
 
@@ -36,10 +37,10 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
             <li key={item.href} className="flex items-center">
               <span className="mx-2">/</span>
               {isLast || isActive ? (
-                <span className="text-gray-700 font-medium">{item.name}</span>
+                <span className="text-gray-700 font-medium">{item.name ?? item.label}</span>
               ) : (
                 <Link href={item.href} className="text-blue-600 hover:underline">
-                  {item.name}
+                  {item.name ?? item.label}
                 </Link>
               )}
             </li>

@@ -122,7 +122,7 @@ describe('DevicesService', () => {
 
   describe('create', () => {
     it('should create a new device', async () => {
-      const createDto = { name: 'New Device', slug: 'new-device', brand: 'Brand', category: new Types.ObjectId().toString() };
+      const createDto = { name: 'New Device', model: 'New Device', slug: 'new-device', brand: 'Brand', category: new Types.ObjectId().toString() };
       mockDevicesRepository.findBySlug.mockResolvedValue(null);
       mockCategoryModel.exec.mockResolvedValue({ _id: createDto.category });
       mockDevicesRepository.create.mockResolvedValue({ ...createDto, _id: 'new-id' });

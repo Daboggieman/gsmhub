@@ -59,7 +59,7 @@ describe('ExternalApiService', () => {
       const result = await service.fetchDeviceSpecs('Brand', 'Model');
 
       expect(httpService.get).toHaveBeenCalledWith(
-        expect.stringContaining('gsmarenaparser'),
+        expect.stringContaining('phone-specs-explorer-api'),
         expect.any(Object)
       );
       expect(result).toBe(mockResult);
@@ -72,7 +72,9 @@ describe('ExternalApiService', () => {
         response: { status: 404, data: { message: 'Not Found' } } 
       })));
       // Secondary succeeds
-      httpService.get.mockReturnValueOnce(of({ data: { raw: 'secondary' } }));
+      httpService.get.mockReturnValueOnce(
+        of({ data: { success: true, raw: 'secondary' } }),
+      );
       transformer.transformSecondaryDevice.mockReturnValue(mockResult);
 
       const result = await service.fetchDeviceSpecs('Brand', 'Model');

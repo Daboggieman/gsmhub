@@ -11,8 +11,10 @@ describe('PricesService', () => {
   let devicesService: any;
 
   class MockPriceHistoryModel {
-    constructor(private data: any) {}
-    save = jest.fn().mockResolvedValue(this.data);
+    save: jest.Mock;
+    constructor(private data: any) {
+      this.save = jest.fn().mockResolvedValue(this.data);
+    }
     static find = jest.fn();
     static findById = jest.fn();
     static findOne = jest.fn();
@@ -55,7 +57,7 @@ describe('PricesService', () => {
 
   describe('create', () => {
     it('should create a price history entry', async () => {
-      const createDto = { device: 'dev1', price: 100, currency: 'USD' };
+      const createDto = { device: 'dev1', price: 100, currency: 'USD', country: 'USA' };
       devicesService.findOne.mockResolvedValue({ _id: 'dev1' });
 
       const result = await service.create(createDto);

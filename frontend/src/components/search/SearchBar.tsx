@@ -214,7 +214,8 @@ const SearchBar: React.FC = () => {
                     </div>
                     <div className="flex-grow min-w-0">
                       <div className="font-bold text-gray-900 group-hover:text-blue-700 transition-colors truncate">
-                        {highlightMatch(result.name, query)}
+                        <span className="sr-only">{result.name}</span>
+                        <span aria-hidden="true">{highlightMatch(result.name, query)}</span>
                       </div>
                       <div className="text-xs text-gray-500 flex items-center gap-2">
                         <span className="bg-gray-100 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">

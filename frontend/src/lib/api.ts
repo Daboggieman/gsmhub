@@ -31,11 +31,6 @@ class ApiClient {
       ...modifiedOptions.headers,
     };
 
-    modifiedOptions.headers = {
-      'Content-Type': 'application/json',
-      ...modifiedOptions.headers,
-    };
-
     modifiedOptions.credentials = 'include';
 
     for (const interceptor of this.requestInterceptors) {
@@ -96,26 +91,26 @@ class ApiClient {
     maxBattery?: number;
     minDisplay?: number;
     maxDisplay?: number;
-  }): Promise<{ devices: Device[]; total: number; page: number; limit: number }> {
+  }): Promise<{ devices: Device[]; total: number; page: number; limit: number; totalPages: number; suggestions?: string[] }> {
     const queryParams = new URLSearchParams();
-    if (params?.page) queryParams.append('page', params.page.toString());
-    if (params?.limit) queryParams.append('limit', params.limit.toString());
+    if (params?.page !== undefined) queryParams.append('page', params.page.toString());
+    if (params?.limit !== undefined) queryParams.append('limit', params.limit.toString());
     if (params?.category) queryParams.append('category', params.category);
     if (params?.brand) queryParams.append('brand', params.brand);
     if (params?.search) queryParams.append('search', params.search);
     if (params?.sort) queryParams.append('sort', params.sort);
 
     // Advanced Filters
-    if (params?.minPrice) queryParams.append('minPrice', params.minPrice.toString());
-    if (params?.maxPrice) queryParams.append('maxPrice', params.maxPrice.toString());
-    if (params?.minRam) queryParams.append('minRam', params.minRam.toString());
-    if (params?.maxRam) queryParams.append('maxRam', params.maxRam.toString());
-    if (params?.minStorage) queryParams.append('minStorage', params.minStorage.toString());
-    if (params?.maxStorage) queryParams.append('maxStorage', params.maxStorage.toString());
-    if (params?.minBattery) queryParams.append('minBattery', params.minBattery.toString());
-    if (params?.maxBattery) queryParams.append('maxBattery', params.maxBattery.toString());
-    if (params?.minDisplay) queryParams.append('minDisplay', params.minDisplay.toString());
-    if (params?.maxDisplay) queryParams.append('maxDisplay', params.maxDisplay.toString());
+    if (params?.minPrice !== undefined) queryParams.append('minPrice', params.minPrice.toString());
+    if (params?.maxPrice !== undefined) queryParams.append('maxPrice', params.maxPrice.toString());
+    if (params?.minRam !== undefined) queryParams.append('minRam', params.minRam.toString());
+    if (params?.maxRam !== undefined) queryParams.append('maxRam', params.maxRam.toString());
+    if (params?.minStorage !== undefined) queryParams.append('minStorage', params.minStorage.toString());
+    if (params?.maxStorage !== undefined) queryParams.append('maxStorage', params.maxStorage.toString());
+    if (params?.minBattery !== undefined) queryParams.append('minBattery', params.minBattery.toString());
+    if (params?.maxBattery !== undefined) queryParams.append('maxBattery', params.maxBattery.toString());
+    if (params?.minDisplay !== undefined) queryParams.append('minDisplay', params.minDisplay.toString());
+    if (params?.maxDisplay !== undefined) queryParams.append('maxDisplay', params.maxDisplay.toString());
 
     const query = queryParams.toString();
     return this.request(`/devices${query ? `?${query}` : ''}`);

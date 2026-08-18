@@ -42,12 +42,12 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText(/search for phones/i);
     fireEvent.change(input, { target: { value: 'iphone' } });
 
-    await vi.advanceTimersByTimeAsync(300);
-
-    await waitFor(() => {
-      expect(screen.getByText('iPhone 15')).toBeInTheDocument();
-      expect(screen.getByText('Suggested Devices')).toBeInTheDocument();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
     });
+    await act(async () => { await Promise.resolve(); });
+    expect(screen.getByText('iPhone 15')).toBeInTheDocument();
+    expect(screen.getByText('Suggested Devices')).toBeInTheDocument();
   });
 
   it('shows "no devices found" message when API returns empty', async () => {
@@ -57,11 +57,11 @@ describe('SearchBar', () => {
     const input = screen.getByPlaceholderText(/search for phones/i);
     fireEvent.change(input, { target: { value: 'nonexistent' } });
 
-    await vi.advanceTimersByTimeAsync(300);
-
-    await waitFor(() => {
-      expect(screen.getByText(/no devices found/i)).toBeInTheDocument();
+    await act(async () => {
+      await vi.advanceTimersByTimeAsync(300);
     });
+    await act(async () => { await Promise.resolve(); });
+    expect(screen.getByText(/no devices found/i)).toBeInTheDocument();
   });
 
   it('clears results when clearing input', async () => {

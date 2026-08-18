@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { DevicesService } from '../devices/devices.service';
 import { Device } from '../devices/device.schema';
 
-interface ComparisonRow {
+export interface ComparisonRow {
   item: string;
   category: string;
   values: string[];

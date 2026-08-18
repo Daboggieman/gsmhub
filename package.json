@@ -1,4 +1,12 @@
 {
+  "packageManager": "pnpm@10.12.1",
+  "scripts": {
+    "test": "pnpm -r test",
+    "lint": "pnpm --filter backend run lint && pnpm --filter frontend run lint",
+    "typecheck": "pnpm --filter backend exec tsc --noEmit && pnpm --filter frontend exec tsc --noEmit",
+    "build": "pnpm --filter backend run build && pnpm --filter frontend run build",
+    "test:e2e": "pnpm exec playwright test"
+  },
   "dependencies": {
     "@nestjs/config": "^4.0.2",
     "@nestjs/typeorm": "^11.0.0",

@@ -23,10 +23,19 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UsersModule } from './modules/users/users.module';
 import { AuditLogModule } from './modules/audit-log/audit-log.module';
 import { AuditLogInterceptor } from './modules/audit-log/audit-log.interceptor';
+import { HealthController } from './health.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      validate: (config) => {
+        const missing = ['MONGO_URI', 'JWT_SECRET'].filter((key) => !config[key]);
+        if (missing.length) throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
+        if (String(config.JWT_SECRET).length < 32) throw new Error('JWT_SECRET must be at least 32 characters long');
+        return config;
+      },
+    }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
@@ -62,7 +71,7 @@ import { AuditLogInterceptor } from './modules/audit-log/audit-log.interceptor';
     UsersModule,
     AuditLogModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, HealthController],
   providers: [
     AppService,
     {

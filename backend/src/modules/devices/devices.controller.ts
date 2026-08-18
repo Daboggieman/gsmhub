@@ -11,6 +11,7 @@ import {
   ClassSerializerInterceptor,
   UseGuards,
   UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { DevicesService } from './devices.service';
@@ -57,11 +58,16 @@ export class DevicesController {
     @Query('minPrice') minPrice?: number,
     @Query('maxPrice') maxPrice?: number,
   ) {
-    limit = limit > 50 ? 50 : limit;
+    page = Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
+    limit = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Math.min(Number(limit), 50) : 10;
 
-    const parseNum = (val: any) => (val ? Number(val) : undefined);
+    const parseNum = (val: any) => {
+      if (val === undefined || val === null || val === '') return undefined;
+      const parsed = Number(val);
+      return Number.isFinite(parsed) ? parsed : undefined;
+    };
 
-    const { devices, total } = await this.devicesService.getAllDevices({
+    const { devices, total, suggestions } = await this.devicesService.getAllDevices({
       skip: (page - 1) * limit,
       limit,
       category,
@@ -82,6 +88,10 @@ export class DevicesController {
     return {
       devices: plainToInstance(DeviceResponseDto, devices),
       total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
+      suggestions,
     };
   }
 
@@ -202,8 +212,16 @@ export class DevicesController {
   @Post('bulk-import')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  @UseInterceptors(FileInterceptor('file', { dest: './uploads' }))
+  @UseInterceptors(FileInterceptor('file', {
+    dest: process.env.UPLOAD_DIR || './uploads',
+    limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+    fileFilter: (_req, file, callback) => {
+      const valid = file.mimetype === 'text/csv' || file.originalname.toLowerCase().endsWith('.csv');
+      callback(valid ? null : new BadRequestException('Only CSV files are supported'), valid);
+    },
+  }))
   async bulkImport(@UploadedFile() file: Express.Multer.File) {
+    if (!file?.path) throw new BadRequestException('A CSV file is required');
     return this.devicesService.bulkImport(file.path);
   }
 

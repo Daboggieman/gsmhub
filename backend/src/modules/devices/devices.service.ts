@@ -6,7 +6,8 @@ import {
   forwardRef,
 } from '@nestjs/common';
 import * as fs from 'fs';
-import * as csv from 'csv-parser';
+import csv from 'csv-parser';
+import { Logger } from '@nestjs/common';
 import { Readable } from 'stream';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { InjectModel } from '@nestjs/mongoose';
@@ -28,6 +29,7 @@ import type { Cache } from 'cache-manager';
 
 @Injectable()
 export class DevicesService {
+  private readonly logger = new Logger(DevicesService.name);
   constructor(
     @Inject(CACHE_MANAGER) private cacheManager: Cache,
     private readonly devicesRepository: DevicesRepository,
@@ -468,6 +470,7 @@ export class DevicesService {
         .on('data', (data) => results.push(data))
         .on('error', (error) => {
           errors.push(`CSV Parsing Error: ${error.message}`);
+          try { fs.unlinkSync(filePath); } catch { /* best-effort cleanup */ }
           resolve({ success: successCount, failed: failedCount, errors });
         })
         .on('end', async () => {
@@ -503,7 +506,7 @@ export class DevicesService {
             }
           }
           // Clean up the temp file
-          fs.unlinkSync(filePath);
+          try { fs.unlinkSync(filePath); } catch { /* best-effort cleanup */ }
           resolve({ success: successCount, failed: failedCount, errors });
         });
     });

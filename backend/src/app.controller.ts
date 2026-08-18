@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, UseGuards, Optional } from '@nestjs/common';
 import { AppService } from './app.service';
 import { DevicesService } from './modules/devices/devices.service';
 import { CategoriesService } from './modules/categories/categories.service';
@@ -12,9 +12,9 @@ import { UserRole } from './modules/users/schemas/user.schema';
 export class AppController {
   constructor(
     private readonly appService: AppService,
-    private readonly devicesService: DevicesService,
-    private readonly categoriesService: CategoriesService,
-    private readonly searchService: SearchService,
+    @Optional() private readonly devicesService: DevicesService,
+    @Optional() private readonly categoriesService: CategoriesService,
+    @Optional() private readonly searchService: SearchService,
   ) {}
 
   @Get()

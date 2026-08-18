@@ -15,7 +15,9 @@ export class AuthController {
     res.cookie('auth_token', access_token, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: process.env.COOKIE_SAME_SITE === 'none' ? 'none' : 'lax',
+      domain: process.env.COOKIE_DOMAIN || undefined,
+      path: '/',
       maxAge: 24 * 60 * 60 * 1000, // 1 day
     });
 
@@ -24,7 +26,7 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Res({ passthrough: true }) res: express.Response) {
-    res.clearCookie('auth_token');
+    res.clearCookie('auth_token', { domain: process.env.COOKIE_DOMAIN || undefined, path: '/' });
     return { message: 'Logged out successfully' };
   }
 

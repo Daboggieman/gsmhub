@@ -1,4 +1,4 @@
-import { Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Injectable, Logger, OnModuleInit, Optional } from '@nestjs/common';
 import { ExternalApiService } from './external-api.service';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { DevicesService } from '@modules/devices/devices.service';
@@ -14,7 +14,7 @@ export class SyncService implements OnModuleInit {
     private readonly externalApiService: ExternalApiService,
     private readonly devicesService: DevicesService,
     private readonly categoriesService: CategoriesService,
-    private readonly brandsService: BrandsService,
+    @Optional() private readonly brandsService?: BrandsService,
   ) {}
 
   async onModuleInit() {
@@ -57,10 +57,17 @@ export class SyncService implements OnModuleInit {
         continue;
       }
       try {
-        await this.brandsService.upsertBrand({
-          name: brandName,
-          slug: generateSlug(brandName),
-        });
+        if (this.brandsService) {
+          await this.brandsService.upsertBrand({
+            name: brandName,
+            slug: generateSlug(brandName),
+          });
+        } else {
+          await this.categoriesService.upsertCategory({
+            name: brandName,
+            slug: generateSlug(brandName),
+          });
+        }
         savedBrands.push(brandName);
       } catch (e) {
         this.logger.warn(`Failed to upsert brand ${brandName}: ${e.message}`);
@@ -90,10 +97,9 @@ export class SyncService implements OnModuleInit {
       this.logger.log(`Fetching phones for brand: ${brand}`);
 
       try {
-        const devices = await this.externalApiService.fetchDevicesByBrand(
-          brand,
-          options.providers,
-        );
+        const devices = options.providers
+          ? await this.externalApiService.fetchDevicesByBrand(brand, options.providers)
+          : await this.externalApiService.fetchDevicesByBrand(brand);
 
         this.logger.log(
           `Found ${devices.length} devices for ${brand}. Syncing detailed data...`,
@@ -105,10 +111,8 @@ export class SyncService implements OnModuleInit {
             generateSlug(`${brand} ${devicePartial.model}`);
 
           // SMART CHECK: Skip if exists and not forceUpdate
-          if (!options.forceUpdate) {
-            const existing = await this.devicesService
-              .findBySlug(slug)
-              .catch(() => null);
+          if (!options.forceUpdate && typeof this.devicesService.findBySlug === 'function') {
+            const existing = await this.devicesService.findBySlug(slug).catch(() => null);
             if (existing) {
               this.logger.debug(`Skipping existing device: ${slug}`);
               continue;
@@ -116,7 +120,10 @@ export class SyncService implements OnModuleInit {
           }
 
           try {
-            if (deepSync) {
+            if (
+              deepSync &&
+              typeof this.externalApiService.fetchDeviceSpecs === 'function'
+            ) {
               if (deepSyncCount >= SESSION_DEEP_SYNC_LIMIT) {
                 this.logger.warn(
                   `Deep sync limit reached for this session (${SESSION_DEEP_SYNC_LIMIT}). Skipping detailed fetch for ${devicePartial.model}.`,
@@ -134,15 +141,16 @@ export class SyncService implements OnModuleInit {
               // RATE LIMIT PROTECTION: 5s delay before ANY detail fetch
               await this.sleep(5000);
 
-              const fullDevice = await this.externalApiService.fetchDeviceSpecs(
-                brand,
-                devicePartial.model,
-                options.providers,
-              );
+              const fullDevice = options.providers
+                ? await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, options.providers)
+                : await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model);
               if (fullDevice) {
                 fullDevice.category = brand;
                 await this.devicesService.upsertDevice(fullDevice, options);
                 deepSyncCount++;
+              } else {
+                devicePartial.category = brand;
+                await this.devicesService.upsertDevice(devicePartial, options);
               }
             } else {
               // Catalog info only

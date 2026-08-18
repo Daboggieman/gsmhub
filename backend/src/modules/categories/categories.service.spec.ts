@@ -9,8 +9,10 @@ describe('CategoriesService', () => {
   let model: any;
 
   class MockCategoryModel {
-    constructor(private data: any) {}
-    save = jest.fn().mockResolvedValue(this.data);
+    save: jest.Mock;
+    constructor(private data: any) {
+      this.save = jest.fn().mockResolvedValue(this.data);
+    }
     static findOne = jest.fn();
     static find = jest.fn();
     static findById = jest.fn();

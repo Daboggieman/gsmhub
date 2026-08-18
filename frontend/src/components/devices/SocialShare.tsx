@@ -55,7 +55,7 @@ const SocialShare: React.FC<SocialShareProps> = ({ url, title }) => {
             {link.icon}
           </a>
         ))}
-        {typeof navigator !== 'undefined' && navigator.share && (
+        {typeof navigator !== 'undefined' && 'share' in navigator && (
           <button
             onClick={handleNativeShare}
             className="bg-gray-800 text-white p-2 rounded-full hover:opacity-90 transition-opacity flex items-center justify-center w-9 h-9"

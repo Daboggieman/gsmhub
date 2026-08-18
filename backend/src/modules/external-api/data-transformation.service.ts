@@ -74,6 +74,7 @@ export class DataTransformationService {
       )
         category = 'Comms';
       else if (lowerKey.includes('sensor')) category = 'Features';
+      else if (lowerKey.includes('color') || lowerKey.includes('colour')) category = 'Misc';
       else if (
         lowerKey.includes('body') ||
         lowerKey.includes('dimension') ||
@@ -126,6 +127,18 @@ export class DataTransformationService {
     };
 
     const details = data.data || data;
+    // Providers return either nested GSMA-style payloads or a flat device object.
+    // Normalize the flat form into the same spotlight fields used below.
+    if (!details.spotlight) {
+      details.spotlight = {
+        chipset: details.chipset,
+        os: details.androidVersion ? `Android ${details.androidVersion}` : details.os,
+        display_size: details.displaySize,
+        display_resolution: details.displayResolution,
+        battery_size: details.battery,
+        ram: this.extractRam(details.internal || details.ram || ''),
+      };
+    }
 
     // 1. Process "spotlight"
     if (details.spotlight) {
@@ -170,6 +183,8 @@ export class DataTransformationService {
     knownKeys.add('image_url');
     knownKeys.add('phone_model');
     knownKeys.add('brand_name');
+    knownKeys.add('model');
+    knownKeys.add('manufacturer');
 
     // Dynamic loop for remainder
     this.addDynamicSpecs(details, specs, knownKeys);
@@ -178,16 +193,17 @@ export class DataTransformationService {
       model: details.phone_model || model,
       brand: details.brand_name || brand,
       slug: generateSlug(details.phone_model || `${brand} ${model}`),
-      imageUrl: details.image_url || '',
+      imageUrl: details.image_url || details.img || details.image || '',
       type: DeviceType.PHONE,
       specs: specs,
       isActive: true,
 
       displaySize: details.spotlight?.display_size || '',
-      chipset: details.spotlight?.chipset || '',
-      battery: details.spotlight?.battery_size || '',
-      os: details.spotlight?.os || '',
-      ram: details.spotlight?.ram || '',
+      chipset: details.spotlight?.chipset,
+      battery: details.spotlight?.battery_size,
+      os: details.spotlight?.os,
+      ram: details.spotlight?.ram || this.extractRam(details.internal || ''),
+      storage: this.extractStorage(details.internal || ''),
       name: details.phone_model || `${brand} ${model}`,
     };
   }
@@ -246,7 +262,7 @@ export class DataTransformationService {
     addSpec('Display', 'Type', data.displayType, 'displayType');
     addSpec('Memory', 'Internal', data.internal, 'internal');
     addSpec('Main Camera', 'Specs', data.mainCameraSpecs, 'mainCameraSpecs');
-    addSpec('Battery', 'Capacity', data.battery, 'battery');
+    addSpec('Battery', 'Capacity', data.battery || data.batteryType, 'battery');
 
     knownKeys.add('manufacturer');
     knownKeys.add('model');
@@ -268,9 +284,20 @@ export class DataTransformationService {
       os: data.androidVersion ? `Android ${data.androidVersion}` : '',
       displaySize: data.displaySize,
       chipset: data.chipset,
-      battery: data.battery,
+      battery: data.battery || data.batteryType,
+      dimension: data.dimension || data.dimensions,
       name: `${data.manufacturer || brand} ${data.model || model}`,
     };
+  }
+
+  private extractRam(value: string): string {
+    const match = String(value || '').match(/(\d+(?:\.\d+)?\s*(?:GB|TB|MB))\s*RAM/i);
+    return match?.[1] || '';
+  }
+
+  private extractStorage(value: string): string {
+    const match = String(value || '').match(/\b\d+(?:\.\d+)?\s*(?:TB|GB|MB)\b/i);
+    return match?.[0] || '';
   }
 
   transformSecondaryDeviceList(data: any[], brand: string): Partial<Device>[] {
