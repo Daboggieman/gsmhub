@@ -1,9 +1,10 @@
 import { CacheModuleOptions } from '@nestjs/cache-manager';
-import { redisStore } from 'cache-manager-redis-store';
+import KeyvRedis from '@keyv/redis';
 
-export const redisConfig: CacheModuleOptions = {
-  store: redisStore,
-  url: process.env.REDIS_URI,
-  ttl: 300, // 5 minutes default TTL
-  max: 100, // maximum number of items in cache
-};
+export const redisConfig = (): any => ({
+  stores: [
+    new KeyvRedis(process.env.REDIS_URI || 'redis://localhost:6379', {
+      ttl: 3600, // 1 hour default TTL (milliseconds for keyv)
+    }),
+  ],
+});
