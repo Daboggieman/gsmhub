@@ -49,7 +49,7 @@ import { HealthController } from './health.controller';
     }),
     CacheModule.registerAsync({
       isGlobal: true,
-      useFactory: () => redisConfig,
+      useFactory: () => redisConfig(),
     }),
     ScheduleModule.forRoot(), // Add ScheduleModule here
     ThrottlerModule.forRoot([{
