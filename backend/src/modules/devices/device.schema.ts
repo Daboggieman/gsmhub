@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Category } from '../categories/category.schema';
-import { DeviceType } from '../../../../shared/src/types';
+import { DeviceType } from '@shared/types';
 
 export type DeviceDocument = Device & Document;
 

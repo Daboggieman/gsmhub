@@ -1,7 +1,7 @@
 import { IsBoolean, IsDateString, IsNumber, IsObject, IsString, IsOptional, IsArray, IsEnum } from 'class-validator';
 import { CategoryResponseDto } from '../../categories/dto/category-response.dto';
 import { Expose, Transform, Type } from 'class-transformer';
-import { DeviceType } from '../../../../../shared/src/types';
+import { DeviceType } from '@shared/types';
 
 export class DeviceResponseDto {
   @Expose()

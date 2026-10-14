@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Device, DeviceDocument } from './device.schema';
-import { escapeRegExp } from '../../../../shared/src/utils/regex';
+import { escapeRegExp } from '@shared/utils/regex';
 
 @Injectable()
 export class DevicesRepository {

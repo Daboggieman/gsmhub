@@ -1,5 +1,5 @@
 import { IsString, IsOptional, IsBoolean, IsArray, IsNumber, IsEnum } from 'class-validator';
-import { DeviceType } from '../../../../../shared/src/types';
+import { DeviceType } from '@shared/types';
 
 export class CreateDeviceDto {
   @IsString()
