@@ -8,7 +8,7 @@ import { Model } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 import { generateSlug } from '../../common/utils/slug.util';
-import { escapeRegExp } from '../../../../shared/src/utils/regex';
+import { escapeRegExp } from '@shared/utils/regex';
 
 @Injectable()
 export class CategoriesService {

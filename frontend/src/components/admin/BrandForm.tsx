@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { generateSlug } from '../../../../shared/src/utils/slug';
+import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';

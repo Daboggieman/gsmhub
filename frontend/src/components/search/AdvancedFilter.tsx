@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter, faTimes, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { Category } from '../../../../shared/src/types';
+import { Category } from '@shared/types';
 
 interface FilterProps {
     filters: {

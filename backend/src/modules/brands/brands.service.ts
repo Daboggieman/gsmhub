@@ -1,3 +1,4 @@
+
 import {
   Injectable,
   NotFoundException,
@@ -9,7 +10,7 @@ import { Brand, BrandDocument } from './brand.schema';
 import { CreateBrandDto, UpdateBrandDto } from './dto/brand.dto';
 import { generateSlug } from '../../common/utils/slug.util';
 import { Device, DeviceDocument } from '../devices/device.schema';
-import { escapeRegExp } from '../../../../shared/src/utils/regex';
+import { escapeRegExp } from '@shared/utils/regex';
 
 @Injectable()
 export class BrandsService {

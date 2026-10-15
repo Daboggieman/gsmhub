@@ -1,4 +1,4 @@
-import { Device, Category, SearchResult, PriceHistory } from '../../../shared/src/types';
+import { Device, Category, SearchResult, PriceHistory } from '@shared/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 

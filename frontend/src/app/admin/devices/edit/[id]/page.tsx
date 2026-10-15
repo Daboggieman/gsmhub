@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from 'react';
 import DeviceForm from '@/components/admin/DeviceForm';
 import { apiClient } from '@/lib/api';
-import { Device } from '../../../../../../../shared/src/types';
+import { Device } from '@shared/types';
 
 export default function EditDevicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);

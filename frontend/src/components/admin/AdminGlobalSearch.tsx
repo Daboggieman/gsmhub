@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { apiClient } from '@/lib/api';
-import { SearchResult } from '../../../../shared/src/types';
+import { SearchResult } from '@shared/types';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faMobileAlt, faTags, faIndustry, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';

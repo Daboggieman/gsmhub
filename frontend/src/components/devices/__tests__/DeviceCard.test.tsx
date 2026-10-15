@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import DeviceCard from '../DeviceCard';
-import { Device, DeviceType } from '../../../../../shared/src/types';
+import { Device, DeviceType } from '@shared/types';
 
 const mockDevice: Device = {
   _id: '1',

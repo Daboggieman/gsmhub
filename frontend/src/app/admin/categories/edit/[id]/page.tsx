@@ -3,7 +3,7 @@
 import { useEffect, useState, use } from 'react';
 import CategoryForm from '@/components/admin/CategoryForm';
 import { apiClient } from '@/lib/api';
-import { Category } from '../../../../../../../shared/src/types';
+import { Category } from '@shared/types';
 
 export default function EditCategoryPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);

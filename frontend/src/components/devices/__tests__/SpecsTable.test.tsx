@@ -1,7 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 import { describe, it, expect } from 'vitest';
 import SpecsTable from '../SpecsTable';
-import { Device, DeviceType } from '../../../../../shared/src/types';
+import { Device, DeviceType } from '@shared/types';
 
 const mockDevice: Device = {
   _id: '1',

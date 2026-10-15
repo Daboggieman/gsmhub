@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api';
-import { Device } from '../../../../shared/src/types';
+import { Device } from '@shared/types';
 import DeviceCard from '@/components/devices/DeviceCard';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import { useRouter } from 'next/navigation';

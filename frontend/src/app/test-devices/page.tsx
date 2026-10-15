@@ -1,7 +1,7 @@
 // src/app/test-devices/page.tsx
 
 import { apiClient } from '@/lib/api';
-import { Device } from '@/../../shared/src/types';
+import { Device } from '@shared/types';
 
 const TestDevicesPage = async () => {
   let devices: Device[] = [];

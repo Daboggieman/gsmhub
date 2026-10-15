@@ -1,5 +1,5 @@
 import React from 'react';
-import { PriceHistory } from '../../../../shared/src/types';
+import { PriceHistory } from '@shared/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt, faTag, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
