@@ -22,11 +22,12 @@ export class SyncService implements OnModuleInit {
     // await this.initialDataLoad();
   }
 
-  // Cron job for periodic incremental sync
-  @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
+  // Weekly full refresh: every Sunday at 03:00. Pulls new devices from
+  // GSMArena into the DB; existing devices are gap-filled, never overwritten.
+  @Cron('0 3 * * 0')
   async handleCron() {
-    this.logger.debug('Called by cron job - Starting sync...');
-    await this.fullSync();
+    this.logger.debug('Weekly sync triggered - refreshing data...');
+    await this.fullSync({ providers: ['gsma'], forceUpdate: false });
   }
 
   async fullSync(
@@ -86,12 +87,16 @@ export class SyncService implements OnModuleInit {
   async fetchAndSavePhonesByBrand(
     brands: string[],
     deepSync: boolean = false,
-    options: { providers?: string[]; forceUpdate?: boolean } = {},
+    options: { providers?: string[]; forceUpdate?: boolean; fullSeed?: boolean } = {},
   ): Promise<void> {
-    this.logger.log(`Fetching phones by brand... DeepSync: ${deepSync}`);
+    this.logger.log(
+      `Fetching phones by brand... DeepSync: ${deepSync}, fullSeed: ${options.fullSeed}`,
+    );
 
     let deepSyncCount = 0;
-    const SESSION_DEEP_SYNC_LIMIT = 5; // To preserve monthly quota
+    const DEEP_SYNC_BATCH_LIMIT = options.fullSeed
+      ? 999_999        // one-time seed: no cap
+      : 200;           // weekly cron: 200 devices/specs per run
 
     for (const brand of brands) {
       this.logger.log(`Fetching phones for brand: ${brand}`);
@@ -110,25 +115,18 @@ export class SyncService implements OnModuleInit {
             devicePartial.slug ||
             generateSlug(`${brand} ${devicePartial.model}`);
 
-          // SMART CHECK: Skip if exists and not forceUpdate
-          if (!options.forceUpdate && typeof this.devicesService.findBySlug === 'function') {
-            const existing = await this.devicesService.findBySlug(slug).catch(() => null);
-            if (existing) {
-              this.logger.debug(`Skipping existing device: ${slug}`);
-              continue;
-            }
-          }
-
+          // Always upsert — upsertDevice() handles existing-vs-new logic internally.
+          // forceUpdate=true = overwrite all fields; forceUpdate=false = gap-fill only.
           try {
             if (
               deepSync &&
               typeof this.externalApiService.fetchDeviceSpecs === 'function'
             ) {
-              if (deepSyncCount >= SESSION_DEEP_SYNC_LIMIT) {
+              if (deepSyncCount >= DEEP_SYNC_BATCH_LIMIT) {
                 this.logger.warn(
-                  `Deep sync limit reached for this session (${SESSION_DEEP_SYNC_LIMIT}). Skipping detailed fetch for ${devicePartial.model}.`,
+                  `Deep sync batch limit (${DEEP_SYNC_BATCH_LIMIT}) reached. Skipping detailed fetch for remaining devices in this session.`,
                 );
-                // Still upsert the partial if it doesn't exist
+                // Still upsert partial if it doesn't exist
                 devicePartial.category = brand;
                 await this.devicesService.upsertDevice(devicePartial, options);
                 continue;
@@ -138,12 +136,17 @@ export class SyncService implements OnModuleInit {
                 `Deep syncing specs for ${brand} ${devicePartial.model}...`,
               );
 
-              // RATE LIMIT PROTECTION: 5s delay before ANY detail fetch
-              await this.sleep(5000);
+              // Rate-limit delay only in weekly cron (not in fullSeed mode)
+              if (!options.fullSeed) {
+                await this.sleep(5000);
+              }
 
-              const fullDevice = options.providers
-                ? await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, options.providers, (devicePartial as any).rawSlug)
-                : await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, undefined, (devicePartial as any).rawSlug);
+              const fullDevice = await this.externalApiService.fetchDeviceSpecs(
+                brand,
+                devicePartial.model,
+                options.providers,
+                (devicePartial as any).rawSlug,
+              );
               if (fullDevice) {
                 fullDevice.category = brand;
                 await this.devicesService.upsertDevice(fullDevice, options);
@@ -153,7 +156,7 @@ export class SyncService implements OnModuleInit {
                 await this.devicesService.upsertDevice(devicePartial, options);
               }
             } else {
-              // Catalog info only
+              // Catalog info only (no deep-spec fetch)
               devicePartial.category = brand;
               await this.devicesService.upsertDevice(devicePartial, options);
             }
@@ -164,12 +167,10 @@ export class SyncService implements OnModuleInit {
           }
         }
 
-        this.logger.log(
-          `Successfully processed ${devices.length} devices for ${brand}`,
-        );
-
-        // Rate limit protection: Sleep 2s between brands
-        await this.sleep(2000);
+        // Brand-level rate limit (skipped in fullSeed)
+        if (!options.fullSeed) {
+          await this.sleep(2000);
+        }
       } catch (error) {
         this.logger.error(
           `Failed to fetch/save devices for brand ${brand}: ${error.message}`,

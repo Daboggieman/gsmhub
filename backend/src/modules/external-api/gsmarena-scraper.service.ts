@@ -23,10 +23,18 @@ export class GsmarenaScraperService {
 
   // Cache brand → device list for the lifetime of the process so deep syncs
   // don't re-scrape the brand page for every device.
-  private readonly deviceListCache = new Map<
-    string,
-    GsmarenaDeviceListItem[]
-  >();
+  private readonly deviceListCache = new Map<string, GsmarenaDeviceListItem[]>();
+
+  // Rate-limit delays (ms). seedMode skips these for the initial bulk load.
+  private readonly BRAND_DELAY = 2000;   // between brand pages
+  private readonly DEVICE_DELAY = 5000;  // between deep-spec fetches
+
+  // Seed mode skips the rate-limit pauses (used by the one-time bulk load).
+  public seedMode = false;
+
+  clearCache() {
+    this.deviceListCache.clear();
+  }
 
   // ----------------------------------------------------------------
   // Public entry points (called by ExternalApiService)
@@ -130,6 +138,11 @@ export class GsmarenaScraperService {
       const nextPageHref = nextPageLink(html);
       if (!nextPageHref) break;
       url = `${this.baseUrl}/${nextPageHref}`;
+
+      // Rate-limit: pause between listing pages (skipped in seed mode)
+      if (!this.seedMode) {
+        await this.sleep(this.BRAND_DELAY);
+      }
     }
 
     this.logger.debug(
@@ -283,6 +296,10 @@ export class GsmarenaScraperService {
       throw new Error(`HTTP ${res.status} for ${url}`);
     }
     return res.text();
+  }
+
+  private sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 }
 
