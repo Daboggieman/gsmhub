@@ -3,6 +3,7 @@ import { ExternalApiService } from './external-api.service';
 import { HttpService } from '@nestjs/axios';
 import { ConfigService } from '@nestjs/config';
 import { DataTransformationService } from './data-transformation.service';
+import { GsmarenaScraperService } from './gsmarena-scraper.service';
 import { of, throwError } from 'rxjs';
 import { HttpException, HttpStatus } from '@nestjs/common';
 
@@ -29,6 +30,13 @@ describe('ExternalApiService', () => {
     transformSecondaryDeviceList: jest.fn(),
   };
 
+  const mockScraper = {
+    fetchBrands: jest.fn().mockResolvedValue([]),
+    fetchDevicesByBrand: jest.fn().mockResolvedValue([]),
+    fetchDeviceSpecs: jest.fn().mockResolvedValue(null),
+    fetchSpecsByModel: jest.fn().mockResolvedValue(null),
+  };
+
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
@@ -36,6 +44,7 @@ describe('ExternalApiService', () => {
         { provide: HttpService, useValue: mockHttpService },
         { provide: ConfigService, useValue: mockConfigService },
         { provide: DataTransformationService, useValue: mockTransformer },
+        { provide: GsmarenaScraperService, useValue: mockScraper },
       ],
     }).compile();
 

@@ -275,13 +275,14 @@ export class ExternalApiService {
     rawSlug?: string,
   ): Promise<any> {
     // GSMArena scraper (free, no quota) — uses the raw GSMArena page slug
-    // captured during the device-list scrape when available.
+    // captured during the device-list scrape when available. Falls through to
+    // the RapidAPI providers when the scraper comes up empty.
     if (providers.includes('gsma')) {
       try {
-        if (rawSlug) {
-          return await this.scraper.fetchDeviceSpecs(rawSlug, brand, model);
-        }
-        return await this.scraper.fetchSpecsByModel(brand, model);
+        const gsmaDevice = rawSlug
+          ? await this.scraper.fetchDeviceSpecs(rawSlug, brand, model)
+          : await this.scraper.fetchSpecsByModel(brand, model);
+        if (gsmaDevice) return gsmaDevice;
       } catch (e) {
         this.logger.warn(
           `GSMArena scraper specs failed for ${brand} ${model}: ${e.message}`,
