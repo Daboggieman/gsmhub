@@ -142,8 +142,8 @@ export class SyncService implements OnModuleInit {
               await this.sleep(5000);
 
               const fullDevice = options.providers
-                ? await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, options.providers)
-                : await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model);
+                ? await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, options.providers, (devicePartial as any).rawSlug)
+                : await this.externalApiService.fetchDeviceSpecs(brand, devicePartial.model, undefined, (devicePartial as any).rawSlug);
               if (fullDevice) {
                 fullDevice.category = brand;
                 await this.devicesService.upsertDevice(fullDevice, options);

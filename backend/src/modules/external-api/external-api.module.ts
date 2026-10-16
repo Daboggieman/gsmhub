@@ -5,6 +5,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { DataTransformationService } from './data-transformation.service';
 import { SyncService } from './sync.service';
 import { ExternalApiController } from './external-api.controller';
+import { GsmarenaScraperService } from './gsmarena-scraper.service';
 import { DevicesModule } from '../devices/devices.module';
 
 import { CategoriesModule } from '../categories/categories.module';
@@ -25,8 +26,18 @@ import { BrandsModule } from '../brands/brands.module';
     BrandsModule,
   ],
   controllers: [ExternalApiController],
-  providers: [ExternalApiService, DataTransformationService, SyncService],
+  providers: [
+    ExternalApiService,
+    GsmarenaScraperService,
+    DataTransformationService,
+    SyncService,
+  ],
 
-  exports: [ExternalApiService, DataTransformationService, SyncService],
+  exports: [
+    ExternalApiService,
+    GsmarenaScraperService,
+    DataTransformationService,
+    SyncService,
+  ],
 })
 export class ExternalApiModule {}

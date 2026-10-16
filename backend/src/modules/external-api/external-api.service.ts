@@ -2,12 +2,16 @@ import { HttpService } from '@nestjs/axios';
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { firstValueFrom } from 'rxjs';
+import { DeviceType } from '@shared/types';
+import { generateSlug } from '../../common/utils/slug.util';
 import { DataTransformationService } from './data-transformation.service';
+import { GsmarenaScraperService } from './gsmarena-scraper.service';
 
 @Injectable()
 export class ExternalApiService {
   private readonly logger = new Logger(ExternalApiService.name);
   private readonly rapidApiKey: string;
+  private readonly scraper: GsmarenaScraperService;
 
   private readonly primaryHost: string;
   private readonly primaryUrl: string;
@@ -22,7 +26,9 @@ export class ExternalApiService {
     private readonly httpService: HttpService,
     private readonly configService: ConfigService,
     private readonly transformer: DataTransformationService,
+    scraper: GsmarenaScraperService,
   ) {
+    this.scraper = scraper;
     this.rapidApiKey = this.configService.get<string>('RAPIDAPI_KEY') || '';
 
     this.primaryHost = this.configService.get<string>(
@@ -89,9 +95,19 @@ export class ExternalApiService {
   // --- FETCH BRANDS ---
 
   async fetchAvailableBrands(
-    providers: string[] = ['primary', 'secondary', 'tertiary'],
+    providers: string[] = ['primary', 'secondary', 'tertiary', 'gsma'],
   ): Promise<string[]> {
     const allBrandsSet = new Set<string>();
+
+    // GSMArena scraper (free, no quota)
+    if (providers.includes('gsma')) {
+      try {
+        const brands = await this.scraper.fetchBrands();
+        brands.forEach((b) => allBrandsSet.add(b));
+      } catch (e) {
+        this.logger.warn(`GSMArena scraper brand fetch failed: ${e.message}`);
+      }
+    }
 
     if (providers.includes('primary')) {
       try {
@@ -148,9 +164,33 @@ export class ExternalApiService {
 
   async fetchDevicesByBrand(
     brandName: string,
-    providers: string[] = ['primary', 'secondary', 'tertiary'],
+    providers: string[] = ['primary', 'secondary', 'tertiary', 'gsma'],
   ): Promise<any[]> {
     let results: any[] = [];
+
+    // GSMArena scraper (free, no quota)
+    if (providers.includes('gsma')) {
+      try {
+        const items = await this.scraper.fetchDevicesByBrand(brandName);
+        if (items.length > 0) {
+          results = items.map((item) => ({
+            model: item.name,
+            brand: brandName,
+            slug: generateSlug(item.name),
+            rawSlug: item.slug, // GSMArena page slug for spec fetches
+            type: DeviceType.PHONE,
+            isActive: true,
+            specs: [],
+            imageUrl: item.imageUrl || '',
+          }));
+          return results;
+        }
+      } catch (e) {
+        this.logger.warn(
+          `GSMArena scraper device list failed for ${brandName}: ${e.message}`,
+        );
+      }
+    }
 
     if (providers.includes('primary')) {
       try {
@@ -231,8 +271,25 @@ export class ExternalApiService {
   async fetchDeviceSpecs(
     brand: string,
     model: string,
-    providers: string[] = ['primary', 'secondary', 'tertiary'],
+    providers: string[] = ['primary', 'secondary', 'tertiary', 'gsma'],
+    rawSlug?: string,
   ): Promise<any> {
+    // GSMArena scraper (free, no quota) — uses the raw GSMArena page slug
+    // captured during the device-list scrape when available.
+    if (providers.includes('gsma')) {
+      try {
+        if (rawSlug) {
+          return await this.scraper.fetchDeviceSpecs(rawSlug, brand, model);
+        }
+        return await this.scraper.fetchSpecsByModel(brand, model);
+      } catch (e) {
+        this.logger.warn(
+          `GSMArena scraper specs failed for ${brand} ${model}: ${e.message}`,
+        );
+      }
+    }
+
+
     if (providers.includes('primary')) {
       try {
         const data = await this.makeRequest(
