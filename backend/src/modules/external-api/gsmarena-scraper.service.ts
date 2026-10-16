@@ -139,9 +139,12 @@ export class GsmarenaScraperService {
       if (!nextPageHref) break;
       url = `${this.baseUrl}/${nextPageHref}`;
 
-      // Rate-limit: pause between listing pages (skipped in seed mode)
+      // Rate-limit: pause between listing pages. Seed mode uses a shorter
+      // pause — zero delay gets the whole scraper 429-blocked within minutes.
       if (!this.seedMode) {
         await this.sleep(this.BRAND_DELAY);
+      } else {
+        await this.sleep(1000);
       }
     }
 
@@ -284,18 +287,31 @@ export class GsmarenaScraperService {
   // ----------------------------------------------------------------
 
   private async httpGet(url: string): Promise<string> {
-    const res = await fetch(url, {
-      headers: {
-        'User-Agent': this.userAgent,
-        Accept: 'text/html,application/xhtml+xml',
-        'Accept-Language': 'en-US,en;q=0.9',
-      },
-      signal: AbortSignal.timeout(20_000),
-    });
-    if (!res.ok) {
-      throw new Error(`HTTP ${res.status} for ${url}`);
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      const res = await fetch(url, {
+        headers: {
+          'User-Agent': this.userAgent,
+          Accept: 'text/html,application/xhtml+xml',
+          'Accept-Language': 'en-US,en;q=0.9',
+        },
+        signal: AbortSignal.timeout(20_000),
+      });
+      if (res.status === 429) {
+        const retryAfter =
+          Number(res.headers.get('retry-after')) || 30 * attempt;
+        this.logger.warn(
+          `GSMArena 429 for ${url} — backing off ${retryAfter}s (attempt ${attempt}/${maxAttempts})`,
+        );
+        await this.sleep(retryAfter * 1000);
+        continue;
+      }
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status} for ${url}`);
+      }
+      return res.text();
     }
-    return res.text();
+    throw new Error(`HTTP 429 persisted for ${url} after ${maxAttempts} attempts`);
   }
 
   private sleep(ms: number): Promise<void> {

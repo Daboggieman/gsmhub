@@ -36,6 +36,8 @@ const onlyBrands = (process.env.SEED_BRANDS || '')
   .filter(Boolean);
 const maxDevices = Number(process.env.SEED_MAX_DEVICES) || 0; // 0 = no cap
 const wipe = process.env.NO_WIPE !== '1';
+const resume = process.env.SEED_RESUME === '1';
+const DEVICE_DELAY_MS = Number(process.env.SEED_DEVICE_DELAY_MS) || 1200;
 
 interface SeedDevice {
   slug: string;
@@ -138,10 +140,13 @@ async function seedDB() {
 
     const categoryName = partial.category || 'Smartphones';
     const catSlug = generateSlug(categoryName);
-    let cat = await CategoryModel.findOne({ slug: catSlug });
-    if (!cat) {
-      cat = await CategoryModel.create({ name: categoryName, slug: catSlug });
-    }
+    // Upsert by slug OR name — a pre-existing doc with mismatched slug must
+    // not make the create() below blow up on the unique name/slug indexes.
+    const cat = await CategoryModel.findOneAndUpdate(
+      { $or: [{ slug: catSlug }, { name: categoryName }] },
+      { $set: { name: categoryName, slug: catSlug } },
+      { upsert: true, new: true },
+    );
 
     await DeviceModel.create({
       ...partial,
@@ -175,8 +180,36 @@ async function seedDB() {
 
   let deviceCount = 0;
   let specCount = 0;
+  let failedCount = 0;
+
+  // Resume support: remember the last fully-finished brand across runs.
+  const ProgressModel = mongoose.model(
+    'SeedProgress',
+    new mongoose.Schema({
+      key: String,
+      lastBrand: String,
+      updatedAt: Date,
+    }),
+  );
+  let skipUntilPast = '';
+  if (resume) {
+    const progress: any = await ProgressModel.findOne({ key: 'seed-progress' });
+    if (progress?.lastBrand) {
+      skipUntilPast = progress.lastBrand;
+      console.log(
+        `Resuming: skipping brands until after "${skipUntilPast}" (use SEED_BRANDS to override)`,
+      );
+    }
+  }
 
   for (const brand of targets) {
+    if (skipUntilPast) {
+      if (brand.name === skipUntilPast) {
+        skipUntilPast = '';
+        console.log(`\n=== Resuming after ${brand.name} ===`);
+      }
+      continue;
+    }
     console.log(`\n=== Brand: ${brand.name} ===`);
     let items;
     try {
@@ -193,6 +226,10 @@ async function seedDB() {
         await disconnect();
         return;
       }
+
+      // Politeness delay between spec-page fetches. GSMArena starts
+      // 429-blocking after ~30 rapid requests with no delay at all.
+      await new Promise((r) => setTimeout(r, DEVICE_DELAY_MS));
 
       try {
         const partial = await scraper.fetchDeviceSpecs(
@@ -217,11 +254,22 @@ async function seedDB() {
         }
       } catch (e: any) {
         console.warn(`  Device ${item.name} failed: ${e.message}`);
+        failedCount++;
       }
     }
+
+    // Persist per-brand progress so an interrupted run can skip finished
+    // brands on restart (SEED_RESUME=1).
+    await ProgressModel.updateOne(
+      { key: 'seed-progress' },
+      { $set: { lastBrand: brand.name, updatedAt: new Date() } },
+      { upsert: true },
+    );
   }
 
-  console.log(`\nSeed complete: ${deviceCount} devices, ${specCount} spec rows`);
+  console.log(
+    `\nSeed complete: ${deviceCount} devices, ${specCount} spec rows, ${failedCount} failures`,
+  );
   await disconnect();
 }
 
