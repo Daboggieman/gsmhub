@@ -102,12 +102,12 @@ function v(sp: RawRecord['specs'], key: string): string {
 function cleanName(model: string): string {
   let s = model;
   s = s.replace(
-    /\b(5G|4G|LTE|TD-LTE|FD-LTE|CDMA2000|CDMA|GSM|UMTS|HSPA\+?|Premium Edition|Dual SIM|Single SIM|Tri SIM)\b/g,
+    /\b(5G|4G|LTE|TD-LTE|FD-LTE|CDMA2000|CDMA|GSM|UMTS|HSPA\+?|Premium Edition|Standard Edition|Dual SIM|Single SIM|Tri SIM)\b/g,
     '',
   );
   s = s.replace(/\b(TD|FD)[- ]?LTE\b/g, '');
   s = s.replace(
-    /\b(?:JP|CN|KR|TW|HK|IN|EU|US|NA|LA|BR|MX|AU|SA|RU|TR|GB|DE|FR|IT|ES|CA|SEA|MEA|UW|Global)\b/g,
+    /\b(?:JP|CN|KR|TW|HK|IN|EU|US|NA|LA|BR|MX|AU|SA|RU|TR|GB|DE|FR|IT|ES|CA|SEA|MEA|UW|Global|China)\b/g,
     '',
   );
   s = s.replace(/\b\d+(?:\.\d+)?(?:GB|TB|MB)\b/g, '');
