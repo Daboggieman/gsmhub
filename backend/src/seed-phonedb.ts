@@ -8,7 +8,7 @@
  *
  * Run:  NODE_EXTRA_CA_CERTS=./rapidssl-g1.crt.pem pnpm seed:phonedb
  * Env:
- *   PHONEDB_JSON=path    dataset location (default /tmp/seeddata/PhoneSpecsDataset25K.json)
+ *   PHONEDB_JSON=path    dataset location (default .seeddata/PhoneSpecsDataset25K.json at repo root)
  *   SEED_MAX_DEVICES=n   cap total devices written
  *   NO_WIPE=1            keep existing devices (default: wipes devices)
  *   ONLY_SMARTPHONES=0   include tablets/watches/etc (default: smartphones only)
@@ -29,7 +29,7 @@ import * as fs from 'fs';
 config();
 
 const DATASET_PATH =
-  process.env.PHONEDB_JSON || '/tmp/seeddata/PhoneSpecsDataset25K.json';
+  process.env.PHONEDB_JSON || '/home/recoding/gsmhub/.seeddata/PhoneSpecsDataset25K.json';
 const maxDevices = Number(process.env.SEED_MAX_DEVICES) || 0;
 const onlySmartphones = process.env.ONLY_SMARTPHONES !== '0';
 const wipe = process.env.NO_WIPE !== '1';
