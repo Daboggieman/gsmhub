@@ -42,11 +42,15 @@ export class DevicesService {
 
   private async attachLatestPrice(device: Device): Promise<Device> {
     if (device && device._id) {
-      const latestPrice = await this.pricesService.findLatestPriceByDeviceId(
-        device._id.toString(),
-      );
-      if (latestPrice) {
-        (device as any).latestPrice = latestPrice.price;
+      try {
+        const latestPrice = await this.pricesService.findLatestPriceByDeviceId(
+          device._id.toString(),
+        );
+        if (latestPrice) {
+          (device as any).latestPrice = latestPrice.price;
+        }
+      } catch (e) {
+        this.logger.warn(`Failed to attach price for ${device._id}: ${(e as Error).message}`);
       }
     }
     return device;
@@ -61,15 +65,58 @@ export class DevicesService {
 
     if (!deviceIds.length) return devices;
 
-    const priceMap =
-      await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
+    try {
+      const priceMap =
+        await this.pricesService.findLatestPricesByDeviceIds(deviceIds);
 
-    return devices.map((device) => {
-      if (device && device._id && priceMap[device._id.toString()]) {
-        (device as any).latestPrice = priceMap[device._id.toString()];
-      }
-      return device;
-    });
+      return devices.map((device) => {
+        if (device && device._id && priceMap[device._id.toString()]) {
+          (device as any).latestPrice = priceMap[device._id.toString()];
+        }
+        return device;
+      });
+    } catch (e) {
+      this.logger.warn(`Failed to attach prices for batch: ${(e as Error).message}`);
+      return devices;
+    }
+  }
+
+  /** Drop every popular/trending cache key so a data change reflects immediately. */
+  private async invalidateListCaches(): Promise<void> {
+    const keys = [
+      'popular_devices_8',
+      'popular_devices_8', // legacy typo keys, harmless
+      'popular_devices_10',
+      'popular_devices_5',
+      'popular_devices_12',
+      'popular_devices_50',
+    ];
+    await Promise.all(keys.map((k) => this.safeCacheDel(k))).catch(() => undefined);
+  }
+
+  private async safeCacheGet<T>(key: string): Promise<T | null> {
+    try {
+      return (await this.cacheManager.get<T>(key)) ?? null;
+    } catch (e) {
+      this.logger.warn(`Cache read failed for ${key}: ${(e as Error).message}`);
+      return null;
+    }
+  }
+
+  private async safeCacheSet(key: string, value: any, ttl: number): Promise<void> {
+    try {
+      await this.cacheManager.set(key, value, ttl);
+    } catch (e) {
+      this.logger.warn(`Cache write failed for ${key}: ${(e as Error).message}`);
+    }
+  }
+
+  private async safeCacheDel(key: string): Promise<void> {
+    try {
+      await this.cacheManager.del(key);
+    } catch (e) {
+      this.logger.warn(`Cache delete failed for ${key}: ${(e as Error).message}`);
+    }
   }
 
   async getAllDevices(filters?: {
@@ -94,7 +141,7 @@ export class DevicesService {
       throw new NotFoundException(`Invalid Category ID: ${filters.category}`);
     }
     const devices = await this.devicesRepository.findAll(filters);
-    const total = await this.devicesRepository.countAll(filters);
+    const total = await this.devicesRepository.countAll({ ...filters });
     const devicesWithPrices = await this.attachLatestPrices(devices);
 
     let suggestions: string[] = [];
@@ -133,7 +180,7 @@ export class DevicesService {
   }
 
   async findBySlug(slug: string): Promise<Device> {
-    const cachedDevice = await this.cacheManager.get<Device>(`device_${slug}`);
+    const cachedDevice = await this.safeCacheGet<Device>(`device_${slug}`);
     if (cachedDevice) {
       return await this.attachLatestPrice(cachedDevice);
     }
@@ -143,7 +190,7 @@ export class DevicesService {
       throw new NotFoundException(`Device with slug ${slug} not found`);
     }
     const deviceWithPrice = await this.attachLatestPrice(device);
-    await this.cacheManager.set(`device_${slug}`, deviceWithPrice, 3600); // Cache for 1 hour
+    await this.safeCacheSet(`device_${slug}`, deviceWithPrice, 3600); // Cache for 1 hour
     return deviceWithPrice;
   }
 

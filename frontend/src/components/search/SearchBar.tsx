@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faSpinner, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '../../lib/api';
 import { SearchResult } from '@shared/types';
+import { escapeRegExp } from '@shared/utils/regex';
 
 const SEARCH_HISTORY_KEY = 'gsmhub_recent_searches';
 

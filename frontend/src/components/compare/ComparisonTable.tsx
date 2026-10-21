@@ -21,7 +21,7 @@ interface ComparisonTableProps {
 }
 
 const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => {
-  const { devices, comparison } = comparisonData;
+  const { devices, comparison = [] } = comparisonData || {};
   const [expandedCategories, setExpandedCategories] = useState<{ [key: string]: boolean }>(() => {
     // Expand all by default
     const cats = [...new Set(comparison.map(c => c.category))];
@@ -30,6 +30,15 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
 
   const [showOnlyDiffs, setShowOnlyDiffs] = useState(false);
   const [highlightDiffs, setHighlightDiffs] = useState(true);
+
+  if (!comparison || comparison.length === 0) {
+    return (
+      <div className="p-8 text-center bg-white rounded-3xl border border-gray-100 shadow-sm">
+        <p className="font-black text-gray-400">No comparison data available.</p>
+        <p className="text-xs text-gray-500 mt-1">Select at least two devices to compare their specifications.</p>
+      </div>
+    );
+  }
 
   if (!devices || devices.length === 0) return null;
 

@@ -26,10 +26,14 @@ class ApiClient {
   private async request<T>(endpoint: string, options?: RequestInit): Promise<T> {
     let modifiedOptions = options || {};
 
-    modifiedOptions.headers = {
-      'Content-Type': 'application/json',
-      ...modifiedOptions.headers,
-    };
+    modifiedOptions.headers = { ...modifiedOptions.headers };
+
+    if (!(modifiedOptions.body instanceof FormData)) {
+      modifiedOptions.headers = {
+        'Content-Type': 'application/json',
+        ...modifiedOptions.headers,
+      };
+    }
 
     modifiedOptions.credentials = 'include';
 
@@ -175,7 +179,11 @@ class ApiClient {
   }
 
   async compareDevices(slugs: string[]): Promise<any> {
-    return this.request(`/compare?devices=${slugs.join(',')}`);
+    const data = await this.request(`/compare?devices=${slugs.join(',')}`);
+    if (data && data.message && !data.comparison) {
+      throw new Error(data.message);
+    }
+    return data;
   }
 
   // Categories

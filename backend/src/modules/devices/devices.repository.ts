@@ -77,10 +77,75 @@ export class DevicesRepository {
       if (filters.maxDisplay) query.displaySizeValue.$lte = filters.maxDisplay;
     }
 
-    if (filters?.minPrice || filters?.maxPrice) {
-      query.latestPrice = {};
-      if (filters.minPrice) query.latestPrice.$gte = filters.minPrice;
-      if (filters.maxPrice) query.latestPrice.$lte = filters.maxPrice;
+    const hasPriceFilter = filters?.minPrice || filters?.maxPrice;
+    const priceSort =
+      filters?.sort === 'price_low' || filters?.sort === 'price_high';
+
+    // Price filtering/sorting must run against the latest known price, which
+    // lives in the pricehistory collection — the Device doc never stores it.
+    // Use a $lookup-backed pipeline for these cases so they work correctly.
+    if (hasPriceFilter || priceSort) {
+      const match: any = { ...query };
+      if (filters?.minPrice || filters?.maxPrice) {
+        match.latestPrice = {};
+        if (filters.minPrice) match.latestPrice.$gte = filters.minPrice;
+        if (filters.maxPrice) match.latestPrice.$lte = filters.maxPrice;
+      }
+      const pipeline: any[] = [
+        { $match: query },
+        {
+          $lookup: {
+            from: 'pricehistories',
+            localField: '_id',
+            foreignField: 'device',
+            as: '__prices',
+          },
+        },
+        {
+          $addFields: {
+            latestPrice: {
+              $let: {
+                vars: {
+                  latest: {
+                    $arrayElemAt: [
+                      { $sortArray: { input: '$__prices', sortBy: { date: -1 } } },
+                      0,
+                    ],
+                  },
+                },
+                in: { $ifNull: ['$$latest.price', null] },
+              },
+            },
+          },
+        },
+        { $match: match },
+      ];
+      if (filters?.sort === 'price_low') pipeline.push({ $sort: { latestPrice: 1 } });
+      if (filters?.sort === 'price_high') pipeline.push({ $sort: { latestPrice: -1 } });
+      else if (filters?.sort) {
+        switch (filters.sort) {
+          case 'latest': pipeline.push({ $sort: { createdAt: -1 } }); break;
+          case 'popular': pipeline.push({ $sort: { views: -1 } }); break;
+          case 'alphabetical': pipeline.push({ $sort: { model: 1 } }); break;
+          default: pipeline.push({ $sort: { createdAt: -1 } });
+        }
+      } else {
+        pipeline.push({ $sort: { createdAt: -1 } });
+      }
+      if (filters?.skip) pipeline.push({ $skip: filters.skip });
+      if (filters?.limit) pipeline.push({ $limit: filters.limit });
+      // Populate category like the find path does.
+      pipeline.push({
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      });
+      pipeline.push({ $unwind: { path: '$category', preserveNullAndEmptyArrays: true } });
+      pipeline.push({ $project: { __prices: 0 } });
+      return this.deviceModel.aggregate(pipeline).exec();
     }
 
     let findQuery = this.deviceModel.find(query).populate('category').lean();
@@ -93,12 +158,6 @@ export class DevicesRepository {
           break;
         case 'popular':
           findQuery = findQuery.sort({ views: -1 });
-          break;
-        case 'price_low':
-          findQuery = findQuery.sort({ latestPrice: 1 });
-          break;
-        case 'price_high':
-          findQuery = findQuery.sort({ latestPrice: -1 });
           break;
         case 'alphabetical':
           findQuery = findQuery.sort({ model: 1 });
@@ -124,11 +183,25 @@ export class DevicesRepository {
     category?: string;
     brand?: string;
     search?: string;
+    minRam?: number;
+    maxRam?: number;
+    minStorage?: number;
+    maxStorage?: number;
+    minBattery?: number;
+    maxBattery?: number;
+    minDisplay?: number;
+    maxDisplay?: number;
+    minPrice?: number;
+    maxPrice?: number;
   }): Promise<number> {
     const query: any = {};
-    if (filters?.category) {
-      query.category = new Types.ObjectId(filters.category);
-    }
+    const parse = (v: any) => {
+      if (v === undefined || v === null || v === '') return undefined;
+      const n = Number(v);
+      return Number.isFinite(n) ? n : undefined;
+    };
+
+    if (filters?.category) query.category = new Types.ObjectId(filters.category);
     if (filters?.brand) {
       query.brand = { $regex: new RegExp(escapeRegExp(filters.brand), 'i') };
     }
@@ -139,6 +212,65 @@ export class DevicesRepository {
         { model: { $regex: new RegExp(safeSearch, 'i') } },
         { brand: { $regex: new RegExp(safeSearch, 'i') } },
       ];
+    }
+    const ranges: [string, any, any][] = [
+      ['ramValue', parse(filters?.minRam), parse(filters?.maxRam)],
+      ['storageValue', parse(filters?.minStorage), parse(filters?.maxStorage)],
+      ['batteryValue', parse(filters?.minBattery), parse(filters?.maxBattery)],
+      ['displaySizeValue', parse(filters?.minDisplay), parse(filters?.maxDisplay)],
+    ];
+    for (const [field, low, high] of ranges) {
+      if (low !== undefined || high !== undefined) {
+        query[field] = {};
+        if (low !== undefined) query[field].$gte = low;
+        if (high !== undefined) query[field].$lte = high;
+      }
+    }
+    const minPrice = parse(filters?.minPrice);
+    const maxPrice = parse(filters?.maxPrice);
+
+    if (minPrice !== undefined || maxPrice !== undefined) {
+      // price range operates on the pricehistory $lookup, matching findAll
+      const pipeline: any[] = [];
+      if (Object.keys(query).length) pipeline.push({ $match: query });
+      pipeline.push(
+        {
+          $lookup: {
+            from: 'pricehistories',
+            localField: '_id',
+            foreignField: 'device',
+            as: '__prices',
+          },
+        },
+        {
+          $addFields: {
+            latestPrice: {
+              $let: {
+                vars: {
+                  latest: {
+                    $arrayElemAt: [
+                      { $sortArray: { input: '$__prices', sortBy: { date: -1 } } },
+                      0,
+                    ],
+                  },
+                },
+                in: { $ifNull: ['$$latest.price', null] },
+              },
+            },
+          },
+        },
+        {
+          $match: {
+            latestPrice: {
+              ...(minPrice !== undefined ? { $gte: minPrice } : {}),
+              ...(maxPrice !== undefined ? { $lte: maxPrice } : {}),
+            },
+          },
+        },
+        { $count: 'n' },
+      );
+      const res = await this.deviceModel.aggregate(pipeline).exec();
+      return res.length ? res[0].n : 0;
     }
 
     return this.deviceModel.countDocuments(query).exec();

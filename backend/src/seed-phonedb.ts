@@ -111,6 +111,8 @@ function cleanName(model: string): string {
     '',
   );
   s = s.replace(/\b\d+(?:\.\d+)?(?:GB|TB|MB)\b/g, '');
+  // Drop "/ alias" suffixes — variants, e.g. "... TD-LTE US 128GB / SM-S931R4"
+  s = s.replace(/\/.*$/, '');
   const isCode = (tok: string): boolean => {
     if (tok.length < 5) return false;
     if (!/^[A-Z0-9-]+$/.test(tok)) return false;
@@ -124,7 +126,8 @@ function cleanName(model: string): string {
     .join(' ')
     .replace(/\s+/g, ' ')
     .trim()
-    .replace(/^[-\s]+|[-\s]+$/g, '');
+    // strip any trailing punctuation/separators left by token removal
+    .replace(/([ -]+)$/, '');
   return out || model;
 }
 

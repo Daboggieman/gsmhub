@@ -44,13 +44,13 @@ export class CreatePriceDto {
   retailer?: string;
 
   @ApiProperty({
-    description: 'A direct link to the product page',
+    description: 'A direct link to the retailer product page',
     example: 'https://www.amazon.com/dp/B08N5T6S4B',
     required: false,
   })
   @IsString()
   @IsOptional()
-  url?: string;
+  affiliateUrl?: string;
 
   @ApiProperty({
     description: 'The date of the price entry',
@@ -100,11 +100,11 @@ export class UpdatePriceDto {
   retailer?: string;
 
   @ApiProperty({
-    description: 'A direct link to the product page',
+    description: 'A direct link to the retailer product page',
     example: 'https://www.bestbuy.com/site/product_name',
     required: false,
   })
   @IsString()
   @IsOptional()
-  url?: string;
+  affiliateUrl?: string;
 }

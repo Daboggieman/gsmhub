@@ -53,7 +53,7 @@ export default function DeviceForm({
     currency: 'USD',
     country: 'USA',
     retailer: '',
-    url: '',
+    affiliateUrl: '',
   })
 
   const [formData, setFormData] = useState<Partial<Device>>({
@@ -225,7 +225,7 @@ export default function DeviceForm({
         currency: 'USD',
         country: 'USA',
         retailer: '',
-        url: '',
+        affiliateUrl: '',
       })
     } catch (err: any) {
       alert(`Failed to add price: ${err.message}`)
@@ -437,9 +437,9 @@ export default function DeviceForm({
                     </label>
                     <input
                       type="text"
-                      value={newPrice.url}
+                      value={newPrice.affiliateUrl}
                       onChange={(e) =>
-                        setNewPrice({ ...newPrice, url: e.target.value })
+                        setNewPrice({ ...newPrice, affiliateUrl: e.target.value })
                       }
                       className="w-full rounded-xl border p-2 font-bold"
                     />
