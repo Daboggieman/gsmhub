@@ -113,12 +113,41 @@ function v(sp: RawRecord['specs'], key: string): string {
   return s === ':' || /^\s*$/.test(s) ? '' : s;
 }
 
+// PhoneDB's currency spec lives under the literal key "null". Labels are
+// occasionally wrong (KR phones as TWD, etc.), but multi-market records
+// legitimately price in one region's currency while listing several market
+// countries — so the label is still the best signal. Outliers are handled
+// downstream by the median + plausibility band.
+// Exception: single-country records where the market country has exactly one
+// plausible currency and the label disagrees (KR-only records labelled TWD).
+const COUNTRY_CURRENCY: Record<string, string> = {
+  'South Korea': 'KRW',
+  India: 'INR',
+  Indonesia: 'IDR',
+  Japan: 'JPY',
+  Taiwan: 'TWD',
+  China: 'CNY',
+  Vietnam: 'VND',
+  Russia: 'RUB',
+  Brazil: 'BRL',
+};
+
 function extractCurrency(sp: RawRecord['specs']): string {
-  // The currency spec is serialized under the literal key "null".
   const raw = v(sp, 'null').toUpperCase();
   const m = raw.match(/([A-Z]{3})/);
-  return m ? m[1] : '';
+  if (!m) return '';
+  const markets = (sp['Market Countries']?.value || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  // Only override for unambiguous single-market records.
+  if (markets.length === 1) {
+    const expected = COUNTRY_CURRENCY[markets[0]];
+    if (expected && expected !== m[1]) return expected;
+  }
+  return m[1];
 }
+
 
 function extractPrice(sp: RawRecord['specs']): number | null {
   const raw = v(sp, 'Price');
@@ -217,21 +246,56 @@ async function main() {
   const PRICE_MAX = 25000;
   const finalBySlug = new Map<string, PriceEntry>();
   let noPlausible = 0;
+  let rescaled = 0;
+  let dropped = 0;
 
   for (const [slug, candidates] of bySlug) {
-    const sorted = [...candidates].sort((a, b) => a.price - b.price);
-    const inBand = sorted.filter((c) => c.price >= PRICE_MIN && c.price <= PRICE_MAX);
-    const pool = inBand.length ? inBand : sorted;
-    const median = pool[Math.floor(pool.length / 2)];
-    if (!inBand.length) noPlausible++;
-    finalBySlug.set(slug, median);
+    // Rescue entries that are off by a power of ten (dataset sometimes
+    // drops trailing zeros, e.g. IDR 3299 for Rp 3,299,000): try scaling
+    // each candidate by 10^k and keep the first landing in band.
+    const inBand: PriceEntry[] = [];
+    for (const c of candidates) {
+      if (c.price >= PRICE_MIN && c.price <= PRICE_MAX) {
+        inBand.push(c);
+        continue;
+      }
+      // Off by a power of ten — rescale into band from either side.
+      let scaled = c.price;
+      while (scaled < PRICE_MIN) scaled *= 10;
+      while (scaled > PRICE_MAX) scaled /= 10;
+      if (scaled >= PRICE_MIN) {
+        inBand.push({ ...c, price: Math.round(scaled * 100) / 100 });
+        rescaled++;
+      }
+    }
+    if (!inBand.length) {
+      dropped++;
+      continue;
+    }
+    // Cluster candidates within 2× of each other and take the largest
+    // cluster's median — variants sharing a slug usually quote the same
+    // device in different markets, so the majority cluster is the real
+    // MSRP; a single mislabelled-currency outlier loses to it.
+    const sortedAll = [...inBand].sort((a, b) => a.price - b.price);
+    let bestCluster: PriceEntry[] = [];
+    let i = 0;
+    while (i < sortedAll.length) {
+      let j = i + 1;
+      while (j < sortedAll.length && sortedAll[j].price <= sortedAll[i].price * 2) j++;
+      const cluster = sortedAll.slice(i, j);
+      if (cluster.length > bestCluster.length) bestCluster = cluster;
+      i = j;
+    }
+    bestCluster.sort((a, b) => a.date.getTime() - b.date.getTime());
+    finalBySlug.set(slug, bestCluster[Math.floor(bestCluster.length / 2)]);
   }
   bySlug.clear();
+  noPlausible = dropped;
 
   console.log(
     `Dataset prices usable: ${finalBySlug.size} unique device slugs ` +
       `(${withPrice} records with Price, ${unknownCurrency} unknown currency skipped, ` +
-      `${noPlausible} outside plausible range kept via fallback)`,
+      `${rescaled} rescaled by ×10^n, ${dropped} slugs dropped as implausible)`,
   );
 
   // --- 3. resolve slugs against devices ---------------------------------
