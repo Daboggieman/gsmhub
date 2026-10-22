@@ -113,13 +113,12 @@ function v(sp: RawRecord['specs'], key: string): string {
   return s === ':' || /^\s*$/.test(s) ? '' : s;
 }
 
-// PhoneDB's currency spec lives under the literal key "null". Labels are
-// occasionally wrong (KR phones as TWD, etc.), but multi-market records
-// legitimately price in one region's currency while listing several market
-// countries — so the label is still the best signal. Outliers are handled
-// downstream by the median + plausibility band.
-// Exception: single-country records where the market country has exactly one
-// plausible currency and the label disagrees (KR-only records labelled TWD).
+// PhoneDB's currency spec lives under the literal key "null", and both the
+// label and the Market Countries field carry noise (KR phones labelled TWD,
+// Indonesian prices on "India"-market records, RUB on China-market rows…).
+// Instead of trusting either blindly, resolvePrice() checks the raw number
+// against the typical MSRP range of each candidate currency: the label wins
+// when it fits; a single-market record may reinterpret via its country.
 const COUNTRY_CURRENCY: Record<string, string> = {
   'South Korea': 'KRW',
   India: 'INR',
@@ -132,22 +131,101 @@ const COUNTRY_CURRENCY: Record<string, string> = {
   Brazil: 'BRL',
 };
 
+// Plausible MSRP range per currency in native units (launch prices).
+const NATIVE_BAND: Record<string, [number, number]> = {
+  USD: [30, 6000],
+  EUR: [50, 3500],
+  GBP: [40, 3000],
+  CAD: [40, 4000],
+  AUD: [40, 4000],
+  CNY: [300, 20000],
+  JPY: [5000, 400000],
+  KRW: [50000, 3000000],
+  INR: [3000, 200000],
+  IDR: [100000, 30000000],
+  TWD: [2000, 70000],
+  VND: [1000000, 60000000],
+  RUB: [2000, 250000],
+  BRL: [200, 20000],
+  MXN: [500, 40000],
+  THB: [500, 60000],
+  MYR: [200, 10000],
+  PHP: [500, 80000],
+  HKD: [300, 15000],
+  SGD: [50, 4000],
+  SAR: [100, 6000],
+  AED: [200, 10000],
+  KZT: [20000, 900000],
+  CLP: [30000, 2000000],
+  COP: [100000, 10000000],
+  PEN: [100, 8000],
+  QAR: [100, 8000],
+  KWD: [10, 2000],
+  JOD: [30, 3000],
+  ILS: [100, 8000],
+  ZAR: [300, 40000],
+  PKR: [5000, 600000],
+  BDT: [3000, 300000],
+  NGN: [20000, 2000000],
+  EGP: [1000, 100000],
+  PLN: [200, 10000],
+  TRY: [1000, 100000],
+  HUF: [20000, 1500000],
+  CHF: [50, 4000],
+  SEK: [500, 30000],
+  NOK: [500, 40000],
+  DKK: [100, 10000],
+  NZD: [50, 5000],
+  RON: [200, 12000],
+  CZK: [1000, 100000],
+};
+
 function extractCurrency(sp: RawRecord['specs']): string {
   const raw = v(sp, 'null').toUpperCase();
   const m = raw.match(/([A-Z]{3})/);
-  if (!m) return '';
+  return m ? m[1] : '';
+}
+
+/**
+ * Decide this record's currency + USD price: interpret the raw value with
+ * the labelled currency if that lands in the currency's MSRP band; else,
+ * for single-market records, with the market country's currency; else null.
+ */
+function resolvePrice(
+  sp: RawRecord['specs'],
+): { usd: number; currency: string; original: number } | null {
+  const raw = extractPrice(sp);
+  if (raw === null) return null;
+  const label = extractCurrency(sp);
+
+  const tryCurrency = (cur: string): number | null => {
+    const band = NATIVE_BAND[cur];
+    const rate = TO_USD[cur];
+    if (!band || !rate) return null;
+    if (raw < band[0] || raw > band[1]) return null;
+    return Math.round(raw * rate * 100) / 100;
+  };
+
+  const viaLabel = tryCurrency(label);
+  if (viaLabel !== null) {
+    return { usd: viaLabel, currency: label, original: raw };
+  }
+
   const markets = (sp['Market Countries']?.value || '')
     .split(',')
     .map((s) => s.trim())
     .filter(Boolean);
-  // Only override for unambiguous single-market records.
   if (markets.length === 1) {
-    const expected = COUNTRY_CURRENCY[markets[0]];
-    if (expected && expected !== m[1]) return expected;
+    const alt = COUNTRY_CURRENCY[markets[0]];
+    if (alt && alt !== label) {
+      const viaAlt = tryCurrency(alt);
+      if (viaAlt !== null) {
+        return { usd: viaAlt, currency: alt, original: raw };
+      }
+    }
   }
-  return m[1];
+  return null;
 }
-
 
 function extractPrice(sp: RawRecord['specs']): number | null {
   const raw = v(sp, 'Price');
@@ -197,9 +275,9 @@ async function main() {
   }
 
   // --- 2. build dataset price map: slug → candidate prices -------------
-  // Currency labels in the dataset are noisy (JP models labelled USD,
-  // 10×/100× unit errors), so keep every convertible candidate per slug,
-  // then take the median of the plausible ones below.
+  // Currency labels in the dataset are noisy, so resolvePrice() sanity-checks
+  // each record's raw value against native MSRP bands before converting;
+  // clustering below then picks the majority interpretation per slug.
   console.log('Mapping dataset prices...');
   interface PriceEntry {
     price: number; // USD
@@ -208,19 +286,14 @@ async function main() {
     date: Date;
   }
   const bySlug = new Map<string, PriceEntry[]>();
-  let withPrice = 0;
-  let unknownCurrency = 0;
+  let unresolved = 0;
 
   for (const rec of dataset) {
     const sp = rec.specs;
-    const priceRaw = extractPrice(sp);
-    if (priceRaw === null) continue;
-    withPrice++;
-
-    const currency = extractCurrency(sp);
-    const rate = TO_USD[currency];
-    if (!rate) {
-      unknownCurrency++;
+    if (!extractPrice(sp)) continue; // no price spec at all
+    const resolved = resolvePrice(sp);
+    if (!resolved) {
+      unresolved++;
       continue;
     }
 
@@ -230,22 +303,24 @@ async function main() {
     if (!name) continue;
 
     const slug = generateSlug(`${brand} ${name}`);
-    const price = Math.round(priceRaw * rate * 100) / 100;
     const date = parseDate(v(sp, 'Announced') || v(sp, 'Released'));
 
     const list = bySlug.get(slug) ?? [];
-    list.push({ price, currency, originalPrice: priceRaw, date });
+    list.push({
+      price: resolved.usd,
+      currency: resolved.currency,
+      originalPrice: resolved.original,
+      date,
+    });
     bySlug.set(slug, list);
   }
 
   // --- 2b. pick a plausible price per slug ------------------------------
-  // Median of candidates within [25, 25000] USD; fall back to median of
-  // all candidates if none are in band (keeps legitimately expensive
-  // devices while dropping cent-level and 10x-unit-error entries).
+  // Keep candidates within the USD band, rescuing ones off by a power of
+  // ten; then cluster and pick the largest cluster's median.
   const PRICE_MIN = 25;
   const PRICE_MAX = 25000;
   const finalBySlug = new Map<string, PriceEntry>();
-  let noPlausible = 0;
   let rescaled = 0;
   let dropped = 0;
 
@@ -290,12 +365,11 @@ async function main() {
     finalBySlug.set(slug, bestCluster[Math.floor(bestCluster.length / 2)]);
   }
   bySlug.clear();
-  noPlausible = dropped;
 
   console.log(
     `Dataset prices usable: ${finalBySlug.size} unique device slugs ` +
-      `(${withPrice} records with Price, ${unknownCurrency} unknown currency skipped, ` +
-      `${rescaled} rescaled by ×10^n, ${dropped} slugs dropped as implausible)`,
+      `(${unresolved} records with no plausible interpretation, ` +
+      `${rescaled} rescaled by ×10^n, ${dropped} slugs dropped)`,
   );
 
   // --- 3. resolve slugs against devices ---------------------------------
