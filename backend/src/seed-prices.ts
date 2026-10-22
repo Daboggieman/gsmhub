@@ -153,13 +153,7 @@ async function main() {
   const PriceHistoryModel = mongoose.model('PriceHistory', PriceHistorySchema as any);
 
   // --- 1. optionally remove the stale dangling demo rows ----------------
-  if (DRY_RUN) {
-    console.log('DRY RUN — nothing written.');
-    await disconnect();
-    return;
-  }
-
-  if (CLEAN_DANGLING) {
+  if (CLEAN_DANGLING && !DRY_RUN) {
     const deviceIds = new Set(
       (await DeviceModel.find({}, { _id: 1 }).lean()).map((d: any) => d._id.toString()),
     );
@@ -173,7 +167,10 @@ async function main() {
     }
   }
 
-  // --- 2. build dataset price map: slug → { priceUsd, date, currency } --
+  // --- 2. build dataset price map: slug → candidate prices -------------
+  // Currency labels in the dataset are noisy (JP models labelled USD,
+  // 10×/100× unit errors), so keep every convertible candidate per slug,
+  // then take the median of the plausible ones below.
   console.log('Mapping dataset prices...');
   interface PriceEntry {
     price: number; // USD
@@ -181,7 +178,7 @@ async function main() {
     originalPrice: number;
     date: Date;
   }
-  const bySlug = new Map<string, PriceEntry>();
+  const bySlug = new Map<string, PriceEntry[]>();
   let withPrice = 0;
   let unknownCurrency = 0;
 
@@ -207,26 +204,44 @@ async function main() {
     const price = Math.round(priceRaw * rate * 100) / 100;
     const date = parseDate(v(sp, 'Announced') || v(sp, 'Released'));
 
-    // Keep the highest-priced variant per slug (flagship trim, most useful)
-    const prev = bySlug.get(slug);
-    if (!prev || price > prev.price) {
-      bySlug.set(slug, { price, currency, originalPrice: priceRaw, date });
-    }
+    const list = bySlug.get(slug) ?? [];
+    list.push({ price, currency, originalPrice: priceRaw, date });
+    bySlug.set(slug, list);
   }
 
+  // --- 2b. pick a plausible price per slug ------------------------------
+  // Median of candidates within [25, 25000] USD; fall back to median of
+  // all candidates if none are in band (keeps legitimately expensive
+  // devices while dropping cent-level and 10x-unit-error entries).
+  const PRICE_MIN = 25;
+  const PRICE_MAX = 25000;
+  const finalBySlug = new Map<string, PriceEntry>();
+  let noPlausible = 0;
+
+  for (const [slug, candidates] of bySlug) {
+    const sorted = [...candidates].sort((a, b) => a.price - b.price);
+    const inBand = sorted.filter((c) => c.price >= PRICE_MIN && c.price <= PRICE_MAX);
+    const pool = inBand.length ? inBand : sorted;
+    const median = pool[Math.floor(pool.length / 2)];
+    if (!inBand.length) noPlausible++;
+    finalBySlug.set(slug, median);
+  }
+  bySlug.clear();
+
   console.log(
-    `Dataset prices usable: ${bySlug.size} unique device slugs ` +
-      `(${withPrice} records with Price, ${unknownCurrency} unknown currency skipped)`,
+    `Dataset prices usable: ${finalBySlug.size} unique device slugs ` +
+      `(${withPrice} records with Price, ${unknownCurrency} unknown currency skipped, ` +
+      `${noPlausible} outside plausible range kept via fallback)`,
   );
 
   // --- 3. resolve slugs against devices ---------------------------------
-  const slugs = [...bySlug.keys()];
+  const slugs = [...finalBySlug.keys()];
   const devices = await DeviceModel.find({ slug: { $in: slugs } }, { _id: 1, slug: 1 })
     .lean();
   const deviceIdBySlug = new Map<string, string>();
   for (const d of devices as any[])
     deviceIdBySlug.set(d.slug, d._id.toString());
-  console.log(`Matched ${deviceIdBySlug.size}/${bySlug.size} slugs to devices`);
+  console.log(`Matched ${deviceIdBySlug.size}/${finalBySlug.size} slugs to devices`);
 
   // --- 4. write price history -------------------------------------------
   if (DRY_RUN) {
@@ -234,17 +249,15 @@ async function main() {
     await disconnect();
     return;
   }
-
-  const existing = new Set(
-    (await PriceHistoryModel.find({}, { device: 1 }).lean()).map((p) =>
-      (p.device as any).toString(),
-    ),
-  );
+  // Replace prices we are about to backfill so a re-run refreshes values,
+  // while leaving any prices added by other means untouched.
+  const targetIds = [...deviceIdBySlug.values()].map((id) => new mongoose.Types.ObjectId(id));
+  await PriceHistoryModel.deleteMany({ device: { $in: targetIds } });
+  console.log('Cleared existing rows for devices being backfilled');
 
   const BATCH = 500;
   let batch: any[] = [];
   let written = 0;
-  let skippedExisting = 0;
 
   const flush = async () => {
     if (!batch.length) return;
@@ -257,13 +270,9 @@ async function main() {
     console.log(`  [${written}] price rows written`);
   };
 
-  for (const [slug, entry] of bySlug) {
+  for (const [slug, entry] of finalBySlug) {
     const deviceId = deviceIdBySlug.get(slug);
     if (!deviceId) continue;
-    if (existing.has(deviceId)) {
-      skippedExisting++;
-      continue;
-    }
     batch.push({
       device: new mongoose.Types.ObjectId(deviceId),
       country: 'Global',
@@ -277,9 +286,7 @@ async function main() {
   }
   if (batch.length) await flush();
 
-  console.log(
-    `\nDone: ${written} price rows written, ${skippedExisting} devices already had prices`,
-  );
+  console.log(`\nDone: ${written} price rows written`);
   await disconnect();
 }
 
