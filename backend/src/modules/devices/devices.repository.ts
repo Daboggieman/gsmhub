@@ -120,9 +120,11 @@ export class DevicesRepository {
         },
         { $match: match },
       ];
-      if (filters?.sort === 'price_low') pipeline.push({ $sort: { latestPrice: 1 } });
-      if (filters?.sort === 'price_high') pipeline.push({ $sort: { latestPrice: -1 } });
-      else if (filters?.sort) {
+      if (filters?.sort === 'price_low') {
+        pipeline.push({ $sort: { latestPrice: 1 } });
+      } else if (filters?.sort === 'price_high') {
+        pipeline.push({ $sort: { latestPrice: -1 } });
+      } else if (filters?.sort) {
         switch (filters.sort) {
           case 'latest': pipeline.push({ $sort: { createdAt: -1 } }); break;
           case 'popular': pipeline.push({ $sort: { views: -1 } }); break;
