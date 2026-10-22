@@ -91,6 +91,9 @@ export class DevicesRepository {
         if (filters.minPrice) match.latestPrice.$gte = filters.minPrice;
         if (filters.maxPrice) match.latestPrice.$lte = filters.maxPrice;
       }
+      // Sorting by price only makes sense for devices that have one —
+      // exclude unpriced devices instead of letting nulls sort first.
+      if (priceSort) match.latestPrice = { ...(match.latestPrice || {}), $ne: null };
       const pipeline: any[] = [
         { $match: query },
         {

@@ -24,6 +24,7 @@
 import { connect, disconnect } from 'mongoose';
 import { config } from 'dotenv';
 import { PriceHistorySchema } from './modules/prices/price-history.schema';
+import { DeviceSchema } from './modules/devices/device.schema';
 import { generateSlug } from './common/utils/slug.util';
 import { cleanName } from './common/utils/device-name.util';
 
@@ -148,10 +149,16 @@ async function main() {
   await connect(MONGO_URI);
   console.log('Connected to MongoDB');
 
-  const DeviceModel = mongoose.model('Device');
+  const DeviceModel = mongoose.model('Device', DeviceSchema as any);
   const PriceHistoryModel = mongoose.model('PriceHistory', PriceHistorySchema as any);
 
   // --- 1. optionally remove the stale dangling demo rows ----------------
+  if (DRY_RUN) {
+    console.log('DRY RUN — nothing written.');
+    await disconnect();
+    return;
+  }
+
   if (CLEAN_DANGLING) {
     const deviceIds = new Set(
       (await DeviceModel.find({}, { _id: 1 }).lean()).map((d: any) => d._id.toString()),
