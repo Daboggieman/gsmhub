@@ -221,7 +221,7 @@ export class DevicesService {
     };
 
     const newDevice = await this.devicesRepository.create(newDeviceData);
-    await this.cacheManager.del('popular_devices');
+    await this.safeCacheDel('popular_devices');
     return newDevice;
   }
 
@@ -265,8 +265,8 @@ export class DevicesService {
       throw new NotFoundException(`Device with ID ${id} not found`);
     }
 
-    await this.cacheManager.del(`device_${updatedDevice.slug}`);
-    await this.cacheManager.del('popular_devices');
+    await this.safeCacheDel(`device_${updatedDevice.slug}`);
+    await this.safeCacheDel('popular_devices');
     return updatedDevice;
   }
 
@@ -275,12 +275,12 @@ export class DevicesService {
     if (!deletedDevice) {
       throw new NotFoundException(`Device with ID ${id} not found`);
     }
-    await this.cacheManager.del(`device_${deletedDevice.slug}`);
-    await this.cacheManager.del('popular_devices');
+    await this.safeCacheDel(`device_${deletedDevice.slug}`);
+    await this.safeCacheDel('popular_devices');
   }
 
   async getPopularDevices(limit: number): Promise<Device[]> {
-    const cachedPopularDevices = await this.cacheManager.get<Device[]>(
+    const cachedPopularDevices = await this.safeCacheGet<Device[]>(
       `popular_devices_${limit}`,
     );
     if (cachedPopularDevices) {
@@ -290,7 +290,7 @@ export class DevicesService {
     const popularDevices = await this.devicesRepository.findPopular(limit);
     const popularDevicesWithPrices =
       await this.attachLatestPrices(popularDevices);
-    await this.cacheManager.set(
+    await this.safeCacheSet(
       `popular_devices_${limit}`,
       popularDevicesWithPrices,
       3600,
@@ -327,8 +327,8 @@ export class DevicesService {
     if (!device) {
       throw new NotFoundException(`Device with slug ${slug} not found`);
     }
-    await this.cacheManager.del(`device_${slug}`);
-    await this.cacheManager.del('popular_devices');
+    await this.safeCacheDel(`device_${slug}`);
+    await this.safeCacheDel('popular_devices');
     return device;
   }
 
@@ -438,8 +438,8 @@ export class DevicesService {
     const upsertedDevice =
       await this.devicesRepository.upsert(preparedDeviceData);
     if (upsertedDevice) {
-      await this.cacheManager.del(`device_${upsertedDevice.slug}`);
-      await this.cacheManager.del('popular_devices');
+      await this.safeCacheDel(`device_${upsertedDevice.slug}`);
+      await this.safeCacheDel('popular_devices');
       return await this.attachLatestPrice(upsertedDevice);
     }
     return null;
