@@ -100,6 +100,16 @@ export default function AdminLayout({
           >
             Audit Logs
           </Link>
+          <Link
+            href="/admin/users"
+            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+              pathname.includes('/admin/users')
+                ? 'bg-white text-indigo-900 shadow-lg'
+                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
+            }`}
+          >
+            Users
+          </Link>
           <button
             onClick={logout}
             className="mt-8 block w-full rounded-xl bg-indigo-900/50 px-4 py-3 text-left font-bold text-indigo-200 transition-all hover:bg-red-600 hover:text-white"

@@ -1,13 +1,59 @@
-import { Injectable, ConflictException } from '@nestjs/common';
+import { Injectable, ConflictException, BadRequestException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { User, UserDocument } from './schemas/user.schema';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
   constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
+
+  async findAll({ page, limit, search }: { page: number; limit: number; search?: string }): Promise<{ users: User[]; total: number }> {
+    const filter: Record<string, any> = {};
+    if (search) {
+      const rx = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      filter.$or = [{ name: rx }, { email: rx }];
+    }
+
+    const [users, total] = await Promise.all([
+      this.userModel.find(filter)
+        .select('-password')
+        .sort({ createdAt: -1 })
+        .skip((page - 1) * limit)
+        .limit(limit)
+        .exec(),
+      this.userModel.countDocuments(filter).exec(),
+    ]);
+    return { users: users as any, total };
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User | null> {
+    const { password, ...rest } = updateUserDto;
+
+    if (updateUserDto.email) {
+      const existing = await this.userModel.findOne({ email: updateUserDto.email, _id: { $ne: id } });
+      if (existing) {
+        throw new ConflictException('User with this email already exists');
+      }
+    }
+
+    const update: Record<string, any> = { ...rest };
+    if (password) {
+      const salt = await bcrypt.genSalt();
+      update.password = await bcrypt.hash(password, salt);
+    }
+
+    const updated = await this.userModel.findByIdAndUpdate(id, update, { new: true }).select('-password').exec();
+    if (!updated) return null;
+    return updated.toObject() as any;
+  }
+
+  async remove(id: string): Promise<void> {
+    const result = await this.userModel.findByIdAndDelete(id).exec();
+    if (!result) throw new BadRequestException('User not found');
+  }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const { email, password, ...rest } = createUserDto;

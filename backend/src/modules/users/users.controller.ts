@@ -5,6 +5,7 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserResponseDto } from './dto/user-response.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -32,7 +33,7 @@ export class UsersController {
       search,
     });
     return {
-      users: plainToInstance(UserResponseDto, users, { excludeExtraneousValues: true }),
+      users: plainToInstance(UserResponseDto, users.map(toResponse), { excludeExtraneousValues: true }),
       total,
       page: pageNum,
       limit: limitNum,
@@ -43,7 +44,7 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
-    return plainToInstance(UserResponseDto, user, { excludeExtraneousValues: true });
+    return plainToInstance(UserResponseDto, toResponse(user), { excludeExtraneousValues: true });
   }
 
   @Patch(':id')
@@ -59,7 +60,7 @@ export class UsersController {
     }
     const user = await this.usersService.update(id, updateUserDto);
     if (!user) throw new BadRequestException('User not found');
-    return plainToInstance(UserResponseDto, user, { excludeExtraneousValues: true });
+    return plainToInstance(UserResponseDto, toResponse(user), { excludeExtraneousValues: true });
   }
 
   @Delete(':id')
@@ -72,11 +73,8 @@ export class UsersController {
   }
 }
 
-class UserResponseDto {
-  id: string;
-  name: string;
-  email: string;
-  role: UserRole;
-  isActive: boolean;
-  createdAt: Date;
+/** Map a user document to the response shape (Mongo `_id` → `id`, password stripped). */
+function toResponse(user: any) {
+  const { _id, password, ...rest } = user;
+  return { id: _id?.toString?.() ?? _id, ...rest };
 }

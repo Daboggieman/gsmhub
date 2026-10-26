@@ -279,6 +279,28 @@ class ApiClient {
   async deletePrice(id: string): Promise<void> {
     return this.request(`/prices/${id}`, { method: 'DELETE' });
   }
+
+  // Users (admin)
+  async getUsers(params: { page?: number; limit?: number; search?: string }): Promise<{ users: any[]; total: number; page: number; limit: number; totalPages: number }> {
+    const searchParams = new URLSearchParams();
+    if (params.page) searchParams.set('page', params.page.toString());
+    if (params.limit) searchParams.set('limit', params.limit.toString());
+    if (params.search) searchParams.set('search', params.search);
+
+    return this.request(`/users?${searchParams.toString()}`);
+  }
+
+  async createUser(data: { name: string; email: string; password: string; role?: string }): Promise<any> {
+    return this.request('/users', { method: 'POST', body: JSON.stringify(data) });
+  }
+
+  async updateUser(id: string, data: any): Promise<any> {
+    return this.request(`/users/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
+  }
+
+  async deleteUser(id: string): Promise<void> {
+    return this.request(`/users/${id}`, { method: 'DELETE' });
+  }
 }
 
 
