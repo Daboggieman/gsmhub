@@ -179,7 +179,7 @@ class ApiClient {
   }
 
   async compareDevices(slugs: string[]): Promise<any> {
-    const data = await this.request(`/compare?devices=${slugs.join(',')}`);
+    const data = await this.request<any>(`/compare?devices=${slugs.join(',')}`);
     if (data && data.message && !data.comparison) {
       throw new Error(data.message);
     }
