@@ -23,6 +23,7 @@ export class UsersService {
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
         .limit(limit)
+        .lean()
         .exec(),
       this.userModel.countDocuments(filter).exec(),
     ]);
