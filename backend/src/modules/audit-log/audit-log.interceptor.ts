@@ -38,7 +38,7 @@ export class AuditLogInterceptor implements NestInterceptor {
                     const action = `${method}_${parts[0]?.toUpperCase() || 'UNKNOWN'}`;
 
                     let targetType = parts[0] || 'unknown';
-                    let targetId = parts[1] || data?._id || 'unknown';
+                    let targetId = parts[1] || data?._id || data?.id || 'unknown';
 
                     // Special handling for some routes
                     if (targetType === 'devices' && parts[1] === 'sync') {
