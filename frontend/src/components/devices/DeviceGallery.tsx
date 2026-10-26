@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
+import DeviceImage from './DeviceImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearchPlus, faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -52,13 +52,13 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
         className="relative w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 bg-gray-100 flex items-center justify-center rounded-md overflow-hidden cursor-zoom-in group"
         onClick={toggleZoom}
       >
-        <Image
+        <DeviceImage
           src={currentImageUrl}
           alt={`${deviceName || 'Device'} image ${currentImageIndex + 1}`}
-          fill
           style={{ objectFit: 'contain' }}
           className="p-2 transition-transform duration-300 group-hover:scale-105"
           priority={currentImageIndex === 0} // Prioritize loading the first image
+          fallbackLabel="No Picture"
         />
         <div className="absolute top-2 right-2 bg-black bg-opacity-50 text-white p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
           <FontAwesomeIcon icon={faSearchPlus} />
@@ -92,11 +92,11 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
               }`}
               onClick={() => setCurrentImageIndex(index)}
             >
-              <Image
+              <DeviceImage
                 src={url}
                 alt={`${deviceName || 'Device'} thumbnail ${index + 1}`}
-                fill
                 style={{ objectFit: 'cover' }}
+                fallbackLabel=""
               />
             </div>
           ))}
@@ -117,12 +117,12 @@ const DeviceGallery: React.FC<DeviceGalleryProps> = ({ imageUrls, deviceName }) 
           </button>
           
           <div className="relative w-full h-full max-w-4xl max-h-[80vh]">
-            <Image
+            <DeviceImage
               src={currentImageUrl}
               alt={`${deviceName || 'Device'} zoomed image`}
-              fill
               style={{ objectFit: 'contain' }}
               className="p-4"
+              fallbackLabel="No Picture"
             />
           </div>
 

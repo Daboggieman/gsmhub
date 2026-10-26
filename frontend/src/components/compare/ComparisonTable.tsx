@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Image from 'next/image';
+import DeviceImage from '../devices/DeviceImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
@@ -106,10 +107,9 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
                     <div className="flex flex-col items-center">
                       <div className="relative w-28 h-40 mb-4 bg-white rounded-2xl p-4 shadow-sm group hover:shadow-md transition-all border border-gray-50">
                         {device.imageUrl ? (
-                          <Image
+                          <DeviceImage
                             src={device.imageUrl}
                             alt={device.name || 'Device image'}
-                            fill
                             style={{ objectFit: 'contain' }}
                             className="p-2 transition-transform group-hover:scale-110"
                           />

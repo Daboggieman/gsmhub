@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faExchangeAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '@/lib/api';
 import { Device, SearchResult } from '@shared/types';
-import Image from 'next/image';
+import DeviceImage from '../devices/DeviceImage';
 import { useRouter } from 'next/navigation';
 
 interface CompareBoxProps {
@@ -121,7 +121,7 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
               >
                 <div className="relative w-12 h-12 bg-gray-100 rounded mr-3 flex-shrink-0">
                   {result.imageUrl ? (
-                    <Image src={result.imageUrl} alt={result.name || 'Device thumbnail'} fill style={{ objectFit: 'contain' }} />
+                    <DeviceImage src={result.imageUrl} alt={result.name || 'Device thumbnail'} style={{ objectFit: 'contain' }} fallbackLabel="" />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center text-[10px] text-gray-400">No Img</div>
                   )}
@@ -156,7 +156,7 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
                   </button>
                   <div className="relative w-20 h-24 mb-2">
                     {device.imageUrl ? (
-                      <Image src={device.imageUrl} alt={device.name || 'Selected device'} fill style={{ objectFit: 'contain' }} />
+                      <DeviceImage src={device.imageUrl} alt={device.name || 'Selected device'} style={{ objectFit: 'contain' }} />
                     ) : (
                       <div className="w-full h-full flex items-center justify-center text-gray-400">No Image</div>
                     )}

@@ -1,8 +1,8 @@
 import React from 'react';
-import Image from 'next/image';
 import Link from 'next/link';
 import { Device } from '@shared/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DeviceImage from './DeviceImage';
 import { 
   faDisplay, 
   faMemory, 
@@ -22,10 +22,9 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ device }) => {
         {/* Image Container */}
         <div className="relative w-full h-56 bg-gray-50 flex items-center justify-center overflow-hidden">
           {device.imageUrl ? (
-            <Image
+            <DeviceImage
               src={device.imageUrl}
               alt={device.name || `${device.brand} ${device.model}`}
-              fill
               style={{ objectFit: 'contain' }}
               className="p-6 transition-transform duration-500 group-hover:scale-110"
             />

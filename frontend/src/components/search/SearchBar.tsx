@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
+import DeviceImage from '../devices/DeviceImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch, faTimes, faSpinner, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '../../lib/api';
@@ -201,11 +201,11 @@ const SearchBar: React.FC = () => {
                   >
                     <div className="w-12 h-12 relative flex-shrink-0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 group-hover:border-blue-200 transition-colors">
                       {result.imageUrl ? (
-                        <Image
+                        <DeviceImage
                           src={result.imageUrl}
                           alt={result.name || 'Device image'}
-                          fill
                           className="object-contain p-1"
+                          fallbackLabel=""
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-300">

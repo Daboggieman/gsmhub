@@ -1,9 +1,9 @@
 import React from 'react';
 import DeviceCard from '@/components/devices/DeviceCard';
+import DeviceImage from '@/components/devices/DeviceImage';
 import { Device } from '@shared/types';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
-import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMobileAlt, faTabletAlt, faLaptop, faClock, faSearch, faArrowRight, faFire, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
@@ -184,12 +184,12 @@ export default async function Home() {
                     </div>
                     <div className="relative w-12 h-16 mr-3 bg-gray-100 rounded flex-shrink-0 p-1">
                       {device.imageUrl ? (
-                        <Image
+                        <DeviceImage
                           src={device.imageUrl}
                           alt={device.name || 'Device image'}
-                          fill
                           style={{ objectFit: 'contain' }}
                           sizes="48px"
+                          fallbackLabel="No Img"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-[8px] text-gray-500 font-bold">No Img</div>
