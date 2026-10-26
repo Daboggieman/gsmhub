@@ -157,10 +157,14 @@ export class DevicesRepository {
         },
       });
       pipeline.push({ $unwind: { path: '$category', preserveNullAndEmptyArrays: true } });
-      return this.deviceModel.aggregate(pipeline).exec();
+      return this.deviceModel.aggregate(pipeline, { allowDiskUse: true }).exec();
     }
 
     // All other paths: use aggregate so latestPriceStages is always applied.
+    // Sort/skip/limit run BEFORE the lookups — sorting the full collection
+    // after a $lookup blows past the 32MB aggregation sort memory limit,
+    // while a $sort directly followed by $skip/$limit gets the top-k
+    // optimization and joins only the page's devices.
     let sortStage: any;
     if (filters?.sort) {
       switch (filters.sort) {
@@ -175,8 +179,12 @@ export class DevicesRepository {
 
     const pipeline: any[] = [
       { $match: query },
-      ...this.latestPriceStages,
       { $sort: sortStage },
+    ];
+    if (filters?.skip) pipeline.push({ $skip: filters.skip });
+    if (filters?.limit) pipeline.push({ $limit: filters.limit });
+    pipeline.push(
+      ...this.latestPriceStages,
       {
         $lookup: {
           from: 'categories',
@@ -186,11 +194,9 @@ export class DevicesRepository {
         },
       },
       { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
-    ];
-    if (filters?.skip) pipeline.push({ $skip: filters.skip });
-    if (filters?.limit) pipeline.push({ $limit: filters.limit });
+    );
 
-    return this.deviceModel.aggregate(pipeline).exec();
+    return this.deviceModel.aggregate(pipeline, { allowDiskUse: true }).exec();
   }
 
   async countAll(filters?: {

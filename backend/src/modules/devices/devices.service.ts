@@ -172,6 +172,10 @@ export class DevicesService {
   }
 
   async findOne(id: string): Promise<Device> {
+    // Malformed IDs (e.g. a slug hitting the :id route) are 404s, not 500s.
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`Device with ID ${id} not found`);
+    }
     const device = await this.devicesRepository.findOne(id);
     if (!device) {
       throw new NotFoundException(`Device with ID ${id} not found`);
