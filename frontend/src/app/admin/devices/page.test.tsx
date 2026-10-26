@@ -22,6 +22,14 @@ vi.mock('next/link', () => ({
   default: ({ children, href }: any) => <a href={href}>{children}</a>,
 }));
 
+const mockPush = vi.fn();
+const mockSearchParams = new URLSearchParams();
+
+vi.mock('next/navigation', () => ({
+  useRouter: () => ({ push: mockPush }),
+  useSearchParams: () => mockSearchParams,
+}));
+
 
 describe('AdminDevicesPage', () => {
   const mockDevices = [
@@ -31,6 +39,7 @@ describe('AdminDevicesPage', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockSearchParams.forEach((_, key) => mockSearchParams.delete(key));
     (apiClient.getDevices as any).mockResolvedValue({
       devices: mockDevices,
       total: 2,
@@ -48,13 +57,17 @@ describe('AdminDevicesPage', () => {
 
   it('handles search', async () => {
     render(<AdminDevicesPage />);
-    
+
     const input = screen.getByPlaceholderText(/Search by/i);
     fireEvent.change(input, { target: { value: 'Device 1' } });
     fireEvent.click(screen.getByText('Filter'));
-    
+
+    // URL-driven search: submitting pushes a new URL with ?search= (and
+    // resets the page); the fetch effect then picks it up.
     await waitFor(() => {
-      expect(apiClient.getDevices).toHaveBeenCalledWith(expect.objectContaining({ search: 'Device 1' }));
+      expect(mockPush).toHaveBeenCalledWith(
+        expect.stringContaining('search=Device')
+      );
     });
   });
 

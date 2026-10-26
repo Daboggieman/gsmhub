@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { apiClient } from '@/lib/api';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
@@ -18,27 +19,33 @@ import {
     faChevronUp
 } from '@fortawesome/free-solid-svg-icons';
 
-export default function AuditLogsPage() {
+const LIMIT = 20;
+
+function AuditLogsPageContent() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    // URL is the source of truth so the Pagination component's links
+    // (which change ?page=&action=…) actually move the list.
+    const page = Number(searchParams.get('page')) || 1;
+    const filters = {
+        action: searchParams.get('action') || '',
+        targetType: searchParams.get('targetType') || '',
+        userId: searchParams.get('userId') || ''
+    };
+
     const [logs, setLogs] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [isAutoRefresh, setIsAutoRefresh] = useState(true);
-    const limit = 20;
-
-    const [filters, setFilters] = useState({
-        action: '',
-        targetType: '',
-        userId: ''
-    });
 
     const fetchLogs = async (silent = false) => {
         if (!silent) setLoading(true);
         try {
             const data = await apiClient.getAuditLogs({
                 page,
-                limit,
+                limit: LIMIT,
                 ...filters
             });
             setLogs(data.logs);
@@ -46,7 +53,6 @@ export default function AuditLogsPage() {
         } catch (err) {
             console.error('Failed to fetch audit logs', err);
         } finally {
-            if (!silent) setLoading(true);
             setLoading(false);
         }
     };
@@ -64,12 +70,24 @@ export default function AuditLogsPage() {
         return () => clearInterval(interval);
     }, [isAutoRefresh, page, filters]);
 
+    /** Push a filter change into the URL, resetting to page 1. */
+    const updateFilter = (key: string, value: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+        if (value) {
+            params.set(key, value);
+        } else {
+            params.delete(key);
+        }
+        params.delete('page');
+        router.push(`/admin/audit-logs?${params.toString()}`);
+    };
+
     const breadcrumbItems = [
         { name: 'Admin', href: '/admin/dashboard' },
         { name: 'Audit Logs', href: '/admin/audit-logs' },
     ];
 
-    const totalPages = Math.ceil(total / limit);
+    const totalPages = Math.ceil(total / LIMIT);
 
     const getActionColor = (action: string) => {
         if (action.includes('POST')) return 'text-green-600 bg-green-50';
@@ -117,7 +135,7 @@ export default function AuditLogsPage() {
                     <select
                         className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900"
                         value={filters.action}
-                        onChange={(e) => setFilters({ ...filters, action: e.target.value })}
+                        onChange={(e) => updateFilter('action', e.target.value)}
                     >
                         <option value="">All Actions</option>
                         <option value="POST_DEVICES">Create Device</option>
@@ -133,7 +151,7 @@ export default function AuditLogsPage() {
                     <select
                         className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900"
                         value={filters.targetType}
-                        onChange={(e) => setFilters({ ...filters, targetType: e.target.value })}
+                        onChange={(e) => updateFilter('targetType', e.target.value)}
                     >
                         <option value="">All Resources</option>
                         <option value="devices">Devices</option>
@@ -144,7 +162,7 @@ export default function AuditLogsPage() {
                 </div>
                 <div className="md:col-span-2 flex items-end">
                     <button
-                        onClick={() => { setFilters({ action: '', targetType: '', userId: '' }); setPage(1); }}
+                        onClick={() => router.push('/admin/audit-logs')}
                         className="p-3 text-red-500 font-black text-xs uppercase tracking-widest hover:underline"
                     >
                         Reset Filters
@@ -237,15 +255,19 @@ export default function AuditLogsPage() {
                             currentPage={page}
                             totalPages={totalPages}
                             baseUrl="/admin/audit-logs"
-                            searchParams={{
-                                action: filters.action,
-                                targetType: filters.targetType,
-                                userId: filters.userId
-                            }}
+                            searchParams={Object.fromEntries(searchParams.entries())}
                         />
                     </div>
                 )}
             </div>
         </div>
+    );
+}
+
+export default function AuditLogsPage() {
+    return (
+        <Suspense fallback={null}>
+            <AuditLogsPageContent />
+        </Suspense>
     );
 }

@@ -10,6 +10,25 @@ interface PaginationProps {
   searchParams: { [key: string]: string | string[] | undefined };
 }
 
+/**
+ * Page window with ellipsis: always shows the first and last page, the
+ * current page with one neighbour on each side, and a gap marker where
+ * pages are skipped.
+ */
+function buildPageList(currentPage: number, totalPages: number): (number | 'gap-left' | 'gap-right')[] {
+  if (totalPages <= 7) {
+    return Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+  const pages: (number | 'gap-left' | 'gap-right')[] = [1];
+  const windowStart = Math.max(2, currentPage - 1);
+  const windowEnd = Math.min(totalPages - 1, currentPage + 1);
+  if (windowStart > 2) pages.push('gap-left');
+  for (let p = windowStart; p <= windowEnd; p++) pages.push(p);
+  if (windowEnd < totalPages - 1) pages.push('gap-right');
+  pages.push(totalPages);
+  return pages;
+}
+
 const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUrl, searchParams }) => {
   const createPageUrl = (page: number) => {
     const params = new URLSearchParams();
@@ -28,69 +47,74 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
 
   if (totalPages <= 1) return null;
 
+  const clamped = Math.min(Math.max(currentPage, 1), totalPages);
+  const pages = buildPageList(clamped, totalPages);
+
   return (
-    <div className="flex justify-center items-center space-x-2 mt-12">
+    <nav className="flex justify-center items-center space-x-2 mt-12" aria-label="Pagination">
       {/* Previous Button */}
-      {currentPage > 1 ? (
+      {clamped > 1 ? (
         <Link
-          href={createPageUrl(currentPage - 1)}
+          href={createPageUrl(clamped - 1)}
+          aria-label="Previous page"
           className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-colors"
         >
           <FontAwesomeIcon icon={faChevronLeft} />
         </Link>
       ) : (
-        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed">
+        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed" aria-hidden="true">
           <FontAwesomeIcon icon={faChevronLeft} />
         </span>
       )}
 
-      {/* Page Numbers */}
+      {/* Page Numbers with ellipsis */}
       <div className="flex space-x-1">
-        {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-          let pageNum = i + 1;
-          if (totalPages > 5) {
-            if (currentPage > 3) {
-              pageNum = currentPage - 2 + i;
-            }
-            if (pageNum > totalPages) {
-              pageNum = totalPages - 4 + i;
-            }
-          }
-          
-          if (pageNum > 0 && pageNum <= totalPages) {
-            const isActive = pageNum === currentPage;
+        {pages.map((entry, idx) => {
+          if (entry === 'gap-left' || entry === 'gap-right') {
             return (
-              <Link
-                key={pageNum}
-                href={createPageUrl(pageNum)}
-                className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
-                  isActive
-                    ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                    : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600'
-                }`}
+              <span
+                key={entry}
+                className="w-10 h-10 flex items-center justify-center text-gray-400 select-none"
+                aria-hidden="true"
               >
-                {pageNum}
-              </Link>
+                …
+              </span>
             );
           }
-          return null;
+          const isActive = entry === clamped;
+          return (
+            <Link
+              key={entry}
+              href={createPageUrl(entry)}
+              aria-current={isActive ? 'page' : undefined}
+              aria-label={`Page ${entry}`}
+              className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
+                isActive
+                  ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
+                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+              }`}
+            >
+              {entry}
+            </Link>
+          );
         })}
       </div>
 
       {/* Next Button */}
-      {currentPage < totalPages ? (
+      {clamped < totalPages ? (
         <Link
-          href={createPageUrl(currentPage + 1)}
+          href={createPageUrl(clamped + 1)}
+          aria-label="Next page"
           className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-colors"
         >
           <FontAwesomeIcon icon={faChevronRight} />
         </Link>
       ) : (
-        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed">
+        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed" aria-hidden="true">
           <FontAwesomeIcon icon={faChevronRight} />
         </span>
       )}
-    </div>
+    </nav>
   );
 };
 

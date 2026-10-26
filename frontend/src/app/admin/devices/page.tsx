@@ -1,26 +1,36 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { apiClient } from '@/lib/api'
-import { Device, Category } from '@shared/types'
+import { Device } from '@shared/types'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faPlus,
   faUpload,
-  faFileCsv,
   faCheckCircle,
   faTimesCircle,
   faSpinner,
   faSync,
 } from '@fortawesome/free-solid-svg-icons'
+import Pagination from '@/components/ui/Pagination'
 
-export default function AdminDevicesPage() {
+const PAGE_LIMIT = 10
+
+function AdminDevicesPageContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // URL is the single source of truth for page + search so the list
+  // survives refresh, browser back/forward, and URL sharing.
+  const page = Number(searchParams.get('page')) || 1
+  const search = searchParams.get('search') || ''
+
   const [devices, setDevices] = useState<Device[]>([])
   const [total, setTotal] = useState(0)
-  const [page, setPage] = useState(1)
   const [isLoading, setIsLoading] = useState(true)
-  const [search, setSearch] = useState('')
+  const [searchInput, setSearchInput] = useState(search)
   const [isImporting, setIsImporting] = useState(false)
   const [syncingId, setSyncingId] = useState<string | null>(null)
   const [isSyncingAll, setIsSyncingAll] = useState(false)
@@ -37,38 +47,57 @@ export default function AdminDevicesPage() {
     forceUpdate: false,
   })
 
+  // Increment to re-fetch without changing page/search (after mutations).
+  const [refreshTick, setRefreshTick] = useState(0)
+
   const fileInputRef = useRef<HTMLInputElement>(null)
 
-  const fetchDevices = async () => {
-    setIsLoading(true)
-    try {
-      const data = await apiClient.getDevices({ page, limit: 10, search })
-      setDevices(data.devices)
-      setTotal(data.total)
-    } catch (error) {
-      console.error('Error fetching devices:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // Keep the search input in sync when the URL changes (back button).
+  useEffect(() => {
+    setSearchInput(search)
+  }, [search])
 
   useEffect(() => {
-    fetchDevices()
-  }, [page])
+    let cancelled = false
+    const load = async () => {
+      setIsLoading(true)
+      try {
+        const data = await apiClient.getDevices({ page, limit: PAGE_LIMIT, search })
+        if (cancelled) return
+        setDevices(data.devices)
+        setTotal(data.total)
+      } catch (error) {
+        console.error('Error fetching devices:', error)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [page, search, refreshTick])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    setPage(1)
-    fetchDevices()
+    const params = new URLSearchParams(searchParams.toString())
+    if (searchInput) {
+      params.set('search', searchInput)
+    } else {
+      params.delete('search')
+    }
+    // Reset to page 1 whenever the filter changes
+    params.delete('page')
+    router.push(`/admin/devices?${params.toString()}`)
   }
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this device?')) {
       try {
         await apiClient.deleteDevice(id)
-        fetchDevices()
+        setRefreshTick((t) => t + 1)
       } catch (error) {
-        alert('Failed to delete brand')
+        alert('Failed to delete device')
       }
     }
   }
@@ -81,7 +110,7 @@ export default function AdminDevicesPage() {
     try {
       await apiClient.syncDevice(device.brand, device.model, syncOptions)
       alert(`${device.name} synchronized successfully with External API`)
-      fetchDevices()
+      setRefreshTick((t) => t + 1)
     } catch (error: any) {
       alert(`Sync Failed: ${error.message}`)
     } finally {
@@ -100,7 +129,7 @@ export default function AdminDevicesPage() {
     try {
       await apiClient.syncDevices(brand, syncOptions)
       alert(`Sync task for ${brand} started. New devices will appear shortly.`)
-      fetchDevices()
+      setRefreshTick((t) => t + 1)
     } catch (error: any) {
       alert(`Bulk Sync Failed: ${error.message}`)
     } finally {
@@ -126,7 +155,7 @@ export default function AdminDevicesPage() {
     try {
       const result = await apiClient.bulkImportDevices(file)
       setImportStatus(result)
-      fetchDevices()
+      setRefreshTick((t) => t + 1)
     } catch (error: any) {
       alert(error.message || 'Failed to import devices')
     } finally {
@@ -134,6 +163,10 @@ export default function AdminDevicesPage() {
       if (fileInputRef.current) fileInputRef.current.value = ''
     }
   }
+
+  const totalPages = Math.ceil(total / PAGE_LIMIT)
+  const rangeStart = total === 0 ? 0 : (page - 1) * PAGE_LIMIT + 1
+  const rangeEnd = Math.min(page * PAGE_LIMIT, total)
 
   return (
     <div className="p-4 md:p-8">
@@ -285,8 +318,8 @@ export default function AdminDevicesPage() {
               type="text"
               placeholder="Search by brand, model or name..."
               className="flex-1 rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
             />
             <button
               type="submit"
@@ -431,29 +464,28 @@ export default function AdminDevicesPage() {
           </table>
         </div>
 
-        {/* Improved Pagination */}
-        <div className="flex items-center justify-between border-t border-gray-100 bg-gray-50/50 p-6">
-          <p className="text-[10px] font-black tracking-widest text-gray-500 uppercase">
-            Showing {devices.length} of {total} devices
-          </p>
-          <div className="flex gap-2">
-            <button
-              disabled={page === 1}
-              onClick={() => setPage(page - 1)}
-              className="rounded-xl border-2 border-gray-100 bg-white px-6 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:border-blue-600 disabled:border-gray-100 disabled:opacity-30"
-            >
-              Prev
-            </button>
-            <button
-              disabled={page * 10 >= total}
-              onClick={() => setPage(page + 1)}
-              className="rounded-xl border-2 border-gray-100 bg-white px-6 py-2 text-[10px] font-black tracking-widest uppercase transition-all hover:border-blue-600 disabled:border-gray-100 disabled:opacity-30"
-            >
-              Next
-            </button>
+        {/* Pagination footer */}
+        <div className="border-t border-gray-100 bg-gray-50/50 p-6">
+          <div className="mb-4 text-center text-[10px] font-black tracking-widest text-gray-500 uppercase">
+            Showing {rangeStart.toLocaleString()}&ndash;
+            {rangeEnd.toLocaleString()} of {total.toLocaleString()} devices
           </div>
+          <Pagination
+            currentPage={page}
+            totalPages={totalPages}
+            baseUrl="/admin/devices"
+            searchParams={{ search }}
+          />
         </div>
       </div>
     </div>
+  )
+}
+
+export default function AdminDevicesPage() {
+  return (
+    <Suspense fallback={null}>
+      <AdminDevicesPageContent />
+    </Suspense>
   )
 }
