@@ -190,6 +190,11 @@ function extractCurrency(sp: RawRecord['specs']): string {
  * Decide this record's currency + USD price: interpret the raw value with
  * the labelled currency if that lands in the currency's MSRP band; else,
  * for single-market records, with the market country's currency; else null.
+ *
+ * tryCurrency also tries the value with two implied decimals (e.g. Brazilian
+ * "179990" = R$1,799.90): datasets for markets with cents-priced MSRP often
+ * drop the decimal point. /100 is only accepted when the plain value is out
+ * of band, so an in-band raw value always wins.
  */
 function resolvePrice(
   sp: RawRecord['specs'],
@@ -202,8 +207,13 @@ function resolvePrice(
     const band = NATIVE_BAND[cur];
     const rate = TO_USD[cur];
     if (!band || !rate) return null;
-    if (raw < band[0] || raw > band[1]) return null;
-    return Math.round(raw * rate * 100) / 100;
+    const candidates = [raw, raw / 100, raw / 10, raw * 100];
+    for (const n of candidates) {
+      if (n >= band[0] && n <= band[1]) {
+        return Math.round(n * rate * 100) / 100;
+      }
+    }
+    return null;
   };
 
   const viaLabel = tryCurrency(label);
@@ -303,6 +313,9 @@ async function main() {
     if (!name) continue;
 
     const slug = generateSlug(`${brand} ${name}`);
+    if (process.env.DEBUG_SLUG && slug.includes(process.env.DEBUG_SLUG)) {
+      console.log(`[DEBUG ${process.env.DEBUG_SLUG}] title="${rec.title.slice(0, 60)}" raw=${extractPrice(sp)} label="${extractCurrency(sp)}" market="${v(sp, 'Market Countries')}" → usd=${resolved.usd} (currency=${resolved.currency}, original=${resolved.original})`);
+    }
     const date = parseDate(v(sp, 'Announced') || v(sp, 'Released'));
 
     const list = bySlug.get(slug) ?? [];
@@ -316,10 +329,11 @@ async function main() {
   }
 
   // --- 2b. pick a plausible price per slug ------------------------------
-  // Keep candidates within the USD band, rescuing ones off by a power of
-  // ten; then cluster and pick the largest cluster's median.
+  // Keep candidates within a tight USD band (flagship MSRPs top out around
+  // $3k; $25k let mislabelled-currency rows through), rescuing ones off by
+  // a power of ten; then cluster and pick the largest cluster's median.
   const PRICE_MIN = 25;
-  const PRICE_MAX = 25000;
+  const PRICE_MAX = 4000;
   const finalBySlug = new Map<string, PriceEntry>();
   let rescaled = 0;
   let dropped = 0;

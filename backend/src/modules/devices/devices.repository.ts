@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import type { PipelineStage } from 'mongoose';
 import { Device, DeviceDocument } from './device.schema';
 import { escapeRegExp } from '@shared/utils/regex';
 
@@ -9,6 +10,37 @@ export class DevicesRepository {
   constructor(
     @InjectModel(Device.name) private deviceModel: Model<DeviceDocument>,
   ) {}
+
+  /**
+   * `$lookup` + `$addFields` stages resolving `latestPrice` from the
+   * pricehistories collection — the Device doc never stores it. The
+   * `$lookup` only fetches price and date fields to keep the join cheap.
+   */
+  private get latestPriceStages(): PipelineStage[] {
+    return [
+      {
+        $lookup: {
+          from: 'pricehistories',
+          let: { deviceId: '$_id' },
+          pipeline: [
+            { $match: { $expr: { $eq: ['$device', '$$deviceId'] } } },
+            { $sort: { date: -1 } },
+            { $limit: 1 },
+            { $project: { _id: 0, price: 1, date: 1 } },
+          ],
+          as: '__latestPrice',
+        },
+      },
+      {
+        $addFields: {
+          latestPrice: {
+            $ifNull: [{ $arrayElemAt: ['$__latestPrice.price', 0] }, null],
+          },
+        },
+      },
+      { $project: { __latestPrice: 0 } },
+    ] as PipelineStage[];
+  }
 
   async create(createDeviceData: Partial<Device>): Promise<Device> {
     const newDevice = new this.deviceModel(createDeviceData);
@@ -96,31 +128,7 @@ export class DevicesRepository {
       if (priceSort) match.latestPrice = { ...(match.latestPrice || {}), $ne: null };
       const pipeline: any[] = [
         { $match: query },
-        {
-          $lookup: {
-            from: 'pricehistories',
-            localField: '_id',
-            foreignField: 'device',
-            as: '__prices',
-          },
-        },
-        {
-          $addFields: {
-            latestPrice: {
-              $let: {
-                vars: {
-                  latest: {
-                    $arrayElemAt: [
-                      { $sortArray: { input: '$__prices', sortBy: { date: -1 } } },
-                      0,
-                    ],
-                  },
-                },
-                in: { $ifNull: ['$$latest.price', null] },
-              },
-            },
-          },
-        },
+        ...this.latestPriceStages,
         { $match: match },
       ];
       if (filters?.sort === 'price_low') {
@@ -149,39 +157,40 @@ export class DevicesRepository {
         },
       });
       pipeline.push({ $unwind: { path: '$category', preserveNullAndEmptyArrays: true } });
-      pipeline.push({ $project: { __prices: 0 } });
       return this.deviceModel.aggregate(pipeline).exec();
     }
 
-    let findQuery = this.deviceModel.find(query).populate('category').lean();
-
-    // Sorting
+    // All other paths: use aggregate so latestPriceStages is always applied.
+    let sortStage: any;
     if (filters?.sort) {
       switch (filters.sort) {
-        case 'latest':
-          findQuery = findQuery.sort({ createdAt: -1 });
-          break;
-        case 'popular':
-          findQuery = findQuery.sort({ views: -1 });
-          break;
-        case 'alphabetical':
-          findQuery = findQuery.sort({ model: 1 });
-          break;
-        default:
-          findQuery = findQuery.sort({ createdAt: -1 });
+        case 'latest':    sortStage = { createdAt: -1 }; break;
+        case 'popular':   sortStage = { views: -1 }; break;
+        case 'alphabetical': sortStage = { model: 1 }; break;
+        default:          sortStage = { createdAt: -1 };
       }
     } else {
-      findQuery = findQuery.sort({ createdAt: -1 });
+      sortStage = { createdAt: -1 };
     }
 
-    if (filters?.skip) {
-      findQuery = findQuery.skip(filters.skip);
-    }
-    if (filters?.limit) {
-      findQuery = findQuery.limit(filters.limit);
-    }
+    const pipeline: any[] = [
+      { $match: query },
+      ...this.latestPriceStages,
+      { $sort: sortStage },
+      {
+        $lookup: {
+          from: 'categories',
+          localField: 'category',
+          foreignField: '_id',
+          as: 'category',
+        },
+      },
+      { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
+    ];
+    if (filters?.skip) pipeline.push({ $skip: filters.skip });
+    if (filters?.limit) pipeline.push({ $limit: filters.limit });
 
-    return findQuery.exec();
+    return this.deviceModel.aggregate(pipeline).exec();
   }
 
   async countAll(filters?: {
@@ -239,31 +248,7 @@ export class DevicesRepository {
       const pipeline: any[] = [];
       if (Object.keys(query).length) pipeline.push({ $match: query });
       pipeline.push(
-        {
-          $lookup: {
-            from: 'pricehistories',
-            localField: '_id',
-            foreignField: 'device',
-            as: '__prices',
-          },
-        },
-        {
-          $addFields: {
-            latestPrice: {
-              $let: {
-                vars: {
-                  latest: {
-                    $arrayElemAt: [
-                      { $sortArray: { input: '$__prices', sortBy: { date: -1 } } },
-                      0,
-                    ],
-                  },
-                },
-                in: { $ifNull: ['$$latest.price', null] },
-              },
-            },
-          },
-        },
+        ...this.latestPriceStages,
         {
           $match: {
             latestPrice: {
@@ -286,11 +271,12 @@ export class DevicesRepository {
   }
 
   async findBySlug(slug: string): Promise<Device | null> {
-    return this.deviceModel
-      .findOne({ slug })
-      .populate('category')
-      .lean()
+    const results = await this.deviceModel
+      .aggregate([{ $match: { slug } }, ...this.latestPriceStages])
       .exec();
+    if (!results.length) return null;
+    const doc = results[0];
+    return this.deviceModel.populate(doc, { path: 'category' }) as unknown as Device;
   }
 
   async update(
@@ -350,35 +336,78 @@ export class DevicesRepository {
             preserveNullAndEmptyArrays: true, // Preserve devices that might not have a category
           },
         },
+        ...this.latestPriceStages,
       ])
       .exec();
   }
 
   async findTrending(limit: number): Promise<Device[]> {
     return this.deviceModel
-      .find()
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .populate('category')
-      .lean()
+      .aggregate([
+        { $sort: { createdAt: -1 } },
+        { $limit: limit },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category',
+          },
+        },
+        {
+          $unwind: {
+            path: '$category',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        ...this.latestPriceStages,
+      ])
       .exec();
   }
 
   async findByCategory(categoryId: string, limit: number): Promise<Device[]> {
     return this.deviceModel
-      .find({ category: new Types.ObjectId(categoryId) })
-      .limit(limit)
-      .populate('category')
-      .lean()
+      .aggregate([
+        { $match: { category: new Types.ObjectId(categoryId) } },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category',
+          },
+        },
+        {
+          $unwind: {
+            path: '$category',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        ...this.latestPriceStages,
+      ])
       .exec();
   }
 
   async findByBrand(brand: string, limit: number): Promise<Device[]> {
     return this.deviceModel
-      .find({ brand: { $regex: new RegExp(escapeRegExp(brand), 'i') } })
-      .limit(limit)
-      .populate('category')
-      .lean()
+      .aggregate([
+        { $match: { brand: { $regex: new RegExp(escapeRegExp(brand), 'i') } } },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category',
+          },
+        },
+        {
+          $unwind: {
+            path: '$category',
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        ...this.latestPriceStages,
+      ])
       .exec();
   }
 
