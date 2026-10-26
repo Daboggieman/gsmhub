@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from 'next/image';
 import DeviceImage from '../devices/DeviceImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {

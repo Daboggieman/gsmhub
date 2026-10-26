@@ -3,11 +3,12 @@ import Link from 'next/link';
 import { Device } from '@shared/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeviceImage from './DeviceImage';
-import { 
-  faDisplay, 
-  faMemory, 
-  faHardDrive, 
+import {
+  faDisplay,
+  faMemory,
+  faHardDrive,
   faMicrochip,
+  faMobileScreen,
   faTag
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -107,8 +108,5 @@ const DeviceCard: React.FC<DeviceCardProps> = ({ device }) => {
     </Link>
   );
 };
-
-// Add faMobileScreen to the imports above if needed, but faMobileScreenButton is already available in common icons
-import { faMobileScreen } from '@fortawesome/free-solid-svg-icons';
 
 export default DeviceCard;
