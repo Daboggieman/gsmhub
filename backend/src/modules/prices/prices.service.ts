@@ -22,8 +22,60 @@ export class PricesService {
     return createdPrice.save();
   }
 
-  async findAll(): Promise<PriceHistory[]> {
-    return this.priceHistoryModel.find().populate('device').exec();
+  async findAll({ page, limit, search }: { page?: number; limit?: number; search?: string } = {}): Promise<{ prices: any[]; total: number }> {
+    const page_ = page && page > 0 ? page : 1;
+    const limit_ = limit && limit > 0 ? Math.min(limit, 100) : 20;
+
+    const pipeline: any[] = [
+      {
+        $lookup: {
+          from: 'devices',
+          localField: 'device',
+          foreignField: '_id',
+          as: 'device',
+          pipeline: [
+            { $project: { name: 1, brand: 1, model: 1, slug: 1, imageUrl: 1 } },
+          ],
+        },
+      },
+      { $unwind: '$device' },
+    ];
+
+    if (search) {
+      const rx = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
+      pipeline.push({
+        $match: {
+          $or: [
+            { 'device.name': rx },
+            { 'device.brand': rx },
+            { 'device.model': rx },
+            { country: rx },
+            { retailer: rx },
+          ],
+        },
+      });
+    }
+
+    pipeline.push({
+      $facet: {
+        items: [
+          { $sort: { date: -1 } },
+          { $skip: (page_ - 1) * limit_ },
+          { $limit: limit_ },
+        ],
+        total: [{ $count: 'count' }],
+      },
+    });
+
+    const [result] = await this.priceHistoryModel
+      .aggregate(pipeline)
+      .allowDiskUse(true)
+      .exec();
+
+    return {
+      prices: (result?.items || []).map((p: any) => ({ ...p, id: p._id?.toString?.() ?? p._id })),
+      total: result?.total?.[0]?.count || 0,
+    };
   }
 
   async findOne(id: string): Promise<PriceHistory> {

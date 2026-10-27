@@ -49,6 +49,12 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
     return row.values.some((v: string) => v !== firstVal);
   };
 
+  // Cheapest price across all devices that report one ("Best Price" badge)
+  const prices = devices
+    .map((d: any) => (typeof d.latestPrice === 'number' ? d.latestPrice : null))
+    .filter((p: number | null): p is number => p !== null);
+  const bestPrice = prices.length >= 2 ? Math.min(...prices) : null;
+
   // Group comparison rows by category and apply filters
   const categorizedComparison: { [category: string]: any[] } = {};
   comparison.forEach(row => {
@@ -119,12 +125,23 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
                         )}
                       </div>
                       <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">Device {idx + 1}</Badge>
-                      <span className="text-xl font-black text-gray-900 leading-tight mb-1">{device.model}</span>
+                      <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">Device {idx + 1}</Badge>
+                      <span
+                        className="text-xl font-black text-gray-900 leading-tight mb-1 line-clamp-2"
+                        title={device.name || device.model}
+                      >
+                        {device.model}
+                      </span>
                       <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{device.brand}</span>
 
-                      {device.latestPrice && (
-                        <div className="mt-4 font-black text-green-600 text-lg">
-                          ${device.latestPrice.toFixed(2)}
+                      {typeof device.latestPrice === 'number' && (
+                        <div className="mt-4 flex flex-col items-center gap-1">
+                          <span className="font-black text-green-600 text-lg">
+                            ${device.latestPrice.toFixed(2)}
+                          </span>
+                          {bestPrice !== null && device.latestPrice === bestPrice && (
+                            <Badge variant="success" size="xs">Best Price</Badge>
+                          )}
                         </div>
                       )}
                     </div>
@@ -150,7 +167,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
                   </tr>
                   {expandedCategories[category] && categorizedComparison[category].map((row, rowIdx) => (
                     <tr key={`${category}-${row.item}`} className={`group hover:bg-blue-50/30 transition-colors ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}`}>
-                      <td className="p-5 border-b border-gray-100 text-xs font-black text-gray-400 uppercase tracking-widest bg-white sticky left-0 z-10 shadow-[5px_0_10px_-5px_rgba(0,0,0,0.05)] group-hover:text-blue-600 transition-colors">
+                      <td className="p-5 border-b border-gray-100 text-xs font-black text-gray-400 uppercase tracking-widest bg-white sticky left-0 z-10 shadow-[5px_0_10px_-5px_rgba(0,0,0,0.05)] group-hover:text-blue-600 transition-colors relative">
                         {row.item}
                         {highlightDiffs && hasDifference(row) && (
                           <div className="w-1 h-full bg-blue-500 absolute left-0 top-0"></div>

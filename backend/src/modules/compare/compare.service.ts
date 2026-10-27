@@ -59,13 +59,10 @@ export class CompareService {
           values,
         };
 
-        // If exactly 2 devices, calculate difference and better
-        if (devices.length === 2) {
-          const result = this.analyzeDifference(key, values[0], values[1]);
-          if (result) {
-            row.difference = result.difference;
-            row.betterIndex = result.betterIndex;
-          }
+        const result = this.analyzeDifference(key, values);
+        if (result) {
+          row.difference = result.difference;
+          row.betterIndex = result.betterIndex;
         }
 
         comparison.push(row);
@@ -85,36 +82,66 @@ export class CompareService {
     };
   }
 
-  private analyzeDifference(key: string, valA: string, valB: string): { difference: string; betterIndex?: number } | null {
-    const numA = this.parseNumericValue(valA);
-    const numB = this.parseNumericValue(valB);
+  /** Extract the unit suffix (text after the first number) from a spec value, e.g. "5000 mAh" → "mAh". */
+  private extractUnit(val: string): string {
+    const match = val?.match(/\d+(?:\.\d+)?\s*(.+)$/);
+    if (!match) return '';
+    return match[1].replace(/^[,;.\s]+/, '').trim();
+  }
 
-    if (numA === null || numB === null) return null;
+  /** Format a number for display: integers without decimals, thousands separators. */
+  private formatNumber(n: number): string {
+    return Number.isInteger(n) ? n.toLocaleString('en-US') : n.toFixed(1).replace(/\.0$/, '');
+  }
 
-    const diff = numB - numA;
-    const diffStr = diff > 0 ? `+${diff.toFixed(1)}` : diff.toFixed(1);
+  /**
+   * Pick the winning device for a spec row and describe the gap.
+   * Works for any number of devices; the delta badge only appears for 2.
+   */
+  private analyzeDifference(key: string, values: string[]): { difference?: string; betterIndex?: number } | null {
+    const parsed = values.map(v => this.parseNumericValue(v));
 
-    // Determine which is better based on the spec key
-    let betterIndex: number | undefined;
-    
-    const higherIsBetter = [
-      'size', 'resolution', 'battery', 'ram', 'storage', 'capacity', 'mah', 'hz', 'pixels', 'mp'
-    ];
-    const lowerIsBetter = [
-      'weight', 'thickness', 'thickness', 'nm', 'ms', 'latency'
-    ];
-
-    const lowKey = key.toLowerCase();
-    
-    if (higherIsBetter.some(k => lowKey.includes(k))) {
-      if (diff > 0) betterIndex = 1;
-      else if (diff < 0) betterIndex = 0;
-    } else if (lowerIsBetter.some(k => lowKey.includes(k))) {
-      if (diff < 0) betterIndex = 1;
-      else if (diff > 0) betterIndex = 0;
+    // WxH values (e.g. "720x1600") compare by total pixel count, not the width alone
+    const isResolution = /resolution/i.test(key);
+    if (isResolution) {
+      for (let i = 0; i < parsed.length; i++) {
+        const m = values[i]?.match(/^\s*(\d+(?:\.\d+)?)\s*[x×]\s*(\d+(?:\.\d+)?)/i);
+        if (m) parsed[i] = parseFloat(m[1]) * parseFloat(m[2]);
+      }
     }
 
-    return { difference: diffStr, betterIndex };
+    if (parsed.some(v => v === null)) return null;
+    const numeric = parsed as number[];
+
+    // If all values are equal, there is no winner to show
+    if (numeric.every(v => v === numeric[0])) return null;
+
+    const lowKey = key.toLowerCase();
+    const higherIsBetter = [
+      'size', 'resolution', 'battery', 'ram', 'storage', 'capacity', 'mah', 'hz', 'pixels', 'mp',
+    ];
+    const lowerIsBetter = [
+      'weight', 'thickness', 'nm', 'ms', 'latency',
+    ];
+
+    let betterIndex: number | undefined;
+    if (higherIsBetter.some(k => lowKey.includes(k))) {
+      betterIndex = numeric.indexOf(Math.max(...numeric));
+    } else if (lowerIsBetter.some(k => lowKey.includes(k))) {
+      betterIndex = numeric.indexOf(Math.min(...numeric));
+    }
+    if (betterIndex === undefined) return null;
+
+    // For 2 devices, show the absolute gap with the unit from the winning value
+    let difference: string | undefined;
+    if (values.length === 2) {
+      const loser = numeric[1 - betterIndex];
+      const delta = Math.abs(numeric[betterIndex] - loser);
+      const unit = isResolution ? 'px' : this.extractUnit(values[betterIndex]);
+      difference = `+${this.formatNumber(delta)}${unit ? ' ' + unit : ''}`;
+    }
+
+    return { difference, betterIndex };
   }
 
   private parseNumericValue(val: string): number | null {

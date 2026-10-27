@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, Suspense } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { apiClient } from '@/lib/api';
 import { Device } from '@shared/types';
 import ComparisonTable from '@/components/compare/ComparisonTable';
@@ -11,28 +11,32 @@ import AdUnit from '@/components/ads/AdUnit';
 
 const ComparePageContent = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const devicesQuery = searchParams.get('devices') || '';
   const [comparisonData, setComparisonData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchComparison = async () => {
       const slugs = devicesQuery.split(',').filter(s => s.length > 0);
       if (slugs.length >= 2) {
         setLoading(true);
+        setError(null);
         try {
           const data = await apiClient.compareDevices(slugs);
           setComparisonData(data);
-        } catch (error) {
+        } catch (error: any) {
           console.error('Failed to fetch comparison data:', error);
+          setComparisonData(null);
+          setError(error.message || 'Failed to load comparison. One of the devices may not exist.');
         } finally {
           setLoading(false);
         }
-      } else if (slugs.length === 1) {
-        // Just one device selected, we can still show something or just wait
-        setComparisonData(null);
       } else {
+        // 0 or 1 device in the URL: nothing to compare yet
         setComparisonData(null);
+        setError(null);
       }
     };
 
@@ -40,6 +44,7 @@ const ComparePageContent = () => {
   }, [devicesQuery]);
 
   const devices = comparisonData?.devices || [];
+  const urlSlugCount = devicesQuery.split(',').filter(s => s.length > 0).length;
 
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
@@ -53,8 +58,20 @@ const ComparePageContent = () => {
         <Breadcrumbs items={breadcrumbItems} />
 
         <div className="mb-12">
-          <CompareBox initialDevices={devices} />
+          <CompareBox initialDevices={devices} urlSlugCount={urlSlugCount} />
         </div>
+
+        {error && (
+          <div className="mb-8 rounded-3xl border border-red-200 bg-red-50 p-6 text-center">
+            <p className="font-black text-red-600 mb-3">{error}</p>
+            <button
+              onClick={() => router.push('/compare')}
+              className="text-xs font-black uppercase tracking-widest text-red-500 hover:underline"
+            >
+              Clear comparison
+            </button>
+          </div>
+        )}
 
         <AdUnit slot="compare-top" format="horizontal" className="mb-8" />
 

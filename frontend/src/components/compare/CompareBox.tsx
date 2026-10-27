@@ -10,9 +10,11 @@ import { useRouter } from 'next/navigation';
 
 interface CompareBoxProps {
   initialDevices?: Device[];
+  /** Number of device slugs in the URL — when it drops below 2, stale boxes are cleared. */
+  urlSlugCount?: number;
 }
 
-const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
+const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [], urlSlugCount = 0 }) => {
   const router = useRouter();
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
@@ -20,12 +22,25 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [] }) => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const prevUrlCountRef = useRef(urlSlugCount);
 
   useEffect(() => {
-    if (initialDevices.length > 0) {
+    // Hydrate/refresh the boxes from URL-driven comparison data
+    if (initialDevices.length >= 2) {
       setSelectedDevices(initialDevices);
     }
   }, [initialDevices]);
+
+  // The URL is the source of truth: if it no longer holds a comparison
+  // (0-1 slugs), drop any devices still sitting in the boxes.
+  useEffect(() => {
+    if (urlSlugCount !== prevUrlCountRef.current) {
+      prevUrlCountRef.current = urlSlugCount;
+      if (urlSlugCount < 2) {
+        setSelectedDevices([]);
+      }
+    }
+  }, [urlSlugCount]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
