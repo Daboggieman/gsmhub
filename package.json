@@ -1,5 +1,5 @@
 {
-  "packageManager": "pnpm@10.12.1",
+  "packageManager": "pnpm@12.16.1",
   "scripts": {
     "test": "pnpm -r test",
     "lint": "pnpm --filter backend run lint && pnpm --filter frontend run lint",
