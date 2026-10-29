@@ -268,6 +268,15 @@ class ApiClient {
   }
 
   // Prices
+  async getPrices(params: { page?: number; limit?: number; search?: string }): Promise<{ prices: any[]; total: number }> {
+    const searchParams = new URLSearchParams();
+    if (params.page) searchParams.set('page', params.page.toString());
+    if (params.limit) searchParams.set('limit', params.limit.toString());
+    if (params.search) searchParams.set('search', params.search);
+
+    return this.request(`/prices?${searchParams.toString()}`);
+  }
+
   async createPrice(data: any): Promise<PriceHistory> {
     return this.request('/prices', { method: 'POST', body: JSON.stringify(data) });
   }
