@@ -6,6 +6,7 @@ import { generateSlug } from '@shared/utils/slug'
 import { apiClient } from '@/lib/api'
 import { useRouter } from 'next/navigation'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
 import {
   faInfoCircle,
   faMicrochip,
@@ -35,6 +36,82 @@ type Tab =
   | 'seo_affiliates'
   | 'pricing'
 
+// API responses may carry `id` (serialized JSON) or `_id` (document).
+const getDeviceId = (d?: Device | null) =>
+  (d as { id?: string } | null | undefined)?.id || d?._id
+
+const TabButton = ({
+  id,
+  label,
+  icon,
+  activeTab,
+  onSelect,
+}: {
+  id: Tab
+  label: string
+  icon: IconDefinition
+  activeTab: Tab
+  onSelect: (id: Tab) => void
+}) => (
+  <button
+    type="button"
+    onClick={() => onSelect(id)}
+    className={`flex items-center gap-2 border-b-2 px-6 py-4 font-bold whitespace-nowrap transition-all ${
+      activeTab === id
+        ? 'border-blue-600 bg-blue-50/50 text-blue-600'
+        : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+    }`}
+  >
+    <FontAwesomeIcon
+      icon={icon}
+      className={activeTab === id ? 'text-blue-600' : 'text-gray-500'}
+    />
+    {label}
+  </button>
+)
+
+const SuggestionList = ({ id, items }: { id: string; items?: string[] }) => (
+  <datalist id={id}>
+    {items?.map((item) => (
+      <option key={item} value={item} />
+    ))}
+  </datalist>
+)
+
+const SuggestibleInput = ({
+  label,
+  name,
+  value,
+  suggestions: items,
+  placeholder,
+  type = 'text',
+  onChange,
+}: {
+  label: string
+  name: string
+  value: string
+  suggestions?: string[]
+  placeholder?: string
+  type?: string
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+}) => (
+  <div>
+    <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+      {label}
+    </label>
+    <input
+      type={type}
+      name={name}
+      list={`${name}-list`}
+      value={value || ''}
+      onChange={onChange}
+      placeholder={placeholder}
+      className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+    />
+    <SuggestionList id={`${name}-list`} items={items} />
+  </div>
+)
+
 export default function DeviceForm({
   initialData,
   isEdit = false,
@@ -60,7 +137,7 @@ export default function DeviceForm({
     affiliateUrl: '',
   })
 
-  const [formData, setFormData] = useState<Partial<Device>>({
+  const [formData, setFormData] = useState<Partial<Device>>(() => ({
     name: '',
     brand: '',
     model: '',
@@ -68,7 +145,6 @@ export default function DeviceForm({
     type: DeviceType.PHONE,
     imageUrl: '',
     images: [],
-    category: '',
     description: '',
     isActive: true,
     specs: [],
@@ -76,32 +152,17 @@ export default function DeviceForm({
     seoDescription: '',
     affiliateLinks: [],
     ...initialData,
-  })
-
-  // Handle auto-slug generation
-  useEffect(() => {
-    if (isAutoSlug && !isEdit) {
-      const name = formData.name || `${formData.brand} ${formData.model}`.trim()
-      if (name) {
-        setFormData((prev) => ({ ...prev, slug: generateSlug(name) }))
-      }
-    }
-  }, [formData.name, formData.brand, formData.model, isAutoSlug, isEdit])
-
-  // Handle category object in initialData
-  useEffect(() => {
-    if (
-      initialData &&
-      initialData.category &&
-      typeof initialData.category === 'object'
-    ) {
-      setFormData((prev) => ({
-        ...prev,
-        category:
-          (initialData.category as any).id || (initialData.category as any)._id,
-      }))
-    }
-  }, [initialData])
+    // Populated category objects arrive from the API on edit — flatten to
+    // the id the select control expects before first render.
+    category:
+      initialData?.category && typeof initialData.category === 'object'
+        ? String(
+            (initialData.category as { id?: string }).id ??
+              (initialData.category as { _id?: string })._id ??
+              '',
+          )
+        : initialData?.category ?? '',
+  }))
 
   useEffect(() => {
     const fetchData = async () => {
@@ -144,11 +205,25 @@ export default function DeviceForm({
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >,
   ) => {
-    const { name, value, type } = e.target as any
+    const { name, value, type } = e.target
     const val =
       type === 'checkbox' ? (e.target as HTMLInputElement).checked : value
 
-    setFormData((prev) => ({ ...prev, [name]: val }))
+    setFormData((prev) => {
+      const next = { ...prev, [name]: val }
+      // Auto-slug derives from name/brand/model in the same update rather
+      // than a follow-up effect (one render per keystroke, not two).
+      if (
+        isAutoSlug &&
+        !isEdit &&
+        (name === 'name' || name === 'brand' || name === 'model')
+      ) {
+        const source =
+          next.name || `${next.brand || ''} ${next.model || ''}`.trim()
+        if (source) next.slug = generateSlug(source)
+      }
+      return next
+    })
 
     if (name === 'slug') {
       setIsAutoSlug(false)
@@ -190,7 +265,11 @@ export default function DeviceForm({
     setFormData({ ...formData, images: newImages })
   }
 
-  const handleAffiliateChange = (index: number, field: string, value: any) => {
+  const handleAffiliateChange = (
+    index: number,
+    field: string,
+    value: string | number,
+  ) => {
     const newLinks = [...(formData.affiliateLinks || [])]
     newLinks[index] = { ...newLinks[index], [field]: value }
     setFormData({ ...formData, affiliateLinks: newLinks })
@@ -213,7 +292,7 @@ export default function DeviceForm({
   }
 
   const handleAddPrice = async () => {
-    const id = (initialData as any).id || (initialData as any)._id
+    const id = getDeviceId(initialData)
     if (!id) return
 
     try {
@@ -231,21 +310,24 @@ export default function DeviceForm({
         retailer: '',
         affiliateUrl: '',
       })
-    } catch (err: any) {
-      alert(`Failed to add price: ${err.message}`)
+    } catch (err) {
+      alert(`Failed to add price: ${err instanceof Error ? err.message : err}`)
     }
   }
 
   const handleDeletePrice = async (priceId: string) => {
     if (!confirm('Delete this price entry?')) return
-    const id = (initialData as any).id || (initialData as any)._id
+    const id = getDeviceId(initialData)
+    if (!id) return
 
     try {
       await apiClient.deletePrice(priceId)
       const data = await apiClient.getDeviceCurrentPrices(id)
       setPrices(data)
-    } catch (err: any) {
-      alert(`Failed to delete price: ${err.message}`)
+    } catch (err) {
+      alert(
+        `Failed to delete price: ${err instanceof Error ? err.message : err}`,
+      )
     }
   }
 
@@ -259,101 +341,39 @@ export default function DeviceForm({
     for (const key of ['_id', 'id', 'createdAt', 'updatedAt', 'views']) delete rest[key]
 
     try {
-      const deviceId = (initialData as any)?.id || (initialData as any)?._id
+      const deviceId = getDeviceId(initialData)
       if (isEdit && deviceId) {
         await apiClient.updateDevice(deviceId, rest)
       } else {
         await apiClient.createDevice(rest)
       }
       router.push('/admin/devices')
-    } catch (err: any) {
-      setError(err.message || 'Failed to save device')
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'Failed to save device',
+      )
       setActiveTab('general') // Show where the error might be if it's validation
     } finally {
       setIsSubmitting(false)
     }
   }
 
-  const TabButton = ({
-    id,
-    label,
-    icon,
-  }: {
-    id: Tab
-    label: string
-    icon: any
-  }) => (
-    <button
-      type="button"
-      onClick={() => setActiveTab(id)}
-      className={`flex items-center gap-2 border-b-2 px-6 py-4 font-bold whitespace-nowrap transition-all ${
-        activeTab === id
-          ? 'border-blue-600 bg-blue-50/50 text-blue-600'
-          : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-800'
-      }`}
-    >
-      <FontAwesomeIcon
-        icon={icon}
-        className={activeTab === id ? 'text-blue-600' : 'text-gray-500'}
-      />
-      {label}
-    </button>
-  )
-
-  const SuggestionList = ({ id, items }: { id: string; items?: string[] }) => (
-    <datalist id={id}>
-      {items?.map((item) => (
-        <option key={item} value={item} />
-      ))}
-    </datalist>
-  )
-
-  const SuggestibleInput = ({
-    label,
-    name,
-    value,
-    suggestions: items,
-    placeholder,
-    type = 'text',
-  }: {
-    label: string
-    name: string
-    value: string
-    suggestions?: string[]
-    placeholder?: string
-    type?: string
-  }) => (
-    <div>
-      <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
-        {label}
-      </label>
-      <input
-        type={type}
-        name={name}
-        list={`${name}-list`}
-        value={value || ''}
-        onChange={handleChange}
-        placeholder={placeholder}
-        className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-      />
-      <SuggestionList id={`${name}-list`} items={items} />
-    </div>
-  )
-
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
       <div className="no-scrollbar flex overflow-x-auto border-b border-gray-100 bg-gray-50/50">
-        <TabButton id="general" label="General Info" icon={faInfoCircle} />
-        <TabButton id="specs_key" label="Key Specs" icon={faMicrochip} />
-        <TabButton id="specs_all" label="Detailed Specs" icon={faCamera} />
-        <TabButton id="media" label="Media & Review" icon={faImages} />
+        <TabButton id="general" label="General Info" icon={faInfoCircle} activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="specs_key" label="Key Specs" icon={faMicrochip} activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="specs_all" label="Detailed Specs" icon={faCamera} activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="media" label="Media & Review" icon={faImages} activeTab={activeTab} onSelect={setActiveTab} />
         <TabButton
           id="seo_affiliates"
           label="SEO & Affiliates"
           icon={faGlobe}
+          activeTab={activeTab}
+          onSelect={setActiveTab}
         />
         {isEdit && (
-          <TabButton id="pricing" label="Retail Prices" icon={faShoppingCart} />
+          <TabButton id="pricing" label="Retail Prices" icon={faShoppingCart} activeTab={activeTab} onSelect={setActiveTab} />
         )}
       </div>
 
@@ -477,7 +497,7 @@ export default function DeviceForm({
                   </div>
                 ) : (
                   <div className="no-scrollbar max-h-[500px] space-y-3 overflow-y-auto pr-2">
-                    {prices.map((p: any) => (
+                    {prices.map((p: PriceHistory) => (
                       <div
                         key={p._id || p.id}
                         className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-all hover:border-blue-200"
@@ -497,13 +517,21 @@ export default function DeviceForm({
                         </div>
                         <div className="flex items-center gap-3">
                           <span className="text-[10px] font-bold text-gray-300 uppercase">
-                            {new Date(
-                              p.date || (p as any).createdAt,
-                            ).toLocaleDateString()}
+                            {(() => {
+                              const shown =
+                                p.date ||
+                                (p as { createdAt?: string }).createdAt
+                              return shown
+                                ? new Date(shown).toLocaleDateString()
+                                : '—'
+                            })()}
                           </span>
                           <button
                             type="button"
-                            onClick={() => handleDeletePrice(p._id || p.id)}
+                            onClick={() => {
+                              const priceId = p._id || p.id
+                              if (priceId) handleDeletePrice(priceId)
+                            }}
                             className="p-2 text-red-400 hover:text-red-600"
                           >
                             <FontAwesomeIcon icon={faTrash} />
@@ -620,8 +648,8 @@ export default function DeviceForm({
                     <option value="">Select Category...</option>
                     {categories.map((c) => (
                       <option
-                        key={c.id || (c as any)._id}
-                        value={c.id || (c as any)._id}
+                        key={c.id || (c as { _id?: string })._id}
+                        value={c.id || (c as { _id?: string })._id}
                       >
                         {c.name}
                       </option>
@@ -695,12 +723,14 @@ export default function DeviceForm({
                 value={formData.os!}
                 suggestions={suggestions.os}
                 placeholder="e.g. Android 14"
+                onChange={handleChange}
               />
               <SuggestibleInput
                 label="Chipset"
                 name="chipset"
                 value={formData.chipset!}
                 suggestions={suggestions.chipset}
+                onChange={handleChange}
               />
               <div>
                 <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
@@ -728,6 +758,7 @@ export default function DeviceForm({
                 value={formData.displaySize!}
                 suggestions={suggestions.displaySize}
                 placeholder="e.g. 6.8 inches"
+                onChange={handleChange}
               />
               <div>
                 <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
@@ -746,6 +777,7 @@ export default function DeviceForm({
                 name="dimension"
                 value={formData.dimension!}
                 suggestions={suggestions.dimension}
+                onChange={handleChange}
               />
             </div>
 
@@ -787,12 +819,14 @@ export default function DeviceForm({
                 value={formData.battery!}
                 suggestions={suggestions.battery}
                 placeholder="e.g. 5000 mAh"
+                onChange={handleChange}
               />
               <SuggestibleInput
                 label="Colors"
                 name="colors"
                 value={formData.colors!}
                 suggestions={suggestions.colors}
+                onChange={handleChange}
               />
             </div>
           </div>
@@ -803,18 +837,21 @@ export default function DeviceForm({
                 name="networkTechnology"
                 value={formData.networkTechnology!}
                 suggestions={suggestions.networkTechnology}
+                onChange={handleChange}
               />
               <SuggestibleInput
                 label="Main Camera"
                 name="mainCamera"
                 value={formData.mainCamera!}
                 suggestions={suggestions.mainCamera}
+                onChange={handleChange}
               />
               <SuggestibleInput
                 label="Selfie Camera"
                 name="selfieCamera"
                 value={formData.selfieCamera!}
                 suggestions={suggestions.selfieCamera}
+                onChange={handleChange}
               />
             </div>
           </div>
