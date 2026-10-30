@@ -79,7 +79,7 @@ export default async function DevicesPage({ searchParams: promiseSearchParams }:
           <div className="text-center py-24 bg-white rounded-2xl border border-gray-100 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">No devices found</h2>
             <p className="text-gray-500">
-              We couldn't find any devices at the moment. Please check back later.
+              We couldn&apos;t find any devices at the moment. Please check back later.
             </p>
           </div>
         )}

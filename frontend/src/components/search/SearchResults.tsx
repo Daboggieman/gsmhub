@@ -63,7 +63,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, query, loading }
             <p className="font-bold mb-1">Search Tips:</p>
             <ul className="list-disc list-inside space-y-1 opacity-80">
               <li>Check your spelling</li>
-              <li>Try more general keywords (e.g., "iPhone" instead of "iPhone 15 Pro Max")</li>
+              <li>Try more general keywords (e.g., &quot;iPhone&quot; instead of &quot;iPhone 15 Pro Max&quot;)</li>
               <li>Filter by brand or category on the left sidebar</li>
             </ul>
           </div>

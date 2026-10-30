@@ -79,7 +79,7 @@ export default function FavoritesPage() {
                         </div>
                         <h2 className="text-2xl font-bold text-gray-800 mb-2">No favorites yet</h2>
                         <p className="text-gray-500 max-w-md mx-auto mb-8">
-                            Start adding devices to your favorites list by clicking the "Become a fan" button on any device page.
+                            Start adding devices to your favorites list by clicking the &quot;Become a fan&quot; button on any device page.
                         </p>
                         <button
                             onClick={() => router.push('/search')}

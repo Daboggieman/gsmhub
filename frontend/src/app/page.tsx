@@ -57,7 +57,7 @@ export default async function Home() {
         <div className="container mx-auto relative z-10 flex flex-col items-center text-center">
           <div className="max-w-3xl">
             <h1 className="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight leading-tight">
-              Device Info? <span className="text-blue-400">we've got you covered</span>
+              Device Info? <span className="text-blue-400">we&apos;ve got you covered</span>
             </h1>
             <p className="text-xl text-blue-100 mb-8 max-w-xl mx-auto">
               The most comprehensive database of Tech device specifications.

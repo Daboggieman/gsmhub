@@ -99,7 +99,7 @@ export default async function CategoryPage({ params: promiseParams, searchParams
           <div className="text-center py-24 bg-white rounded-2xl border border-gray-100 shadow-sm">
             <h2 className="text-2xl font-bold text-gray-800 mb-2">No devices found</h2>
             <p className="text-gray-500">
-              We couldn't find any devices in this category matching your criteria.
+              We couldn&apos;t find any devices in this category matching your criteria.
             </p>
           </div>
         )}

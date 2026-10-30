@@ -514,7 +514,7 @@ export default function DeviceForm({
                   </div>
                 )}
                 <p className="mt-4 text-[10px] font-bold text-gray-400 italic">
-                  * These prices appear in the "Prices" section of the public
+                  * These prices appear in the &quot;Prices&quot; section of the public
                   device page and contribute to price history charts.
                 </p>
               </div>

@@ -235,7 +235,7 @@ const SearchBar: React.FC = () => {
                 className="bg-gray-50 p-3 text-center border-t border-gray-100 hover:bg-blue-50 cursor-pointer transition-colors"
               >
                 <span className="text-sm font-bold text-blue-600">
-                  View all results for "{query}"
+                  View all results for &quot;{query}&quot;
                 </span>
               </div>
             </>
@@ -247,7 +247,7 @@ const SearchBar: React.FC = () => {
               <div className="text-gray-400 mb-2 text-2xl">
                 <FontAwesomeIcon icon={faSearch} />
               </div>
-              <p className="text-gray-500 font-medium">No devices found for "{query}"</p>
+              <p className="text-gray-500 font-medium">No devices found for &quot;{query}&quot;</p>
               <p className="text-xs text-gray-400 mt-1">Try a different search term</p>
             </div>
           )}
