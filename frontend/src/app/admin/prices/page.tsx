@@ -221,11 +221,14 @@ function AdminPricesPageContent() {
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this price entry?')) {
+      setBusyId(id)
       try {
         await apiClient.deletePrice(id)
         setRefreshTick((t) => t + 1)
       } catch (error: any) {
         alert(error.message || 'Failed to delete price entry')
+      } finally {
+        setBusyId(null)
       }
     }
   }
