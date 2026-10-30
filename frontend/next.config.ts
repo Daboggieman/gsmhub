@@ -54,7 +54,20 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  /* config options here */
+  // Proxy browser API calls to the backend so auth cookies remain
+  // first-party (the browser only ever talks to this origin).
+  // BACKEND_URL may be a bare hostname (Render blueprint fromService host)
+  // or a full URL.
+  async rewrites() {
+    const backend = process.env.BACKEND_URL || 'http://localhost:3001';
+    const destination = backend.startsWith('http') ? backend : `https://${backend}`;
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${destination}/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

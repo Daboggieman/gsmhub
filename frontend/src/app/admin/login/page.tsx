@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth-context';
+import { API_BASE_URL } from '@/lib/api';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
@@ -16,7 +17,7 @@ export default function AdminLoginPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'}/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

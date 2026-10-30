@@ -1,6 +1,15 @@
 import { Device, Category, SearchResult, PriceHistory } from '@shared/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+// Browser requests go to the same origin ("/api") so auth cookies stay
+// first-party (Safari/Brave block third-party cookies); next.config.ts
+// proxies "/api/:path*" to the backend via BACKEND_URL.
+// Server-side (SSR) requests call the backend directly and need no cookies,
+// so they use the absolute BACKEND_URL.
+// NEXT_PUBLIC_API_URL (inlined at build time) remains as a legacy override
+// for the browser — leave it unset in deployments.
+export const API_BASE_URL = typeof window === 'undefined'
+  ? (process.env.BACKEND_URL || process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001')
+  : (process.env.NEXT_PUBLIC_API_URL || '/api');
 
 class ApiClient {
   private baseURL: string;
