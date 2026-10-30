@@ -65,7 +65,7 @@ This document outlines the planned phases and progress for the GSMHUB project.
 
 ### PHASE 17: TESTING
 
-- [/] 17.1 Backend Testing (Jest unit/integration) — 11 suites; 2 currently failing (stale compare expectation + prices aggregate mock)
+- [x] 17.1 Backend Testing (Jest unit/integration) — 11 suites, 64 tests passing (stale compare + prices findAll expectations fixed 2026-10-30)
 - [x] 17.2 Frontend Testing (React Testing Library) — Vitest + RTL, 27 tests passing
 - [/] 17.3 End-to-End Testing (Playwright) — `user-flow.spec.ts` + `admin-flow.spec.ts` exist; run against deployed app
 - [ ] 17.4 Performance Testing (Lighthouse)

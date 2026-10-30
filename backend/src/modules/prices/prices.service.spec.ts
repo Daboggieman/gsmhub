@@ -67,14 +67,20 @@ describe('PricesService', () => {
   });
 
   describe('findAll', () => {
-    it('should return all prices', async () => {
-      model.find.mockReturnValue({
-        populate: jest.fn().mockReturnValue({
-          exec: jest.fn().mockResolvedValue([]),
+    it('should return paginated prices via the aggregate pipeline', async () => {
+      model.aggregate.mockReturnValue({
+        allowDiskUse: jest.fn().mockReturnValue({
+          exec: jest.fn().mockResolvedValue([
+            { items: [{ price: 100, device: { name: 'Device A' } }], total: [{ count: 1 }] },
+          ]),
         }),
       });
-      await service.findAll();
-      expect(model.find).toHaveBeenCalled();
+
+      const result = await service.findAll();
+      expect(model.aggregate).toHaveBeenCalled();
+      expect(result.total).toBe(1);
+      expect(result.prices).toHaveLength(1);
+      expect(result.prices[0].price).toBe(100);
     });
   });
 

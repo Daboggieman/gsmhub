@@ -89,11 +89,12 @@ describe('CompareService', () => {
       expect(sizeRow).toBeDefined();
       expect(sizeRow?.values).toEqual(['6.1 inches', '6.7 inches']);
       // 6.7 - 6.1 = 0.6. Display size higher is better.
-      expect(sizeRow?.difference).toBe('+0.6');
+      // The delta badge includes the unit taken from the winning value.
+      expect(sizeRow?.difference).toBe('+0.6 inches');
       expect(sizeRow?.betterIndex).toBe(1);
 
       const battRow = result.comparison.find((r) => r.item === 'Capacity');
-      expect(battRow?.difference).toBe('+1000.0');
+      expect(battRow?.difference).toBe('+1,000 mAh');
       expect(battRow?.betterIndex).toBe(1);
     });
   });
