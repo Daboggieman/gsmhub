@@ -1,0 +1,135 @@
+'use client'
+
+import { useEffect, useState, Suspense } from 'react'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { apiClient } from '@/lib/api'
+import { Device } from '@shared/types'
+import { formatPrice } from '@/lib/utils'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlus, faTimes, faSpinner } from '@fortawesome/free-solid-svg-icons'
+import Pagination from '@/components/ui/Pagination'
+
+const PAGE_LIMIT = 10
+
+// Free-text fields, seeded with the currencies/countries that appear in the
+// price dataset (seed-prices resolves launch prices to these markets).
+const CURRENCY_SUGGESTIONS = [
+  'USD', 'EUR', 'GBP', 'NGN', 'KES', 'GHS', 'ZAR', 'XOF', 'AED', 'CNY', 'INR',
+]
+const COUNTRY_SUGGESTIONS = [
+  'USA', 'UK', 'Nigeria', 'Kenya', 'Ghana', 'South Africa', 'UAE', 'India', 'China', 'EU',
+]
+
+interface PriceRow {
+  id?: string
+  _id?: string
+  price: number
+  currency: string
+  country: string
+  retailer?: string
+  affiliateUrl?: string
+  date: string
+  device?: { name?: string; brand?: string; model?: string } | null
+}
+
+const EMPTY_FORM = {
+  price: '',
+  currency: 'USD',
+  country: 'USA',
+  retailer: '',
+  affiliateUrl: '',
+}
+
+// Intl throws on an invalid currency code, which would crash the table
+// render — fall back to a plain amount + code instead.
+function formatPriceCell(price: number, currency: string) {
+  try {
+    return formatPrice(price, currency)
+  } catch {
+    return `${price} ${currency}`
+  }
+}
+
+function AdminPricesPageContent() {
+  const router = useRouter()
+  const searchParams = useSearchParams()
+
+  // URL is the single source of truth for page + search so the list
+  // survives refresh, browser back/forward, and URL sharing.
+  const page = Number(searchParams.get('page')) || 1
+  const search = searchParams.get('search') || ''
+
+  const [prices, setPrices] = useState<PriceRow[]>([])
+  const [total, setTotal] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [searchInput, setSearchInput] = useState(search)
+  const [isFormOpen, setIsFormOpen] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [formError, setFormError] = useState('')
+  const [busyId, setBusyId] = useState<string | null>(null)
+
+  // null = create mode; a string = editing that price entry.
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editingDeviceName, setEditingDeviceName] = useState('')
+  const [form, setForm] = useState(EMPTY_FORM)
+
+  // Device picker state (create mode only — a price entry cannot be
+  // reassigned to another device after creation).
+  const [deviceQuery, setDeviceQuery] = useState('')
+  const [deviceResults, setDeviceResults] = useState<Device[]>([])
+  const [isSearchingDevices, setIsSearchingDevices] = useState(false)
+  const [selectedDevice, setSelectedDevice] = useState<{
+    id: string
+    name: string
+  } | null>(null)
+
+  // Increment to re-fetch without changing page/search (after mutations).
+  const [refreshTick, setRefreshTick] = useState(0)
+
+  // Keep the search input in sync when the URL changes (back button).
+  useEffect(() => {
+    setSearchInput(search)
+  }, [search])
+
+  useEffect(() => {
+    let cancelled = false
+    const load = async () => {
+      setIsLoading(true)
+      try {
+        const data = await apiClient.getPrices({ page, limit: PAGE_LIMIT, search })
+        if (cancelled) return
+        setPrices(data.prices)
+        setTotal(data.total)
+      } catch (error) {
+        console.error('Error fetching prices:', error)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    load()
+    return () => {
+      cancelled = true
+    }
+  }, [page, search, refreshTick])
+
+  // Debounced device lookup for the create-form picker.
+  useEffect(() => {
+    if (!deviceQuery.trim()) {
+      setDeviceResults([])
+      return
+    }
+    setIsSearchingDevices(true)
+    const timeout = setTimeout(async () => {
+      try {
+        const data = await apiClient.getDevices({ search: deviceQuery, limit: 5 })
+        setDeviceResults(data.devices)
+      } catch {
+        setDeviceResults([])
+      } finally {
+        setIsSearchingDevices(false)
+      }
+    }, 300)
+    return () => clearTimeout(timeout)
+  }, [deviceQuery])
+
+  // __CHUNK2__

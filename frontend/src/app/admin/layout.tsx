@@ -71,6 +71,16 @@ export default function AdminLayout({
             Devices
           </Link>
           <Link
+            href="/admin/prices"
+            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
+              pathname.includes('/admin/prices')
+                ? 'bg-white text-indigo-900 shadow-lg'
+                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
+            }`}
+          >
+            Prices
+          </Link>
+          <Link
             href="/admin/categories"
             className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
               pathname.includes('/admin/categories')
