@@ -34,17 +34,11 @@ Both AdSense and Amazon review the live site. Approval fails without these.
    `localhost` and `*.vercel.app` subdomains are routinely rejected. You
    need `gsmhub.<yourdomain>` (or similar) serving the frontend, with the
    backend API reachable.
-2. **Add the policy pages** (currently missing — these are hard
-   requirements):
-   - `/privacy` — Privacy Policy. Must mention cookies, personalized ads
-     (Google/AdSense), affiliate links, and analytics.
-   - `/about` and `/contact` — who runs the site, how to reach you.
-   - A site-wide affiliate disclosure line in the footer (the price widget
-     already has one; a global one is expected by Amazon policy).
-3. **Hide `/test-devices`** — it is a public route with thin content, a
-   common "low value content" rejection trigger. Remove it from the
-   production build, and make sure `robots.txt`/sitemaps don't list admin
-   or test routes.
+2. ~~Add the policy pages~~ **Done** — `/privacy`, `/terms`, `/about`,
+   `/contact` are live, and the footer carries a site-wide affiliate
+   disclosure (the price widget has its own per-widget disclosure too).
+3. ~~Hide `/test-devices`~~ **Done** — the route was removed from the
+   app entirely; `robots.txt`/sitemaps don't list admin routes.
 4. **Content volume**: reviewers look for substantial original content.
    Spec sheets help, but a handful of original buying guides/reviews
    ("Best phones under ₦200,000", etc.) materially improves approval odds.

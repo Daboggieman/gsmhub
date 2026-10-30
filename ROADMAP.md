@@ -23,7 +23,7 @@ This document outlines the planned phases and progress for the GSMHUB project.
 
 - [/] Phase 15: Monetization Features
 - [x] Phase 16: Admin Panel
-- [ ] Phase 17: Testing
+- [/] Phase 17: Testing
 - [/] Phase 18: Deployment Preparation
 - [ ] Phase 19: Deployment
 - [ ] Phase 20: Post-Deployment
@@ -65,10 +65,18 @@ This document outlines the planned phases and progress for the GSMHUB project.
 
 ### PHASE 17: TESTING
 
-- [ ] 17.1 Backend Testing (Jest unit/integration)
-- [ ] 17.2 Frontend Testing (React Testing Library)
-- [ ] 17.3 End-to-End Testing (Playwright/Cypress)
+- [/] 17.1 Backend Testing (Jest unit/integration) — 11 suites; 2 currently failing (stale compare expectation + prices aggregate mock)
+- [x] 17.2 Frontend Testing (React Testing Library) — Vitest + RTL, 27 tests passing
+- [/] 17.3 End-to-End Testing (Playwright) — `user-flow.spec.ts` + `admin-flow.spec.ts` exist; run against deployed app
 - [ ] 17.4 Performance Testing (Lighthouse)
+
+### PHASE 18: DEPLOYMENT PREPARATION
+
+- [x] 18.1 Render Blueprint ([render.yaml](render.yaml): API + frontend + Key Value cache, free plans)
+- [x] 18.2 Same-origin API proxy (browser → `/api/*` via Next rewrites; auth cookies stay first-party)
+- [x] 18.3 Ad prerequisites (privacy/terms/about/contact pages, `/ads.txt` route, footer affiliate disclosure, `/test-devices` removed)
+- [ ] 18.4 Production deployment (apply Blueprint + Atlas + seed — see [docs/deployment.md](docs/deployment.md))
+- [ ] 18.5 Custom domain & go-live (then finish AdSense — see [docs/monetization-setup.md](docs/monetization-setup.md))
 
 ### PHASE 19: DEPLOYMENT
 
