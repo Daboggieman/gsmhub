@@ -21,7 +21,7 @@ This document outlines the planned phases and progress for the GSMHUB project.
 - [x] Phase 13: Search Functionality (Frontend)
 - [x] Phase 14: SEO Optimization
 
-- [ ] Phase 15: Monetization Features
+- [/] Phase 15: Monetization Features
 - [x] Phase 16: Admin Panel
 - [ ] Phase 17: Testing
 - [ ] Phase 18: Deployment Preparation
@@ -37,17 +37,17 @@ This document outlines the planned phases and progress for the GSMHUB project.
 
 ### PHASE 15: MONETIZATION FEATURES
 
-- [ ] 15.1 Google AdSense Integration
+- [/] 15.1 Google AdSense Integration
   - [ ] Create AdSense account
-  - [ ] Add AdSense script to layout
-  - [ ] Create Ad components
-- [ ] 15.2 Affiliate Links
+  - [x] Add AdSense script to layout
+  - [x] Create Ad components
+- [/] 15.2 Affiliate Links
   - [ ] Sign up for affiliate programs (Jumia, Amazon, etc.)
-  - [ ] Create affiliate link generator
-  - [ ] Add "Buy Now" buttons
-- [ ] 15.3 Price Comparison Widget
-  - [ ] Show prices from multiple retailers
-  - [ ] Highlight best price
+  - [x] Create affiliate link generator
+  - [x] Add "Buy Now" buttons
+- [x] 15.3 Price Comparison Widget
+  - [x] Show prices from multiple retailers
+  - [x] Highlight best price
 
 ### PHASE 16: ADMIN PANEL (CORE MVP)
 
