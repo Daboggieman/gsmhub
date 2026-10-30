@@ -169,9 +169,12 @@ cp frontend/.env.example frontend/.env.local
 It should contain:
 
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:3001
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 ```
+
+Nothing else is required for local dev — the browser calls same-origin
+`/api/*`, which Next proxies to the backend (`BACKEND_URL`, default
+`http://localhost:3001`).
 
 ## 7. Start the Frontend
 
