@@ -11,8 +11,11 @@
 
 ## Quick Links
 
-- **[Changelog](CHANGELOG.md)** - Historical progress and implementation logs.
+- **[Documentation Index](docs/README.md)** - All guides and references.
+- **[Deployment Guide](docs/deployment.md)** - Render + MongoDB Atlas free stack (Blueprint included).
+- **[Monetization Setup](docs/monetization-setup.md)** - AdSense, Amazon Associates, Jumia/Kolibri.
 - **[Roadmap](ROADMAP.md)** - Current status and future development phases.
+- **[Implementation Log](docs/implementation_history/session-log.md)** - Chronological development history.
 - **[Shared Types](shared/src/types/index.ts)** - Centralized TypeScript definitions.
 
 ---
@@ -25,11 +28,14 @@
 - **Advanced Search**: Real-time, debounced fuzzy search with autocomplete and image previews.
 - **Comparison Engine**: Side-by-side specification comparison with numeric difference highlighting.
 - **SEO Optimized**: Dynamic metadata, JSON-LD Product schema, and automatic sitemaps.
-- **Price Tracking**: Latest prices per country/retailer with historical trend analysis.
+- **Price Tracking**: Latest prices per country/retailer with historical trend analysis, currency-aware best-deal highlighting, and affiliate "Buy Now" links.
 
 ### Admin Panel
 
 - **Secure Authentication**: JWT-based auth with Passport.js (Local/JWT strategies).
+- **Price Management**: Centralized price entry editor with device picker (`/admin/prices`).
+- **Affiliate Link Generator**: Tracked retailer links built from the device name (Amazon, Jumia, Flipkart, Google Shopping).
+- **User Management**: Admin accounts, roles, and activation with audit logging.
 - **Data Command Center**: Manage devices, categories, and brands with ease.
 - **Dynamic Forms**: Tabbed interface with searchable dropdowns and auto-suggestions.
 - **Live Analytics**: Dashboard widgets for popular devices, trending searches, and system stats.
@@ -75,7 +81,7 @@
    ```bash
    cd backend
    pnpm install
-   # Create .env and add MONGO_URI, REDIS_URI, JWT_SECRET
+   # Create .env — copy .env.example and fill in MONGO_URI, REDIS_URI, JWT_SECRET
    pnpm run start:dev
    ```
 
@@ -83,9 +89,13 @@
    ```bash
    cd ../frontend
    pnpm install
-   # Create .env.local and add NEXT_PUBLIC_API_URL
+   # Nothing required for local dev — the frontend proxies /api/* to the
+   # backend via next.config.ts rewrites (BACKEND_URL, default localhost:3001).
+   # Optional: copy .env.example to .env.local and set NEXT_PUBLIC_SITE_URL.
    pnpm run dev
    ```
+
+> For deployment (free Render + Atlas stack) see **[docs/deployment.md](docs/deployment.md)**.
 
 ---
 
@@ -93,10 +103,12 @@
 
 ```text
 gsmhub/
-├── backend/    # NestJS API (Modules: Devices, Search, Categories, Auth, etc.)
-├── frontend/   # Next.js App (Components, Hooks, Pages, Context)
+├── backend/    # NestJS API (Modules: Devices, Search, Categories, Prices, Auth, Users, etc.)
+├── frontend/   # Next.js App (App Router, Admin Panel, Components)
 ├── shared/     # Unified TypeScript types and shared utilities
-└── artifacts/  # Project documentation and planning
+├── e2e/        # Playwright end-to-end tests
+├── docs/       # Deployment, monetization, API reference, runbooks, dev log
+└── render.yaml # Render Blueprint (one-click free-stack deployment)
 ```
 
 ---

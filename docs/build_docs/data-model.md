@@ -17,6 +17,8 @@ MongoDB schemas (Mongoose) used by the GSMHub backend.
 | `type` | string | Device type |
 | `specs` | [DeviceSpec] | Array of spec objects (NOT object — legacy data may differ) |
 | `views` | number | Indexed, used for popularity |
+| `isActive` | boolean | Visibility toggle |
+| `affiliateLinks` | [{platform, url, price?}] | Retailer links shown as "Buy on {platform}" buttons |
 | `createdAt` | Date | Indexed |
 
 ## DeviceSpec (embedded)
@@ -50,19 +52,28 @@ MongoDB schemas (Mongoose) used by the GSMHub backend.
 |-------|------|-------|
 | `device` | ref Device | Compound index `{device: 1, date: -1}` |
 | `date` | Date | Indexed (compound with device) |
-| `country` | string | |
-| `retailer` | string | |
-| `price` | number | |
-| `currency` | string | |
+| `country` | string | Seed rows use `Global` |
+| `retailer` | string | Seed rows use `Official Store` |
+| `price` | number | Seed rows are USD-normalized (see below) |
+| `currency` | string | Seed rows are `USD` |
+| `affiliateUrl` | string | Retailer link — powers the widget's "Buy Now" |
+
+**Seed convention:** `seed-prices.ts` normalizes the PhoneDB launch price
+to USD (`price` = USD amount, `currency` = `'USD'`), keeping the original
+launch currency only in the resolution logic. Manually added entries may
+use any currency — the price comparison widget therefore groups best-deal
+selection **per currency** and never compares raw amounts across
+currencies.
 
 ## User (Admin)
 
-| Field | Type |
-|-------|------|
-| `email` | string |
-| `password` | string (bcrypt hash) |
-| `name` | string |
-| `role` | string |
+| Field | Type | Notes |
+|-------|------|-------|
+| `email` | string | Unique |
+| `password` | string | bcrypt hash |
+| `name` | string | |
+| `role` | string | `admin` \| `user` |
+| `isActive` | boolean | Deactivation guard for self |
 
 ## SearchIndex
 

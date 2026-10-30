@@ -6,6 +6,60 @@ For the full project roadmap (Phases 1-23), see `ROADMAP.md`.
 
 ---
 
+## 2026-10-30 — Phase 18 Deployment Prep + AdSense Prerequisites
+
+- **Same-origin API proxy:** browser API calls now go to `/api/*` (same
+  origin), proxied to the backend via `next.config.ts` rewrites +
+  `BACKEND_URL`; SSR calls hit the backend directly. Reason: auth is a
+  HttpOnly cookie — split `*.onrender.com` origins would make it
+  third-party and break admin login on Safari/Brave. Login/logout calls
+  moved off direct fetch onto the proxy base (`API_BASE_URL` exported from
+  `lib/api.ts`).
+- **`render.yaml` Blueprint:** `gsmhub-api` (health check `/health/live`,
+  generated JWT_SECRET), `gsmhub-cache` (Key Value free), `gsmhub-web`
+  (Next.js + proxy). Only `MONGO_URI` (Atlas) is prompted; Node 22 pinned.
+- **AdSense approval pages:** `/privacy`, `/terms`, `/about`, `/contact`
+  created (footer previously linked to two 404s); footer affiliate
+  disclosure added; six dead footer links removed; public
+  `/test-devices` fixture page deleted (thin content).
+- **`/ads.txt` route:** serves the Google record once
+  `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` is set; comment-only until then.
+- **Docs:** `docs/deployment.md` (full Render+Atlas walkthrough),
+  `docs/monetization-setup.md` (AdSense/Amazon/Jumia-Kolibri signup guide);
+  package READMEs replaced (were stock NestJS/Next boilerplate).
+- **Known debt (pre-existing):** 2 failing backend tests (compare spec
+  expectation drift; prices spec mock missing `allowDiskUse`), ~230 lint
+  errors repo-wide. CI (`ci.yml`: typecheck+lint+test+build) is red.
+
+---
+
+## 2026-10-29 — Phase 16 Complete + Phase 15 Code-Complete
+
+- **16.4 Manual price updates:** new admin Prices page (`/admin/prices`) —
+  URL-driven search + pagination, create form with debounced device
+  picker, inline edit (device not reassignable, matches UpdatePriceDto),
+  delete with confirm; `getPrices()` added to the API client; sidebar link.
+- **15.3 Price comparison widget fixes:** best-deal is now judged **per
+  currency** (seeded data is USD-normalized; raw cross-currency sorting
+  crowned wrong winners once mixed currencies exist), shared `formatPrice`
+  formatting, "Last updated" reflects the most recent offer, `rel="sponsored"`
+  on Buy Now, "No Link" replaces the misleading "Out of Stock".
+- **API client honesty:** `getDevicePriceHistory` actually called the
+  current-offers endpoint — renamed `getDeviceCurrentPrices`, added a real
+  history method; all call sites updated.
+- **15.2 Affiliate link generator:** `lib/affiliate.ts` (platform
+  templates — no invented tracking schemes) + `AffiliateLinkGenerator`
+  component in DeviceForm's affiliate tab; IDs remembered in localStorage;
+  fixed a stale-state bug in the apply handler.
+- **15.1 verified as already scaffolded:** AdSense script gate +
+  `AdUnit` component + 4 placements existed.
+- **Infra:** root `pnpm-workspace.yaml` `allowBuilds` filled in (bcrypt +
+  unrs-resolver build, telemetry scripts denied) — deps now install.
+- **Verified:** 27/27 frontend tests (4 new widget tests), backend
+  unchanged 62/64, frontend production build green.
+
+---
+
 ## 2026-01-25 — Smart Sync & Backend Crash Fixes
 
 - **Smart Sync Strategy:** Database existence checks (skips API calls for existing devices), session limits capping Deep Sync to 5 fetches/session, 5s throttling between API hits.

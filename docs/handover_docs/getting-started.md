@@ -36,8 +36,13 @@ gsmhub/
 
 2. **Environment variables** — see `.env.example` files in `backend/` and `frontend/`:
 
-   - Backend needs: `MONGODB_URI`, `REDIS_URI`, `JWT_SECRET`, RapidAPI keys.
-   - Frontend needs: `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_SITE_URL`.
+   - Backend needs: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET` (≥ 32 chars),
+     `FRONTEND_URL`. RapidAPI keys are only needed for device sync
+     (see `docs/build_docs/external-apis.md`).
+   - Frontend needs nothing for local dev by default: `BACKEND_URL`
+     (optional, defaults to `http://localhost:3001`) targets the API, and
+     `NEXT_PUBLIC_SITE_URL` is used by robots.txt/sitemap. Leave
+     `NEXT_PUBLIC_API_URL` unset — see the API proxy note below.
 
 3. **Start the backend:**
 
@@ -78,6 +83,20 @@ Admin panel: `/admin/login`
 - **Path aliases:** Backend uses `@shared/*` in `tsconfig.json` pointing to `../shared/src/*`.
 - **Build:** Backend uses `tsc` directly (not `nest build`) to handle the monorepo shared module correctly.
 - **Dev mode:** Backend uses `ts-node-dev` with `tsconfig-paths/register`.
+- **API proxy:** the browser always calls the API through same-origin
+  `/api/*`, proxied to the backend by `next.config.ts` rewrites
+  (`BACKEND_URL`). This keeps the auth cookie first-party — pointing the
+  browser at the backend origin directly would break admin login on
+  Safari/Brave (third-party cookie blocking). SSR calls go server-to-server
+  directly and don't involve cookies. Don't reintroduce direct
+  browser→backend calls.
+
+## Deployment
+
+The stack deploys free on Render (frontend + API + Redis) with MongoDB
+Atlas free tier — `render.yaml` at the repo root is a Blueprint that
+creates everything. Full walkthrough: `docs/deployment.md`.
+Custom-domain + AdSense finishing steps: `docs/monetization-setup.md`.
 
 ## External APIs
 

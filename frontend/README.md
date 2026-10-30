@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# GSMHub Frontend
 
-## Getting Started
+Next.js (App Router) frontend for GSMHUB — public device catalog,
+comparison, and the `/admin` panel.
 
-First, run the development server:
+Part of the pnpm workspace, with `@gsmhub/shared` linked from `../shared`.
+
+> This project runs **Next.js 16** — consult the bundled docs at
+> `node_modules/next/dist/docs/` (see `AGENTS.md`) before writing code;
+> conventions may differ from older Next.js versions.
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install                 # from the repo root (workspace install)
+pnpm run dev                 # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**API access:** the browser always calls same-origin `/api/*`; the Next.js
+server proxies those requests to the backend (`BACKEND_URL`, default
+`http://localhost:3001`) via `next.config.ts` rewrites. This keeps the
+auth cookie first-party — do not point the browser at the backend origin
+directly. Server-side (SSR) calls use `BACKEND_URL` directly.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Optional env vars (`.env.example`): `BACKEND_URL`, `NEXT_PUBLIC_SITE_URL`
+(robots/sitemap), `NEXT_PUBLIC_ADSENSE_ID` +
+`NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` (after AdSense approval — see
+[docs/monetization-setup.md](../docs/monetization-setup.md)).
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command | What it does |
+|---------|--------------|
+| `pnpm run dev` | Dev server |
+| `pnpm run build` | Production build |
+| `pnpm run start` | Serve the production build |
+| `pnpm run lint` | ESLint |
+| `pnpm test` | Vitest unit tests |
 
-To learn more about Next.js, take a look at the following resources:
+## Areas
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- `/` — device catalog, search, comparison, price widget
+- `/admin` — dashboard, devices (bulk import/sync), prices, categories,
+  brands, users, audit logs (JWT cookie auth)
+- `/privacy`, `/terms`, `/about`, `/contact`, `/ads.txt` — policy &
+  approval pages
