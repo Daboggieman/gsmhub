@@ -1,4 +1,12 @@
-import { Controller, Request, Post, UseGuards, Body, Get, Res } from '@nestjs/common';
+import {
+  Controller,
+  Request,
+  Post,
+  UseGuards,
+  Body,
+  Get,
+  Res,
+} from '@nestjs/common';
 import * as express from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -6,10 +14,13 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('login')
-  async login(@Body() loginDto: LoginDto, @Res({ passthrough: true }) res: express.Response) {
+  async login(
+    @Body() loginDto: LoginDto,
+    @Res({ passthrough: true }) res: express.Response,
+  ) {
     const { access_token, user } = await this.authService.login(loginDto);
 
     res.cookie('auth_token', access_token, {
@@ -26,7 +37,10 @@ export class AuthController {
 
   @Post('logout')
   async logout(@Res({ passthrough: true }) res: express.Response) {
-    res.clearCookie('auth_token', { domain: process.env.COOKIE_DOMAIN || undefined, path: '/' });
+    res.clearCookie('auth_token', {
+      domain: process.env.COOKIE_DOMAIN || undefined,
+      path: '/',
+    });
     return { message: 'Logged out successfully' };
   }
 

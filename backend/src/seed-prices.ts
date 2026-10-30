@@ -248,7 +248,20 @@ function extractPrice(sp: RawRecord['specs']): number | null {
 function parseDate(raw: string): Date {
   const m = raw.match(/^(\d{4})\s+([A-Za-z]{3})(?:\s+(\d{1,2}))?/);
   if (!m) return new Date(0);
-  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   const mi = months.indexOf(m[2]);
   if (mi < 0) return new Date(0);
   const d = m[3] ? Number(m[3]) : 1;
@@ -260,24 +273,33 @@ async function main() {
   if (!MONGO_URI) throw new Error('MONGO_URI is not set');
 
   console.log(`Loading ${DATASET_PATH}...`);
-  const dataset = JSON.parse(fs.readFileSync(DATASET_PATH, 'utf-8')) as RawRecord[];
+  const dataset = JSON.parse(
+    fs.readFileSync(DATASET_PATH, 'utf-8'),
+  ) as RawRecord[];
   console.log(`Loaded ${dataset.length} records`);
 
   await connect(MONGO_URI);
   console.log('Connected to MongoDB');
 
   const DeviceModel = mongoose.model('Device', DeviceSchema as any);
-  const PriceHistoryModel = mongoose.model('PriceHistory', PriceHistorySchema as any);
+  const PriceHistoryModel = mongoose.model(
+    'PriceHistory',
+    PriceHistorySchema as any,
+  );
 
   // --- 1. optionally remove the stale dangling demo rows ----------------
   if (CLEAN_DANGLING && !DRY_RUN) {
     const deviceIds = new Set(
-      (await DeviceModel.find({}, { _id: 1 }).lean()).map((d: any) => d._id.toString()),
+      (await DeviceModel.find({}, { _id: 1 }).lean()).map((d: any) =>
+        d._id.toString(),
+      ),
     );
     const all = await PriceHistoryModel.find({}, { device: 1 }).lean();
-    const dangling = all.filter((p) => !deviceIds.has((p.device as any)?.toString()));
+    const dangling = all.filter((p) => !deviceIds.has(p.device?.toString()));
     if (dangling.length) {
-      await PriceHistoryModel.deleteMany({ _id: { $in: dangling.map((d) => d._id) } });
+      await PriceHistoryModel.deleteMany({
+        _id: { $in: dangling.map((d) => d._id) },
+      });
       console.log(`Removed ${dangling.length} dangling price rows`);
     } else {
       console.log('No dangling price rows');
@@ -314,7 +336,9 @@ async function main() {
 
     const slug = generateSlug(`${brand} ${name}`);
     if (process.env.DEBUG_SLUG && slug.includes(process.env.DEBUG_SLUG)) {
-      console.log(`[DEBUG ${process.env.DEBUG_SLUG}] title="${rec.title.slice(0, 60)}" raw=${extractPrice(sp)} label="${extractCurrency(sp)}" market="${v(sp, 'Market Countries')}" → usd=${resolved.usd} (currency=${resolved.currency}, original=${resolved.original})`);
+      console.log(
+        `[DEBUG ${process.env.DEBUG_SLUG}] title="${rec.title.slice(0, 60)}" raw=${extractPrice(sp)} label="${extractCurrency(sp)}" market="${v(sp, 'Market Countries')}" → usd=${resolved.usd} (currency=${resolved.currency}, original=${resolved.original})`,
+      );
     }
     const date = parseDate(v(sp, 'Announced') || v(sp, 'Released'));
 
@@ -370,7 +394,11 @@ async function main() {
     let i = 0;
     while (i < sortedAll.length) {
       let j = i + 1;
-      while (j < sortedAll.length && sortedAll[j].price <= sortedAll[i].price * 2) j++;
+      while (
+        j < sortedAll.length &&
+        sortedAll[j].price <= sortedAll[i].price * 2
+      )
+        j++;
       const cluster = sortedAll.slice(i, j);
       if (cluster.length > bestCluster.length) bestCluster = cluster;
       i = j;
@@ -388,12 +416,16 @@ async function main() {
 
   // --- 3. resolve slugs against devices ---------------------------------
   const slugs = [...finalBySlug.keys()];
-  const devices = await DeviceModel.find({ slug: { $in: slugs } }, { _id: 1, slug: 1 })
-    .lean();
+  const devices = await DeviceModel.find(
+    { slug: { $in: slugs } },
+    { _id: 1, slug: 1 },
+  ).lean();
   const deviceIdBySlug = new Map<string, string>();
   for (const d of devices as any[])
     deviceIdBySlug.set(d.slug, d._id.toString());
-  console.log(`Matched ${deviceIdBySlug.size}/${finalBySlug.size} slugs to devices`);
+  console.log(
+    `Matched ${deviceIdBySlug.size}/${finalBySlug.size} slugs to devices`,
+  );
 
   // --- 4. write price history -------------------------------------------
   if (DRY_RUN) {
@@ -403,7 +435,9 @@ async function main() {
   }
   // Replace prices we are about to backfill so a re-run refreshes values,
   // while leaving any prices added by other means untouched.
-  const targetIds = [...deviceIdBySlug.values()].map((id) => new mongoose.Types.ObjectId(id));
+  const targetIds = [...deviceIdBySlug.values()].map(
+    (id) => new mongoose.Types.ObjectId(id),
+  );
   await PriceHistoryModel.deleteMany({ device: { $in: targetIds } });
   console.log('Cleared existing rows for devices being backfilled');
 

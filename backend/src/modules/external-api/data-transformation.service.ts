@@ -74,7 +74,8 @@ export class DataTransformationService {
       )
         category = 'Comms';
       else if (lowerKey.includes('sensor')) category = 'Features';
-      else if (lowerKey.includes('color') || lowerKey.includes('colour')) category = 'Misc';
+      else if (lowerKey.includes('color') || lowerKey.includes('colour'))
+        category = 'Misc';
       else if (
         lowerKey.includes('body') ||
         lowerKey.includes('dimension') ||
@@ -132,7 +133,9 @@ export class DataTransformationService {
     if (!details.spotlight) {
       details.spotlight = {
         chipset: details.chipset,
-        os: details.androidVersion ? `Android ${details.androidVersion}` : details.os,
+        os: details.androidVersion
+          ? `Android ${details.androidVersion}`
+          : details.os,
         display_size: details.displaySize,
         display_resolution: details.displayResolution,
         battery_size: details.battery,
@@ -291,12 +294,16 @@ export class DataTransformationService {
   }
 
   private extractRam(value: string): string {
-    const match = String(value || '').match(/(\d+(?:\.\d+)?\s*(?:GB|TB|MB))\s*RAM/i);
+    const match = String(value || '').match(
+      /(\d+(?:\.\d+)?\s*(?:GB|TB|MB))\s*RAM/i,
+    );
     return match?.[1] || '';
   }
 
   private extractStorage(value: string): string {
-    const match = String(value || '').match(/\b\d+(?:\.\d+)?\s*(?:TB|GB|MB)\b/i);
+    const match = String(value || '').match(
+      /\b\d+(?:\.\d+)?\s*(?:TB|GB|MB)\b/i,
+    );
     return match?.[0] || '';
   }
 

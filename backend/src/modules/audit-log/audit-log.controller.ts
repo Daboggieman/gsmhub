@@ -9,22 +9,22 @@ import { UserRole } from '../users/schemas/user.schema';
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.ADMIN)
 export class AuditLogController {
-    constructor(private readonly auditLogService: AuditLogService) { }
+  constructor(private readonly auditLogService: AuditLogService) {}
 
-    @Get()
-    async findAll(
-        @Query('page') page?: string,
-        @Query('limit') limit?: string,
-        @Query('userId') userId?: string,
-        @Query('action') action?: string,
-        @Query('targetType') targetType?: string,
-    ) {
-        return this.auditLogService.findAll({
-            page: page ? parseInt(page) : 1,
-            limit: limit ? parseInt(limit) : 20,
-            userId,
-            action,
-            targetType,
-        });
-    }
+  @Get()
+  async findAll(
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+    @Query('userId') userId?: string,
+    @Query('action') action?: string,
+    @Query('targetType') targetType?: string,
+  ) {
+    return this.auditLogService.findAll({
+      page: page ? parseInt(page) : 1,
+      limit: limit ? parseInt(limit) : 20,
+      userId,
+      action,
+      targetType,
+    });
+  }
 }

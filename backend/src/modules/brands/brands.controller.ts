@@ -48,7 +48,10 @@ export class BrandsController {
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async update(@Param('id') id: string, @Body() updateBrandDto: UpdateBrandDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateBrandDto: UpdateBrandDto,
+  ) {
     const brand = await this.brandsService.update(id, updateBrandDto);
     return plainToInstance(BrandResponseDto, brand);
   }

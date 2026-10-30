@@ -13,11 +13,18 @@ export class ApiResponse<T> {
     this.timestamp = new Date().toISOString();
   }
 
-  static success<T>(data: T, message = 'Success', statusCode: HttpStatus = HttpStatus.OK): ApiResponse<T> {
+  static success<T>(
+    data: T,
+    message = 'Success',
+    statusCode: HttpStatus = HttpStatus.OK,
+  ): ApiResponse<T> {
     return new ApiResponse(statusCode, message, data);
   }
 
-  static error(message: string, statusCode: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR): ApiResponse<any> {
+  static error(
+    message: string,
+    statusCode: HttpStatus = HttpStatus.INTERNAL_SERVER_ERROR,
+  ): ApiResponse<any> {
     return new ApiResponse(statusCode, message, null);
   }
 }

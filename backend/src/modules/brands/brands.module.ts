@@ -9,7 +9,7 @@ import { Device, DeviceSchema } from '../devices/device.schema';
   imports: [
     MongooseModule.forFeature([
       { name: Brand.name, schema: BrandSchema },
-      { name: Device.name, schema: DeviceSchema }
+      { name: Device.name, schema: DeviceSchema },
     ]),
   ],
   controllers: [BrandsController],

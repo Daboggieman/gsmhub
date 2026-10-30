@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, Inject, forwardRef } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  Inject,
+  forwardRef,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { PriceHistory, PriceHistoryDocument } from './price-history.schema';
@@ -8,7 +13,8 @@ import { DevicesService } from '../devices/devices.service';
 @Injectable()
 export class PricesService {
   constructor(
-    @InjectModel(PriceHistory.name) private priceHistoryModel: Model<PriceHistoryDocument>,
+    @InjectModel(PriceHistory.name)
+    private priceHistoryModel: Model<PriceHistoryDocument>,
     @Inject(forwardRef(() => DevicesService))
     private readonly devicesService: DevicesService,
   ) {}
@@ -17,12 +23,19 @@ export class PricesService {
     await this.devicesService.findOne(createPriceDto.device);
     const createdPrice = new this.priceHistoryModel({
       ...createPriceDto,
-      date: createPriceDto.date || new Date().toISOString()
+      date: createPriceDto.date || new Date().toISOString(),
     });
     return createdPrice.save();
   }
 
-  async findAll({ page, limit, search }: { page?: number; limit?: number; search?: string } = {}): Promise<{ prices: any[]; total: number }> {
+  async findAll({
+    page,
+    limit,
+    search,
+  }: { page?: number; limit?: number; search?: string } = {}): Promise<{
+    prices: any[];
+    total: number;
+  }> {
     const page_ = page && page > 0 ? page : 1;
     const limit_ = limit && limit > 0 ? Math.min(limit, 100) : 20;
 
@@ -73,13 +86,19 @@ export class PricesService {
       .exec();
 
     return {
-      prices: (result?.items || []).map((p: any) => ({ ...p, id: p._id?.toString?.() ?? p._id })),
+      prices: (result?.items || []).map((p: any) => ({
+        ...p,
+        id: p._id?.toString?.() ?? p._id,
+      })),
       total: result?.total?.[0]?.count || 0,
     };
   }
 
   async findOne(id: string): Promise<PriceHistory> {
-    const price = await this.priceHistoryModel.findById(id).populate('device').exec();
+    const price = await this.priceHistoryModel
+      .findById(id)
+      .populate('device')
+      .exec();
     if (!price) {
       throw new NotFoundException(`Price with ID ${id} not found`);
     }
@@ -87,43 +106,60 @@ export class PricesService {
   }
 
   async findByDevice(deviceId: string): Promise<PriceHistory[]> {
-    return this.priceHistoryModel.find({ device: deviceId }).sort({ date: -1 }).exec();
+    return this.priceHistoryModel
+      .find({ device: deviceId })
+      .sort({ date: -1 })
+      .exec();
   }
 
   async getCurrentPrices(deviceId: string): Promise<PriceHistory[]> {
     // Get the latest price for each unique country/retailer combination
-    return this.priceHistoryModel.aggregate([
-      { $match: { device: deviceId } },
-      { $sort: { date: -1 } },
-      { 
-        $group: { 
-          _id: { country: "$country", retailer: "$retailer" },
-          latestPrice: { $first: "$$ROOT" }
-        }
-      },
-      { $replaceRoot: { newRoot: "$latestPrice" } }
-    ]).exec();
+    return this.priceHistoryModel
+      .aggregate([
+        { $match: { device: deviceId } },
+        { $sort: { date: -1 } },
+        {
+          $group: {
+            _id: { country: '$country', retailer: '$retailer' },
+            latestPrice: { $first: '$$ROOT' },
+          },
+        },
+        { $replaceRoot: { newRoot: '$latestPrice' } },
+      ])
+      .exec();
   }
 
   async getPriceHistory(deviceId: string): Promise<PriceHistory[]> {
-    return this.priceHistoryModel.find({ device: deviceId }).sort({ date: 1 }).exec();
+    return this.priceHistoryModel
+      .find({ device: deviceId })
+      .sort({ date: 1 })
+      .exec();
   }
 
-  async findLatestPriceByDeviceId(deviceId: string): Promise<PriceHistory | null> {
-    return this.priceHistoryModel.findOne({ device: deviceId }).sort({ date: -1 }).exec();
+  async findLatestPriceByDeviceId(
+    deviceId: string,
+  ): Promise<PriceHistory | null> {
+    return this.priceHistoryModel
+      .findOne({ device: deviceId })
+      .sort({ date: -1 })
+      .exec();
   }
 
-  async findLatestPricesByDeviceIds(deviceIds: string[]): Promise<Record<string, number>> {
-    const latestPrices = await this.priceHistoryModel.aggregate([
-      { $match: { device: { $in: deviceIds } } },
-      { $sort: { date: -1 } },
-      {
-        $group: {
-          _id: "$device",
-          latestPrice: { $first: "$price" }
-        }
-      }
-    ]).exec();
+  async findLatestPricesByDeviceIds(
+    deviceIds: string[],
+  ): Promise<Record<string, number>> {
+    const latestPrices = await this.priceHistoryModel
+      .aggregate([
+        { $match: { device: { $in: deviceIds } } },
+        { $sort: { date: -1 } },
+        {
+          $group: {
+            _id: '$device',
+            latestPrice: { $first: '$price' },
+          },
+        },
+      ])
+      .exec();
 
     return latestPrices.reduce((acc, curr) => {
       acc[curr._id.toString()] = curr.latestPrice;
@@ -131,7 +167,9 @@ export class PricesService {
     }, {});
   }
 
-  async getPriceTrend(deviceId: string): Promise<{ trend: 'up' | 'down' | 'stable'; percentage: number }> {
+  async getPriceTrend(
+    deviceId: string,
+  ): Promise<{ trend: 'up' | 'down' | 'stable'; percentage: number }> {
     const history = await this.priceHistoryModel
       .find({ device: deviceId })
       .sort({ date: -1 })
@@ -150,11 +188,14 @@ export class PricesService {
     const percentage = ((current - previous) / previous) * 100;
     return {
       trend: current > previous ? 'up' : 'down',
-      percentage: Math.abs(percentage)
+      percentage: Math.abs(percentage),
     };
   }
 
-  async update(id: string, updatePriceDto: UpdatePriceDto): Promise<PriceHistory> {
+  async update(
+    id: string,
+    updatePriceDto: UpdatePriceDto,
+  ): Promise<PriceHistory> {
     const existingPrice = await this.priceHistoryModel
       .findByIdAndUpdate(id, updatePriceDto, { new: true })
       .exec();

@@ -87,7 +87,11 @@ export class SyncService implements OnModuleInit {
   async fetchAndSavePhonesByBrand(
     brands: string[],
     deepSync: boolean = false,
-    options: { providers?: string[]; forceUpdate?: boolean; fullSeed?: boolean } = {},
+    options: {
+      providers?: string[];
+      forceUpdate?: boolean;
+      fullSeed?: boolean;
+    } = {},
   ): Promise<void> {
     this.logger.log(
       `Fetching phones by brand... DeepSync: ${deepSync}, fullSeed: ${options.fullSeed}`,
@@ -95,15 +99,18 @@ export class SyncService implements OnModuleInit {
 
     let deepSyncCount = 0;
     const DEEP_SYNC_BATCH_LIMIT = options.fullSeed
-      ? 999_999        // one-time seed: no cap
-      : 200;           // weekly cron: 200 devices/specs per run
+      ? 999_999 // one-time seed: no cap
+      : 200; // weekly cron: 200 devices/specs per run
 
     for (const brand of brands) {
       this.logger.log(`Fetching phones for brand: ${brand}`);
 
       try {
         const devices = options.providers
-          ? await this.externalApiService.fetchDevicesByBrand(brand, options.providers)
+          ? await this.externalApiService.fetchDevicesByBrand(
+              brand,
+              options.providers,
+            )
           : await this.externalApiService.fetchDevicesByBrand(brand);
 
         this.logger.log(
@@ -145,7 +152,7 @@ export class SyncService implements OnModuleInit {
                 brand,
                 devicePartial.model,
                 options.providers,
-                (devicePartial as any).rawSlug,
+                devicePartial.rawSlug,
               );
               if (fullDevice) {
                 fullDevice.category = brand;

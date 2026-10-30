@@ -1,4 +1,8 @@
-import { Injectable, ConflictException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  ConflictException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import * as bcrypt from 'bcrypt';
@@ -8,9 +12,17 @@ import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) { }
+  constructor(@InjectModel(User.name) private userModel: Model<UserDocument>) {}
 
-  async findAll({ page, limit, search }: { page: number; limit: number; search?: string }): Promise<{ users: User[]; total: number }> {
+  async findAll({
+    page,
+    limit,
+    search,
+  }: {
+    page: number;
+    limit: number;
+    search?: string;
+  }): Promise<{ users: User[]; total: number }> {
     const filter: Record<string, any> = {};
     if (search) {
       const rx = new RegExp(search.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i');
@@ -18,7 +30,8 @@ export class UsersService {
     }
 
     const [users, total] = await Promise.all([
-      this.userModel.find(filter)
+      this.userModel
+        .find(filter)
         .select('-password')
         .sort({ createdAt: -1 })
         .skip((page - 1) * limit)
@@ -34,7 +47,10 @@ export class UsersService {
     const { password, ...rest } = updateUserDto;
 
     if (updateUserDto.email) {
-      const existing = await this.userModel.findOne({ email: updateUserDto.email, _id: { $ne: id } });
+      const existing = await this.userModel.findOne({
+        email: updateUserDto.email,
+        _id: { $ne: id },
+      });
       if (existing) {
         throw new ConflictException('User with this email already exists');
       }
@@ -46,7 +62,10 @@ export class UsersService {
       update.password = await bcrypt.hash(password, salt);
     }
 
-    const updated = await this.userModel.findByIdAndUpdate(id, update, { new: true }).select('-password').exec();
+    const updated = await this.userModel
+      .findByIdAndUpdate(id, update, { new: true })
+      .select('-password')
+      .exec();
     if (!updated) return null;
     return updated.toObject() as any;
   }
@@ -76,7 +95,7 @@ export class UsersService {
     const savedUser = await newUser.save();
     const userObject = savedUser.toObject() as any;
     delete userObject.password;
-    return userObject as any;
+    return userObject;
   }
 
   async findByEmail(email: string): Promise<UserDocument | null> {
@@ -92,7 +111,7 @@ export class UsersService {
     if (!user) return false;
 
     const favorites = user.favorites || [];
-    const index = favorites.findIndex(f => f.toString() === deviceId);
+    const index = favorites.findIndex((f) => f.toString() === deviceId);
 
     if (index > -1) {
       favorites.splice(index, 1);
@@ -108,7 +127,8 @@ export class UsersService {
   }
 
   async getFavorites(userId: string): Promise<any[]> {
-    const user = await this.userModel.findById(userId)
+    const user = await this.userModel
+      .findById(userId)
       .populate('favorites')
       .exec();
     return user?.favorites || [];

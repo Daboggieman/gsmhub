@@ -20,6 +20,20 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   const [copyFeedback, setCopyFeedback] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
 
+  // Hooks must run before the "no specs" early return below, so hook
+  // order stays stable when device.specs appears between renders.
+  useEffect(() => {
+    if (!device?.specs) return;
+    const categories = Array.isArray(device.specs)
+      ? Array.from(new Set(device.specs.map((spec) => spec.category)))
+      : Object.keys(device.specs);
+    const initialExpansionState: { [key: string]: boolean } = {};
+    categories.forEach(category => {
+      initialExpansionState[category] = true;
+    });
+    setExpandedCategories(initialExpansionState);
+  }, [device.specs]);
+
   if (!device || !device.specs) {
     return (
       <div className="bg-white shadow-sm rounded-2xl p-8 text-center border border-gray-100">
@@ -59,14 +73,6 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
       )])
       .filter(([, specs]) => Object.keys(specs as object).length > 0)
   ) as typeof categorizedSpecs;
-
-  useEffect(() => {
-    const initialExpansionState: { [key: string]: boolean } = {};
-    Object.keys(categorizedSpecs).forEach(category => {
-      initialExpansionState[category] = true;
-    });
-    setExpandedCategories(initialExpansionState);
-  }, [device.specs]);
 
   const toggleCategory = (categoryName: string) => {
     setExpandedCategories(prevState => ({

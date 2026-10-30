@@ -69,7 +69,7 @@ describe('ExternalApiService', () => {
 
       expect(httpService.get).toHaveBeenCalledWith(
         expect.stringContaining('phone-specs-explorer-api'),
-        expect.any(Object)
+        expect.any(Object),
       );
       expect(result).toBe(mockResult);
     });
@@ -77,9 +77,11 @@ describe('ExternalApiService', () => {
     it('should fallback to secondary if primary API fails', async () => {
       const mockResult = { name: 'Device Secondary' };
       // Primary fails
-      httpService.get.mockReturnValueOnce(throwError(() => ({ 
-        response: { status: 404, data: { message: 'Not Found' } } 
-      })));
+      httpService.get.mockReturnValueOnce(
+        throwError(() => ({
+          response: { status: 404, data: { message: 'Not Found' } },
+        })),
+      );
       // Secondary succeeds
       httpService.get.mockReturnValueOnce(
         of({ data: { success: true, raw: 'secondary' } }),
@@ -93,11 +95,15 @@ describe('ExternalApiService', () => {
     });
 
     it('should throw HttpException if both APIs fail', async () => {
-      httpService.get.mockReturnValue(throwError(() => ({ 
-        response: { status: 404, data: { message: 'Not Found' } } 
-      })));
+      httpService.get.mockReturnValue(
+        throwError(() => ({
+          response: { status: 404, data: { message: 'Not Found' } },
+        })),
+      );
 
-      await expect(service.fetchDeviceSpecs('Brand', 'Model')).rejects.toThrow(HttpException);
+      await expect(service.fetchDeviceSpecs('Brand', 'Model')).rejects.toThrow(
+        HttpException,
+      );
     });
   });
 
@@ -113,7 +119,9 @@ describe('ExternalApiService', () => {
 
     it('should fallback to secondary if primary fails', async () => {
       const brands = ['Apple', 'Samsung'];
-      httpService.get.mockReturnValueOnce(throwError(() => new Error('API Error')));
+      httpService.get.mockReturnValueOnce(
+        throwError(() => new Error('API Error')),
+      );
       httpService.get.mockReturnValueOnce(of({ data: brands }));
 
       const result = await service.fetchAvailableBrands();

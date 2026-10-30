@@ -9,7 +9,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule'; // Import ScheduleModule
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'; // Import Throttler components
 
-
 import { mongooseConfig } from './config/mongoose.config';
 import { redisConfig } from './config/redis.config';
 import { DevicesModule } from './modules/devices/devices.module';
@@ -30,9 +29,15 @@ import { HealthController } from './health.controller';
     ConfigModule.forRoot({
       isGlobal: true,
       validate: (config) => {
-        const missing = ['MONGO_URI', 'JWT_SECRET'].filter((key) => !config[key]);
-        if (missing.length) throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
-        if (String(config.JWT_SECRET).length < 32) throw new Error('JWT_SECRET must be at least 32 characters long');
+        const missing = ['MONGO_URI', 'JWT_SECRET'].filter(
+          (key) => !config[key],
+        );
+        if (missing.length)
+          throw new Error(
+            `Missing required environment variables: ${missing.join(', ')}`,
+          );
+        if (String(config.JWT_SECRET).length < 32)
+          throw new Error('JWT_SECRET must be at least 32 characters long');
         return config;
       },
     }),
@@ -52,10 +57,12 @@ import { HealthController } from './health.controller';
       useFactory: () => redisConfig(),
     }),
     ScheduleModule.forRoot(), // Add ScheduleModule here
-    ThrottlerModule.forRoot([{
-      ttl: 60000,
-      limit: 100,
-    }]),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
 
     DevicesModule,
     CategoriesModule,
@@ -80,6 +87,5 @@ import { HealthController } from './health.controller';
       useClass: AuditLogInterceptor,
     },
   ],
-
 })
-export class AppModule { }
+export class AppModule {}

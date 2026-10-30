@@ -49,7 +49,7 @@ describe('SyncService', () => {
     it('should fetch brands and then fetch devices for each brand', async () => {
       const brands = ['Apple', 'Samsung'];
       const devices = [{ name: 'iPhone 15' }];
-      
+
       externalApiService.fetchAvailableBrands.mockResolvedValue(brands);
       externalApiService.fetchDevicesByBrand.mockResolvedValue(devices);
 
@@ -57,13 +57,19 @@ describe('SyncService', () => {
 
       expect(externalApiService.fetchAvailableBrands).toHaveBeenCalled();
       expect(categoriesService.upsertCategory).toHaveBeenCalledTimes(2);
-      expect(externalApiService.fetchDevicesByBrand).toHaveBeenCalledWith('Apple');
-      expect(externalApiService.fetchDevicesByBrand).toHaveBeenCalledWith('Samsung');
+      expect(externalApiService.fetchDevicesByBrand).toHaveBeenCalledWith(
+        'Apple',
+      );
+      expect(externalApiService.fetchDevicesByBrand).toHaveBeenCalledWith(
+        'Samsung',
+      );
       expect(devicesService.upsertDevice).toHaveBeenCalledTimes(2); // Once for each brand's device list (mocked to return same list)
     });
 
     it('should handle errors during brand sync gracefully', async () => {
-      externalApiService.fetchAvailableBrands.mockRejectedValue(new Error('Fetch failed'));
+      externalApiService.fetchAvailableBrands.mockRejectedValue(
+        new Error('Fetch failed'),
+      );
 
       await service.fullSync();
 

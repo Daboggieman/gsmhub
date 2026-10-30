@@ -125,7 +125,8 @@ export class DevicesRepository {
       }
       // Sorting by price only makes sense for devices that have one —
       // exclude unpriced devices instead of letting nulls sort first.
-      if (priceSort) match.latestPrice = { ...(match.latestPrice || {}), $ne: null };
+      if (priceSort)
+        match.latestPrice = { ...(match.latestPrice || {}), $ne: null };
       const pipeline: any[] = [
         { $match: query },
         ...this.latestPriceStages,
@@ -137,10 +138,17 @@ export class DevicesRepository {
         pipeline.push({ $sort: { latestPrice: -1 } });
       } else if (filters?.sort) {
         switch (filters.sort) {
-          case 'latest': pipeline.push({ $sort: { createdAt: -1 } }); break;
-          case 'popular': pipeline.push({ $sort: { views: -1 } }); break;
-          case 'alphabetical': pipeline.push({ $sort: { model: 1 } }); break;
-          default: pipeline.push({ $sort: { createdAt: -1 } });
+          case 'latest':
+            pipeline.push({ $sort: { createdAt: -1 } });
+            break;
+          case 'popular':
+            pipeline.push({ $sort: { views: -1 } });
+            break;
+          case 'alphabetical':
+            pipeline.push({ $sort: { model: 1 } });
+            break;
+          default:
+            pipeline.push({ $sort: { createdAt: -1 } });
         }
       } else {
         pipeline.push({ $sort: { createdAt: -1 } });
@@ -156,8 +164,12 @@ export class DevicesRepository {
           as: 'category',
         },
       });
-      pipeline.push({ $unwind: { path: '$category', preserveNullAndEmptyArrays: true } });
-      return this.deviceModel.aggregate(pipeline, { allowDiskUse: true }).exec();
+      pipeline.push({
+        $unwind: { path: '$category', preserveNullAndEmptyArrays: true },
+      });
+      return this.deviceModel
+        .aggregate(pipeline, { allowDiskUse: true })
+        .exec();
     }
 
     // All other paths: use aggregate so latestPriceStages is always applied.
@@ -168,19 +180,23 @@ export class DevicesRepository {
     let sortStage: any;
     if (filters?.sort) {
       switch (filters.sort) {
-        case 'latest':    sortStage = { createdAt: -1 }; break;
-        case 'popular':   sortStage = { views: -1 }; break;
-        case 'alphabetical': sortStage = { model: 1 }; break;
-        default:          sortStage = { createdAt: -1 };
+        case 'latest':
+          sortStage = { createdAt: -1 };
+          break;
+        case 'popular':
+          sortStage = { views: -1 };
+          break;
+        case 'alphabetical':
+          sortStage = { model: 1 };
+          break;
+        default:
+          sortStage = { createdAt: -1 };
       }
     } else {
       sortStage = { createdAt: -1 };
     }
 
-    const pipeline: any[] = [
-      { $match: query },
-      { $sort: sortStage },
-    ];
+    const pipeline: any[] = [{ $match: query }, { $sort: sortStage }];
     if (filters?.skip) pipeline.push({ $skip: filters.skip });
     if (filters?.limit) pipeline.push({ $limit: filters.limit });
     pipeline.push(
@@ -221,7 +237,8 @@ export class DevicesRepository {
       return Number.isFinite(n) ? n : undefined;
     };
 
-    if (filters?.category) query.category = new Types.ObjectId(filters.category);
+    if (filters?.category)
+      query.category = new Types.ObjectId(filters.category);
     if (filters?.brand) {
       query.brand = { $regex: new RegExp(escapeRegExp(filters.brand), 'i') };
     }
@@ -237,7 +254,11 @@ export class DevicesRepository {
       ['ramValue', parse(filters?.minRam), parse(filters?.maxRam)],
       ['storageValue', parse(filters?.minStorage), parse(filters?.maxStorage)],
       ['batteryValue', parse(filters?.minBattery), parse(filters?.maxBattery)],
-      ['displaySizeValue', parse(filters?.minDisplay), parse(filters?.maxDisplay)],
+      [
+        'displaySizeValue',
+        parse(filters?.minDisplay),
+        parse(filters?.maxDisplay),
+      ],
     ];
     for (const [field, low, high] of ranges) {
       if (low !== undefined || high !== undefined) {
@@ -282,7 +303,7 @@ export class DevicesRepository {
       .exec();
     if (!results.length) return null;
     const doc = results[0];
-    return this.deviceModel.populate(doc, { path: 'category' }) as unknown as Device;
+    return this.deviceModel.populate(doc, { path: 'category' });
   }
 
   async update(

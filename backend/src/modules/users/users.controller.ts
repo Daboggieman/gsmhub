@@ -1,6 +1,16 @@
 import {
-  Controller, Get, Post, Patch, Delete, Param, Body,
-  Query, UseGuards, Req, ForbiddenException, BadRequestException,
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Param,
+  Body,
+  Query,
+  UseGuards,
+  Req,
+  ForbiddenException,
+  BadRequestException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -24,16 +34,21 @@ export class UsersController {
     @Query('limit') limit?: string,
     @Query('search') search?: string,
   ) {
-    const pageNum = Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
-    const limitNum = Number.isFinite(Number(limit)) && Number(limit) > 0
-      ? Math.min(Number(limit), 50) : 10;
+    const pageNum =
+      Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
+    const limitNum =
+      Number.isFinite(Number(limit)) && Number(limit) > 0
+        ? Math.min(Number(limit), 50)
+        : 10;
     const { users, total } = await this.usersService.findAll({
       page: pageNum,
       limit: limitNum,
       search,
     });
     return {
-      users: plainToInstance(UserResponseDto, users.map(toResponse), { excludeExtraneousValues: true }),
+      users: plainToInstance(UserResponseDto, users.map(toResponse), {
+        excludeExtraneousValues: true,
+      }),
       total,
       page: pageNum,
       limit: limitNum,
@@ -44,11 +59,17 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
-    return plainToInstance(UserResponseDto, toResponse(user), { excludeExtraneousValues: true });
+    return plainToInstance(UserResponseDto, toResponse(user), {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Patch(':id')
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Req() req: any) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Req() req: any,
+  ) {
     // Prevent demoting or deactivating yourself
     if (id === req.user.userId) {
       if (updateUserDto.isActive === false) {
@@ -60,7 +81,9 @@ export class UsersController {
     }
     const user = await this.usersService.update(id, updateUserDto);
     if (!user) throw new BadRequestException('User not found');
-    return plainToInstance(UserResponseDto, toResponse(user), { excludeExtraneousValues: true });
+    return plainToInstance(UserResponseDto, toResponse(user), {
+      excludeExtraneousValues: true,
+    });
   }
 
   @Delete(':id')

@@ -59,7 +59,10 @@ export class DevicesController {
     @Query('maxPrice') maxPrice?: number,
   ) {
     page = Number.isFinite(Number(page)) && Number(page) > 0 ? Number(page) : 1;
-    limit = Number.isFinite(Number(limit)) && Number(limit) > 0 ? Math.min(Number(limit), 50) : 10;
+    limit =
+      Number.isFinite(Number(limit)) && Number(limit) > 0
+        ? Math.min(Number(limit), 50)
+        : 10;
 
     const parseNum = (val: any) => {
       if (val === undefined || val === null || val === '') return undefined;
@@ -67,24 +70,25 @@ export class DevicesController {
       return Number.isFinite(parsed) ? parsed : undefined;
     };
 
-    const { devices, total, suggestions } = await this.devicesService.getAllDevices({
-      skip: (page - 1) * limit,
-      limit,
-      category,
-      brand,
-      search,
-      sort,
-      minRam: parseNum(minRam),
-      maxRam: parseNum(maxRam),
-      minStorage: parseNum(minStorage),
-      maxStorage: parseNum(maxStorage),
-      minBattery: parseNum(minBattery),
-      maxBattery: parseNum(maxBattery),
-      minDisplay: parseNum(minDisplay),
-      maxDisplay: parseNum(maxDisplay),
-      minPrice: parseNum(minPrice),
-      maxPrice: parseNum(maxPrice),
-    });
+    const { devices, total, suggestions } =
+      await this.devicesService.getAllDevices({
+        skip: (page - 1) * limit,
+        limit,
+        category,
+        brand,
+        search,
+        sort,
+        minRam: parseNum(minRam),
+        maxRam: parseNum(maxRam),
+        minStorage: parseNum(minStorage),
+        maxStorage: parseNum(maxStorage),
+        minBattery: parseNum(minBattery),
+        maxBattery: parseNum(maxBattery),
+        minDisplay: parseNum(minDisplay),
+        maxDisplay: parseNum(maxDisplay),
+        minPrice: parseNum(minPrice),
+        maxPrice: parseNum(maxPrice),
+      });
     return {
       devices: plainToInstance(DeviceResponseDto, devices),
       total,
@@ -212,14 +216,23 @@ export class DevicesController {
   @Post('bulk-import')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  @UseInterceptors(FileInterceptor('file', {
-    dest: process.env.UPLOAD_DIR || './uploads',
-    limits: { fileSize: 5 * 1024 * 1024, files: 1 },
-    fileFilter: (_req, file, callback) => {
-      const valid = file.mimetype === 'text/csv' || file.originalname.toLowerCase().endsWith('.csv');
-      callback(valid ? null : new BadRequestException('Only CSV files are supported'), valid);
-    },
-  }))
+  @UseInterceptors(
+    FileInterceptor('file', {
+      dest: process.env.UPLOAD_DIR || './uploads',
+      limits: { fileSize: 5 * 1024 * 1024, files: 1 },
+      fileFilter: (_req, file, callback) => {
+        const valid =
+          file.mimetype === 'text/csv' ||
+          file.originalname.toLowerCase().endsWith('.csv');
+        callback(
+          valid
+            ? null
+            : new BadRequestException('Only CSV files are supported'),
+          valid,
+        );
+      },
+    }),
+  )
   async bulkImport(@UploadedFile() file: Express.Multer.File) {
     if (!file?.path) throw new BadRequestException('A CSV file is required');
     return this.devicesService.bulkImport(file.path);

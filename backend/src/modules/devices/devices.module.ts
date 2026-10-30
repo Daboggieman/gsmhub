@@ -13,7 +13,9 @@ import { ExternalApiModule } from '../external-api/external-api.module';
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Device.name, schema: DeviceSchema }]),
-    MongooseModule.forFeature([{ name: Category.name, schema: CategorySchema }]),
+    MongooseModule.forFeature([
+      { name: Category.name, schema: CategorySchema },
+    ]),
     HttpModule,
     forwardRef(() => ExternalApiModule), // Circular dependency resolution
     forwardRef(() => CategoriesModule),

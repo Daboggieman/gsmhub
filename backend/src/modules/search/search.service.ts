@@ -11,13 +11,15 @@ import { escapeRegExp } from '@shared/utils/regex';
 export class SearchService {
   constructor(
     @InjectModel(Device.name) private deviceModel: Model<DeviceDocument>,
-    @InjectModel(SearchIndex.name) private searchIndexModel: Model<SearchIndexDocument>,
-    @InjectModel(SearchQuery.name) private searchQueryModel: Model<SearchQueryDocument>,
+    @InjectModel(SearchIndex.name)
+    private searchIndexModel: Model<SearchIndexDocument>,
+    @InjectModel(SearchQuery.name)
+    private searchQueryModel: Model<SearchQueryDocument>,
   ) {}
 
   async search(query: string, limit: number = 10): Promise<SearchResult[]> {
     if (!query) return [];
-    
+
     // Log the search query for analytics
     this.logSearchQuery(query);
 
@@ -27,54 +29,60 @@ export class SearchService {
 
     // Use a combination of text search and regex for better fuzzy-like matching
     let devices = await this.deviceModel
-      .find({
-        $or: [
-          { $text: { $search: trimmedQuery } },
-          { name: searchRegex },
-          { brand: searchRegex },
-          { model: searchRegex }
-        ],
-        isActive: true
-      }, {
-        score: { $meta: 'textScore' }
-      })
-      .sort({ 
+      .find(
+        {
+          $or: [
+            { $text: { $search: trimmedQuery } },
+            { name: searchRegex },
+            { brand: searchRegex },
+            { model: searchRegex },
+          ],
+          isActive: true,
+        },
+        {
+          score: { $meta: 'textScore' },
+        },
+      )
+      .sort({
         score: { $meta: 'textScore' },
-        views: -1 // Use views as tie-breaker for popularity
+        views: -1, // Use views as tie-breaker for popularity
       })
       .limit(limit)
       .exec();
-    
+
     // Fallback: If no results, try broader search (split query into words)
     if (devices.length === 0 && trimmedQuery.includes(' ')) {
-      const words = trimmedQuery.split(/\s+/).filter(w => w.length > 2);
+      const words = trimmedQuery.split(/\s+/).filter((w) => w.length > 2);
       if (words.length > 0) {
         devices = await this.deviceModel
           .find({
-            $or: words.map(word => ({
+            $or: words.map((word) => ({
               $or: [
                 { name: new RegExp(escapeRegExp(word), 'i') },
-                { brand: new RegExp(escapeRegExp(word), 'i') }
-              ]
+                { brand: new RegExp(escapeRegExp(word), 'i') },
+              ],
             })),
-            isActive: true
+            isActive: true,
           })
           .sort({ views: -1 })
           .limit(limit)
           .exec();
       }
     }
-    
+
     return this.mapToSearchResults(devices);
   }
 
-  async getAutocomplete(query: string, limit: number = 8): Promise<SearchResult[]> {
+  async getAutocomplete(
+    query: string,
+    limit: number = 8,
+  ): Promise<SearchResult[]> {
     if (!query || query.length < 2) {
       return [];
     }
-    
+
     const searchRegex = new RegExp(escapeRegExp(query), 'i');
-    
+
     const devices = await this.deviceModel
       .find({
         $or: [
@@ -82,12 +90,12 @@ export class SearchService {
           { brand: searchRegex },
           { model: searchRegex },
         ],
-        isActive: true
+        isActive: true,
       })
       .sort({ views: -1 })
       .limit(limit)
       .exec();
-    
+
     return this.mapToSearchResults(devices);
   }
 
@@ -98,12 +106,12 @@ export class SearchService {
       .sort({ count: -1 })
       .limit(limit)
       .exec();
-    
-    return suggestions.map(s => s.query);
+
+    return suggestions.map((s) => s.query);
   }
 
   private mapToSearchResults(devices: DeviceDocument[]): SearchResult[] {
-    return devices.map(device => ({
+    return devices.map((device) => ({
       _id: device._id.toString(),
       name: device.name,
       slug: device.slug,
@@ -117,11 +125,13 @@ export class SearchService {
     const normalizedQuery = query.toLowerCase().trim();
     if (!normalizedQuery || normalizedQuery.length < 3) return;
 
-    await this.searchQueryModel.findOneAndUpdate(
-      { query: normalizedQuery },
-      { $inc: { count: 1 } },
-      { upsert: true, new: true }
-    ).exec();
+    await this.searchQueryModel
+      .findOneAndUpdate(
+        { query: normalizedQuery },
+        { $inc: { count: 1 } },
+        { upsert: true, new: true },
+      )
+      .exec();
   }
 
   async getPopularQueries(limit: number = 10): Promise<SearchQuery[]> {

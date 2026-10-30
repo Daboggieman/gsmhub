@@ -26,14 +26,17 @@ export class AppController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
   async getAdminStats() {
-    const [devicesCount, categoriesCount, totalViews, topDevices, topSearches] = await Promise.all([
-      this.devicesService.getAllDevices({ limit: 1 }).then(res => res.total),
-      this.categoriesService.count(),
-      this.devicesService.getTotalViews(),
-      this.devicesService.getPopularDevices(5),
-      this.searchService.getPopularQueries(5),
-    ]);
-    
+    const [devicesCount, categoriesCount, totalViews, topDevices, topSearches] =
+      await Promise.all([
+        this.devicesService
+          .getAllDevices({ limit: 1 })
+          .then((res) => res.total),
+        this.categoriesService.count(),
+        this.devicesService.getTotalViews(),
+        this.devicesService.getPopularDevices(5),
+        this.searchService.getPopularQueries(5),
+      ]);
+
     // Mock Revenue Data (Placeholder until real integrations)
     const revenueData = [
       { name: 'Jan', revenue: 4000, ads: 2400 },
@@ -51,7 +54,7 @@ export class AppController {
       { name: 'Konga', value: 300 },
       { name: 'Slot', value: 200 },
     ];
-    
+
     return {
       devicesCount,
       categoriesCount,

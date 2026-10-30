@@ -45,8 +45,14 @@ describe('SearchService', () => {
       providers: [
         SearchService,
         { provide: getModelToken(Device.name), useValue: mockDeviceModel },
-        { provide: getModelToken(SearchIndex.name), useValue: mockSearchIndexModel },
-        { provide: getModelToken(SearchQuery.name), useValue: mockSearchQueryModel },
+        {
+          provide: getModelToken(SearchIndex.name),
+          useValue: mockSearchIndexModel,
+        },
+        {
+          provide: getModelToken(SearchQuery.name),
+          useValue: mockSearchQueryModel,
+        },
       ],
     }).compile();
 
@@ -69,9 +75,9 @@ describe('SearchService', () => {
 
     it('should return mapped search results', async () => {
       mockDeviceModel.exec.mockResolvedValue([mockDevice]);
-      
+
       const result = await service.search('iphone');
-      
+
       expect(deviceModel.find).toHaveBeenCalled();
       expect(result.length).toBe(1);
       expect(result[0].name).toBe(mockDevice.name);
@@ -80,21 +86,21 @@ describe('SearchService', () => {
 
     it('should log search query if query is long enough', async () => {
       mockDeviceModel.exec.mockResolvedValue([]);
-      
+
       await service.search('iphone 15');
-      
+
       expect(searchQueryModel.findOneAndUpdate).toHaveBeenCalledWith(
         { query: 'iphone 15' },
         { $inc: { count: 1 } },
-        { upsert: true, new: true }
+        { upsert: true, new: true },
       );
     });
 
     it('should escape regex special characters', async () => {
       mockDeviceModel.exec.mockResolvedValue([]);
-      
+
       await service.search('iphone (15)');
-      
+
       const regexArg = deviceModel.find.mock.calls[0][0].$or[1].name;
       expect(regexArg.source).toBe('iphone \\(15\\)');
     });
@@ -108,9 +114,9 @@ describe('SearchService', () => {
 
     it('should fetch results for valid query length', async () => {
       mockDeviceModel.exec.mockResolvedValue([mockDevice]);
-      
+
       const result = await service.getAutocomplete('iph');
-      
+
       expect(deviceModel.find).toHaveBeenCalled();
       expect(result.length).toBe(1);
     });
@@ -118,12 +124,15 @@ describe('SearchService', () => {
 
   describe('getSuggestions', () => {
     it('should return suggestion strings', async () => {
-      mockSearchQueryModel.exec.mockResolvedValue([{ query: 'iphone' }, { query: 'iphone 15' }]);
-      
+      mockSearchQueryModel.exec.mockResolvedValue([
+        { query: 'iphone' },
+        { query: 'iphone 15' },
+      ]);
+
       const result = await service.getSuggestions('iph');
-      
+
       expect(searchQueryModel.find).toHaveBeenCalledWith({
-        query: new RegExp('^iph', 'i')
+        query: new RegExp('^iph', 'i'),
       });
       expect(result).toEqual(['iphone', 'iphone 15']);
     });
@@ -131,10 +140,12 @@ describe('SearchService', () => {
 
   describe('getPopularQueries', () => {
     it('should return sorted popular queries', async () => {
-      mockSearchQueryModel.exec.mockResolvedValue([{ query: 'iphone', count: 10 }]);
-      
+      mockSearchQueryModel.exec.mockResolvedValue([
+        { query: 'iphone', count: 10 },
+      ]);
+
       const result = await service.getPopularQueries(5);
-      
+
       expect(searchQueryModel.find).toHaveBeenCalled();
       expect(searchQueryModel.sort).toHaveBeenCalledWith({ count: -1 });
       expect(searchQueryModel.limit).toHaveBeenCalledWith(5);

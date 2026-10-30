@@ -12,11 +12,17 @@ export class SearchController {
 
   @Get('autocomplete')
   autocomplete(@Query('q') query: string, @Query('limit') limit?: string) {
-    return this.searchService.getAutocomplete(query, limit ? parseInt(limit) : 5);
+    return this.searchService.getAutocomplete(
+      query,
+      limit ? parseInt(limit) : 5,
+    );
   }
 
   @Get('suggestions')
   suggestions(@Query('q') query: string, @Query('limit') limit?: string) {
-    return this.searchService.getSuggestions(query, limit ? parseInt(limit) : 5);
+    return this.searchService.getSuggestions(
+      query,
+      limit ? parseInt(limit) : 5,
+    );
   }
 }

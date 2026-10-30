@@ -4,7 +4,7 @@ export function removeUndefinedProps(obj: any): any {
   }
 
   if (Array.isArray(obj)) {
-    return obj.map(item => removeUndefinedProps(item));
+    return obj.map((item) => removeUndefinedProps(item));
   }
 
   const newObj: { [key: string]: any } = {};

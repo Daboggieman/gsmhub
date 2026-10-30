@@ -50,7 +50,9 @@ export class DevicesService {
           (device as any).latestPrice = latestPrice.price;
         }
       } catch (e) {
-        this.logger.warn(`Failed to attach price for ${device._id}: ${(e as Error).message}`);
+        this.logger.warn(
+          `Failed to attach price for ${device._id}: ${(e as Error).message}`,
+        );
       }
     }
     return device;
@@ -61,7 +63,7 @@ export class DevicesService {
 
     const deviceIds = devices
       .filter((d) => d && d._id)
-      .map((d) => d._id!.toString());
+      .map((d) => d._id.toString());
 
     if (!deviceIds.length) return devices;
 
@@ -76,7 +78,9 @@ export class DevicesService {
         return device;
       });
     } catch (e) {
-      this.logger.warn(`Failed to attach prices for batch: ${(e as Error).message}`);
+      this.logger.warn(
+        `Failed to attach prices for batch: ${(e as Error).message}`,
+      );
       return devices;
     }
   }
@@ -91,7 +95,9 @@ export class DevicesService {
       'popular_devices_12',
       'popular_devices_50',
     ];
-    await Promise.all(keys.map((k) => this.safeCacheDel(k))).catch(() => undefined);
+    await Promise.all(keys.map((k) => this.safeCacheDel(k))).catch(
+      () => undefined,
+    );
   }
 
   private async safeCacheGet<T>(key: string): Promise<T | null> {
@@ -103,11 +109,17 @@ export class DevicesService {
     }
   }
 
-  private async safeCacheSet(key: string, value: any, ttl: number): Promise<void> {
+  private async safeCacheSet(
+    key: string,
+    value: any,
+    ttl: number,
+  ): Promise<void> {
     try {
       await this.cacheManager.set(key, value, ttl);
     } catch (e) {
-      this.logger.warn(`Cache write failed for ${key}: ${(e as Error).message}`);
+      this.logger.warn(
+        `Cache write failed for ${key}: ${(e as Error).message}`,
+      );
     }
   }
 
@@ -115,7 +127,9 @@ export class DevicesService {
     try {
       await this.cacheManager.del(key);
     } catch (e) {
-      this.logger.warn(`Cache delete failed for ${key}: ${(e as Error).message}`);
+      this.logger.warn(
+        `Cache delete failed for ${key}: ${(e as Error).message}`,
+      );
     }
   }
 
@@ -389,12 +403,12 @@ export class DevicesService {
 
       if (Object.keys(updatePayload).length > 0) {
         return await this.devicesRepository.update(
-          existingDevice._id!.toString(),
+          existingDevice._id.toString(),
           updatePayload,
         );
       }
 
-      return existingDevice as Device;
+      return existingDevice;
     }
 
     // Default category to 'Smartphones' if missing
@@ -521,7 +535,11 @@ export class DevicesService {
         .on('data', (data) => results.push(data))
         .on('error', (error) => {
           errors.push(`CSV Parsing Error: ${error.message}`);
-          try { fs.unlinkSync(filePath); } catch { /* best-effort cleanup */ }
+          try {
+            fs.unlinkSync(filePath);
+          } catch {
+            /* best-effort cleanup */
+          }
           resolve({ success: successCount, failed: failedCount, errors });
         })
         .on('end', async () => {
@@ -557,7 +575,11 @@ export class DevicesService {
             }
           }
           // Clean up the temp file
-          try { fs.unlinkSync(filePath); } catch { /* best-effort cleanup */ }
+          try {
+            fs.unlinkSync(filePath);
+          } catch {
+            /* best-effort cleanup */
+          }
           resolve({ success: successCount, failed: failedCount, errors });
         });
     });

@@ -14,19 +14,32 @@ async function bootstrap() {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
-    res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+    res.setHeader(
+      'Permissions-Policy',
+      'camera=(), microphone=(), geolocation=()',
+    );
     if (process.env.NODE_ENV === 'production') {
-      res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
+      res.setHeader(
+        'Strict-Transport-Security',
+        'max-age=31536000; includeSubDomains',
+      );
     }
     next();
   });
   app.use(express.json({ limit: process.env.JSON_BODY_LIMIT || '1mb' }));
-  app.use(express.urlencoded({ limit: process.env.URLENCODED_BODY_LIMIT || '100kb', extended: true }));
-  app.useGlobalPipes(new ValidationPipe({
-    whitelist: true,
-    forbidNonWhitelisted: true,
-    transform: true,
-  }));
+  app.use(
+    express.urlencoded({
+      limit: process.env.URLENCODED_BODY_LIMIT || '100kb',
+      extended: true,
+    }),
+  );
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
 
   // Apply global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
@@ -38,12 +51,14 @@ async function bootstrap() {
   // (origins may be full URLs or bare hostnames — e.g. a Render blueprint
   // fromService host reference — normalize to https:// URLs for matching)
   const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000')
-    .split(',').map((origin) => origin.trim())
+    .split(',')
+    .map((origin) => origin.trim())
     .map((origin) => (origin.startsWith('http') ? origin : `https://${origin}`))
     .filter(Boolean);
   app.enableCors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      if (!origin || allowedOrigins.includes(origin))
+        return callback(null, true);
       return callback(new Error('Origin is not allowed by CORS'));
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',

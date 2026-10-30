@@ -57,7 +57,12 @@ describe('PricesService', () => {
 
   describe('create', () => {
     it('should create a price history entry', async () => {
-      const createDto = { device: 'dev1', price: 100, currency: 'USD', country: 'USA' };
+      const createDto = {
+        device: 'dev1',
+        price: 100,
+        currency: 'USD',
+        country: 'USA',
+      };
       devicesService.findOne.mockResolvedValue({ _id: 'dev1' });
 
       const result = await service.create(createDto);
@@ -71,7 +76,10 @@ describe('PricesService', () => {
       model.aggregate.mockReturnValue({
         allowDiskUse: jest.fn().mockReturnValue({
           exec: jest.fn().mockResolvedValue([
-            { items: [{ price: 100, device: { name: 'Device A' } }], total: [{ count: 1 }] },
+            {
+              items: [{ price: 100, device: { name: 'Device A' } }],
+              total: [{ count: 1 }],
+            },
           ]),
         }),
       });

@@ -16,7 +16,11 @@ import { connect, disconnect } from 'mongoose';
 import { config } from 'dotenv';
 import { DeviceSchema } from './modules/devices/device.schema';
 import { BrandSchema } from './modules/brands/brand.schema';
-import { User, UserSchema, UserRole } from './modules/users/schemas/user.schema';
+import {
+  User,
+  UserSchema,
+  UserRole,
+} from './modules/users/schemas/user.schema';
 import { GsmarenaScraperService } from './modules/external-api/gsmarena-scraper.service';
 import { CategorySchema } from './modules/categories/category.schema';
 import { DeviceSpec, DeviceType } from '@shared/types';
@@ -116,18 +120,28 @@ async function seedDB() {
     if (existing) {
       const update: Record<string, any> = {};
       for (const field of [
-        'description', 'releaseDate', 'dimension', 'os', 'storage',
-        'displaySize', 'ram', 'battery', 'weight', 'chipset',
-        'mainCamera', 'selfieCamera', 'videoResolution', 'colors',
-        'networkTechnology', 'imageUrl',
+        'description',
+        'releaseDate',
+        'dimension',
+        'os',
+        'storage',
+        'displaySize',
+        'ram',
+        'battery',
+        'weight',
+        'chipset',
+        'mainCamera',
+        'selfieCamera',
+        'videoResolution',
+        'colors',
+        'networkTechnology',
+        'imageUrl',
       ]) {
         if (!existing[field] && partial[field]) update[field] = partial[field];
       }
       if (partial.specs?.length) {
         const have = new Set((existing.specs || []).map((s: any) => s.key));
-        const missing = partial.specs.filter(
-          (s: any) => !have.has(s.key),
-        );
+        const missing = partial.specs.filter((s: any) => !have.has(s.key));
         if (missing.length) {
           update.specs = [...(existing.specs || []), ...missing];
         }

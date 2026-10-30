@@ -4,7 +4,9 @@ import { HealthController } from './health.controller';
 describe('HealthController', () => {
   it('reports liveness without checking dependencies', () => {
     const controller = new HealthController({ readyState: 0 } as any);
-    expect(controller.live()).toEqual(expect.objectContaining({ status: 'ok' }));
+    expect(controller.live()).toEqual(
+      expect.objectContaining({ status: 'ok' }),
+    );
   });
 
   it('reports readiness when MongoDB is connected', () => {

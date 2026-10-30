@@ -30,7 +30,8 @@ import * as fs from 'fs';
 config();
 
 const DATASET_PATH =
-  process.env.PHONEDB_JSON || '/home/recoding/gsmhub/.seeddata/PhoneSpecsDataset25K.json';
+  process.env.PHONEDB_JSON ||
+  '/home/recoding/gsmhub/.seeddata/PhoneSpecsDataset25K.json';
 const maxDevices = Number(process.env.SEED_MAX_DEVICES) || 0;
 const onlySmartphones = process.env.ONLY_SMARTPHONES !== '0';
 const wipe = process.env.NO_WIPE !== '1';
@@ -99,10 +100,33 @@ function v(sp: RawRecord['specs'], key: string): string {
   return s === ':' || /^\s*$/.test(s) ? '' : s;
 }
 
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const MONTHS = [
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Oct',
+  'Nov',
+  'Dec',
+];
 const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December',
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
 ];
 
 /** "2023 Sep 22" → "2023, September 22"; other formats pass through. */
@@ -144,25 +168,42 @@ function extractBattery(sp: RawRecord['specs']): string | undefined {
   return raw ? raw.replace(/\s*battery\s*$/i, '').trim() : undefined;
 }
 
-function extractCamera(sp: RawRecord['specs'], key: string): string | undefined {
+function extractCamera(
+  sp: RawRecord['specs'],
+  key: string,
+): string | undefined {
   const raw = v(sp, key);
   return raw
     ? raw.replace(/\s*(camera|sec\. cam|aux\. cam)\s*$/i, '').trim()
     : undefined;
 }
 
-function extractVideoRes(sp: RawRecord['specs'], key: string): string | undefined {
+function extractVideoRes(
+  sp: RawRecord['specs'],
+  key: string,
+): string | undefined {
   const raw = v(sp, key);
   const m = raw.match(/(\d+)x(\d+)/);
   if (!m) return raw || undefined;
   const h = Number(m[2]);
   return (
     (h >= 4320 ? '8K' : undefined) ||
-    (h >= 2160 ? '4K' : h >= 1440 ? '1440p' : h >= 1080 ? '1080p' : h >= 720 ? '720p' : `${h}p`)
+    (h >= 2160
+      ? '4K'
+      : h >= 1440
+        ? '1440p'
+        : h >= 1080
+          ? '1080p'
+          : h >= 720
+            ? '720p'
+            : `${h}p`)
   );
 }
 
-function extractNetwork(sp: RawRecord['specs'], model: string): string | undefined {
+function extractNetwork(
+  sp: RawRecord['specs'],
+  model: string,
+): string | undefined {
   const m = model.toUpperCase();
   if (/5G/.test(m)) return 'GSM / CDMA / HSPA / LTE / 5G';
   if (/LTE|4G/.test(m)) return 'GSM / HSPA / LTE';
@@ -252,7 +293,9 @@ async function main() {
   if (!MONGO_URI) throw new Error('MONGO_URI is not set');
 
   console.log(`Loading ${DATASET_PATH}...`);
-  const dataset = JSON.parse(fs.readFileSync(DATASET_PATH, 'utf-8')) as RawRecord[];
+  const dataset = JSON.parse(
+    fs.readFileSync(DATASET_PATH, 'utf-8'),
+  ) as RawRecord[];
   console.log(`Loaded ${dataset.length} records`);
 
   await connect(MONGO_URI);
@@ -289,7 +332,9 @@ async function main() {
 
   console.log(
     `Mapped ${byKey.size} devices from ${dataset.length} records` +
-      (onlySmartphones ? ` (${skippedCategory} non-smartphone records skipped)` : ''),
+      (onlySmartphones
+        ? ` (${skippedCategory} non-smartphone records skipped)`
+        : ''),
   );
 
   // --- categories + brands --------------------------------------------
@@ -324,7 +369,11 @@ async function main() {
   const flush = async () => {
     if (!batch.length) return;
     const ops = batch.map((dev) => ({
-      replaceOne: { filter: { slug: dev.slug }, replacement: dev, upsert: true },
+      replaceOne: {
+        filter: { slug: dev.slug },
+        replacement: dev,
+        upsert: true,
+      },
     }));
     await DeviceModel.bulkWrite(ops, { ordered: false });
     written += batch.length;

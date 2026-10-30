@@ -6,7 +6,8 @@ import { Category, CategoryDocument } from './category.schema';
 @Injectable()
 export class CategoriesSeeder {
   constructor(
-    @InjectModel(Category.name) private readonly categoryModel: Model<CategoryDocument>,
+    @InjectModel(Category.name)
+    private readonly categoryModel: Model<CategoryDocument>,
   ) {}
 
   async seed() {
@@ -20,7 +21,9 @@ export class CategoriesSeeder {
     ];
 
     for (const category of predefinedCategories) {
-      const exists = await this.categoryModel.findOne({ slug: category.slug }).exec();
+      const exists = await this.categoryModel
+        .findOne({ slug: category.slug })
+        .exec();
       if (!exists) {
         await new this.categoryModel(category).save();
       }

@@ -15,11 +15,13 @@ interface BreadcrumbsProps {
 }
 
 const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
+  // Hooks must run before any early return so hook order stays stable
+  // when `items` goes from empty to populated between renders.
+  const pathname = usePathname();
+
   if (!items || items.length === 0) {
     return null;
   }
-
-  const pathname = usePathname();
 
   return (
     <nav className="text-sm text-gray-500 mb-4">

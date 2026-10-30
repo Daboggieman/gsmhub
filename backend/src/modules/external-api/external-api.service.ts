@@ -290,7 +290,6 @@ export class ExternalApiService {
       }
     }
 
-
     if (providers.includes('primary')) {
       try {
         const data = await this.makeRequest(

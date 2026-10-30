@@ -64,13 +64,19 @@ export class CategoriesController {
     // First, find the category by slug to get its ID
     const category = await this.categoriesService.findBySlug(slug);
     // Then, use the category ID to find devices
-    return this.devicesService.getDevicesByCategory(category._id.toString(), 50);
+    return this.devicesService.getDevicesByCategory(
+      category._id.toString(),
+      50,
+    );
   }
 
   @Patch(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async update(@Param('id') id: string, @Body() updateCategoryDto: UpdateCategoryDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateCategoryDto: UpdateCategoryDto,
+  ) {
     const category = await this.categoriesService.update(id, updateCategoryDto);
     return plainToInstance(CategoryResponseDto, category);
   }

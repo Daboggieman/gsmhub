@@ -129,8 +129,17 @@ export class Device {
   @Prop({ index: true })
   displaySizeValue?: number; // Display size in inches
 
-  @Prop({ type: [{ user: String, date: String, text: String, avatarInitials: String }] })
-  opinions?: { user: string; date: string; text: string; avatarInitials?: string }[];
+  @Prop({
+    type: [
+      { user: String, date: String, text: String, avatarInitials: String },
+    ],
+  })
+  opinions?: {
+    user: string;
+    date: string;
+    text: string;
+    avatarInitials?: string;
+  }[];
 
   @Prop()
   seoTitle?: string;

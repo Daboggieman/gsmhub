@@ -23,11 +23,14 @@ export class GsmarenaScraperService {
 
   // Cache brand → device list for the lifetime of the process so deep syncs
   // don't re-scrape the brand page for every device.
-  private readonly deviceListCache = new Map<string, GsmarenaDeviceListItem[]>();
+  private readonly deviceListCache = new Map<
+    string,
+    GsmarenaDeviceListItem[]
+  >();
 
   // Rate-limit delays (ms). seedMode skips these for the initial bulk load.
-  private readonly BRAND_DELAY = 2000;   // between brand pages
-  private readonly DEVICE_DELAY = 5000;  // between deep-spec fetches
+  private readonly BRAND_DELAY = 2000; // between brand pages
+  private readonly DEVICE_DELAY = 5000; // between deep-spec fetches
 
   // Seed mode skips the rate-limit pauses (used by the one-time bulk load).
   public seedMode = false;
@@ -311,7 +314,9 @@ export class GsmarenaScraperService {
       }
       return res.text();
     }
-    throw new Error(`HTTP 429 persisted for ${url} after ${maxAttempts} attempts`);
+    throw new Error(
+      `HTTP 429 persisted for ${url} after ${maxAttempts} attempts`,
+    );
   }
 
   private sleep(ms: number): Promise<void> {

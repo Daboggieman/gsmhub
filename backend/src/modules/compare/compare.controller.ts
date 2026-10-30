@@ -7,7 +7,7 @@ export class CompareController {
 
   @Get()
   async compare(@Query('devices') devices: string) {
-    const slugs = devices.split(',').filter(s => s.length > 0);
+    const slugs = devices.split(',').filter((s) => s.length > 0);
     if (slugs.length < 2) {
       return { message: 'Please provide at least 2 device slugs' };
     }

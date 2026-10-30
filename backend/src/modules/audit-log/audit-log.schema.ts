@@ -6,26 +6,26 @@ export type AuditLogDocument = AuditLog & Document;
 
 @Schema({ timestamps: true })
 export class AuditLog {
-    @Prop({ type: Types.ObjectId, ref: 'User', required: true })
-    user: Types.ObjectId | User;
+  @Prop({ type: Types.ObjectId, ref: 'User', required: true })
+  user: Types.ObjectId | User;
 
-    @Prop({ required: true })
-    action: string;
+  @Prop({ required: true })
+  action: string;
 
-    @Prop({ required: true })
-    targetType: string;
+  @Prop({ required: true })
+  targetType: string;
 
-    @Prop({ required: true })
-    targetId: string;
+  @Prop({ required: true })
+  targetId: string;
 
-    @Prop({ type: Object })
-    details: any;
+  @Prop({ type: Object })
+  details: any;
 
-    @Prop()
-    ipAddress?: string;
+  @Prop()
+  ipAddress?: string;
 
-    @Prop()
-    userAgent?: string;
+  @Prop()
+  userAgent?: string;
 }
 
 export const AuditLogSchema = SchemaFactory.createForClass(AuditLog);

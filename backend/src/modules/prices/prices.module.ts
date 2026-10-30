@@ -7,7 +7,9 @@ import { DevicesModule } from '../devices/devices.module'; // Import DevicesModu
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: PriceHistory.name, schema: PriceHistorySchema }]),
+    MongooseModule.forFeature([
+      { name: PriceHistory.name, schema: PriceHistorySchema },
+    ]),
     forwardRef(() => DevicesModule), // Import DevicesModule to provide DevicesService
   ],
   providers: [PricesService],
