@@ -35,8 +35,12 @@ async function bootstrap() {
   app.useGlobalInterceptors(new LoggingInterceptor());
 
   // Enable CORS
+  // (origins may be full URLs or bare hostnames — e.g. a Render blueprint
+  // fromService host reference — normalize to https:// URLs for matching)
   const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000')
-    .split(',').map((origin) => origin.trim()).filter(Boolean);
+    .split(',').map((origin) => origin.trim())
+    .map((origin) => (origin.startsWith('http') ? origin : `https://${origin}`))
+    .filter(Boolean);
   app.enableCors({
     origin: (origin, callback) => {
       if (!origin || allowedOrigins.includes(origin)) return callback(null, true);

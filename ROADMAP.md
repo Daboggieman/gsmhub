@@ -24,7 +24,7 @@ This document outlines the planned phases and progress for the GSMHUB project.
 - [/] Phase 15: Monetization Features
 - [x] Phase 16: Admin Panel
 - [ ] Phase 17: Testing
-- [ ] Phase 18: Deployment Preparation
+- [/] Phase 18: Deployment Preparation
 - [ ] Phase 19: Deployment
 - [ ] Phase 20: Post-Deployment
 - [ ] Phase 21: Scaling & Optimization

@@ -67,7 +67,6 @@ const Footer: React.FC = () => {
               <li><Link href="/categories" className="hover:text-white transition-colors">Categories</Link></li>
               <li><Link href="/brands" className="hover:text-white transition-colors">Popular Brands</Link></li>
               <li><Link href="/compare" className="hover:text-white transition-colors">Compare Devices</Link></li>
-              <li><Link href="/news" className="hover:text-white transition-colors">Latest News</Link></li>
             </ul>
           </div>
 
@@ -78,11 +77,10 @@ const Footer: React.FC = () => {
               Resources
             </h4>
             <ul className="space-y-3 text-blue-100 opacity-80 text-sm">
-              <li><Link href="/reviews" className="hover:text-white transition-colors">Expert Reviews</Link></li>
-              <li><Link href="/glossary" className="hover:text-white transition-colors">Tech Glossary</Link></li>
-              <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
-              <li><Link href="/coverage" className="hover:text-white transition-colors">Network Coverage</Link></li>
-              <li><Link href="/sitemap" className="hover:text-white transition-colors">Sitemap</Link></li>
+              <li><Link href="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
+              <li><Link href="/terms" className="hover:text-white transition-colors">Terms of Use</Link></li>
+              <li><Link href="/about" className="hover:text-white transition-colors">About Us</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
@@ -109,16 +107,25 @@ const Footer: React.FC = () => {
             <div className="mt-6 pt-6 border-t border-white/10 space-y-2 text-xs">
               <Link href="/privacy" className="block hover:text-white transition-colors">Privacy Policy</Link>
               <Link href="/terms" className="block hover:text-white transition-colors">Terms of Use</Link>
+              <Link href="/contact" className="block hover:text-white transition-colors">Contact</Link>
             </div>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-blue-100 opacity-60">
-          <p>&copy; {currentYear} GSMHub. All rights reserved.</p>
-          <div className="flex gap-6">
-            <p>Designed for Mobile Enthusiasts</p>
-            <p>Powered by Next.js & NestJS</p>
+        <div className="pt-8 border-t border-white/10 flex flex-col gap-4 text-xs text-blue-100 opacity-60">
+          <p className="leading-relaxed">
+            Affiliate Disclosure: GSMHub contains affiliate links. We may earn a
+            commission when you make a purchase through them, at no extra cost
+            to you. GSMHub is not affiliated with any device manufacturer or
+            retailer.
+          </p>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; {currentYear} GSMHub. All rights reserved.</p>
+            <div className="flex gap-6">
+              <p>Designed for Mobile Enthusiasts</p>
+              <p>Powered by Next.js & NestJS</p>
+            </div>
           </div>
         </div>
       </div>

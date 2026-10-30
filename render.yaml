@@ -1,0 +1,84 @@
+# Render Blueprint — GSMHUB (frontend + API + cache)
+#
+# Deploy: Render Dashboard → New → Blueprint → point at this repo, or
+# `render blueprint launch` from the repo root. Render prompts for the
+# `sync: false` values (Atlas MongoDB URI) during creation.
+#
+# After the first deploy:
+#   1. Seed the database from your machine:
+#        pnpm install && pnpm --filter @gsmhub/shared build
+#        MONGO_URI=<atlas-uri> pnpm --filter backend exec ts-node -r tsconfig-paths/register --transpile-only src/seed.ts
+#        MONGO_URI=<atlas-uri> PHONEDB_JSON=<dataset> pnpm --filter backend exec ts-node ... src/seed-phonedb.ts
+#        MONGO_URI=<atlas-uri> PHONEDB_JSON=<dataset> pnpm --filter backend exec ts-node ... src/seed-prices.ts
+#   2. Set NEXT_PUBLIC_SITE_URL on the frontend service to its own
+#      onrender.com URL so robots.txt/sitemap advertise the right origin.
+# See docs/deployment.md for the full walkthrough.
+services:
+  # NestJS API
+  - type: web
+    name: gsmhub-api
+    runtime: node
+    plan: free
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @gsmhub/shared build && pnpm --filter backend build
+    startCommand: pnpm --filter backend start:prod
+    healthCheckPath: /health/live
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false # Atlas free-cluster connection string — prompted at creation
+      # Auth cookie config: same-origin proxying keeps cookies first-party,
+      # so the defaults (lax / no domain) are correct here.
+      - key: FRONTEND_URL
+        fromService:
+          name: gsmhub-web
+          type: web
+          property: host
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REDIS_URI
+        fromService:
+          name: gsmhub-cache
+          type: keyvalue
+          property: connectionString
+
+  # Redis-compatible cache (Render Key Value, free plan)
+  - type: keyvalue
+    name: gsmhub-cache
+    plan: free
+    ipAllowList:
+      - source: 0.0.0.0/0 # free-plan KV has no private networking; open to the platform
+    maxmemoryPolicy: allkeys-lru
+    persistenceMode: off
+
+  # Next.js frontend (also proxies /api/* to the API — see next.config.ts)
+  - type: web
+    name: gsmhub-web
+    runtime: node
+    plan: free
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @gsmhub/shared build && pnpm --filter frontend build
+    startCommand: pnpm --filter frontend start
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: NODE_ENV
+        value: production
+      # Server-side (SSR) calls to the API; the browser uses same-origin /api
+      # proxied by next.config.ts rewrites to this value.
+      - key: BACKEND_URL
+        fromService:
+          name: gsmhub-api
+          type: web
+          property: host
+      # Set after first deploy to the frontend's own onrender.com URL
+      # (used by robots.txt and sitemap.xml).
+      - key: NEXT_PUBLIC_SITE_URL
+        sync: false
+      # Leave unset for now — set together with NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
+      # after AdSense approval (see docs/monetization-setup.md):
+      # - key: NEXT_PUBLIC_ADSENSE_ID
+      #   sync: false
+      # - key: NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
+      #   sync: false
