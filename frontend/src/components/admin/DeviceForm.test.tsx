@@ -19,6 +19,7 @@ vi.mock('@/lib/api', () => ({
     createDevice: vi.fn(),
     updateDevice: vi.fn(),
     getDevicePriceHistory: vi.fn(),
+    getDeviceCurrentPrices: vi.fn(),
     createPrice: vi.fn(),
     deletePrice: vi.fn(),
   },

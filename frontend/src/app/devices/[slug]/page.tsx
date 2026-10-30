@@ -44,7 +44,7 @@ async function getDeviceData(slug: string): Promise<{ device: Device; priceHisto
 
     if (deviceId) {
       try {
-        priceHistory = await apiClient.getDevicePriceHistory(deviceId);
+        priceHistory = await apiClient.getDeviceCurrentPrices(deviceId);
       } catch (err) {
         console.error('Failed to fetch auxiliary device data:', err);
       }

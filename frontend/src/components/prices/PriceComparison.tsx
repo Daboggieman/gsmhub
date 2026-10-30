@@ -1,5 +1,6 @@
 import React from 'react';
 import { PriceHistory } from '@shared/types';
+import { formatPrice } from '@/lib/utils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faExternalLinkAlt, faTag, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
@@ -8,18 +9,52 @@ interface PriceComparisonProps {
     deviceName: string;
 }
 
+interface CurrencyGroup {
+    currency: string;
+    rows: PriceHistory[];
+    best: PriceHistory;
+}
+
+/**
+ * Groups offers by currency and finds the cheapest offer within each group.
+ * Amounts are never converted across currencies (no reliable FX data), so
+ * "Best Deal" is only claimed within a currency.
+ */
+function buildCurrencyGroups(prices: PriceHistory[]): CurrencyGroup[] {
+    const byCurrency = new Map<string, PriceHistory[]>();
+    for (const price of prices) {
+        const currency = (price.currency || 'USD').toUpperCase();
+        const group = byCurrency.get(currency) ?? [];
+        group.push(price);
+        byCurrency.set(currency, group);
+    }
+    return [...byCurrency.entries()]
+        .map(([currency, rows]) => {
+            const sorted = [...rows].sort((a, b) => a.price - b.price);
+            return { currency, rows: sorted, best: sorted[0] };
+        })
+        .sort((a, b) => {
+            // USD first when present, then alphabetical for the rest.
+            if (a.currency === 'USD') return -1;
+            if (b.currency === 'USD') return 1;
+            return a.currency.localeCompare(b.currency);
+        });
+}
+
 const PriceComparison: React.FC<PriceComparisonProps> = ({ prices, deviceName }) => {
     if (!prices || prices.length === 0) {
         return (
             <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6 text-center">
-                <p className="text-gray-500 italic">No pricing information available for this device yet.</p>
+                <p className="text-gray-500 italic">No pricing information available for {deviceName} yet.</p>
             </div>
         );
     }
 
-    // Sort prices by amount to find the best deal
-    const sortedPrices = [...prices].sort((a, b) => a.price - b.price);
-    const bestPrice = sortedPrices[0];
+    const groups = buildCurrencyGroups(prices);
+    const showCurrencyHeadings = groups.length > 1;
+    const mostRecent = [...prices].sort(
+        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    )[0];
 
     return (
         <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
@@ -29,7 +64,7 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({ prices, deviceName })
                     Price Comparison
                 </h3>
                 <span className="text-xs text-gray-500 bg-white px-2 py-1 rounded border border-gray-200">
-                    Last updated: {new Date(bestPrice.date).toLocaleDateString()}
+                    Last updated: {new Date(mostRecent.date).toLocaleDateString()}
                 </span>
             </div>
 
@@ -44,47 +79,61 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({ prices, deviceName })
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-100">
-                        {sortedPrices.map((price) => {
-                            const priceId = price._id || price.id;
-                            const bestPriceId = bestPrice._id || bestPrice.id;
-                            return (
-                                <tr key={priceId} className={priceId === bestPriceId ? 'bg-green-50/30' : 'hover:bg-gray-50'}>
-                                    <td className="px-4 py-4">
-                                        <div className="font-bold text-gray-800">
-                                            {price.retailer || 'Store'}
-                                            {priceId === bestPriceId && (
-                                                <span className="ml-2 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-black uppercase">
-                                                    Best Deal
-                                                </span>
-                                            )}
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <span className="text-sm text-gray-600 font-medium">{price.country}</span>
-                                    </td>
-                                    <td className="px-4 py-4">
-                                        <div className="font-black text-gray-900">
-                                            {price.currency} {price.price.toLocaleString()}
-                                        </div>
-                                    </td>
-                                    <td className="px-4 py-4 text-right">
-                                        {price.affiliateUrl ? (
-                                            <a
-                                                href={price.affiliateUrl}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2 rounded transition-colors"
-                                            >
-                                                Buy Now
-                                                <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 text-[10px]" />
-                                            </a>
-                                        ) : (
-                                            <span className="text-[10px] text-gray-400 font-bold uppercase">Out of Stock</span>
-                                        )}
-                                    </td>
-                                </tr>
-                            );
-                        })}
+                        {groups.map((group) => (
+                            <React.Fragment key={group.currency}>
+                                {showCurrencyHeadings && (
+                                    <tr className="bg-gray-50/50">
+                                        <td
+                                            colSpan={4}
+                                            className="px-4 py-2 text-[10px] font-black tracking-widest text-gray-500 uppercase"
+                                        >
+                                            Prices in {group.currency}
+                                        </td>
+                                    </tr>
+                                )}
+                                {group.rows.map((price) => {
+                                    const priceId = price._id || price.id;
+                                    const isBest = (group.best._id || group.best.id) === priceId;
+                                    return (
+                                        <tr key={priceId} className={isBest ? 'bg-green-50/30' : 'hover:bg-gray-50'}>
+                                            <td className="px-4 py-4">
+                                                <div className="font-bold text-gray-800">
+                                                    {price.retailer || 'Store'}
+                                                    {isBest && (
+                                                        <span className="ml-2 text-[10px] bg-green-100 text-green-700 px-1.5 py-0.5 rounded-full font-black uppercase">
+                                                            Best Deal
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                <span className="text-sm text-gray-600 font-medium">{price.country}</span>
+                                            </td>
+                                            <td className="px-4 py-4">
+                                                <div className="font-black text-gray-900">
+                                                    {formatPrice(price.price, group.currency)}
+                                                </div>
+                                            </td>
+                                            <td className="px-4 py-4 text-right">
+                                                {price.affiliateUrl ? (
+                                                    <a
+                                                        href={price.affiliateUrl}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer sponsored"
+                                                        className="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white text-xs font-black px-4 py-2 rounded transition-colors"
+                                                    >
+                                                        Buy Now
+                                                        <FontAwesomeIcon icon={faExternalLinkAlt} className="ml-2 text-[10px]" />
+                                                    </a>
+                                                ) : (
+                                                    <span className="text-[10px] text-gray-400 font-bold uppercase">No Link</span>
+                                                )}
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </React.Fragment>
+                        ))}
                     </tbody>
                 </table>
             </div>

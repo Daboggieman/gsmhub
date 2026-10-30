@@ -19,7 +19,9 @@ import {
   faGlobe,
   faShoppingCart,
   faHistory,
+  faWandMagicSparkles,
 } from '@fortawesome/free-solid-svg-icons'
+import AffiliateLinkGenerator from '@/components/admin/AffiliateLinkGenerator'
 
 interface DeviceFormProps {
   initialData?: Device
@@ -46,6 +48,9 @@ export default function DeviceForm({
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState('')
   const [isAutoSlug, setIsAutoSlug] = useState(!isEdit)
+
+  // Index of the affiliate link row whose generator panel is open (null = closed).
+  const [generatorIndex, setGeneratorIndex] = useState<number | null>(null)
   const [prices, setPrices] = useState<PriceHistory[]>([])
   const [isPriceLoading, setIsPriceLoading] = useState(false)
   const [newPrice, setNewPrice] = useState({
@@ -121,7 +126,7 @@ export default function DeviceForm({
       const fetchPrices = async () => {
         setIsPriceLoading(true)
         try {
-          const data = await apiClient.getDevicePriceHistory(
+          const data = await apiClient.getDeviceCurrentPrices(
             deviceId,
           )
           setPrices(data)
@@ -218,7 +223,7 @@ export default function DeviceForm({
         device: id,
       })
       // Refresh prices
-      const data = await apiClient.getDevicePriceHistory(id)
+      const data = await apiClient.getDeviceCurrentPrices(id)
       setPrices(data)
       setNewPrice({
         price: 0,
@@ -238,7 +243,7 @@ export default function DeviceForm({
 
     try {
       await apiClient.deletePrice(priceId)
-      const data = await apiClient.getDevicePriceHistory(id)
+      const data = await apiClient.getDeviceCurrentPrices(id)
       setPrices(data)
     } catch (err: any) {
       alert(`Failed to delete price: ${err.message}`)
@@ -1093,9 +1098,26 @@ export default function DeviceForm({
                       </div>
                     </div>
                     <div>
-                      <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
-                        Affiliate URL
-                      </label>
+                      <div className="mb-1 flex items-center justify-between">
+                        <label className="block text-[10px] font-black text-gray-500 uppercase">
+                          Affiliate URL
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setGeneratorIndex(
+                              generatorIndex === index ? null : index,
+                            )
+                          }
+                          className="text-[10px] font-black text-indigo-600 uppercase hover:underline"
+                        >
+                          <FontAwesomeIcon
+                            icon={faWandMagicSparkles}
+                            className="mr-1"
+                          />
+                          {generatorIndex === index ? 'Close' : 'Generate'}
+                        </button>
+                      </div>
                       <input
                         placeholder="https://retailer.com/product/..."
                         value={link.url}
@@ -1105,6 +1127,29 @@ export default function DeviceForm({
                         className="w-full rounded-lg border border-gray-300 p-2 text-sm font-medium text-gray-700"
                       />
                     </div>
+                    {generatorIndex === index && (
+                      <AffiliateLinkGenerator
+                        defaultQuery={
+                          formData.name ||
+                          `${formData.brand || ''} ${formData.model || ''}`.trim()
+                        }
+                        onApply={(url, platformLabel) => {
+                          // Single combined update — two handleAffiliateChange
+                          // calls would each derive from the same stale formData.
+                          const newLinks = [...(formData.affiliateLinks || [])]
+                          newLinks[index] = {
+                            ...newLinks[index],
+                            url,
+                            platform: newLinks[index].platform || platformLabel,
+                          }
+                          setFormData({
+                            ...formData,
+                            affiliateLinks: newLinks,
+                          })
+                          setGeneratorIndex(null)
+                        }}
+                      />
+                    )}
                   </div>
                 ))}
                 {(!formData.affiliateLinks ||

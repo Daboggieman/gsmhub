@@ -216,9 +216,15 @@ class ApiClient {
     return this.request(`/search?q=${encodeURIComponent(query)}`);
   }
 
-  // Price History
-  async getDevicePriceHistory(deviceId: string): Promise<PriceHistory[]> {
+  // Prices — latest offer per country/retailer for a device
+  // (backend route: GET /prices/device/:id → PricesService.getCurrentPrices)
+  async getDeviceCurrentPrices(deviceId: string): Promise<PriceHistory[]> {
     return this.request(`/prices/device/${deviceId}`);
+  }
+
+  // Full chronological history for a device
+  async getDevicePriceHistory(deviceId: string): Promise<PriceHistory[]> {
+    return this.request(`/prices/device/${deviceId}/history`);
   }
 
   // Admin
