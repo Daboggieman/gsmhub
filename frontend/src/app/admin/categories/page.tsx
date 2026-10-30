@@ -36,7 +36,7 @@ export default function AdminCategoriesPage() {
       try {
         await apiClient.deleteCategory(id);
         fetchCategories();
-      } catch (error) {
+      } catch {
         alert('Failed to delete category');
       }
     }

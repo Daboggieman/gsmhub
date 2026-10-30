@@ -52,7 +52,7 @@ export default function AdminBrandsPage() {
       try {
         await apiClient.deleteBrand(id)
         fetchBrands()
-      } catch (error) {
+      } catch {
         alert('Failed to delete brand')
       }
     }

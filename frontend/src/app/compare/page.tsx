@@ -3,7 +3,6 @@
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { apiClient } from '@/lib/api';
-import { Device } from '@shared/types';
 import ComparisonTable from '@/components/compare/ComparisonTable';
 import CompareBox from '@/components/compare/CompareBox';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';

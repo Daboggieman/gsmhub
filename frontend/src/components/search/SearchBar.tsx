@@ -4,10 +4,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import DeviceImage from '../devices/DeviceImage';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes, faSpinner, faHistory, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faTimes, faSpinner, faHistory } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '../../lib/api';
 import { SearchResult } from '@shared/types';
-import { escapeRegExp } from '@shared/utils/regex';
 
 const SEARCH_HISTORY_KEY = 'gsmhub_recent_searches';
 
@@ -26,7 +25,7 @@ const SearchBar: React.FC = () => {
     if (saved) {
       try {
         setHistory(JSON.parse(saved));
-      } catch (e) {
+      } catch {
         setHistory([]);
       }
     }

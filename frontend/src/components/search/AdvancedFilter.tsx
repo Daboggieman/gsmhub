@@ -41,7 +41,6 @@ const FilterSection = ({ title, children, isOpenDefault = false }: { title: stri
 };
 
 const RangeInput = ({
-    label,
     min,
     max,
     unit = '',

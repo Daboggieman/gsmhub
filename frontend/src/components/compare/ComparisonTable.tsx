@@ -7,7 +7,6 @@ import {
   faChevronDown,
   faChevronUp,
   faCircleCheck,
-  faCircleMinus,
   faScaleBalanced,
   faCircleInfo
 } from '@fortawesome/free-solid-svg-icons';

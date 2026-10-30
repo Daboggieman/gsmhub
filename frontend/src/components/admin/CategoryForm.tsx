@@ -8,8 +8,6 @@ import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faTag, 
-  faInfoCircle, 
-  faCheckCircle, 
   faTimesCircle,
   faIcons
 } from '@fortawesome/free-solid-svg-icons';

@@ -8,12 +8,8 @@ import Pagination from '@/components/ui/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faHistory,
-    faFilter,
-    faSearch,
     faInfoCircle,
     faUser,
-    faCalendarAlt,
-    faTag,
     faSyncAlt,
     faChevronDown,
     faChevronUp

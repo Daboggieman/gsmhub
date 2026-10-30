@@ -3,16 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { apiClient } from '@/lib/api';
 import { SearchResult } from '@shared/types';
-import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faMobileAlt, faTags, faIndustry, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faMobileAlt, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 
 export default function AdminGlobalSearch() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 

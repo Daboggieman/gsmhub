@@ -14,7 +14,6 @@ import {
   faPlus,
   faTrash,
   faEye,
-  faCheckCircle,
   faTimesCircle,
   faGlobe,
   faShoppingCart,
@@ -256,7 +255,8 @@ export default function DeviceForm({
     setError('')
 
     // Filter out internal fields and ensure payload is clean
-    const { _id, id, createdAt, updatedAt, views, ...rest } = formData as any
+    const rest: Record<string, unknown> = { ...(formData as Record<string, unknown>) }
+    for (const key of ['_id', 'id', 'createdAt', 'updatedAt', 'views']) delete rest[key]
 
     try {
       const deviceId = (initialData as any)?.id || (initialData as any)?._id

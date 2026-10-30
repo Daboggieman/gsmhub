@@ -8,8 +8,6 @@ import { Device, Category } from '@shared/types';
 import SearchResults from '@/components/search/SearchResults';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faSortAmountDown, faTimes } from '@fortawesome/free-solid-svg-icons';
 import AdvancedFilter from '@/components/search/AdvancedFilter';
 
 const SearchPageContent = () => {
@@ -50,7 +48,7 @@ const SearchPageContent = () => {
         ]);
         setCategories(cats);
         setBrands(brandList);
-      } catch (err) {
+      } catch {
         console.error('Failed to load initial data');
       }
     };
@@ -114,7 +112,6 @@ const SearchPageContent = () => {
     { label: query || brand || 'All Devices', href: '#' },
   ].map(item => ({ ...item, name: item.label })); // Adapt to BreadcrumbItem type
 
-  const POPULAR_BRANDS = ['Samsung', 'Apple', 'Xiaomi', 'Google', 'OnePlus', 'Oppo', 'Vivo', 'Realme'];
   const totalPages = Math.ceil(total / limit);
 
   // Convert searchParams to object for Pagination component

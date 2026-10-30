@@ -1,11 +1,10 @@
 import React from 'react';
 import DeviceCard from '@/components/devices/DeviceCard';
 import DeviceImage from '@/components/devices/DeviceImage';
-import { Device } from '@shared/types';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileAlt, faTabletAlt, faLaptop, faClock, faSearch, faArrowRight, faFire, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faMobileAlt, faTabletAlt, faLaptop, faClock, faSearch, faChartLine } from '@fortawesome/free-solid-svg-icons';
 
 async function getHomeData() {
   try {

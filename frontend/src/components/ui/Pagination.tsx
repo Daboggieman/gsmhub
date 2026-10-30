@@ -69,7 +69,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
 
       {/* Page Numbers with ellipsis */}
       <div className="flex space-x-1">
-        {pages.map((entry, idx) => {
+        {pages.map((entry) => {
           if (entry === 'gap-left' || entry === 'gap-right') {
             return (
               <span

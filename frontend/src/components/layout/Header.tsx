@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import SearchBar from '../search/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faChevronDown, faScaleBalanced, faMobileScreenButton, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faTimes, faScaleBalanced, faMobileScreenButton, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

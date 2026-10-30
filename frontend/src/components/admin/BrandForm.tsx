@@ -5,7 +5,7 @@ import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faIndustry, faImage, faTimesCircle, faCheckCircle, faEye } from '@fortawesome/free-solid-svg-icons';
+import { faIndustry, faTimesCircle, faEye } from '@fortawesome/free-solid-svg-icons';
 
 interface BrandFormProps {
   initialData?: any;

@@ -14,20 +14,14 @@ import {
   faArrowRight,
   faDollarSign,
   faShoppingCart,
-  faTurnUp,
   faArrowUp
 } from '@fortawesome/free-solid-svg-icons';
 import {
-  BarChart,
-  Bar,
   XAxis,
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
-  LineChart,
-  Line,
   PieChart,
   Pie,
   Cell,

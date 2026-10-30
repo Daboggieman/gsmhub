@@ -32,7 +32,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         const { apiClient } = await import('./api');
         const profile = await apiClient.getProfile();
         setUser(profile);
-      } catch (err) {
+      } catch {
         // Session invalid or expired
         setUser(null);
       } finally {

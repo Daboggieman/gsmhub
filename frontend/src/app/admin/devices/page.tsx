@@ -96,7 +96,7 @@ function AdminDevicesPageContent() {
       try {
         await apiClient.deleteDevice(id)
         setRefreshTick((t) => t + 1)
-      } catch (error) {
+      } catch {
         alert('Failed to delete device')
       }
     }

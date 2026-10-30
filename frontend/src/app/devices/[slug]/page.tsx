@@ -14,7 +14,6 @@ import SimilarDevices from '@/components/devices/SimilarDevices';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faShoppingCart,
-  faExternalLinkAlt,
   faHistory,
   faCheckCircle,
   faExpand,
@@ -27,8 +26,6 @@ import {
   faNetworkWired,
   faNewspaper,
   faCommentDots,
-  faExclamationTriangle,
-  faHeart,
   faImages,
   faBalanceScale
 } from '@fortawesome/free-solid-svg-icons';
@@ -82,7 +79,7 @@ export async function generateStaticParams() {
     return devices.map((device) => ({
       slug: device.slug,
     }));
-  } catch (err) {
+  } catch {
     return [];
   }
 }
