@@ -107,7 +107,7 @@ function AdminDevicesPageContent() {
   }
 
   const handleSync = async (device: Device) => {
-    const deviceId = (device as any).id || device._id
+    const deviceId = (device as { id?: string }).id || device._id
     if (!deviceId) return
 
     setSyncingId(deviceId)
@@ -384,7 +384,7 @@ function AdminDevicesPageContent() {
                 </tr>
               ) : (
                 devices.map((device, index) => {
-                  const deviceId = (device as any).id || device._id
+                  const deviceId = (device as { id?: string }).id || device._id
                   return (
                     <tr
                       key={deviceId || index}
@@ -413,7 +413,7 @@ function AdminDevicesPageContent() {
                         <span className="rounded-full bg-gray-100 px-3 py-1 text-[10px] font-black tracking-wider text-gray-600 uppercase">
                           {device.category &&
                           typeof device.category === 'object'
-                            ? (device.category as any).name
+                            ? (device.category as { name: string }).name
                             : 'General'}
                         </span>
                       </td>

@@ -51,7 +51,7 @@ const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
             <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Similar Devices</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {devices.map((device) => (
-                    <DeviceCard key={device._id?.toString() || (device as any).id} device={device} />
+                    <DeviceCard key={device._id?.toString() || (device as { id?: string }).id} device={device} />
                 ))}
             </div>
         </div>

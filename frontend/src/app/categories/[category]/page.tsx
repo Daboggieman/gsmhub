@@ -13,7 +13,7 @@ async function getCategoryData(slug: string, page: number = 1, sort: string = 'l
     if (!category) return null;
 
     // Use the category ID to fetch devices.
-    const categoryId = (category as any)._id || category.id;
+    const categoryId = (category as { _id?: string })._id || category.id;
     const limit = 24;
 
     const { devices, total } = await apiClient.getDevices({

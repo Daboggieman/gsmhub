@@ -20,7 +20,7 @@ function AdminUsersPageContent() {
   const page = Number(searchParams.get('page')) || 1
   const search = searchParams.get('search') || ''
 
-  const [users, setUsers] = useState<any[]>([])
+  const [users, setUsers] = useState<AdminUser[]>([])
   const [total, setTotal] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
   const [searchInput, setSearchInput] = useState(search)

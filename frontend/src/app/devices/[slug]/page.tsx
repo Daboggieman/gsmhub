@@ -36,7 +36,7 @@ async function getDeviceData(slug: string): Promise<{ device: Device; priceHisto
     const device = await apiClient.getDevice(slug);
     if (!device) return null;
 
-    const deviceId = (device as any)._id || device._id;
+    const deviceId = device._id;
     let priceHistory: PriceHistory[] = [];
 
     if (deviceId) {
@@ -141,7 +141,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
             </a>
           ))}
           <div className="ml-auto px-4 flex items-center">
-            <FavoriteButton deviceId={device._id?.toString() || (device as any)._id?.toString()} />
+            <FavoriteButton deviceId={device._id?.toString()} />
           </div>
         </div>
 
@@ -253,9 +253,9 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
               <SocialShare url={currentUrl} title={`Check out the ${device.name} specifications on GSMHub!`} />
 
               {/* Affiliate Buttons (Priority) */}
-              {(device as any).affiliateLinks && (device as any).affiliateLinks.length > 0 && (
+              {device.affiliateLinks && device.affiliateLinks.length > 0 && (
                 <div className="flex flex-wrap gap-4 mb-10">
-                  {(device as any).affiliateLinks.map((link: any, i: number) => (
+                  {device.affiliateLinks.map((link, i: number) => (
                     <a
                       key={i}
                       href={link.url}
@@ -343,7 +343,7 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
             )}
 
             {/* Similar Devices Section */}
-            <SimilarDevices deviceId={device._id?.toString() || (device as any).id?.toString()} />
+            <SimilarDevices deviceId={device._id?.toString()} />
 
           </div>
         </div>

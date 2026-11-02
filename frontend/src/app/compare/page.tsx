@@ -12,7 +12,7 @@ const ComparePageContent = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const devicesQuery = searchParams.get('devices') || '';
-  const [comparisonData, setComparisonData] = useState<any>(null);
+  const [comparisonData, setComparisonData] = useState<DetailedComparison | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

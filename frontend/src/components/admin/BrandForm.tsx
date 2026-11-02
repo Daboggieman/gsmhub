@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIndustry, faTimesCircle, faEye } from '@fortawesome/free-solid-svg-icons';
 
 interface BrandFormProps {
-  initialData?: any;
+  initialData?: Partial<AdminBrand>;
   isEdit?: boolean;
 }
 

@@ -30,7 +30,7 @@ function AuditLogsPageContent() {
         userId: searchParams.get('userId') || ''
     };
 
-    const [logs, setLogs] = useState<any[]>([]);
+    const [logs, setLogs] = useState<AuditLogEntry[]>([]);
     const [loading, setLoading] = useState(true);
     const [total, setTotal] = useState(0);
     const [expandedId, setExpandedId] = useState<string | null>(null);

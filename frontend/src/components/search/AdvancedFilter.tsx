@@ -20,7 +20,7 @@ interface FilterProps {
     };
     categories: Category[];
     availableBrands: string[];
-    onUpdate: (newFilters: Record<string, any>) => void;
+    onUpdate: (newFilters: Record<string, unknown>) => void;
     onClear: () => void;
 }
 
@@ -136,7 +136,7 @@ export default function AdvancedFilter({ filters, categories, availableBrands, o
                     >
                         <option value="">All Categories</option>
                         {categories.map(cat => (
-                            <option key={cat.slug} value={(cat as any)._id || cat.id}>{cat.name}</option>
+                            <option key={cat.slug} value={(cat as { _id?: string })._id || cat.id}>{cat.name}</option>
                         ))}
                     </select>
                 </FilterSection>

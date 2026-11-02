@@ -6,14 +6,14 @@ import { apiClient } from '@/lib/api';
 
 export default function EditBrandPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [brand, setBrand] = useState<any>(null);
+  const [brand, setBrand] = useState<AdminBrand | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBrand = async () => {
       try {
         const brands = await apiClient.getAdminBrands();
-        const found = brands.find((b: any) => b.id === id);
+        const found = brands.find((b) => b.id === id);
         setBrand(found);
       } catch (error) {
         console.error('Failed to fetch brand', error);

@@ -13,7 +13,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminBrandsPage() {
-  const [brands, setBrands] = useState<any[]>([])
+  const [brands, setBrands] = useState<AdminBrand[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [isSyncing, setIsSyncing] = useState<string | null>(null) // State to track which brand is syncing
   const [search, setSearch] = useState('')

@@ -70,7 +70,7 @@ export function generateMetadata({
 /**
  * Generates JSON-LD for Product schema (for Google Rich Results)
  */
-export function generateProductJsonLd(device: any) {
+export function generateProductJsonLd(device: Device) {
   return {
     '@context': 'https://schema.org/',
     '@type': 'Product',
@@ -90,7 +90,7 @@ export function generateProductJsonLd(device: any) {
       itemCondition: 'https://schema.org/NewCondition',
       availability: 'https://schema.org/InStock',
     },
-    additionalProperty: device.specs?.slice(0, 10).map((spec: any) => ({
+    additionalProperty: device.specs?.slice(0, 10).map((spec: DeviceSpec) => ({
       '@type': 'PropertyValue',
       name: spec.key,
       value: spec.value,

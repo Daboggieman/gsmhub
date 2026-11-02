@@ -323,7 +323,7 @@ function AdminPricesPageContent() {
                         </div>
                       ) : (
                         deviceResults.map((d) => {
-                          const deviceId = (d as any).id || d._id
+                          const deviceId = (d as { id?: string }).id || d._id
                           return (
                             <button
                               key={deviceId}
