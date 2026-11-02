@@ -50,14 +50,14 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   // Group specs by category
   const categorizedSpecs: { [category: string]: { [key: string]: string } } = {};
 
-  let specsArray: any[] = [];
+  let specsArray: { category: string; key: string; value: string }[] = [];
   if (Array.isArray(device.specs)) {
-    specsArray = device.specs;
+    specsArray = device.specs.map(s => ({ category: s.category, key: s.key, value: s.value }));
   } else if (typeof device.specs === 'object' && device.specs !== null) {
     specsArray = Object.keys(device.specs).map(key => ({
       category: 'General',
       key: key,
-      value: (device.specs as any)[key]
+      value: String((device.specs as Record<string, string>)[key])
     }));
   }
 

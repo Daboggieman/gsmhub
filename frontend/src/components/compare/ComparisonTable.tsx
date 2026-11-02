@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import DeviceImage from '../devices/DeviceImage';
+import { Device } from '@shared/types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronDown,
@@ -14,8 +15,13 @@ import Badge from '../ui/Badge';
 
 interface ComparisonTableProps {
   comparisonData: {
-    devices: any[];
-    comparison: any[];
+    devices: Device[];
+    comparison: {
+      item: string;
+      values: string[];
+      difference?: string;
+      betterIndex?: number;
+    }[];
   };
 }
 
@@ -42,7 +48,7 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
   if (!devices || devices.length === 0) return null;
 
   // Helper to check if a row has differences
-  const hasDifference = (row: any) => {
+  const hasDifference = (row: { values: string[] }) => {
     if (row.values.length < 2) return false;
     const firstVal = row.values[0];
     return row.values.some((v: string) => v !== firstVal);
@@ -50,12 +56,13 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
 
   // Cheapest price across all devices that report one ("Best Price" badge)
   const prices = devices
-    .map((d: any) => (typeof d.latestPrice === 'number' ? d.latestPrice : null))
-    .filter((p: number | null): p is number => p !== null);
+    .map((d: { latestPrice?: number }) => (typeof d.latestPrice === 'number' ? d.latestPrice : null))
+    .filter((p): p is number => p !== null);
   const bestPrice = prices.length >= 2 ? Math.min(...prices) : null;
 
   // Group comparison rows by category and apply filters
-  const categorizedComparison: { [category: string]: any[] } = {};
+  type ComparisonRow = typeof comparison[number];
+  const categorizedComparison: { [category: string]: ComparisonRow[] } = {};
   comparison.forEach(row => {
     if (showOnlyDiffs && !hasDifference(row)) return;
 
