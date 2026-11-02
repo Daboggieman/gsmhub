@@ -26,32 +26,42 @@ export default function AdminBrandsPage() {
     forceUpdate: false,
   })
 
-  const fetchBrands = async () => {
-    setIsLoading(true)
-    try {
-      const data = await apiClient.getAdminBrands(search)
-      setBrands(data)
-    } catch (error) {
-      console.error('Error fetching brands:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
+  // Increment to re-fetch without changing the search term (after
+  // mutations and manual search submits).
+  const [refreshTick, setRefreshTick] = useState(0)
 
   useEffect(() => {
-    fetchBrands()
-  }, [])
+    let cancelled = false
+    const load = async (term: string) => {
+      setIsLoading(true)
+      try {
+        const data = await apiClient.getAdminBrands(term)
+        if (!cancelled) setBrands(data)
+      } catch (error) {
+        console.error('Error fetching brands:', error)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    load(search)
+    return () => {
+      cancelled = true
+    }
+    // `search` is read at trigger time: refetches are explicit (submit,
+    // delete, sync) rather than per-keystroke.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshTick])
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault()
-    fetchBrands()
+    setRefreshTick((t) => t + 1)
   }
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this brand?')) {
       try {
         await apiClient.deleteBrand(id)
-        fetchBrands()
+        setRefreshTick((t) => t + 1)
       } catch {
         alert('Failed to delete brand')
       }
@@ -63,7 +73,7 @@ export default function AdminBrandsPage() {
     try {
       const { message } = await apiClient.syncDevices(brandName, syncOptions)
       alert(message)
-      if (brandName) fetchBrands()
+      if (brandName) setRefreshTick((t) => t + 1)
     } catch (error) {
       console.error('Sync failed:', error)
       alert('Sync failed. Please check the backend logs.')

@@ -10,32 +10,42 @@ export default function AdminCategoriesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  const fetchCategories = async () => {
-    setIsLoading(true);
-    try {
-      const data = await apiClient.getCategories(search);
-      setCategories(data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  // Increment to re-fetch without changing the search term (after
+  // mutations and manual search submits).
+  const [refreshTick, setRefreshTick] = useState(0);
 
   useEffect(() => {
-    fetchCategories();
-  }, []);
+    let cancelled = false;
+    const load = async (term: string) => {
+      setIsLoading(true);
+      try {
+        const data = await apiClient.getCategories(term);
+        if (!cancelled) setCategories(data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      } finally {
+        if (!cancelled) setIsLoading(false);
+      }
+    };
+    load(search);
+    return () => {
+      cancelled = true;
+    };
+    // `search` is read at trigger time: refetches are explicit (submit,
+    // delete) rather than per-keystroke.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [refreshTick]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    fetchCategories();
+    setRefreshTick((t) => t + 1);
   };
 
   const handleDelete = async (id: string) => {
     if (confirm('Are you sure you want to delete this category?')) {
       try {
         await apiClient.deleteCategory(id);
-        fetchCategories();
+        setRefreshTick((t) => t + 1);
       } catch {
         alert('Failed to delete category');
       }

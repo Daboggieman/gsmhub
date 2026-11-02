@@ -33,10 +33,14 @@ function AdminUsersPageContent() {
   // Increment to re-fetch without changing page/search (after mutations).
   const [refreshTick, setRefreshTick] = useState(0)
 
-  // Keep the search input in sync when the URL changes (back button).
-  useEffect(() => {
+  // Keep the search input in sync when the URL changes (back button) —
+  // adjusted during render (documented prop-change pattern) so no
+  // cascading effect render is needed.
+  const [prevSearch, setPrevSearch] = useState(search)
+  if (prevSearch !== search) {
+    setPrevSearch(search)
     setSearchInput(search)
-  }, [search])
+  }
 
   useEffect(() => {
     let cancelled = false

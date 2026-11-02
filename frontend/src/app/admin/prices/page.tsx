@@ -86,10 +86,14 @@ function AdminPricesPageContent() {
   // Increment to re-fetch without changing page/search (after mutations).
   const [refreshTick, setRefreshTick] = useState(0)
 
-  // Keep the search input in sync when the URL changes (back button).
-  useEffect(() => {
+  // Keep the search input in sync when the URL changes (back button) —
+  // adjusted during render (documented prop-change pattern) so no
+  // cascading effect render is needed.
+  const [prevSearch, setPrevSearch] = useState(search)
+  if (prevSearch !== search) {
+    setPrevSearch(search)
     setSearchInput(search)
-  }, [search])
+  }
 
   useEffect(() => {
     let cancelled = false
@@ -115,13 +119,13 @@ function AdminPricesPageContent() {
   // Debounced device search for the create-form picker.
   useEffect(() => {
     if (!isFormOpen || editingId) return
-    if (!deviceQuery.trim()) {
-      setDeviceResults([])
-      setIsSearchingDevices(false)
-      return
-    }
-    setIsSearchingDevices(true)
     const t = setTimeout(async () => {
+      if (!deviceQuery.trim()) {
+        setDeviceResults([])
+        setIsSearchingDevices(false)
+        return
+      }
+      setIsSearchingDevices(true)
       try {
         const data = await apiClient.getDevices({ search: deviceQuery, limit: 5 })
         setDeviceResults(data.devices)

@@ -36,35 +36,47 @@ function AuditLogsPageContent() {
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [isAutoRefresh, setIsAutoRefresh] = useState(true);
 
-    const fetchLogs = async (silent = false) => {
-        if (!silent) setLoading(true);
-        try {
-            const data = await apiClient.getAuditLogs({
-                page,
-                limit: LIMIT,
-                ...filters
-            });
-            setLogs(data.logs);
-            setTotal(data.total);
-        } catch (err) {
-            console.error('Failed to fetch audit logs', err);
-        } finally {
-            setLoading(false);
+    // Primitive filter values as deps — a `filters` object literal would
+    // be a new identity every render and re-fire the effect endlessly.
+    const action = searchParams.get('action') || '';
+    const targetType = searchParams.get('targetType') || '';
+    const userId = searchParams.get('userId') || '';
+
+    useEffect(() => {
+        let cancelled = false;
+        const load = async (silent = false) => {
+            if (!silent) setLoading(true);
+            try {
+                const data = await apiClient.getAuditLogs({
+                    page,
+                    limit: LIMIT,
+                    action,
+                    targetType,
+                    userId
+                });
+                if (cancelled) return;
+                setLogs(data.logs);
+                setTotal(data.total);
+            } catch (err) {
+                console.error('Failed to fetch audit logs', err);
+            } finally {
+                if (!cancelled) setLoading(false);
+            }
+        };
+        load();
+
+        // Auto-refresh logic (silent — no loading spinner).
+        let interval: ReturnType<typeof setInterval> | undefined;
+        if (isAutoRefresh) {
+            interval = setInterval(() => {
+                load(true);
+            }, 30000); // 30 seconds
         }
-    };
-
-    useEffect(() => {
-        fetchLogs();
-    }, [page, filters]);
-
-    // Auto-refresh logic
-    useEffect(() => {
-        if (!isAutoRefresh) return;
-        const interval = setInterval(() => {
-            fetchLogs(true);
-        }, 30000); // 30 seconds
-        return () => clearInterval(interval);
-    }, [isAutoRefresh, page, filters]);
+        return () => {
+            cancelled = true;
+            if (interval) clearInterval(interval);
+        };
+    }, [isAutoRefresh, page, action, targetType, userId]);
 
     /** Push a filter change into the URL, resetting to page 1. */
     const updateFilter = (key: string, value: string) => {

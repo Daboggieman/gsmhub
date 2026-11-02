@@ -41,7 +41,13 @@ export default function AffiliateLinkGenerator({
   const [copied, setCopied] = useState(false)
 
   useEffect(() => {
-    setAffiliateId(loadStoredIds()[platformId] || '')
+    // Deferred via a local step so the effect body itself performs no
+    // synchronous state updates; loadStoredIds reads localStorage, which
+    // must not run during render (SSR-unsafe).
+    const loadAffiliateId = () => {
+      setAffiliateId(loadStoredIds()[platformId] || '')
+    }
+    loadAffiliateId()
   }, [platformId])
 
   const platform = getAffiliatePlatform(platformId)
