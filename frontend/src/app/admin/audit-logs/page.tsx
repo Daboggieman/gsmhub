@@ -35,6 +35,8 @@ function AuditLogsPageContent() {
     const [total, setTotal] = useState(0);
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [isAutoRefresh, setIsAutoRefresh] = useState(true);
+    // Bumped by the manual refresh button to re-run the fetch effect.
+    const [refreshTick, setRefreshTick] = useState(0);
 
     // Primitive filter values as deps — a `filters` object literal would
     // be a new identity every render and re-fire the effect endlessly.
@@ -76,7 +78,7 @@ function AuditLogsPageContent() {
             cancelled = true;
             if (interval) clearInterval(interval);
         };
-    }, [isAutoRefresh, page, action, targetType, userId]);
+    }, [isAutoRefresh, page, refreshTick, action, targetType, userId]);
 
     /** Push a filter change into the URL, resetting to page 1. */
     const updateFilter = (key: string, value: string) => {
@@ -127,8 +129,8 @@ function AuditLogsPageContent() {
                             {isAutoRefresh ? 'Disable' : 'Enable'}
                         </button>
                     </div>
-                    <button 
-                        onClick={() => fetchLogs()}
+                    <button
+                        onClick={() => setRefreshTick((t) => t + 1)}
                         className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100"
                     >
                         <FontAwesomeIcon icon={faSyncAlt} className={loading ? 'animate-spin' : ''} />

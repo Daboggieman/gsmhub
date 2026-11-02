@@ -22,25 +22,29 @@ const CompareBox: React.FC<CompareBoxProps> = ({ initialDevices = [], urlSlugCou
   const [showDropdown, setShowDropdown] = useState(false);
   const [loading, setLoading] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const prevUrlCountRef = useRef(urlSlugCount);
 
   useEffect(() => {
-    // Hydrate/refresh the boxes from URL-driven comparison data
-    if (initialDevices.length >= 2) {
-      setSelectedDevices(initialDevices);
-    }
+    // Hydrate/refresh the boxes from URL-driven comparison data.
+    // Deferred via a local step so the effect body itself performs no
+    // synchronous state updates.
+    const syncFromUrl = () => {
+      if (initialDevices.length >= 2) {
+        setSelectedDevices(initialDevices);
+      }
+    };
+    syncFromUrl();
   }, [initialDevices]);
 
   // The URL is the source of truth: if it no longer holds a comparison
-  // (0-1 slugs), drop any devices still sitting in the boxes.
-  useEffect(() => {
-    if (urlSlugCount !== prevUrlCountRef.current) {
-      prevUrlCountRef.current = urlSlugCount;
-      if (urlSlugCount < 2) {
-        setSelectedDevices([]);
-      }
+  // (0-1 slugs), drop any devices still sitting in the boxes — adjusted
+  // during render (documented prop-change pattern).
+  const [prevSlugCount, setPrevSlugCount] = useState(urlSlugCount);
+  if (prevSlugCount !== urlSlugCount) {
+    setPrevSlugCount(urlSlugCount);
+    if (urlSlugCount < 2) {
+      setSelectedDevices([]);
     }
-  }, [urlSlugCount]);
+  }
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {

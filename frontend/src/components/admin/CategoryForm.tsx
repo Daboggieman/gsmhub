@@ -31,18 +31,19 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
   const [error, setError] = useState('');
   const [isAutoSlug, setIsAutoSlug] = useState(!isEdit);
 
-  // Handle auto-slug generation
-  useEffect(() => {
-    if (isAutoSlug && !isEdit && formData.name) {
-      setFormData(prev => ({ ...prev, slug: generateSlug(formData.name!) }));
-    }
-  }, [formData.name, isAutoSlug, isEdit]);
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value, type } = e.target as any;
+    const { name, value, type } = e.target;
     const val = type === 'checkbox' ? (e.target as HTMLInputElement).checked : value;
-    
-    setFormData((prev) => ({ ...prev, [name]: val }));
+
+    setFormData((prev) => {
+      const next = { ...prev, [name]: val };
+      // Auto-slug derives from the name in the same update (no follow-up
+      // effect, one render per keystroke).
+      if (isAutoSlug && !isEdit && name === 'name' && next.name) {
+        next.slug = generateSlug(next.name);
+      }
+      return next;
+    });
     
     if (name === 'slug') {
       setIsAutoSlug(false);

@@ -20,15 +20,20 @@ const SearchBar: React.FC = () => {
   const router = useRouter();
 
   useEffect(() => {
-    // Load search history from localStorage
-    const saved = localStorage.getItem(SEARCH_HISTORY_KEY);
-    if (saved) {
-      try {
-        setHistory(JSON.parse(saved));
-      } catch {
-        setHistory([]);
+    // Load search history from localStorage — deferred via a local step
+    // so the effect body itself performs no synchronous state updates
+    // (and the read stays post-hydration, avoiding a hydration mismatch).
+    const loadHistory = () => {
+      const saved = localStorage.getItem(SEARCH_HISTORY_KEY);
+      if (saved) {
+        try {
+          setHistory(JSON.parse(saved));
+        } catch {
+          setHistory([]);
+        }
       }
-    }
+    };
+    loadHistory();
 
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {

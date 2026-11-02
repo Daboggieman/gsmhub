@@ -18,18 +18,23 @@ export default function FavoriteButton({ deviceId, initialIsFavorited = false }:
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
 
-    useEffect(() => {
-        // If we wanted to double check status on mount, we could, 
-        // but typically we trust the parent or just rely on user action.
-        // Ideally, the parent passes correct initial state.
-        // For now, if user is logged in, we might want to check?
-        // Let's rely on simple toggling for now to save requests, 
-        // or checks in a real app would be done via a bulk 'am I favoriting this?' or user profile load.
-        if (user && (user as any).favorites) {
-            const isFav = (user as any).favorites.some((f: any) => (typeof f === 'string' ? f : f._id) === deviceId);
-            setIsFavorited(isFav);
+    // Seed `isFavorited` from the user's favorites when the user or
+    // device changes — adjusted during render (documented prop-change
+    // pattern) so no cascading effect render is needed.
+    const [prevUser, setPrevUser] = useState(user);
+    const [prevDeviceId, setPrevDeviceId] = useState(deviceId);
+    if (prevUser !== user || prevDeviceId !== deviceId) {
+        setPrevUser(user);
+        setPrevDeviceId(deviceId);
+        const favorites = user
+            ? (user as { favorites?: (string | { _id?: string })[] }).favorites
+            : undefined;
+        if (favorites) {
+            setIsFavorited(
+                favorites.some((f) => (typeof f === 'string' ? f : f._id) === deviceId),
+            );
         }
-    }, [user, deviceId]);
+    }
 
     const handleToggle = async () => {
         if (!user) {

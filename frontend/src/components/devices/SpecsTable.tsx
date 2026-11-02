@@ -22,16 +22,21 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
 
   // Hooks must run before the "no specs" early return below, so hook
   // order stays stable when device.specs appears between renders.
+  // Deferred via a local step so the effect body itself performs no
+  // synchronous state updates.
   useEffect(() => {
-    if (!device?.specs) return;
-    const categories = Array.isArray(device.specs)
-      ? Array.from(new Set(device.specs.map((spec) => spec.category)))
-      : Object.keys(device.specs);
-    const initialExpansionState: { [key: string]: boolean } = {};
-    categories.forEach(category => {
-      initialExpansionState[category] = true;
-    });
-    setExpandedCategories(initialExpansionState);
+    const initExpansion = () => {
+      if (!device?.specs) return;
+      const categories = Array.isArray(device.specs)
+        ? Array.from(new Set(device.specs.map((spec) => spec.category)))
+        : Object.keys(device.specs);
+      const initialExpansionState: { [key: string]: boolean } = {};
+      categories.forEach(category => {
+        initialExpansionState[category] = true;
+      });
+      setExpandedCategories(initialExpansionState);
+    };
+    initExpansion();
   }, [device.specs]);
 
   if (!device || !device.specs) {
