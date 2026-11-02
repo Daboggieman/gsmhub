@@ -71,7 +71,7 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
         await apiClient.createCategory(payload);
       }
       router.push('/admin/categories');
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || 'Failed to save category');
     } finally {
       setIsSubmitting(false);

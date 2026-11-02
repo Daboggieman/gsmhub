@@ -35,7 +35,7 @@ export default function AdminLoginPage() {
       }
 
       login(data.user);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message);
     } finally {
       setIsSubmitting(false);

@@ -70,7 +70,7 @@ function AdminDevicesPageContent() {
         if (cancelled) return
         setDevices(data.devices)
         setTotal(data.total)
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('Error fetching devices:', error)
       } finally {
         if (!cancelled) setIsLoading(false)
@@ -115,7 +115,7 @@ function AdminDevicesPageContent() {
       await apiClient.syncDevice(device.brand, device.model, syncOptions)
       alert(`${device.name} synchronized successfully with External API`)
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
+    } catch (error: unknown) {
       alert(`Sync Failed: ${error.message}`)
     } finally {
       setSyncingId(null)
@@ -134,7 +134,7 @@ function AdminDevicesPageContent() {
       await apiClient.syncDevices(brand, syncOptions)
       alert(`Sync task for ${brand} started. New devices will appear shortly.`)
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
+    } catch (error: unknown) {
       alert(`Bulk Sync Failed: ${error.message}`)
     } finally {
       setIsSyncingAll(false)
@@ -160,7 +160,7 @@ function AdminDevicesPageContent() {
       const result = await apiClient.bulkImportDevices(file)
       setImportStatus(result)
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
+    } catch (error: unknown) {
       alert(error.message || 'Failed to import devices')
     } finally {
       setIsImporting(false)

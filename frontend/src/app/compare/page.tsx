@@ -25,7 +25,7 @@ const ComparePageContent = () => {
         try {
           const data = await apiClient.compareDevices(slugs);
           setComparisonData(data);
-        } catch (error: any) {
+        } catch (error: unknown) {
           console.error('Failed to fetch comparison data:', error);
           setComparisonData(null);
           setError(error.message || 'Failed to load comparison. One of the devices may not exist.');

@@ -104,7 +104,7 @@ function AdminPricesPageContent() {
         if (cancelled) return
         setPrices(data.prices)
         setTotal(data.total)
-      } catch (error) {
+      } catch (error: unknown) {
         console.error('Error fetching prices:', error)
       } finally {
         if (!cancelled) setIsLoading(false)
@@ -216,7 +216,7 @@ function AdminPricesPageContent() {
       setIsFormOpen(false)
       resetForm()
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
+    } catch (error: unknown) {
       setFormError(error.message || 'Failed to save price')
     } finally {
       setIsSubmitting(false)
@@ -229,7 +229,7 @@ function AdminPricesPageContent() {
       try {
         await apiClient.deletePrice(id)
         setRefreshTick((t) => t + 1)
-      } catch (error: any) {
+      } catch (error: unknown) {
         alert(error.message || 'Failed to delete price entry')
       } finally {
         setBusyId(null)

@@ -57,7 +57,7 @@ export default function BrandForm({ initialData, isEdit = false }: BrandFormProp
         await apiClient.createBrand(formData);
       }
       router.push('/admin/brands');
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || 'Failed to save brand');
     } finally {
       setIsSubmitting(false);

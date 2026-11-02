@@ -219,7 +219,7 @@ export default function AdminDashboard() {
                 </div>
                 <div className="flex-1">
                   <p className="font-black text-gray-900 group-hover:text-indigo-600 transition-colors">{device.name}</p>
-                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{device.brand} • {typeof device.category === 'object' ? (device.category as any).name : 'Standard'}</p>
+                  <p className="text-[10px] text-gray-400 font-black uppercase tracking-widest">{device.brand} • {typeof device.category === 'object' && 'name' in device.category ? device.category.name : 'Standard'}</p>
                 </div>
                 <div className="text-right">
                   <p className="font-black text-gray-900 leading-none">{device.views.toLocaleString()}</p>
