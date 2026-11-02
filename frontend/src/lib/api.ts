@@ -1,5 +1,103 @@
 import { Device, Category, SearchResult, PriceHistory } from '@shared/types';
 
+// ---- API payload/response shapes not covered by @shared/types ----
+
+export interface AdminBrand {
+  id?: string;
+  _id?: string;
+  name: string;
+  slug: string;
+  logoUrl?: string;
+  description?: string;
+  isFeatured?: boolean;
+  deviceCount?: number;
+}
+
+export interface AuditLogEntry {
+  id?: string;
+  _id?: string;
+  user?: { id?: string; _id?: string; name?: string; email?: string } | string;
+  action: string;
+  targetType: string;
+  targetId: string;
+  details?: Record<string, unknown>;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt?: string;
+}
+
+export interface AdminStats {
+  devicesCount: number;
+  categoriesCount: number;
+  totalViews: number;
+  topDevices: {
+    _id: string;
+    name: string;
+    brand: string;
+    category: string | { name: string };
+    imageUrl?: string;
+    views: number;
+  }[];
+  topSearches: { query: string; count: number }[];
+  revenueData: { name: string; revenue: number; ads: number }[];
+  affiliatePerformance: { name: string; value: number }[];
+}
+
+export interface DetailedComparison {
+  devices: Device[];
+  comparison: {
+    item: string;
+    values: string[];
+    difference?: string;
+    betterIndex?: number;
+  }[];
+  message?: string;
+}
+
+export interface AdminUser {
+  id?: string;
+  _id?: string;
+  name: string;
+  email: string;
+  role: string;
+  isActive?: boolean;
+  createdAt?: string;
+}
+
+// Price rows as returned by GET /prices (device document populated by the
+// aggregate) — PriceHistory itself carries only the raw deviceId.
+export interface PriceRow extends Omit<PriceHistory, 'deviceId'> {
+  device?: { name: string; brand: string; model: string; slug: string; imageUrl?: string };
+  createdAt?: string;
+}
+
+export interface CreatePricePayload {
+  device: string;
+  price: number;
+  currency: string;
+  country: string;
+  retailer?: string;
+  affiliateUrl?: string;
+  date?: string;
+}
+
+export interface SyncResult {
+  message?: string;
+  synced?: number;
+  failed?: number;
+  [key: string]: unknown;
+}
+
+export interface UserProfile {
+  id?: string;
+  _id?: string;
+  name: string;
+  email: string;
+  role: string;
+  isActive?: boolean;
+  favorites?: (string | { _id?: string })[];
+}
+
 // Browser requests go to the same origin ("/api") so auth cookies stay
 // first-party (Safari/Brave block third-party cookies); next.config.ts
 // proxies "/api/:path*" to the backend via BACKEND_URL.
@@ -20,7 +118,7 @@ class ApiClient {
     this.baseURL = baseURL;
   }
 
-  async getProfile(): Promise<any> {
+  async getProfile(): Promise<UserProfile> {
     return this.request('/auth/profile');
   }
 
@@ -79,11 +177,11 @@ class ApiClient {
     return this.request(`/devices/${id}`, { method: 'DELETE' });
   }
 
-  async createDevice(data: any): Promise<Device> {
+  async createDevice(data: Partial<Device>): Promise<Device> {
     return this.request('/devices', { method: 'POST', body: JSON.stringify(data) });
   }
 
-  async updateDevice(id: string, data: any): Promise<Device> {
+  async updateDevice(id: string, data: Partial<Device>): Promise<Device> {
     return this.request(`/devices/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
   }
 
@@ -167,15 +265,15 @@ class ApiClient {
     return this.request('/devices/brands');
   }
 
-  async getAdminBrands(search?: string): Promise<any[]> {
+  async getAdminBrands(search?: string): Promise<AdminBrand[]> {
     return this.request(`/brands${search ? `?search=${encodeURIComponent(search)}` : ''}`);
   }
 
-  async createBrand(data: any): Promise<any> {
+  async createBrand(data: Partial<AdminBrand>): Promise<AdminBrand> {
     return this.request('/brands', { method: 'POST', body: JSON.stringify(data) });
   }
 
-  async updateBrand(id: string, data: any): Promise<any> {
+  async updateBrand(id: string, data: Partial<AdminBrand>): Promise<AdminBrand> {
     return this.request(`/brands/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
   }
 
@@ -187,8 +285,8 @@ class ApiClient {
     return this.request('/devices/suggestions');
   }
 
-  async compareDevices(slugs: string[]): Promise<any> {
-    const data = await this.request<any>(`/compare?devices=${slugs.join(',')}`);
+  async compareDevices(slugs: string[]): Promise<DetailedComparison> {
+    const data = await this.request<DetailedComparison>(`/compare?devices=${slugs.join(',')}`);
     if (data && data.message && !data.comparison) {
       throw new Error(data.message);
     }
@@ -212,11 +310,11 @@ class ApiClient {
     return this.request(`/categories/${id}`, { method: 'DELETE' });
   }
 
-  async createCategory(data: any): Promise<Category> {
+  async createCategory(data: Partial<Category>): Promise<Category> {
     return this.request('/categories', { method: 'POST', body: JSON.stringify(data) });
   }
 
-  async updateCategory(id: string, data: any): Promise<Category> {
+  async updateCategory(id: string, data: Partial<Category>): Promise<Category> {
     return this.request(`/categories/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
   }
 
@@ -237,7 +335,7 @@ class ApiClient {
   }
 
   // Admin
-  async getAdminStats(): Promise<any> {
+  async getAdminStats(): Promise<AdminStats> {
     return this.request('/admin/stats');
   }
 
@@ -250,7 +348,7 @@ class ApiClient {
     return this.request('/users/favorites');
   }
 
-  async getAuditLogs(params: { page?: number; limit?: number; userId?: string; action?: string; targetType?: string }): Promise<{ logs: any[]; total: number; page: number; limit: number }> {
+  async getAuditLogs(params: { page?: number; limit?: number; userId?: string; action?: string; targetType?: string }): Promise<{ logs: AuditLogEntry[]; total: number; page: number; limit: number }> {
     const searchParams = new URLSearchParams();
     if (params.page) searchParams.set('page', params.page.toString());
     if (params.limit) searchParams.set('limit', params.limit.toString());
@@ -262,7 +360,7 @@ class ApiClient {
   }
 
   // External API / Sync
-  async syncDevices(brand?: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<any> {
+  async syncDevices(brand?: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<SyncResult> {
     if (brand) {
       return this.request(`/external-api/sync/brand/${encodeURIComponent(brand)}`, { 
         method: 'POST',
@@ -275,7 +373,7 @@ class ApiClient {
     });
   }
 
-  async syncDevice(brand: string, model: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<any> {
+  async syncDevice(brand: string, model: string, options: { providers?: string[]; forceUpdate?: boolean } = {}): Promise<SyncResult> {
     return this.request('/devices/sync', { 
       method: 'POST', 
       body: JSON.stringify({ brand, model, ...options }) 
@@ -283,7 +381,7 @@ class ApiClient {
   }
 
   // Prices
-  async getPrices(params: { page?: number; limit?: number; search?: string }): Promise<{ prices: any[]; total: number }> {
+  async getPrices(params: { page?: number; limit?: number; search?: string }): Promise<{ prices: PriceRow[]; total: number }> {
     const searchParams = new URLSearchParams();
     if (params.page) searchParams.set('page', params.page.toString());
     if (params.limit) searchParams.set('limit', params.limit.toString());
@@ -292,11 +390,11 @@ class ApiClient {
     return this.request(`/prices?${searchParams.toString()}`);
   }
 
-  async createPrice(data: any): Promise<PriceHistory> {
+  async createPrice(data: CreatePricePayload): Promise<PriceHistory> {
     return this.request('/prices', { method: 'POST', body: JSON.stringify(data) });
   }
 
-  async updatePrice(id: string, data: any): Promise<PriceHistory> {
+  async updatePrice(id: string, data: Partial<CreatePricePayload>): Promise<PriceHistory> {
     return this.request(`/prices/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
   }
 
@@ -305,7 +403,7 @@ class ApiClient {
   }
 
   // Users (admin)
-  async getUsers(params: { page?: number; limit?: number; search?: string }): Promise<{ users: any[]; total: number; page: number; limit: number; totalPages: number }> {
+  async getUsers(params: { page?: number; limit?: number; search?: string }): Promise<{ users: AdminUser[]; total: number; page: number; limit: number; totalPages: number }> {
     const searchParams = new URLSearchParams();
     if (params.page) searchParams.set('page', params.page.toString());
     if (params.limit) searchParams.set('limit', params.limit.toString());
@@ -314,11 +412,11 @@ class ApiClient {
     return this.request(`/users?${searchParams.toString()}`);
   }
 
-  async createUser(data: { name: string; email: string; password: string; role?: string }): Promise<any> {
+  async createUser(data: { name: string; email: string; password: string; role?: string }): Promise<AdminUser> {
     return this.request('/users', { method: 'POST', body: JSON.stringify(data) });
   }
 
-  async updateUser(id: string, data: any): Promise<any> {
+  async updateUser(id: string, data: Partial<AdminUser>): Promise<AdminUser> {
     return this.request(`/users/${id}`, { method: 'PATCH', body: JSON.stringify(data) });
   }
 
