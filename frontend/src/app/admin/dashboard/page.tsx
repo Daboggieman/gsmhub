@@ -1,8 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useState } from 'react';
-import { apiClient } from '@/lib/api';
-import { Device } from '@shared/types';
+import { apiClient, AdminStats } from '@/lib/api';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -29,20 +28,10 @@ import {
   Area
 } from 'recharts';
 
-interface Stats {
-  devicesCount: number;
-  categoriesCount: number;
-  totalViews: number;
-  topDevices: Device[];
-  topSearches: { query: string; count: number }[];
-  revenueData: { name: string; revenue: number; ads: number }[];
-  affiliatePerformance: { name: string; value: number }[];
-}
-
 const COLORS = ['#4F46E5', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6'];
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<AdminStats | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
