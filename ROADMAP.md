@@ -69,6 +69,7 @@ This document outlines the planned phases and progress for the GSMHUB project.
 - [x] 17.2 Frontend Testing (React Testing Library) — Vitest + RTL, 27 tests passing
 - [/] 17.3 End-to-End Testing (Playwright) — `user-flow.spec.ts` + `admin-flow.spec.ts` exist; run against deployed app
 - [ ] 17.4 Performance Testing (Lighthouse)
+- [x] 17.5 Code Quality (ESLint) — repo-wide lint debt eliminated 2026-11-03: frontend 0 errors (6 advisory `no-img-element` warnings on admin thumbnails), backend 0 errors (typed-lint `no-unsafe-*` demoted to warn — ~690 warnings remain until Mongoose models get document interfaces); real bugs fixed along the way (`$limit` honored in category/brand listings, audit-logs refetch loop, conditional-hook crashes)
 
 ### PHASE 18: DEPLOYMENT PREPARATION
 

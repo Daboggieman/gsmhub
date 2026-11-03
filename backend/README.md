@@ -25,6 +25,7 @@ Key env vars: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET`, `FRONTEND_URL`
 | `pnpm run start:dev` | Watch mode (ts-node-dev) |
 | `pnpm run build` | Compile with `tsc` → `dist/backend/src/main` |
 | `pnpm run start:prod` | Run the compiled build |
+| `pnpm run lint` | ESLint (0 errors; typed-lint `no-unsafe-*` warnings are advisory) |
 | `pnpm test` | Jest unit tests |
 | `pnpm run seed:gsma` | Seed brands/categories/admin |
 | `pnpm run seed:phonedb` | Seed device catalog from PhoneDB dataset |
