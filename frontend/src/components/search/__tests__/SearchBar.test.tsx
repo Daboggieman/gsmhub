@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, act } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vitest';
 import SearchBar from '../SearchBar';
 import { apiClient } from '../../../lib/api';
 
@@ -36,7 +36,7 @@ describe('SearchBar', () => {
     const mockResults = [
       { _id: '1', name: 'iPhone 15', slug: 'iphone-15', brand: 'Apple', imageUrl: '' },
     ];
-    (apiClient.searchDevices as any).mockResolvedValue(mockResults);
+    (apiClient.searchDevices as Mock).mockResolvedValue(mockResults);
 
     render(<SearchBar />);
     const input = screen.getByPlaceholderText(/search for phones/i);
@@ -51,7 +51,7 @@ describe('SearchBar', () => {
   });
 
   it('shows "no devices found" message when API returns empty', async () => {
-    (apiClient.searchDevices as any).mockResolvedValue([]);
+    (apiClient.searchDevices as Mock).mockResolvedValue([]);
 
     render(<SearchBar />);
     const input = screen.getByPlaceholderText(/search for phones/i);

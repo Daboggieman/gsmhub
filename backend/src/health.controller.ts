@@ -5,7 +5,7 @@ import {
   ServiceUnavailableException,
 } from '@nestjs/common';
 import { InjectConnection } from '@nestjs/mongoose';
-import { Connection } from 'mongoose';
+import { Connection, ConnectionStates } from 'mongoose';
 
 @Controller('health')
 export class HealthController {
@@ -20,7 +20,7 @@ export class HealthController {
   @Get('ready')
   @HttpCode(200)
   ready() {
-    if (this.connection.readyState !== 1) {
+    if (this.connection.readyState !== ConnectionStates.connected) {
       throw new ServiceUnavailableException({
         status: 'not_ready',
         database: 'unavailable',

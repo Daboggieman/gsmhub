@@ -2,6 +2,7 @@
 
 import { useEffect, useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
+import { AdminUser } from '@/lib/api'
 import { apiClient } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -85,8 +86,8 @@ function AdminUsersPageContent() {
       setIsFormOpen(false)
       setNewUser({ name: '', email: '', password: '', role: 'admin' })
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
-      setFormError(error.message || 'Failed to create user')
+    } catch (error: unknown) {
+      setFormError(error instanceof Error ? error.message : 'Failed to create user')
     } finally {
       setIsSubmitting(false)
     }
@@ -97,20 +98,22 @@ function AdminUsersPageContent() {
     try {
       await apiClient.updateUser(id, { role })
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
-      alert(error.message || 'Failed to update role')
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'Failed to update role')
     } finally {
       setBusyId(null)
     }
   }
 
-  const handleToggleActive = async (current: any) => {
-    setBusyId(current.id)
+  const handleToggleActive = async (current: AdminUser) => {
+    const id = current.id || current._id
+    if (!id) return
+    setBusyId(id)
     try {
-      await apiClient.updateUser(current.id, { isActive: !current.isActive })
+      await apiClient.updateUser(id, { isActive: !current.isActive })
       setRefreshTick((t) => t + 1)
-    } catch (error: any) {
-      alert(error.message || 'Failed to update status')
+    } catch (error: unknown) {
+      alert(error instanceof Error ? error.message : 'Failed to update status')
     } finally {
       setBusyId(null)
     }
@@ -121,8 +124,8 @@ function AdminUsersPageContent() {
       try {
         await apiClient.deleteUser(id)
         setRefreshTick((t) => t + 1)
-      } catch (error: any) {
-        alert(error.message || 'Failed to delete user')
+      } catch (error: unknown) {
+        alert(error instanceof Error ? error.message : 'Failed to delete user')
       }
     }
   }
@@ -356,7 +359,7 @@ function AdminUsersPageContent() {
                           <select
                             value={u.role}
                             disabled={isSelf || busyId === u.id}
-                            onChange={(e) => handleRoleChange(u.id, e.target.value)}
+                            onChange={(e) => u.id && handleRoleChange(u.id, e.target.value)}
                             className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-[10px] font-black text-gray-700 uppercase outline-none transition-all hover:border-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
                             title={isSelf ? 'You cannot change your own role' : 'Change role'}
                           >
@@ -382,7 +385,7 @@ function AdminUsersPageContent() {
                             )}
                           </button>
                           <button
-                            onClick={() => handleDelete(u.id)}
+                            onClick={() => u.id && handleDelete(u.id)}
                             disabled={isSelf || busyId === u.id}
                             className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-red-600 uppercase transition-all hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
                             title={isSelf ? 'You cannot delete your own account' : undefined}

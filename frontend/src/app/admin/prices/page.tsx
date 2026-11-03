@@ -217,7 +217,7 @@ function AdminPricesPageContent() {
       resetForm()
       setRefreshTick((t) => t + 1)
     } catch (error: unknown) {
-      setFormError(error.message || 'Failed to save price')
+      setFormError(error instanceof Error ? error.message : 'Failed to save price')
     } finally {
       setIsSubmitting(false)
     }
@@ -230,7 +230,7 @@ function AdminPricesPageContent() {
         await apiClient.deletePrice(id)
         setRefreshTick((t) => t + 1)
       } catch (error: unknown) {
-        alert(error.message || 'Failed to delete price entry')
+        alert(error instanceof Error ? error.message : 'Failed to delete price entry')
       } finally {
         setBusyId(null)
       }
@@ -330,7 +330,7 @@ function AdminPricesPageContent() {
                               type="button"
                               onClick={() => {
                                 setSelectedDevice({
-                                  id: deviceId,
+                                  id: deviceId!,
                                   name: d.name,
                                 })
                                 setDeviceQuery('')

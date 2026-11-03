@@ -116,7 +116,7 @@ function AdminDevicesPageContent() {
       alert(`${device.name} synchronized successfully with External API`)
       setRefreshTick((t) => t + 1)
     } catch (error: unknown) {
-      alert(`Sync Failed: ${error.message}`)
+      alert(`Sync Failed: ${error instanceof Error ? error.message : String(error)}`)
     } finally {
       setSyncingId(null)
     }
@@ -135,7 +135,7 @@ function AdminDevicesPageContent() {
       alert(`Sync task for ${brand} started. New devices will appear shortly.`)
       setRefreshTick((t) => t + 1)
     } catch (error: unknown) {
-      alert(`Bulk Sync Failed: ${error.message}`)
+      alert(`Bulk Sync Failed: ${error instanceof Error ? error.message : String(error)}`)
     } finally {
       setIsSyncingAll(false)
     }
@@ -161,7 +161,7 @@ function AdminDevicesPageContent() {
       setImportStatus(result)
       setRefreshTick((t) => t + 1)
     } catch (error: unknown) {
-      alert(error.message || 'Failed to import devices')
+      alert((error instanceof Error ? error.message : String(error)) || 'Failed to import devices')
     } finally {
       setIsImporting(false)
       if (fileInputRef.current) fileInputRef.current.value = ''

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Category } from '@shared/types';
 import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
@@ -72,7 +72,7 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
       }
       router.push('/admin/categories');
     } catch (err: unknown) {
-      setError(err.message || 'Failed to save category');
+      setError(err instanceof Error ? err.message : 'Failed to save category');
     } finally {
       setIsSubmitting(false);
     }

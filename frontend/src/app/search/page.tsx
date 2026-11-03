@@ -88,11 +88,11 @@ const SearchPageContent = () => {
     minPrice, maxPrice, minRam, maxRam, minStorage, maxStorage, minBattery, maxBattery, minDisplay, maxDisplay
   ]);
 
-  const updateFilters = (newFilters: Record<string, string>) => {
+  const updateFilters = (newFilters: Record<string, unknown>) => {
     const params = new URLSearchParams(searchParams.toString());
     Object.entries(newFilters).forEach(([key, value]) => {
       if (value) {
-        params.set(key, value);
+        params.set(key, String(value));
       } else {
         params.delete(key);
       }

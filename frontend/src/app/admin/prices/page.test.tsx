@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import type { ReactNode } from 'react';
 import AdminPricesPage from './page';
 import { apiClient } from '@/lib/api';
 
@@ -19,7 +20,7 @@ vi.mock('@fortawesome/react-fontawesome', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ children, href }: any) => <a href={href}>{children}</a>,
+  default: ({ children, href }: { children?: ReactNode; href: string }) => <a href={href}>{children}</a>,
 }));
 
 const mockPush = vi.fn();
@@ -54,7 +55,7 @@ describe('AdminPricesPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSearchParams.forEach((_, key) => mockSearchParams.delete(key));
-    (apiClient.getPrices as any).mockResolvedValue({
+    (apiClient.getPrices as Mock).mockResolvedValue({
       prices: mockPrices,
       total: 2,
     });
@@ -87,7 +88,7 @@ describe('AdminPricesPage', () => {
   });
 
   it('deletes a price entry', async () => {
-    (apiClient.deletePrice as any).mockResolvedValue({});
+    (apiClient.deletePrice as Mock).mockResolvedValue({});
     vi.spyOn(window, 'confirm').mockImplementation(() => true);
 
     render(<AdminPricesPage />);
@@ -105,7 +106,7 @@ describe('AdminPricesPage', () => {
   });
 
   it('opens edit form prefilled and saves changes', async () => {
-    (apiClient.updatePrice as any).mockResolvedValue({});
+    (apiClient.updatePrice as Mock).mockResolvedValue({});
 
     render(<AdminPricesPage />);
 

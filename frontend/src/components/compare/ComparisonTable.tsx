@@ -17,6 +17,7 @@ interface ComparisonTableProps {
   comparisonData: {
     devices: Device[];
     comparison: {
+      category: string;
       item: string;
       values: string[];
       difference?: string;

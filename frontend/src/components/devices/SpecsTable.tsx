@@ -57,7 +57,7 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
     specsArray = Object.keys(device.specs).map(key => ({
       category: 'General',
       key: key,
-      value: String((device.specs as Record<string, string>)[key])
+      value: String((device.specs as unknown as Record<string, string>)[key])
     }));
   }
 

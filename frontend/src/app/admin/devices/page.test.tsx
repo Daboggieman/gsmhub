@@ -1,5 +1,6 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
+import type { ReactNode } from 'react';
 import AdminDevicesPage from './page';
 import { apiClient } from '@/lib/api';
 
@@ -19,7 +20,7 @@ vi.mock('@fortawesome/react-fontawesome', () => ({
 }));
 
 vi.mock('next/link', () => ({
-  default: ({ children, href }: any) => <a href={href}>{children}</a>,
+  default: ({ children, href }: { children?: ReactNode; href: string }) => <a href={href}>{children}</a>,
 }));
 
 const mockPush = vi.fn();
@@ -40,7 +41,7 @@ describe('AdminDevicesPage', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSearchParams.forEach((_, key) => mockSearchParams.delete(key));
-    (apiClient.getDevices as any).mockResolvedValue({
+    (apiClient.getDevices as Mock).mockResolvedValue({
       devices: mockDevices,
       total: 2,
     });
@@ -72,7 +73,7 @@ describe('AdminDevicesPage', () => {
   });
 
   it('handles delete', async () => {
-    (apiClient.deleteDevice as any).mockResolvedValue({});
+    (apiClient.deleteDevice as Mock).mockResolvedValue({});
     // Mock confirm
     vi.spyOn(window, 'confirm').mockImplementation(() => true);
     

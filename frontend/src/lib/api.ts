@@ -23,7 +23,7 @@ export interface AuditLogEntry {
   details?: Record<string, unknown>;
   ipAddress?: string;
   userAgent?: string;
-  createdAt?: string;
+  createdAt: string;
 }
 
 export interface AdminStats {
@@ -46,6 +46,7 @@ export interface AdminStats {
 export interface DetailedComparison {
   devices: Device[];
   comparison: {
+    category: string;
     item: string;
     values: string[];
     difference?: string;

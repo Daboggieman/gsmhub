@@ -9,7 +9,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ScheduleModule } from '@nestjs/schedule'; // Import ScheduleModule
 import { ThrottlerModule, ThrottlerGuard } from '@nestjs/throttler'; // Import Throttler components
 
-import { mongooseConfig } from './config/mongoose.config';
 import { redisConfig } from './config/redis.config';
 import { DevicesModule } from './modules/devices/devices.module';
 import { CategoriesModule } from './modules/categories/categories.module';
@@ -43,7 +42,7 @@ import { HealthController } from './health.controller';
     }),
     MongooseModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: (configService: ConfigService) => {
         const uri = configService.get<string>('MONGO_URI');
         if (!uri) {
           throw new Error('MONGO_URI is not defined in environment variables');

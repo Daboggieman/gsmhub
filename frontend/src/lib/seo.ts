@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { Device, DeviceSpec } from '@shared/types';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://gsmhub.com';
 const SITE_NAME = 'GSMHub';

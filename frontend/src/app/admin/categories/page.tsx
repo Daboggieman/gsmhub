@@ -93,7 +93,7 @@ export default function AdminCategoriesPage() {
               <tr key="empty-row"><td colSpan={3} className="px-6 py-4 text-center">No categories found.</td></tr>
             ) : (
               categories.map((category) => (
-                <tr key={category.id || (category as any)._id} className="border-b border-gray-100 hover:bg-gray-50">
+                <tr key={category.id || (category as { _id?: string })._id} className="border-b border-gray-100 hover:bg-gray-50">
                   <td className="px-6 py-4 font-medium text-gray-900">{category.name}</td>
                   <td className="px-6 py-4 text-gray-600">{category.slug}</td>
                   <td className="px-6 py-4 space-x-3">

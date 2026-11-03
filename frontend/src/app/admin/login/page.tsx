@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
 
       login(data.user);
     } catch (err: unknown) {
-      setError(err.message);
+      setError(err instanceof Error ? err.message : 'Login failed');
     } finally {
       setIsSubmitting(false);
     }

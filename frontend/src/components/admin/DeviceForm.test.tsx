@@ -1,8 +1,8 @@
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, type Mock } from 'vitest';
 import DeviceForm from './DeviceForm';
 import { apiClient } from '@/lib/api';
-import { DeviceType } from '@shared/types';
+import { Device, DeviceType } from '@shared/types';
 
 // Mock dependencies
 vi.mock('next/navigation', () => ({
@@ -37,9 +37,9 @@ describe('DeviceForm', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    (apiClient.getCategories as any).mockResolvedValue(mockCategories);
-    (apiClient.getBrands as any).mockResolvedValue(mockBrands);
-    (apiClient.getFieldSuggestions as any).mockResolvedValue(mockSuggestions);
+    (apiClient.getCategories as Mock).mockResolvedValue(mockCategories);
+    (apiClient.getBrands as Mock).mockResolvedValue(mockBrands);
+    (apiClient.getFieldSuggestions as Mock).mockResolvedValue(mockSuggestions);
   });
 
   it('renders the form correctly', async () => {
@@ -74,13 +74,13 @@ describe('DeviceForm', () => {
   });
   
   it('loads initial data for editing', async () => {
-      const initialData: any = {
+      const initialData = {
           id: '123',
           name: 'Existing Phone',
           brand: 'Brand X',
           category: { id: '1', name: 'Phones' },
           type: DeviceType.PHONE
-      };
+      } as unknown as Device;
       
       render(<DeviceForm initialData={initialData} isEdit={true} />);
       

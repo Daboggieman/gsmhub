@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { AdminBrand } from '@/lib/api'
 import { apiClient } from '@/lib/api'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -299,7 +300,7 @@ export default function AdminBrandsPage() {
                           />
                         </button>
                         <button
-                          onClick={() => handleDelete(brand.id)}
+                          onClick={() => brand.id && handleDelete(brand.id)}
                           className="text-red-400 transition-colors hover:text-red-600"
                         >
                           <FontAwesomeIcon icon={faTrash} />

@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Hand-maintained service worker: no-img-element doesn't apply there.
+    "public/**",
   ]),
 ]);
 

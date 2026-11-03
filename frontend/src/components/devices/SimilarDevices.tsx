@@ -6,7 +6,7 @@ import DeviceCard from './DeviceCard';
 import { apiClient } from '@/lib/api';
 
 interface SimilarDevicesProps {
-    deviceId: string;
+    deviceId?: string;
 }
 
 const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
@@ -14,6 +14,7 @@ const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        if (!deviceId) return;
         const fetchSimilar = async () => {
             try {
                 setLoading(true);
@@ -26,9 +27,7 @@ const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
             }
         };
 
-        if (deviceId) {
-            fetchSimilar();
-        }
+        fetchSimilar();
     }, [deviceId]);
 
     if (loading) {

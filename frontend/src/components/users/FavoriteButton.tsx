@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/lib/auth-context';
@@ -8,7 +8,7 @@ import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 
 interface FavoriteButtonProps {
-    deviceId: string;
+    deviceId?: string;
     initialIsFavorited?: boolean;
 }
 
@@ -37,6 +37,7 @@ export default function FavoriteButton({ deviceId, initialIsFavorited = false }:
     }
 
     const handleToggle = async () => {
+        if (!deviceId) return;
         if (!user) {
             // Redirect to login or show modal
             router.push('/login'); // Assuming we have a login route, or we trigger auth modal

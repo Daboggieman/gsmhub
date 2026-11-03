@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { apiClient } from '@/lib/api';
+import { apiClient, DetailedComparison } from '@/lib/api';
 import ComparisonTable from '@/components/compare/ComparisonTable';
 import CompareBox from '@/components/compare/CompareBox';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
@@ -28,7 +28,7 @@ const ComparePageContent = () => {
         } catch (error: unknown) {
           console.error('Failed to fetch comparison data:', error);
           setComparisonData(null);
-          setError(error.message || 'Failed to load comparison. One of the devices may not exist.');
+          setError(error instanceof Error ? error.message : 'Failed to load comparison. One of the devices may not exist.');
         } finally {
           setLoading(false);
         }
@@ -48,7 +48,7 @@ const ComparePageContent = () => {
   const breadcrumbItems = [
     { name: 'Home', href: '/' },
     { name: 'Compare', href: '/compare' },
-    { name: devices.length > 0 ? devices.map((d: any) => d.name).join(' vs ') : 'Select Devices', href: '#' },
+    { name: devices.length > 0 ? devices.map((d) => d.name).join(' vs ') : 'Select Devices', href: '#' },
   ];
 
   return (
@@ -82,7 +82,7 @@ const ComparePageContent = () => {
         ) : comparisonData ? (
           <div className="mt-8">
             <h1 className="text-3xl font-black mb-8 text-gray-900 tracking-tight">
-              Comparison: <span className="text-blue-600">{devices.map((d: any) => d.name).join(' vs ')}</span>
+              Comparison: <span className="text-blue-600">{devices.map((d) => d.name).join(' vs ')}</span>
             </h1>
             <ComparisonTable comparisonData={comparisonData} />
           </div>

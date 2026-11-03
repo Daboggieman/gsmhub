@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from 'react';
 import BrandForm from '@/components/admin/BrandForm';
-import { apiClient } from '@/lib/api';
+import { apiClient, AdminBrand } from '@/lib/api';
 
 export default function EditBrandPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
@@ -14,7 +14,7 @@ export default function EditBrandPage({ params }: { params: Promise<{ id: string
       try {
         const brands = await apiClient.getAdminBrands();
         const found = brands.find((b) => b.id === id);
-        setBrand(found);
+        setBrand(found ?? null);
       } catch (error) {
         console.error('Failed to fetch brand', error);
       } finally {

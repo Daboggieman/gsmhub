@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { generateSlug } from '@shared/utils/slug';
-import { apiClient } from '@/lib/api';
+import { apiClient, AdminBrand } from '@/lib/api';
 import { useRouter } from 'next/navigation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faIndustry, faTimesCircle, faEye } from '@fortawesome/free-solid-svg-icons';
@@ -58,7 +58,7 @@ export default function BrandForm({ initialData, isEdit = false }: BrandFormProp
       }
       router.push('/admin/brands');
     } catch (err: unknown) {
-      setError(err.message || 'Failed to save brand');
+      setError(err instanceof Error ? err.message : 'Failed to save brand');
     } finally {
       setIsSubmitting(false);
     }

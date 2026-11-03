@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { apiClient } from '@/lib/api';
+import { apiClient, AuditLogEntry } from '@/lib/api';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -106,6 +106,12 @@ function AuditLogsPageContent() {
         return 'text-gray-600 bg-gray-50';
     };
 
+    // Audit-log user references can be a populated object or a bare id string.
+    const logUserName = (u: AuditLogEntry['user']) =>
+        typeof u === 'object' && u ? u.name : undefined;
+    const logUserEmail = (u: AuditLogEntry['user']) =>
+        typeof u === 'object' && u ? u.email : undefined;
+
     return (
         <div className="p-8 max-w-7xl mx-auto">
             <Breadcrumbs items={breadcrumbItems} />
@@ -205,7 +211,7 @@ function AuditLogsPageContent() {
                                 </tr>
                             ) : logs.map((log) => (
                                 <React.Fragment key={log._id}>
-                                    <tr className="hover:bg-gray-50/50 transition-colors group cursor-pointer" onClick={() => setExpandedId(expandedId === log._id ? null : log._id)}>
+                                    <tr className="hover:bg-gray-50/50 transition-colors group cursor-pointer" onClick={() => setExpandedId(expandedId === log._id ? null : log._id ?? null)}>
                                         <td className="p-6 text-sm font-medium text-gray-500">
                                             <div className="flex flex-col">
                                                 <span>{new Date(log.createdAt).toLocaleDateString()}</span>
@@ -215,11 +221,11 @@ function AuditLogsPageContent() {
                                         <td className="p-6">
                                             <div className="flex items-center gap-3">
                                                 <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">
-                                                    {log.user?.name?.charAt(0) || <FontAwesomeIcon icon={faUser} />}
+                                                    {logUserName(log.user)?.charAt(0) || <FontAwesomeIcon icon={faUser} />}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-gray-900">{log.user?.name || 'Unknown'}</span>
-                                                    <span className="text-[10px] font-medium text-gray-400">{log.user?.email}</span>
+                                                    <span className="text-sm font-bold text-gray-900">{logUserName(log.user) || 'Unknown'}</span>
+                                                    <span className="text-[10px] font-medium text-gray-400">{logUserEmail(log.user)}</span>
                                                 </div>
                                             </div>
                                         </td>

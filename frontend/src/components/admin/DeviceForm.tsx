@@ -198,7 +198,10 @@ export default function DeviceForm({
       }
       fetchPrices()
     }
-  }, [])
+    // Mount-only: the edit page gates on the loaded device before
+    // rendering this form, so isEdit/initialData are set at mount and
+    // never change for a mounted instance.
+  }, [isEdit, initialData?._id])
 
   const handleChange = (
     e: React.ChangeEvent<
