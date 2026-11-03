@@ -421,6 +421,19 @@ export class DevicesRepository {
       .aggregate([
         { $match: { brand: { $regex: new RegExp(escapeRegExp(brand), 'i') } } },
         { $limit: limit },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'category',
+            foreignField: '_id',
+            as: 'category',
+          },
+        },
+        {
+          $unwind: {
+            path: '$category',
+            preserveNullAndEmptyArrays: true,
+          },
         },
         ...this.latestPriceStages,
       ])

@@ -484,7 +484,7 @@ export class DevicesService {
     }
   }
 
-  async getBrands(): Promise<string[]> {
+  getBrands(): Promise<string[]> {
     return this.devicesRepository.getUniqueBrands();
   }
 
@@ -514,7 +514,7 @@ export class DevicesService {
     return suggestions;
   }
 
-  async getTotalViews(): Promise<number> {
+  getTotalViews(): Promise<number> {
     return this.devicesRepository.getTotalViews();
   }
 

@@ -27,6 +27,13 @@ export default tseslint.config(
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      // Mongoose models and external API payloads are untyped at the
+      // boundary; unsafe-access noise is warn-level (see ROADMAP 17.1)
+      // until those models get explicit document interfaces.
+      '@typescript-eslint/no-unsafe-member-access': 'warn',
+      '@typescript-eslint/no-unsafe-assignment': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'warn',
+      '@typescript-eslint/no-unsafe-return': 'warn',
       '@typescript-eslint/no-floating-promises': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'warn',
       // Destructure-omit (`const { password, ...rest } = user`) is the

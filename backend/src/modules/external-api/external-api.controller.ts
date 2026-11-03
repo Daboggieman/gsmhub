@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Post,
-  Param,
-  Body,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Param, Body, UseGuards } from '@nestjs/common';
 import { SyncService } from './sync.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -18,9 +12,7 @@ export class ExternalApiController {
   @Post('sync/all')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  syncAll(
-    @Body() options: { providers?: string[]; forceUpdate?: boolean },
-  ) {
+  syncAll(@Body() options: { providers?: string[]; forceUpdate?: boolean }) {
     this.syncService.fullSync(options).catch((err) => {
       console.error('Manual Full Sync Failed:', err);
     });
