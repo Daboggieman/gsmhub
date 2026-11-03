@@ -1,9 +1,8 @@
 import { Injectable, Logger, OnModuleInit, Optional } from '@nestjs/common';
 import { ExternalApiService } from './external-api.service';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Cron } from '@nestjs/schedule';
 import { DevicesService } from '@modules/devices/devices.service';
 import { CategoriesService } from '@modules/categories/categories.service';
-import { Category } from '@modules/categories/category.schema';
 import { BrandsService } from '@modules/brands/brands.service';
 
 @Injectable()
@@ -118,10 +117,6 @@ export class SyncService implements OnModuleInit {
         );
 
         for (const devicePartial of devices) {
-          const slug =
-            devicePartial.slug ||
-            generateSlug(`${brand} ${devicePartial.model}`);
-
           // Always upsert — upsertDevice() handles existing-vs-new logic internally.
           // forceUpdate=true = overwrite all fields; forceUpdate=false = gap-fill only.
           try {

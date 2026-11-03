@@ -396,6 +396,7 @@ export class DevicesRepository {
     return this.deviceModel
       .aggregate([
         { $match: { category: new Types.ObjectId(categoryId) } },
+        { $limit: limit },
         {
           $lookup: {
             from: 'categories',
@@ -419,19 +420,7 @@ export class DevicesRepository {
     return this.deviceModel
       .aggregate([
         { $match: { brand: { $regex: new RegExp(escapeRegExp(brand), 'i') } } },
-        {
-          $lookup: {
-            from: 'categories',
-            localField: 'category',
-            foreignField: '_id',
-            as: 'category',
-          },
-        },
-        {
-          $unwind: {
-            path: '$category',
-            preserveNullAndEmptyArrays: true,
-          },
+        { $limit: limit },
         },
         ...this.latestPriceStages,
       ])

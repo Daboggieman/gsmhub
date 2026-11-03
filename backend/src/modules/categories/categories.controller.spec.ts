@@ -6,7 +6,6 @@ import { CategoryResponseDto } from './dto/category-response.dto';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
-  let categoriesService: any;
   let devicesService: any;
 
   const mockCategoriesService = {
@@ -32,7 +31,6 @@ describe('CategoriesController', () => {
     }).compile();
 
     controller = module.get<CategoriesController>(CategoriesController);
-    categoriesService = module.get<CategoriesService>(CategoriesService);
     devicesService = module.get<DevicesService>(DevicesService);
   });
 

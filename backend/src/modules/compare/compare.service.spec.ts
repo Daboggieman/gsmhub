@@ -5,7 +5,6 @@ import { NotFoundException } from '@nestjs/common';
 
 describe('CompareService', () => {
   let service: CompareService;
-  let devicesService: any;
 
   const mockDevicesService = {
     findBySlug: jest.fn(),
@@ -23,7 +22,6 @@ describe('CompareService', () => {
     }).compile();
 
     service = module.get<CompareService>(CompareService);
-    devicesService = module.get<DevicesService>(DevicesService);
   });
 
   afterEach(() => {

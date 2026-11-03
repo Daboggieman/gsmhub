@@ -12,9 +12,7 @@ import { Types } from 'mongoose';
 
 describe('DevicesService', () => {
   let service: DevicesService;
-  let repository: DevicesRepository;
   let cacheManager: any;
-  let pricesService: PricesService;
 
   const mockDevice = {
     _id: new Types.ObjectId().toString(),
@@ -82,9 +80,7 @@ describe('DevicesService', () => {
     }).compile();
 
     service = module.get<DevicesService>(DevicesService);
-    repository = module.get<DevicesRepository>(DevicesRepository);
     cacheManager = module.get(CACHE_MANAGER);
-    pricesService = module.get<PricesService>(PricesService);
   });
 
   it('should be defined', () => {

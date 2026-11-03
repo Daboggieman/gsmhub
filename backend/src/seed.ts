@@ -23,7 +23,7 @@ import {
 } from './modules/users/schemas/user.schema';
 import { GsmarenaScraperService } from './modules/external-api/gsmarena-scraper.service';
 import { CategorySchema } from './modules/categories/category.schema';
-import { DeviceSpec, DeviceType } from '@shared/types';
+import { DeviceType } from '@shared/types';
 import { generateSlug } from './common/utils/slug.util';
 
 import * as mongoose from 'mongoose';
@@ -42,33 +42,6 @@ const maxDevices = Number(process.env.SEED_MAX_DEVICES) || 0; // 0 = no cap
 const wipe = process.env.NO_WIPE !== '1';
 const resume = process.env.SEED_RESUME === '1';
 const DEVICE_DELAY_MS = Number(process.env.SEED_DEVICE_DELAY_MS) || 1200;
-
-interface SeedDevice {
-  slug: string;
-  name: string;
-  brand: string;
-  model: string;
-  type: string;
-  isActive: boolean;
-  category: string; // brand name, resolved to Category _id below
-  imageUrl?: string;
-  description?: string;
-  releaseDate?: string;
-  dimension?: string;
-  weight?: string;
-  os?: string;
-  storage?: string;
-  displaySize?: string;
-  ram?: string;
-  battery?: string;
-  chipset?: string;
-  mainCamera?: string;
-  selfieCamera?: string;
-  videoResolution?: string;
-  colors?: string;
-  networkTechnology?: string;
-  specs: { category: string; key: string; value: string }[];
-}
 
 async function seedAdmin(UserModel: Model<any>) {
   const adminEmail = 'admin@gsmhub.com';

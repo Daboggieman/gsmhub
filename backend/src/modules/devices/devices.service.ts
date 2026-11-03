@@ -3,16 +3,14 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
-  forwardRef,
 } from '@nestjs/common';
 import * as fs from 'fs';
 import csv from 'csv-parser';
 import { Logger } from '@nestjs/common';
-import { Readable } from 'stream';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
-import { Device, DeviceDocument } from './device.schema';
+import { Device } from './device.schema';
 import { Category, CategoryDocument } from '../categories/category.schema';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
@@ -20,7 +18,6 @@ import { DevicesRepository } from './devices.repository';
 import {
   Category as SharedCategory,
   Device as SharedDevice,
-  DeviceType,
 } from '@shared/types';
 import { CategoriesService } from '../categories/categories.service';
 import { PricesService } from '../prices/prices.service';

@@ -3,7 +3,6 @@ import { getModelToken } from '@nestjs/mongoose';
 import { PricesService } from './prices.service';
 import { PriceHistory } from './price-history.schema';
 import { DevicesService } from '../devices/devices.service';
-import { NotFoundException } from '@nestjs/common';
 
 describe('PricesService', () => {
   let service: PricesService;

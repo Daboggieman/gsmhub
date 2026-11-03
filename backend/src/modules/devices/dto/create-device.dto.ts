@@ -3,7 +3,6 @@ import {
   IsOptional,
   IsBoolean,
   IsArray,
-  IsNumber,
   IsEnum,
 } from 'class-validator';
 import { DeviceType } from '@shared/types';

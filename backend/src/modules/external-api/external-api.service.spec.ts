@@ -5,7 +5,7 @@ import { ConfigService } from '@nestjs/config';
 import { DataTransformationService } from './data-transformation.service';
 import { GsmarenaScraperService } from './gsmarena-scraper.service';
 import { of, throwError } from 'rxjs';
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { HttpException } from '@nestjs/common';
 
 describe('ExternalApiService', () => {
   let service: ExternalApiService;

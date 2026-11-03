@@ -1,6 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DataTransformationService } from './data-transformation.service';
-import { DeviceType } from '@shared/types';
 
 describe('DataTransformationService', () => {
   let service: DataTransformationService;
