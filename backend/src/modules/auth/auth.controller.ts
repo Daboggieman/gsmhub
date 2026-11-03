@@ -36,7 +36,7 @@ export class AuthController {
   }
 
   @Post('logout')
-  async logout(@Res({ passthrough: true }) res: express.Response) {
+  logout(@Res({ passthrough: true }) res: express.Response) {
     res.clearCookie('auth_token', {
       domain: process.env.COOKIE_DOMAIN || undefined,
       path: '/',

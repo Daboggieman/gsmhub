@@ -15,7 +15,7 @@ import { BrandsModule } from '../brands/brands.module';
   imports: [
     HttpModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => ({
+      useFactory: (configService: ConfigService) => ({
         timeout: configService.get<number>('HTTP_TIMEOUT') || 5000,
         maxRedirects: configService.get<number>('HTTP_MAX_REDIRECTS') || 5,
       }),

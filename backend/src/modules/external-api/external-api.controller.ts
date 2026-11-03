@@ -4,7 +4,6 @@ import {
   Param,
   Body,
   UseGuards,
-  UnauthorizedException,
 } from '@nestjs/common';
 import { SyncService } from './sync.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -19,7 +18,7 @@ export class ExternalApiController {
   @Post('sync/all')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  async syncAll(
+  syncAll(
     @Body() options: { providers?: string[]; forceUpdate?: boolean },
   ) {
     this.syncService.fullSync(options).catch((err) => {

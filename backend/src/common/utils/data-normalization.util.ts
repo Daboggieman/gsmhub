@@ -9,7 +9,7 @@ export function removeUndefinedProps(obj: any): any {
 
   const newObj: { [key: string]: any } = {};
   for (const key in obj) {
-    if (obj.hasOwnProperty(key) && obj[key] !== undefined) {
+    if (Object.hasOwn(obj, key) && obj[key] !== undefined) {
       newObj[key] = removeUndefinedProps(obj[key]);
     }
   }

@@ -268,7 +268,7 @@ export class DevicesService {
       }
       updatePayload.category = categoryDoc._id as any;
     } else if (
-      updateDeviceDto.hasOwnProperty('category') &&
+      Object.hasOwn(updateDeviceDto, 'category') &&
       categoryId === null
     ) {
       updatePayload.category = null as any;
@@ -529,7 +529,7 @@ export class DevicesService {
     let successCount = 0;
     let failedCount = 0;
 
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       fs.createReadStream(filePath)
         .pipe(csv())
         .on('data', (data) => results.push(data))
@@ -542,45 +542,49 @@ export class DevicesService {
           }
           resolve({ success: successCount, failed: failedCount, errors });
         })
-        .on('end', async () => {
-          for (const row of results) {
-            try {
-              // Map CSV columns to Device template if needed, or assume they match CreateDeviceDto
-              // Example mapping for affiliateLinks and specs if they are JSON strings in CSV
-              if (
-                row.affiliateLinks &&
-                typeof row.affiliateLinks === 'string'
-              ) {
-                try {
-                  row.affiliateLinks = JSON.parse(row.affiliateLinks);
-                } catch (e) {
-                  row.affiliateLinks = [];
+        .on('end', () => {
+          // Stream event handlers must return void; run the async import
+          // in a detached IIFE and settle the outer promise when done.
+          void (async () => {
+            for (const row of results) {
+              try {
+                // Map CSV columns to Device template if needed, or assume they match CreateDeviceDto
+                // Example mapping for affiliateLinks and specs if they are JSON strings in CSV
+                if (
+                  row.affiliateLinks &&
+                  typeof row.affiliateLinks === 'string'
+                ) {
+                  try {
+                    row.affiliateLinks = JSON.parse(row.affiliateLinks);
+                  } catch {
+                    row.affiliateLinks = [];
+                  }
                 }
-              }
-              if (row.specs && typeof row.specs === 'string') {
-                try {
-                  row.specs = JSON.parse(row.specs);
-                } catch (e) {
-                  row.specs = [];
+                if (row.specs && typeof row.specs === 'string') {
+                  try {
+                    row.specs = JSON.parse(row.specs);
+                  } catch {
+                    row.specs = [];
+                  }
                 }
-              }
 
-              await this.upsertDevice(row);
-              successCount++;
-            } catch (error) {
-              failedCount++;
-              errors.push(
-                `Failed to import ${row.name || 'Unknown'}: ${error.message}`,
-              );
+                await this.upsertDevice(row);
+                successCount++;
+              } catch (error) {
+                failedCount++;
+                errors.push(
+                  `Failed to import ${row.name || 'Unknown'}: ${error.message}`,
+                );
+              }
             }
-          }
-          // Clean up the temp file
-          try {
-            fs.unlinkSync(filePath);
-          } catch {
-            /* best-effort cleanup */
-          }
-          resolve({ success: successCount, failed: failedCount, errors });
+            // Clean up the temp file
+            try {
+              fs.unlinkSync(filePath);
+            } catch {
+              /* best-effort cleanup */
+            }
+            resolve({ success: successCount, failed: failedCount, errors });
+          })();
         });
     });
   }
