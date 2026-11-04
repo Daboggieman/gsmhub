@@ -4,6 +4,14 @@ This is a real runtime log captured from the GSMHub backend sync service. It sho
 
 Captured from a live sync run on **24/01/2026** at **02:16-02:17 UTC**.
 
+> **Historical note (November 2026):** this log predates the removal of the
+> RapidAPI providers. The 429 examples below reference
+> `gsmarenaparser.p.rapidapi.com` and the primary/secondary/tertiary
+> fallback chain, neither of which exists anymore — sync now uses only the
+> keyless GSMArena scraper (see `external-apis.md`). The general log shape
+> (SyncService lines, deep-sync pattern) still applies; the deep-sync cap
+> is now 200 devices per run, not 5.
+
 ---
 
 ## Normal Sync Flow

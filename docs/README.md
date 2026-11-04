@@ -10,7 +10,7 @@
 
 | Document | Contents |
 |----------|----------|
-| [build_docs/external-apis.md](build_docs/external-apis.md) | External RapidAPI providers (endpoints, auth, code examples, sample responses) |
+| [build_docs/external-apis.md](build_docs/external-apis.md) | Device-data sources: GSMArena scraper + PhoneDB seeding (pipeline, parsing, sync entry points) |
 | [build_docs/api-reference.md](build_docs/api-reference.md) | Internal backend API endpoints |
 | [build_docs/data-model.md](build_docs/data-model.md) | MongoDB schemas and indexes |
 | [build_docs/sync-service.md](build_docs/sync-service.md) | How the data sync pipeline behaves at runtime (real logs) |

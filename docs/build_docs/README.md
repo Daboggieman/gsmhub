@@ -4,7 +4,7 @@ Technical reference documentation for building and extending GSMHub.
 
 | Document | Contents |
 |----------|----------|
-| [external-apis.md](external-apis.md) | External RapidAPI providers (endpoints, auth, code examples, sample responses) |
+| [external-apis.md](external-apis.md) | Device-data sources: GSMArena scraper + PhoneDB seeding (pipeline, parsing, sync entry points) |
 | [api-reference.md](api-reference.md) | Internal backend API endpoints |
 | [data-model.md](data-model.md) | MongoDB schemas and indexes |
 | [sync-service.md](sync-service.md) | How the data sync pipeline behaves at runtime (real logs) |

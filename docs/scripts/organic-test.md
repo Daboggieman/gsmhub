@@ -79,23 +79,18 @@ REDIS_URI=redis://localhost:6379
 
 JWT_SECRET=paste-the-generated-secret-here
 
+ADMIN_PASSWORD=choose-a-strong-dev-admin-password
+
 FRONTEND_URL=http://localhost:3000
 COOKIE_SAME_SITE=lax
 
 JSON_BODY_LIMIT=1mb
 URLENCODED_BODY_LIMIT=100kb
-
-# Optional external API configuration
-RAPIDAPI_KEY=
-PRIMARY_API_HOST=phone-specs-explorer-api.p.rapidapi.com
-PRIMARY_API_URL=https://phone-specs-explorer-api.p.rapidapi.com
-SECONDARY_API_HOST=gsmarenaparser.p.rapidapi.com
-SECONDARY_API_URL=https://gsmarenaparser.p.rapidapi.com
-TERTIARY_API_HOST=mobile-phones2.p.rapidapi.com
-TERTIARY_API_URL=https://mobile-phones2.p.rapidapi.com
 ```
 
-Do not use the example JWT secret in any real environment.
+Do not use the example JWT secret in any real environment. There are no
+external API keys to configure — device sync uses the keyless GSMArena
+scraper.
 
 ## 4. Seed Development Data
 
@@ -110,10 +105,10 @@ The seed creates sample categories and devices, plus this development admin acco
 
 ```text
 Email: admin@gsmhub.com
-Password: admin123
+Password: (the ADMIN_PASSWORD value from backend/.env — there is no default)
 ```
 
-Warning: the seed script deletes existing devices, categories, and price history before inserting sample data. Only run it against a disposable development database. Change or remove the seeded admin before using a shared or production database.
+Warning: the seed script deletes existing devices, categories, and price history before inserting sample data. Only run it against a disposable development database.
 
 ## 5. Start the Backend
 
@@ -259,8 +254,8 @@ pnpm build
 
 The current expected test totals are:
 
-- Backend: 64 passing tests.
-- Frontend: 19 passing tests.
+- Backend: 67 passing tests (11 suites).
+- Frontend: 27 passing tests.
 
 Run the suites independently when diagnosing failures:
 

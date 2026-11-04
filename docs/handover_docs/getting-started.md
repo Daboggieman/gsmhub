@@ -37,8 +37,8 @@ gsmhub/
 2. **Environment variables** — see `.env.example` files in `backend/` and `frontend/`:
 
    - Backend needs: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET` (≥ 32 chars),
-     `FRONTEND_URL`. RapidAPI keys are only needed for device sync
-     (see `docs/build_docs/external-apis.md`).
+     `FRONTEND_URL`. Device sync needs no API keys at all — it uses the
+     built-in GSMArena scraper (see `docs/build_docs/external-apis.md`).
    - Frontend needs nothing for local dev by default: `BACKEND_URL`
      (optional, defaults to `http://localhost:3001`) targets the API, and
      `NEXT_PUBLIC_SITE_URL` is used by robots.txt/sitemap. Leave

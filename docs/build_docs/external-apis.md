@@ -1,380 +1,96 @@
-# External API Reference
-
-This document covers the external RapidAPI services used by GSHub to fetch device data.
-
-## RapidAPI Authentication
-
-All requests require RapidAPI authentication headers:
-
-- `X-RapidAPI-Key`: Your RapidAPI subscription key
-- `X-RapidAPI-Host`: The API host provided by RapidAPI
-
----
-
-## API 1: Phone Specs Explorer
-
-**Host:** `phone-specs-explorer-api.p.rapidapi.com`
-
-### Search Phones
-
-**Endpoint:** `GET /{brand_id}/search`
-
-Search for phones by query string.
-
-**Parameters:**
-
-| Param | Type | Required | Description |
-|-------|------|----------|-------------|
-| `q` | string | Yes | Search query |
-| `brand_id` | string | Path | Brand identifier |
-
-**Headers:**
-
-| Header | Value |
-|--------|-------|
-| `X-RapidAPI-Host` | `phone-specs-explorer-api.p.rapidapi.com` |
-
-**JavaScript Example:**
-
-```javascript
-const axios = require('axios');
-
-const options = {
-  method: 'GET',
-  url: 'https://phone-specs-explorer-api.p.rapidapi.com/2165/search',
-  params: { q: 'iPhone' },
-  headers: {
-    'x-rapidapi-key': 'YOUR_RAPIDAPI_KEY',
-    'x-rapidapi-host': 'phone-specs-explorer-api.p.rapidapi.com'
-  }
-};
-
-async function fetchData() {
-  try {
-    const response = await axios.request(options);
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-fetchData();
-```
-
-**Example Response:**
-
-```json
-{
-  "status": 200,
-  "success": true,
-  "query": "iPhone",
-  "data": [
-    {
-      "id": "prestigio_multiphone_5508_duo",
-      "brand_name": "Prestigio",
-      "phone_model": "MultiPhone 5508 Duo",
-      "description": "Prestigio MultiPhone 5508 Duo Android smartphone. Announced 2014. Features 5.0\" display, MT6592 chipset, 13 MP primary camera, 5 MP front camera, 2300 mAh battery, 16 GB storage, 1000 MB RAM, Asahi Dragontrail Glass."
-    }
-  ]
-}
-```
-
----
-
-## API 2: Mobile Phones2
-
-**Host:** `mobile-phones2.p.rapidapi.com`
-
-### List Brands
-
-**Endpoint:** `GET /brands`
-
-Retrieve a list of all available device manufacturers/brands.
-
-**Parameters:** None required.
-
-**Headers:**
-
-| Header | Value |
-|--------|-------|
-| `X-RapidAPI-Host` | `mobile-phones2.p.rapidapi.com` |
-
-**JavaScript Example:**
-
-```javascript
-const axios = require('axios');
-
-const options = {
-  method: 'GET',
-  url: 'https://mobile-phones2.p.rapidapi.com/brands',
-  headers: {
-    'x-rapidapi-key': 'YOUR_RAPIDAPI_KEY',
-    'x-rapidapi-host': 'mobile-phones2.p.rapidapi.com'
-  }
-};
-
-async function fetchData() {
-  try {
-    const response = await axios.request(options);
-    console.log(response.data);
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-fetchData();
-```
-
-**Example Response:**
-
-```json
-[
-  { "name": "Nokia", "id": 1 },
-  { "name": "Ericsson", "id": 2 },
-  { "name": "Siemens", "id": 3 },
-  { "name": "Motorola", "id": 4 },
-  { "name": "alcatel", "id": 5 },
-  { "name": "Panasonic", "id": 6 },
-  { "name": "Sony", "id": 7 },
-  { "name": "Mitsubishi", "id": 8 }
-]
-```
-
----
-
-## API 3: Generic Device Specs API
-
-**Host:** `your-api-host.rapidapi.com`
-
-### Get All Device Specifications
-
-**Endpoint:** `GET /api/values/getalldevicespecs`
-
-Retrieve comprehensive specifications for all supported devices.
-
-**JavaScript Example:**
-
-```javascript
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
-    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
-  }
-};
-
-fetch('https://your-api-host.rapidapi.com/api/values/getalldevicespecs', options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
-
-**Python Example:**
-
-```python
-import requests
-
-url = "https://your-api-host.rapidapi.com/api/values/getalldevicespecs"
-
-headers = {
-    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
-    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())
-```
-
-**C# Example:**
-
-```csharp
-using System;
-using System.Net.Http;
-using System.Threading.Tasks;
-
-class Program
-{
-    private static readonly HttpClient client = new HttpClient();
-
-    static async Task Main()
-    {
-        client.DefaultRequestHeaders.Add("X-RapidAPI-Key", "YOUR_RAPIDAPI_KEY");
-        client.DefaultRequestHeaders.Add("X-RapidAPI-Host", "your-api-host.rapidapi.com");
-
-        string response = await client.GetStringAsync("https://your-api-host.rapidapi.com/api/values/getalldevicespecs");
-        Console.WriteLine(response);
-    }
-}
-```
-
-**Sample Response:**
-
-```json
-[
-  {
-    "id": 1,
-    "manufacturer": "Samsung",
-    "model": "Galaxy S21",
-    "chipset": "Exynos 2100",
-    "androidVersion": "11",
-    "battery": "4000 mAh",
-    "cpu": "Octa-core (1x2.9 GHz Cortex-X1 & 3x2.80 GHz Cortex-A78 & 4x2.2 GHz Cortex-A55)",
-    "displayResolution": "1080 x 2400 pixels",
-    "displaySize": "6.2 inches",
-    "displayType": "Dynamic AMOLED 2X",
-    "gpu": "Mali-G78 MP14",
-    "internal": "128GB 8GB RAM, 256GB 8GB RAM",
-    "mainCameraFeatures": "LED flash, auto-HDR, panorama",
-    "mainCameraSpecs": "64 MP + 12 MP + 12 MP",
-    "mainVideoSpecs": "4K@30/60fps, 1080p@30/60/240fps",
-    "selfieCameraFeatures": "Dual video call, Auto-HDR",
-    "selfieCameraSpecs": "10 MP",
-    "selfieVideoSpecs": "4K@30/60fps, 1080p@30fps",
-    "sensors": "Fingerprint, accelerometer, gyro, proximity, compass, barometer"
-  }
-]
-```
-
-### Get Device Specifications by Manufacturer/Model
-
-**Endpoint:** `GET /api/values/getspecs/{manufacturer}/{model}`
-
-Retrieve specifications for a specific device.
-
-**JavaScript Example:**
-
-```javascript
-const manufacturer = "Samsung";
-const model = "Galaxy S21";
-
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
-    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
-  }
-};
-
-fetch(`https://your-api-host.rapidapi.com/api/values/getspecs/${manufacturer}/${model}`, options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
-
-**Python Example:**
-
-```python
-import requests
-
-manufacturer = "Samsung"
-model = "Galaxy S21"
-url = f"https://your-api-host.rapidapi.com/api/values/getspecs/{manufacturer}/{model}"
-
-headers = {
-    "X-RapidAPI-Key": "YOUR_RAPIDAPI_KEY",
-    "X-RapidAPI-Host": "your-api-host.rapidapi.com"
-}
-
-response = requests.get(url, headers=headers)
-print(response.json())
-```
-
-### Get Devices by Brand
-
-**Endpoint:** `GET /api/values/getdevices/{brand}`
-
-Retrieve all devices from a specific manufacturer/brand.
-
-**JavaScript Example:**
-
-```javascript
-const brand = 'Samsung';
-
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
-    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
-  }
-};
-
-fetch(`https://your-api-host.rapidapi.com/api/values/getdevices/${brand}`, options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
-
-**Sample Response:**
-
-```json
-[
-  {
-    "id": 1,
-    "manufacturer": "Samsung",
-    "model": "Galaxy S21",
-    "chipset": "Exynos 2100",
-    "androidVersion": "11"
-  },
-  {
-    "id": 2,
-    "manufacturer": "Samsung",
-    "model": "Galaxy Note 20",
-    "chipset": "Exynos 990",
-    "androidVersion": "10"
-  }
-]
-```
-
-### Get Devices by SoC (System on Chip)
-
-**Endpoint:** `GET /api/values/devicesbysoc/{soc}`
-
-Find all devices that use a specific chipset/SoC.
-
-**JavaScript Example:**
-
-```javascript
-const soc = 'Snapdragon 888';
-
-const options = {
-  method: 'GET',
-  headers: {
-    'X-RapidAPI-Key': 'YOUR_RAPIDAPI_KEY',
-    'X-RapidAPI-Host': 'your-api-host.rapidapi.com'
-  }
-};
-
-fetch(`https://your-api-host.rapidapi.com/api/values/devicesbysoc/${encodeURIComponent(soc)}`, options)
-  .then(response => response.json())
-  .then(response => console.log(response))
-  .catch(err => console.error(err));
-```
-
-### Get Available Brands
-
-**Endpoint:** `GET /api/values/availablebrands`
-
-Retrieve a list of all available device manufacturers/brands.
-
-**Sample Response:**
-
-```json
-[
-  "Samsung", "Apple", "OnePlus", "Xiaomi",
-  "Google", "Huawei", "Oppo", "Vivo", "Realme", "Motorola"
-]
-```
-
----
-
-## Response Format
-
-All endpoints return JSON responses with appropriate HTTP status codes:
-
-| Code | Meaning |
-|------|---------|
-| 200 | Success |
-| 400 | Bad Request |
-| 404 | Not Found |
-| 429 | Rate Limit Exceeded |
-| 500 | Internal Server Error |
+# External Data Sources
+
+GSMHub has a single device-data provider: the **GSMArena scraper**
+(`backend/src/modules/external-api/gsmarena-scraper.service.ts`). It fetches
+public GSMArena pages directly with native `fetch` — no API key, no quota,
+no paid subscription.
+
+> The three RapidAPI providers this doc used to describe (Phone Specs
+> Explorer, GSMArena Parser, Mobile Phones2) were removed in November 2026:
+> all three listings had died (404), and the real catalog never came from
+> them anyway. See the bottom of this file for the history note.
+
+## Catalog Seeding (the real bulk path)
+
+The full device catalog does **not** come from any live API — it is seeded
+from the PhoneDB dataset:
+
+| Step | Command | What it does |
+|------|---------|--------------|
+| 1 | `pnpm run seed:gsma` | Scrapes GSMArena for brands/devices and writes the structure (optional; PhoneDB is the usual path) |
+| 2 | `pnpm run seed:phonedb` | Seeds the ~25K-device catalog from a PhoneDB JSON dataset (`PHONEDB_JSON=<path>`) |
+| 3 | `pnpm run seed-prices` | Seeds price history (see `docs/deployment.md`) |
+
+Both seed scripts require `ADMIN_PASSWORD` in `backend/.env` when creating
+the admin account. After seeding with PhoneDB, run
+`pnpm run backfill:spec-values` once if the dataset predates the numeric
+spec fields (`ramValue`/`storageValue`/`batteryValue`/`displaySizeValue`).
+
+## GSMArena Scraper
+
+**Base URL:** `https://www.gsmarena.com` (scraped with a desktop
+Firefox User-Agent; 20s timeout, 3 attempts with `Retry-After` backoff on
+HTTP 429).
+
+**Rate-limit pacing:**
+
+| Delay | Value | Skipped when |
+|-------|-------|--------------|
+| Between brand pages | 2 s | `seedMode = true` |
+| Between device spec fetches | 5 s | `seedMode = true` |
+
+Brand → device-list results are cached for the process lifetime so deep
+syncs don't re-scrape a brand page per device (`clearCache()` resets it).
+
+### Public entry points (used by `ExternalApiService`)
+
+| Method | Purpose |
+|--------|---------|
+| `fetchBrands()` | Scrape `makers.php3` → list of brand names |
+| `fetchDevicesByBrand(brandName)` | Resolve the brand, scrape its device list → `{ slug, name, brand, imageUrl }[]` |
+| `fetchDeviceSpecs(deviceSlug, brandName, model)` | Fetch and parse a device page by its GSMArena slug (e.g. `apple_iphone_18_pro-14934`) |
+| `fetchSpecsByModel(brandName, model)` | Resolve "Brand Model" → slug via the (cached) brand list, then fetch specs |
+
+### Spec-page parsing
+
+`parseDevicePage` extracts the spec table into the app's
+`Partial<Device>` shape: top-line fields (OS, display size, chipset,
+battery, dimensions, RAM/storage strings), the categorized
+`DeviceSpec[]` list, and the image URL. The shared
+`deriveSpecValues()` helper (from `@gsmhub/shared`) derives the numeric
+filter mirrors (`ramValue`, `storageValue`, `batteryValue`,
+`displaySizeValue`) so Phone Finder min/max filters work.
+
+## How Sync Uses It
+
+`ExternalApiService` (same module) delegates everything to the scraper and
+is the only consumer the rest of the app sees:
+
+- `providers` defaults to `['gsma']` on every fetch method.
+- Unknown provider names are simply ignored — there are no others.
+- If the scraper returns nothing, `fetchDeviceSpecs` throws
+  `HttpException(404)`; brand/device-list fetches return `[]`.
+
+Sync entry points (all admin-guarded, all keyless):
+
+- `POST /external-api/sync/all` — background full sync
+- `POST /external-api/sync/brand/:brand` — deep sync one brand
+- `POST /devices/sync` — sync a single device
+- Weekly cron (Sundays 03:00) — `fullSync({ providers: ['gsma'] })`
+
+See `sync-service.md` for the sync pipeline itself and
+`docs/handover_docs/sync-runbook.md` for operational runbook steps.
+
+## Removed: RapidAPI providers (history)
+
+Until November 2026 the module also integrated three RapidAPI services —
+Phone Specs Explorer (`phone-specs-explorer-api.p.rapidapi.com`, primary),
+GSMArena Parser (`gsmarenaparser.p.rapidapi.com`, secondary) and Mobile
+Phones2 (`mobile-phones2.p.rapidapi.com`, tertiary) — selected via the
+`providers` option and authenticated with `RAPIDAPI_KEY`. All three
+listings started returning 404, the admin sync UI defaulted to them (so
+manual sync silently hit dead endpoints), and the catalog was already
+sourced from the PhoneDB dataset — so they were removed along with
+`RAPIDAPI_KEY`, the `PRIMARY_/SECONDARY_/TERTIARY_API_HOST/URL` config,
+the `HttpModule` registration and the `DataTransformationService`
+transformers.
