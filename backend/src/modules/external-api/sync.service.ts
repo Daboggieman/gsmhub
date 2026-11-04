@@ -26,15 +26,15 @@ export class SyncService implements OnModuleInit {
   @Cron('0 3 * * 0')
   async handleCron() {
     this.logger.debug('Weekly sync triggered - refreshing data...');
-    await this.fullSync({ providers: ['gsma'], forceUpdate: false });
+    await this.fullSync({ forceUpdate: false });
   }
 
   async fullSync(
-    options: { providers?: string[]; forceUpdate?: boolean } = {},
+    options: { forceUpdate?: boolean } = {},
   ): Promise<void> {
     this.logger.log('Starting full data sync from external API...');
     try {
-      const brands = await this.fetchAndSaveBrands(options.providers);
+      const brands = await this.fetchAndSaveBrands();
       // For full sync, we might want to do a deep sync for each brand
       await this.fetchAndSavePhonesByBrand(brands, true, options);
       this.logger.log('Full sync completed successfully.');
@@ -43,10 +43,9 @@ export class SyncService implements OnModuleInit {
     }
   }
 
-  private async fetchAndSaveBrands(providers?: string[]): Promise<string[]> {
+  private async fetchAndSaveBrands(): Promise<string[]> {
     this.logger.log('Fetching brands...');
-    const brands =
-      await this.externalApiService.fetchAvailableBrands(providers);
+    const brands = await this.externalApiService.fetchAvailableBrands();
     const savedBrands: string[] = [];
 
     for (const brandName of brands) {
@@ -87,7 +86,6 @@ export class SyncService implements OnModuleInit {
     brands: string[],
     deepSync: boolean = false,
     options: {
-      providers?: string[];
       forceUpdate?: boolean;
       fullSeed?: boolean;
     } = {},
@@ -105,12 +103,8 @@ export class SyncService implements OnModuleInit {
       this.logger.log(`Fetching phones for brand: ${brand}`);
 
       try {
-        const devices = options.providers
-          ? await this.externalApiService.fetchDevicesByBrand(
-              brand,
-              options.providers,
-            )
-          : await this.externalApiService.fetchDevicesByBrand(brand);
+        const devices =
+          await this.externalApiService.fetchDevicesByBrand(brand);
 
         this.logger.log(
           `Found ${devices.length} devices for ${brand}. Syncing detailed data...`,
@@ -146,7 +140,6 @@ export class SyncService implements OnModuleInit {
               const fullDevice = await this.externalApiService.fetchDeviceSpecs(
                 brand,
                 devicePartial.model,
-                options.providers,
                 devicePartial.rawSlug,
               );
               if (fullDevice) {

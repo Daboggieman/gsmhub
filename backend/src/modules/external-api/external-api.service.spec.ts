@@ -40,7 +40,6 @@ describe('ExternalApiService', () => {
       const result = await service.fetchDeviceSpecs(
         'Brand',
         'Model',
-        ['gsma'],
         'brand-model-123.php',
       );
 

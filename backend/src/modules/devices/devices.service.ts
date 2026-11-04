@@ -471,13 +471,12 @@ export class DevicesService {
   async syncDeviceFromAPI(
     brand: string,
     model: string,
-    options: { providers?: string[]; forceUpdate?: boolean } = {},
+    options: { forceUpdate?: boolean } = {},
   ): Promise<Device | null> {
     try {
       const deviceData = await this.externalApiService.fetchDeviceSpecs(
         brand,
         model,
-        options.providers,
       );
       if (!deviceData) {
         throw new NotFoundException(

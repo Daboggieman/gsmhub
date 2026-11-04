@@ -202,7 +202,6 @@ export class DevicesController {
     body: {
       brand: string;
       model: string;
-      providers?: string[];
       forceUpdate?: boolean;
     },
   ): Promise<DeviceResponseDto> {
@@ -210,7 +209,6 @@ export class DevicesController {
       body.brand,
       body.model,
       {
-        providers: body.providers,
         forceUpdate: body.forceUpdate,
       },
     );

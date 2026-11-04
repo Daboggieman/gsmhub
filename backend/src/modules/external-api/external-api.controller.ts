@@ -12,7 +12,7 @@ export class ExternalApiController {
   @Post('sync/all')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN)
-  syncAll(@Body() options: { providers?: string[]; forceUpdate?: boolean }) {
+  syncAll(@Body() options: { forceUpdate?: boolean }) {
     this.syncService.fullSync(options).catch((err) => {
       console.error('Manual Full Sync Failed:', err);
     });
@@ -24,7 +24,7 @@ export class ExternalApiController {
   @Roles(UserRole.ADMIN)
   async syncBrand(
     @Param('brand') brand: string,
-    @Body() options: { providers?: string[]; forceUpdate?: boolean },
+    @Body() options: { forceUpdate?: boolean },
   ) {
     await this.syncService.fetchAndSavePhonesByBrand([brand], true, options);
     return { message: `Deep sync completed for brand: ${brand}` };
