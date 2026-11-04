@@ -1,9 +1,4 @@
-import {
-  Controller,
-  Get,
-  Query,
-  BadRequestException,
-} from '@nestjs/common';
+import { Controller, Get, Query, BadRequestException } from '@nestjs/common';
 import { CompareService } from './compare.service';
 
 const MAX_COMPARE_DEVICES = 4;

@@ -113,7 +113,9 @@ const SearchBar: React.FC = () => {
 
   const highlightMatch = (text: string, highlight: string) => {
     if (!highlight.trim() || !text) return text;
-    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    // Escape metacharacters so typing e.g. "(" doesn't throw inside RegExp
+    const escaped = highlight.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
     return (
       <span>
         {parts.map((part, i) => 

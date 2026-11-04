@@ -70,10 +70,11 @@ gsmhub/
 | `pnpm run lint` | Lint backend + frontend |
 | `pnpm run test` | Run all tests |
 
-## Default Admin Credentials
+## Admin Credentials
 
-- **Email:** `admin@gsmhub.com`
-- **Password:** `admin123`
+There is **no default admin password**. The seed scripts create
+`admin@gsmhub.com` with the password from the `ADMIN_PASSWORD` env var —
+they refuse to run without it (see `backend/.env.example`).
 
 Admin panel: `/admin/login`
 

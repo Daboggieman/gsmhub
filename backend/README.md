@@ -10,13 +10,14 @@ Part of the pnpm workspace (`@gsmhub/backend` conceptually; the package is
 
 ```bash
 pnpm install            # from the repo root (workspace install)
-cp .env.example .env    # then fill in MONGO_URI, REDIS_URI, JWT_SECRET (≥32 chars)
+cp .env.example .env    # then fill in MONGO_URI, REDIS_URI, JWT_SECRET (≥32 chars), ADMIN_PASSWORD
 pnpm run start:dev      # ts-node-dev on port 3001
 ```
 
-Key env vars: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET`, `FRONTEND_URL`
-(CORS origins), optional `COOKIE_SAME_SITE` / `COOKIE_DOMAIN`. See
-`.env.example`.
+Key env vars: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET`, `ADMIN_PASSWORD`
+(used by seed scripts when creating the admin account — no default),
+`FRONTEND_URL` (CORS origins), optional `COOKIE_SAME_SITE` /
+`COOKIE_DOMAIN`. See `.env.example`.
 
 ## Scripts
 
@@ -29,6 +30,7 @@ Key env vars: `MONGO_URI`, `REDIS_URI`, `JWT_SECRET`, `FRONTEND_URL`
 | `pnpm test` | Jest unit tests |
 | `pnpm run seed:gsma` | Seed brands/categories/admin |
 | `pnpm run seed:phonedb` | Seed device catalog from PhoneDB dataset |
+| `pnpm run backfill:spec-values` | One-time: derive numeric spec fields for Phone Finder filters on existing data |
 | `src/seed-prices.ts` | Seed price history (run with ts-node, see docs/deployment.md) |
 
 ## Documentation

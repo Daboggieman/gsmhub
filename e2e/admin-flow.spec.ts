@@ -20,8 +20,8 @@ test.describe("Admin Flow", () => {
     await expect(page.url()).toContain("/admin/login");
 
     // Login
-    await page.getByPlaceholderText(/email/i).fill(ADMIN_EMAIL);
-    await page.getByPlaceholderText(/password/i).fill(ADMIN_PASSWORD);
+    await page.getByPlaceholder(/email/i).fill(ADMIN_EMAIL);
+    await page.getByPlaceholder(/password/i).fill(ADMIN_PASSWORD);
     await page.getByRole("button", { name: /login/i }).click();
 
     // Dashboard

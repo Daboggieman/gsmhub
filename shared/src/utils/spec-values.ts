@@ -19,12 +19,12 @@ export function extractSpecNumber(raw?: string | null): number | undefined {
     /(\d+(?:[.,]\d+)?)\s*(TB|TIB|GB|GIB|MB|MIB|KB|KIB|MAH|INCH(?:ES)?|"|″)?/i,
   );
   if (!m) return undefined;
-  const n = parseFloat(m[1].replace(',', '.'));
+  const n = parseFloat(m[1].replace(",", "."));
   if (!Number.isFinite(n)) return undefined;
-  const unit = (m[2] || '').toUpperCase();
-  if (unit === 'TB' || unit === 'TIB') return n * 1024;
-  if (unit === 'MB' || unit === 'MIB') return n / 1024;
-  if (unit === 'KB' || unit === 'KIB') return n / (1024 * 1024);
+  const unit = (m[2] || "").toUpperCase();
+  if (unit === "TB" || unit === "TIB") return n * 1024;
+  if (unit === "MB" || unit === "MIB") return n / 1024;
+  if (unit === "KB" || unit === "KIB") return n / (1024 * 1024);
   return n;
 }
 

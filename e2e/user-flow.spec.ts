@@ -8,7 +8,7 @@ test.describe("User Flow", () => {
     await expect(page).toHaveTitle(/GSMHub/i);
 
     // Search
-    const searchInput = page.getByPlaceholderText(/search/i);
+    const searchInput = page.getByPlaceholder(/search/i);
     await searchInput.fill("Samsung");
     await searchInput.press("Enter");
 

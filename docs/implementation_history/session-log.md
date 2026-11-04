@@ -6,6 +6,68 @@ For the full project roadmap (Phases 1-23), see `ROADMAP.md`.
 
 ---
 
+## 2026-11-04 — Go-Live Blockers Fixed (Security + Broken Public Endpoints)
+
+All remaining audit findings (audit-report-2026-10-20.md) that still applied
+were fixed. Items already fixed since the audit (image hosts, price
+filter/sort via `$lookup`, countAll filters, popular-cache keys, cache
+try/catch wrappers, `affiliateUrl` DTO, CSV import FormData) were not touched.
+
+- **`/search` fixed (was 500 on every call):** MongoDB forbids `$text`
+  inside `$or` — the combined query always threw. Rewrote
+  `SearchService.search` to regex-only on name/brand/model (same proven
+  approach as `DevicesRepository`), sorted by views. Whitespace-only `q`
+  now returns `[]`. Spec asserts `$text` never appears in the query.
+- **Search analytics hardened:** `logSearchQuery` is fire-and-forget with a
+  `.catch`; the upsert body try/catches E11000 races instead of risking an
+  unhandled-rejection crash.
+- **Dead `SearchIndex` schema deleted** (was defined, injected, never used);
+  search module/service/spec updated.
+- **JWT re-checked against DB:** `JwtStrategy.validate` now loads the user
+  (`findById … select('email role isActive')`) and throws
+  `UnauthorizedException` for missing/inactive accounts — a deleted or
+  deactivated admin loses access immediately instead of at token expiry.
+  `AuthModule` registers the User model for the strategy.
+- **Cookie TTL aligned:** session cookie `maxAge` reduced 24h → 60m to
+  match the JWT `expiresIn` (previously the client looked logged in for
+  23h while every call 401'd).
+- **Limit parsing hardened everywhere:** new `parsePositiveInt` util
+  (`common/utils/`) clamps to [1, max] with a fallback — applied to
+  popular/trending/category/brand/similar (devices.controller),
+  all three search.controller routes, audit-logs page/limit. `?limit=abc`
+  no longer 500s; `?limit=999999999` no longer unbounded.
+- **Compare:** spec-less devices no longer crash (`(device.specs || [])`
+  guards); `> 4` devices → `BadRequestException` (each slug = find +
+  price aggregation).
+- **Phone Finder filters actually work now:** `ramValue`/`storageValue`/
+  `batteryValue`/`displaySizeValue` were filtered on in the repository but
+  populated nowhere. New shared `deriveSpecValues` (`shared/src/utils/
+  spec-values.ts` — unit-aware: TB/GB/MB/mAh/inches) wired into the
+  PhoneDB seed mapper, all three external-API transformers (dead
+  `extract*Value` privates deleted), and admin create/update. One-time
+  backfill for already-seeded data: `pnpm run backfill:spec-values`
+  (idempotent; skips devices that already have values).
+- **Admin password no longer hardcoded:** both seed scripts require
+  `ADMIN_PASSWORD` (no fallback) when creating the admin — `admin123` is
+  gone from source. `.env.example` documents it; e2e admin spec takes
+  `E2E_ADMIN_PASSWORD` (also fixed its stale `/admin/auth/login` route →
+  `/admin/login` and `getByPlaceholderText` → `getByPlaceholder`).
+- **Secrets untracked:** `cookies.txt` (contained a signed admin cookie)
+  deleted from disk and git index; `backend/rapidssl-g1.crt.pem` untracked;
+  both patterns gitignored. **History still contains old commits — run
+  `git filter-repo`/BFG + rotate `JWT_SECRET`/`MONGO_URI`/`RAPIDAPI_KEY`
+  before go-live** (needs a `.env` — currently absent from disk).
+- **Abuse controls:** `@Throttle(5/min)` on `/auth/login` (was sharing the
+  global 100/min bucket); `trust proxy` set in `main.ts` so rate limiting
+  sees client IPs behind Render/nginx.
+- **`getPriceTrend` div-by-zero guard** when previous price is 0.
+- **Verified:** jest 11 suites / 67 tests (new: whitespace search, no-`$text`
+  assertion, analytics-error tolerance), vitest 27/27, workspace tsc clean,
+  full build green, eslint 0 errors (backend 766 / frontend 6 advisory
+  warnings).
+
+---
+
 ## 2026-11-03 — Lint Debt Elimination + Backend Test Fixes (CI Green)
 
 - **Backend tests fixed (ROADMAP 17.1):** stale expectations in

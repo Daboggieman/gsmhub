@@ -143,3 +143,8 @@ test-phonedb-mapper.gen.ts
 
 # PhoneDB seed dataset (423MB, kept out of git)
 .seeddata/
+
+# Secrets / credentials never belong in git
+cookies.txt
+*.crt.pem
+*.key.pem

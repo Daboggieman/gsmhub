@@ -12,6 +12,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { Device } from './device.schema';
 import { Category, CategoryDocument } from '../categories/category.schema';
+import { deriveSpecValues } from '@shared/utils/spec-values';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 import { DevicesRepository } from './devices.repository';
@@ -233,6 +234,8 @@ export class DevicesService {
       ...deviceData,
       slug,
       category: category ? (category._id as any) : undefined,
+      // Filterable numeric mirrors of the spec strings (Phone Finder filters)
+      ...deriveSpecValues(deviceData),
     };
 
     const newDevice = await this.devicesRepository.create(newDeviceData);
@@ -253,7 +256,12 @@ export class DevicesService {
       }
     }
 
-    const updatePayload: Partial<Device> = { ...deviceData, slug };
+    const updatePayload: Partial<Device> = {
+      ...deviceData,
+      slug,
+      // Refresh the numeric mirrors for any spec string being updated
+      ...deriveSpecValues(deviceData),
+    };
 
     if (categoryId) {
       if (!Types.ObjectId.isValid(categoryId)) {
