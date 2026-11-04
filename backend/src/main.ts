@@ -8,6 +8,9 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor'; 
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // Behind a reverse proxy (Render, nginx) the socket IP is the proxy's;
+  // trust one hop so req.ip — and therefore rate limiting — sees the client.
+  app.set('trust proxy', 1);
   app.use(cookieParser());
   app.enableShutdownHooks();
   app.use((req, res, next) => {

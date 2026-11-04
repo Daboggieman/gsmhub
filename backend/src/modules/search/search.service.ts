@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Device, DeviceDocument } from '../devices/device.schema';
-import { SearchIndex, SearchIndexDocument } from './search-index.schema';
 import { SearchQuery, SearchQueryDocument } from './search-query.schema';
 import { SearchResult } from '@shared/types';
 import { escapeRegExp } from '@shared/utils/regex';
@@ -11,42 +10,31 @@ import { escapeRegExp } from '@shared/utils/regex';
 export class SearchService {
   constructor(
     @InjectModel(Device.name) private deviceModel: Model<DeviceDocument>,
-    @InjectModel(SearchIndex.name)
-    private searchIndexModel: Model<SearchIndexDocument>,
     @InjectModel(SearchQuery.name)
     private searchQueryModel: Model<SearchQueryDocument>,
   ) {}
 
   async search(query: string, limit: number = 10): Promise<SearchResult[]> {
-    if (!query) return [];
-
-    // Log the search query for analytics
-    this.logSearchQuery(query);
-
     const trimmedQuery = query.trim();
-    const safeSearch = escapeRegExp(trimmedQuery);
-    const searchRegex = new RegExp(safeSearch, 'i');
+    if (!trimmedQuery) return [];
 
-    // Use a combination of text search and regex for better fuzzy-like matching
+    // Log the search query for analytics (best-effort, never blocks or throws)
+    void this.logSearchQuery(query).catch(() => {});
+
+    const searchRegex = new RegExp(escapeRegExp(trimmedQuery), 'i');
+
+    // Regex search on name/brand/model — same approach as DevicesRepository.
+    // ($text cannot be used inside $or, so a combined query always throws.)
     let devices = await this.deviceModel
-      .find(
-        {
-          $or: [
-            { $text: { $search: trimmedQuery } },
-            { name: searchRegex },
-            { brand: searchRegex },
-            { model: searchRegex },
-          ],
-          isActive: true,
-        },
-        {
-          score: { $meta: 'textScore' },
-        },
-      )
-      .sort({
-        score: { $meta: 'textScore' },
-        views: -1, // Use views as tie-breaker for popularity
+      .find({
+        $or: [
+          { name: searchRegex },
+          { brand: searchRegex },
+          { model: searchRegex },
+        ],
+        isActive: true,
       })
+      .sort({ views: -1 })
       .limit(limit)
       .exec();
 
@@ -125,13 +113,18 @@ export class SearchService {
     const normalizedQuery = query.toLowerCase().trim();
     if (!normalizedQuery || normalizedQuery.length < 3) return;
 
-    await this.searchQueryModel
-      .findOneAndUpdate(
-        { query: normalizedQuery },
-        { $inc: { count: 1 } },
-        { upsert: true, new: true },
-      )
-      .exec();
+    try {
+      await this.searchQueryModel
+        .findOneAndUpdate(
+          { query: normalizedQuery },
+          { $inc: { count: 1 } },
+          { upsert: true, new: true },
+        )
+        .exec();
+    } catch {
+      // Analytics is best-effort: tolerate concurrent-upsert E11000 races
+      // and transient DB errors without crashing the process.
+    }
   }
 
   async getPopularQueries(limit: number = 10): Promise<SearchQuery[]> {

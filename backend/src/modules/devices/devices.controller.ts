@@ -23,6 +23,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../users/schemas/user.schema';
+import { parsePositiveInt } from '../../common/utils/parse-positive-int.util';
 
 @Controller('devices')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -104,7 +105,7 @@ export class DevicesController {
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
     const devices = await this.devicesService.getPopularDevices(
-      limit ? parseInt(limit) : 10,
+      parsePositiveInt(limit, 10, 50),
     );
     return plainToInstance(DeviceResponseDto, devices);
   }
@@ -114,7 +115,7 @@ export class DevicesController {
     @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
     const devices = await this.devicesService.getTrendingDevices(
-      limit ? parseInt(limit) : 10,
+      parsePositiveInt(limit, 10, 50),
     );
     return plainToInstance(DeviceResponseDto, devices);
   }
@@ -138,7 +139,7 @@ export class DevicesController {
   ): Promise<DeviceResponseDto[]> {
     const devices = await this.devicesService.getDevicesByCategory(
       category,
-      limit ? parseInt(limit) : 50,
+      parsePositiveInt(limit, 50, 100),
     );
     return plainToInstance(DeviceResponseDto, devices);
   }
@@ -150,7 +151,7 @@ export class DevicesController {
   ): Promise<DeviceResponseDto[]> {
     const devices = await this.devicesService.getDevicesByBrand(
       brand,
-      limit ? parseInt(limit) : 50,
+      parsePositiveInt(limit, 50, 100),
     );
     return plainToInstance(DeviceResponseDto, devices);
   }
@@ -184,9 +185,12 @@ export class DevicesController {
   @Get(':id/similar')
   async getSimilar(
     @Param('id') id: string,
-    @Query('limit') limit: number = 5,
+    @Query('limit') limit?: string,
   ): Promise<DeviceResponseDto[]> {
-    const devices = await this.devicesService.findSimilar(id, limit);
+    const devices = await this.devicesService.findSimilar(
+      id,
+      parsePositiveInt(limit, 5, 20),
+    );
     return plainToInstance(DeviceResponseDto, devices);
   }
 

@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SearchIndex, SearchIndexSchema } from './search-index.schema';
 import { SearchQuery, SearchQuerySchema } from './search-query.schema';
 import { SearchService } from './search.service';
 import { SearchController } from './search.controller';
@@ -9,7 +8,6 @@ import { DevicesModule } from '../devices/devices.module'; // Import DevicesModu
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: SearchIndex.name, schema: SearchIndexSchema },
       { name: SearchQuery.name, schema: SearchQuerySchema },
     ]),
     DevicesModule, // Import DevicesModule to provide DeviceModel

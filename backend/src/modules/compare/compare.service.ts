@@ -42,7 +42,7 @@ export class CompareService {
     // Extract all unique categories and keys
     const allSpecs: { [category: string]: Set<string> } = {};
     devices.forEach((device) => {
-      device.specs.forEach((spec) => {
+      (device.specs || []).forEach((spec) => {
         if (!allSpecs[spec.category]) {
           allSpecs[spec.category] = new Set<string>();
         }
@@ -55,7 +55,7 @@ export class CompareService {
     Object.keys(allSpecs).forEach((category) => {
       allSpecs[category].forEach((key) => {
         const values = devices.map((device) => {
-          const spec = device.specs.find(
+          const spec = (device.specs || []).find(
             (s) => s.category === category && s.key === key,
           );
           return spec ? spec.value : '-';

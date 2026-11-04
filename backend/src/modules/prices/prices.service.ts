@@ -183,7 +183,7 @@ export class PricesService {
     const current = history[0].price;
     const previous = history[1].price;
 
-    if (current === previous) return { trend: 'stable', percentage: 0 };
+    if (previous === 0) return { trend: 'stable', percentage: 0 };
 
     const percentage = ((current - previous) / previous) * 100;
     return {

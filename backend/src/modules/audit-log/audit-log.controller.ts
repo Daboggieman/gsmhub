@@ -4,6 +4,7 @@ import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
 import { UserRole } from '../users/schemas/user.schema';
+import { parsePositiveInt } from '../../common/utils/parse-positive-int.util';
 
 @Controller('admin/audit-logs')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -20,8 +21,8 @@ export class AuditLogController {
     @Query('targetType') targetType?: string,
   ) {
     return this.auditLogService.findAll({
-      page: page ? parseInt(page) : 1,
-      limit: limit ? parseInt(limit) : 20,
+      page: parsePositiveInt(page, 1, 1_000_000),
+      limit: parsePositiveInt(limit, 20, 100),
       userId,
       action,
       targetType,

@@ -7,6 +7,7 @@ import {
   Get,
   Res,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import * as express from 'express';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -16,6 +17,9 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 export class AuthController {
   constructor(private authService: AuthService) {}
 
+  // Brute-force protection: 5 login attempts/min/IP (the global 100/min
+  // bucket would otherwise let an attacker share the API's whole budget).
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post('login')
   async login(
     @Body() loginDto: LoginDto,
@@ -29,7 +33,7 @@ export class AuthController {
       sameSite: process.env.COOKIE_SAME_SITE === 'none' ? 'none' : 'lax',
       domain: process.env.COOKIE_DOMAIN || undefined,
       path: '/',
-      maxAge: 24 * 60 * 60 * 1000, // 1 day
+      maxAge: 60 * 60 * 1000, // 60 minutes — matches JWT TTL
     });
 
     return { user };

@@ -47,8 +47,15 @@ async function seedAdmin(UserModel: Model<any>) {
   const adminEmail = 'admin@gsmhub.com';
   const existingAdmin = await UserModel.findOne({ email: adminEmail });
   if (!existingAdmin) {
+    // No default password: the operator must set ADMIN_PASSWORD.
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error(
+        'ADMIN_PASSWORD is not set — refusing to create the admin account with a known default. Add ADMIN_PASSWORD to backend/.env.',
+      );
+    }
     const salt = await bcrypt.genSalt();
-    const hashedPassword = await bcrypt.hash('admin123', salt);
+    const hashedPassword = await bcrypt.hash(adminPassword, salt);
     await UserModel.create({
       email: adminEmail,
       password: hashedPassword,

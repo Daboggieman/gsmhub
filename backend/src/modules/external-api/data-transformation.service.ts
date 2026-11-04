@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Device, DeviceSpec, DeviceType } from '@shared/types';
+import { deriveSpecValues } from '@shared/utils/spec-values';
 import { generateSlug } from '../../common/utils/slug.util';
 
 @Injectable()
@@ -208,6 +209,13 @@ export class DataTransformationService {
       ram: details.spotlight?.ram || this.extractRam(details.internal || ''),
       storage: this.extractStorage(details.internal || ''),
       name: details.phone_model || `${brand} ${model}`,
+      // Filterable numeric mirrors (Phone Finder min/max filters)
+      ...deriveSpecValues({
+        ram: details.spotlight?.ram || this.extractRam(details.internal || ''),
+        storage: this.extractStorage(details.internal || ''),
+        battery: details.spotlight?.battery_size,
+        displaySize: details.spotlight?.display_size,
+      }),
     };
   }
 
@@ -290,6 +298,13 @@ export class DataTransformationService {
       battery: data.battery || data.batteryType,
       dimension: data.dimension || data.dimensions,
       name: `${data.manufacturer || brand} ${data.model || model}`,
+      // Filterable numeric mirrors (Phone Finder min/max filters)
+      ...deriveSpecValues({
+        ram: this.extractRam(data.internal || ''),
+        storage: this.extractStorage(data.internal || ''),
+        battery: data.battery || data.batteryType,
+        displaySize: data.displaySize,
+      }),
     };
   }
 
@@ -393,7 +408,14 @@ export class DataTransformationService {
       displaySize: data.spotlight?.display_size || '',
       chipset: data.spotlight?.chipset || '',
       battery: data.spotlight?.battery_size || '',
+      ram: data.spotlight?.ram_size || '',
       name: data.phoneName || `${brand} ${model}`,
+      // Filterable numeric mirrors (Phone Finder min/max filters)
+      ...deriveSpecValues({
+        ram: data.spotlight?.ram_size,
+        battery: data.spotlight?.battery_size,
+        displaySize: data.spotlight?.display_size,
+      }),
     };
   }
 
@@ -410,36 +432,5 @@ export class DataTransformationService {
       specs: [],
       imageUrl: item.image_url || item.image || '',
     }));
-  }
-
-  // --- UTILS ---
-
-  private extractRamValue(internalString: string): number {
-    if (!internalString) return 0;
-    const match = internalString.match(/(\d+)\s*GB\s*RAM/i);
-    return match ? parseInt(match[1]) : 0;
-  }
-
-  private extractBatteryValue(batteryString: string): number {
-    if (!batteryString) return 0;
-    const match = batteryString.match(/(\d+)\s*mAh/i);
-    return match ? parseInt(match[1]) : 0;
-  }
-
-  private extractDisplaySizeValue(displayString: string): number {
-    if (!displayString) return 0;
-    const match = displayString.match(/(\d+(\.\d+)?)\s*inches/i);
-    return match ? parseFloat(match[1]) : 0;
-  }
-
-  private extractStorageValue(internalString: string): number {
-    if (!internalString) return 0;
-    const match = internalString.match(/(\d+)\s*(GB|TB|MB)/i);
-    if (!match) return 0;
-    let val = parseInt(match[1]);
-    const unit = match[2].toUpperCase();
-    if (unit === 'TB') val *= 1024;
-    if (unit === 'MB') val /= 1024;
-    return val;
   }
 }

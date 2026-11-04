@@ -20,6 +20,7 @@ import { BrandSchema } from './modules/brands/brand.schema';
 import { CategorySchema } from './modules/categories/category.schema';
 import { UserSchema, UserRole } from './modules/users/schemas/user.schema';
 import { DeviceType } from '@shared/types';
+import { deriveSpecValues } from '@shared/utils/spec-values';
 import { generateSlug } from './common/utils/slug.util';
 import { cleanName } from './common/utils/device-name.util';
 
@@ -69,6 +70,10 @@ interface MappedDevice {
   displaySize?: string;
   ram?: string;
   battery?: string;
+  ramValue?: number;
+  storageValue?: number;
+  batteryValue?: number;
+  displaySizeValue?: number;
   chipset?: string;
   mainCamera?: string;
   selfieCamera?: string;
@@ -238,6 +243,15 @@ function mapRecord(rec: RawRecord): MappedDevice | null {
 
   const cpu = v(sp, 'CPU');
 
+  const displaySize = displayInches
+    ? res
+      ? `${displayInches} (${res})`
+      : displayInches
+    : res || undefined;
+  const ram = extractRam(sp);
+  const storage = extractStorage(sp);
+  const battery = extractBattery(sp);
+
   return {
     slug: generateSlug(`${brand} ${name}`),
     name: `${brand} ${name}`.trim(),
@@ -251,14 +265,12 @@ function mapRecord(rec: RawRecord): MappedDevice | null {
     dimension,
     weight: v(sp, 'Mass') || undefined,
     os: v(sp, 'Operating System') || undefined,
-    storage: extractStorage(sp),
-    displaySize: displayInches
-      ? res
-        ? `${displayInches} (${res})`
-        : displayInches
-      : res || undefined,
-    ram: extractRam(sp),
-    battery: extractBattery(sp),
+    storage,
+    displaySize,
+    ram,
+    battery,
+    // Filterable numeric mirrors of the fields above (Phone Finder min/max)
+    ...deriveSpecValues({ ram, storage, battery, displaySize }),
     chipset: cpu ? cpu.split(',')[0].trim() : undefined,
     mainCamera: extractCamera(sp, 'Number of effective pixels'),
     selfieCamera: extractCamera(sp, 'Secondary Camera Number of pixels'),
@@ -273,8 +285,15 @@ async function seedAdmin(UserModel: mongoose.Model<any>) {
   const adminEmail = 'admin@gsmhub.com';
   const existing = await UserModel.findOne({ email: adminEmail });
   if (!existing) {
+    // No default password: the operator must set ADMIN_PASSWORD.
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword) {
+      throw new Error(
+        'ADMIN_PASSWORD is not set — refusing to create the admin account with a known default. Add ADMIN_PASSWORD to backend/.env.',
+      );
+    }
     const salt = await bcrypt.genSalt();
-    const hashed = await bcrypt.hash('admin123', salt);
+    const hashed = await bcrypt.hash(adminPassword, salt);
     await UserModel.create({
       email: adminEmail,
       password: hashed,
