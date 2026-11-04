@@ -39,11 +39,7 @@ function AdminDevicesPageContent() {
     failed: number
     errors: string[]
   } | null>(null)
-  const [syncOptions, setSyncOptions] = useState<{
-    providers: string[]
-    forceUpdate: boolean
-  }>({
-    providers: ['primary', 'secondary', 'tertiary'],
+  const [syncOptions, setSyncOptions] = useState<{ forceUpdate: boolean }>({
     forceUpdate: false,
   })
 
@@ -141,15 +137,6 @@ function AdminDevicesPageContent() {
     }
   }
 
-  const toggleProvider = (provider: string) => {
-    setSyncOptions((prev) => ({
-      ...prev,
-      providers: prev.providers.includes(provider)
-        ? prev.providers.filter((p) => p !== provider)
-        : [...prev.providers, provider],
-    }))
-  }
-
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
     if (!file) return
@@ -176,29 +163,6 @@ function AdminDevicesPageContent() {
     <div className="p-4 md:p-8">
       {/* Sync Settings */}
       <div className="mb-8 flex flex-wrap items-center gap-6 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
-        <div>
-          <h4 className="mb-3 text-[10px] font-black tracking-widest text-gray-400 uppercase">
-            Sync Providers
-          </h4>
-          <div className="flex gap-2">
-            {['primary', 'secondary', 'tertiary'].map((p) => (
-              <button
-                key={p}
-                onClick={() => toggleProvider(p)}
-                className={`rounded-xl px-4 py-2 text-[10px] font-black uppercase transition-all ${
-                  syncOptions.providers.includes(p)
-                    ? 'bg-indigo-600 text-white shadow-md shadow-indigo-100'
-                    : 'bg-gray-100 text-gray-400'
-                }`}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className="hidden h-10 w-px bg-gray-100 md:block"></div>
-
         <div>
           <h4 className="mb-3 text-[10px] font-black tracking-widest text-gray-400 uppercase">
             Conflict Policy

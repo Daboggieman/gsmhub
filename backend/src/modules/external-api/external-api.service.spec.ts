@@ -1,34 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ExternalApiService } from './external-api.service';
-import { HttpService } from '@nestjs/axios';
-import { ConfigService } from '@nestjs/config';
-import { DataTransformationService } from './data-transformation.service';
 import { GsmarenaScraperService } from './gsmarena-scraper.service';
-import { of, throwError } from 'rxjs';
 import { HttpException } from '@nestjs/common';
 
 describe('ExternalApiService', () => {
   let service: ExternalApiService;
-  let httpService: any;
-  let transformer: any;
-
-  const mockConfigService = {
-    get: jest.fn((key: string, defaultValue?: string) => {
-      if (key === 'RAPIDAPI_KEY') return 'test-key';
-      return defaultValue;
-    }),
-  };
-
-  const mockHttpService = {
-    get: jest.fn(),
-  };
-
-  const mockTransformer = {
-    transformPrimaryDevice: jest.fn(),
-    transformSecondaryDevice: jest.fn(),
-    transformPrimaryDeviceList: jest.fn(),
-    transformSecondaryDeviceList: jest.fn(),
-  };
+  let scraper: any;
 
   const mockScraper = {
     fetchBrands: jest.fn().mockResolvedValue([]),
@@ -41,16 +18,12 @@ describe('ExternalApiService', () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         ExternalApiService,
-        { provide: HttpService, useValue: mockHttpService },
-        { provide: ConfigService, useValue: mockConfigService },
-        { provide: DataTransformationService, useValue: mockTransformer },
         { provide: GsmarenaScraperService, useValue: mockScraper },
       ],
     }).compile();
 
     service = module.get<ExternalApiService>(ExternalApiService);
-    httpService = module.get(HttpService);
-    transformer = module.get(DataTransformationService);
+    scraper = module.get(GsmarenaScraperService);
 
     jest.clearAllMocks();
   });
@@ -60,45 +33,46 @@ describe('ExternalApiService', () => {
   });
 
   describe('fetchDeviceSpecs', () => {
-    it('should return primary data if primary API succeeds', async () => {
+    it('should return scraper specs via the raw slug when available', async () => {
       const mockResult = { name: 'Device' };
-      httpService.get.mockReturnValue(of({ data: { raw: 'data' } }));
-      transformer.transformPrimaryDevice.mockReturnValue(mockResult);
+      scraper.fetchDeviceSpecs.mockResolvedValueOnce(mockResult);
 
-      const result = await service.fetchDeviceSpecs('Brand', 'Model');
-
-      expect(httpService.get).toHaveBeenCalledWith(
-        expect.stringContaining('phone-specs-explorer-api'),
-        expect.any(Object),
+      const result = await service.fetchDeviceSpecs(
+        'Brand',
+        'Model',
+        ['gsma'],
+        'brand-model-123.php',
       );
+
+      expect(scraper.fetchDeviceSpecs).toHaveBeenCalledWith(
+        'brand-model-123.php',
+        'Brand',
+        'Model',
+      );
+      expect(scraper.fetchSpecsByModel).not.toHaveBeenCalled();
       expect(result).toBe(mockResult);
     });
 
-    it('should fallback to secondary if primary API fails', async () => {
-      const mockResult = { name: 'Device Secondary' };
-      // Primary fails
-      httpService.get.mockReturnValueOnce(
-        throwError(() => ({
-          response: { status: 404, data: { message: 'Not Found' } },
-        })),
-      );
-      // Secondary succeeds
-      httpService.get.mockReturnValueOnce(
-        of({ data: { success: true, raw: 'secondary' } }),
-      );
-      transformer.transformSecondaryDevice.mockReturnValue(mockResult);
+    it('should fall back to fetchSpecsByModel when no raw slug is known', async () => {
+      const mockResult = { name: 'Device By Model' };
+      scraper.fetchSpecsByModel.mockResolvedValueOnce(mockResult);
 
       const result = await service.fetchDeviceSpecs('Brand', 'Model');
 
-      expect(httpService.get).toHaveBeenCalledTimes(2);
+      expect(scraper.fetchSpecsByModel).toHaveBeenCalledWith('Brand', 'Model');
+      expect(scraper.fetchDeviceSpecs).not.toHaveBeenCalled();
       expect(result).toBe(mockResult);
     });
 
-    it('should throw HttpException if both APIs fail', async () => {
-      httpService.get.mockReturnValue(
-        throwError(() => ({
-          response: { status: 404, data: { message: 'Not Found' } },
-        })),
+    it('should throw HttpException when the scraper returns nothing', async () => {
+      await expect(service.fetchDeviceSpecs('Brand', 'Model')).rejects.toThrow(
+        HttpException,
+      );
+    });
+
+    it('should throw HttpException when the scraper errors', async () => {
+      scraper.fetchSpecsByModel.mockRejectedValueOnce(
+        new Error('HTTP 403 for https://www.gsmarena.com/brand-model.php'),
       );
 
       await expect(service.fetchDeviceSpecs('Brand', 'Model')).rejects.toThrow(
@@ -108,25 +82,56 @@ describe('ExternalApiService', () => {
   });
 
   describe('fetchAvailableBrands', () => {
-    it('should return brands from primary API', async () => {
-      const brands = ['Apple', 'Samsung'];
-      httpService.get.mockReturnValue(of({ data: brands }));
+    it('should return brands from the scraper', async () => {
+      scraper.fetchBrands.mockResolvedValueOnce(['Apple', 'Samsung']);
 
       const result = await service.fetchAvailableBrands();
 
-      expect(result).toEqual(brands);
+      expect(result).toEqual(['Apple', 'Samsung']);
     });
 
-    it('should fallback to secondary if primary fails', async () => {
-      const brands = ['Apple', 'Samsung'];
-      httpService.get.mockReturnValueOnce(
-        throwError(() => new Error('API Error')),
-      );
-      httpService.get.mockReturnValueOnce(of({ data: brands }));
+    it('should return an empty list when the scraper fails', async () => {
+      scraper.fetchBrands.mockRejectedValueOnce(new Error('HTTP 503'));
 
       const result = await service.fetchAvailableBrands();
 
-      expect(result).toEqual(brands);
+      expect(result).toEqual([]);
+    });
+  });
+
+  describe('fetchDevicesByBrand', () => {
+    it('should map scraper items into device partials', async () => {
+      scraper.fetchDevicesByBrand.mockResolvedValueOnce([
+        { name: 'Galaxy S24', slug: 'galaxy_s24-12814.php', imageUrl: 'x.jpg' },
+      ]);
+
+      const result = await service.fetchDevicesByBrand('Samsung');
+
+      expect(result).toHaveLength(1);
+      expect(result[0]).toMatchObject({
+        model: 'Galaxy S24',
+        brand: 'Samsung',
+        rawSlug: 'galaxy_s24-12814.php',
+        imageUrl: 'x.jpg',
+        isActive: true,
+        specs: [],
+      });
+    });
+
+    it('should return an empty list when the scraper comes up empty', async () => {
+      scraper.fetchDevicesByBrand.mockResolvedValueOnce([]);
+
+      const result = await service.fetchDevicesByBrand('Samsung');
+
+      expect(result).toEqual([]);
+    });
+
+    it('should return an empty list when the scraper fails', async () => {
+      scraper.fetchDevicesByBrand.mockRejectedValueOnce(new Error('HTTP 429'));
+
+      const result = await service.fetchDevicesByBrand('Samsung');
+
+      expect(result).toEqual([]);
     });
   });
 });
