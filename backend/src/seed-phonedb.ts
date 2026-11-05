@@ -6,12 +6,15 @@
  * device per (brand, clean name), and bulk-writes to MongoDB in minutes —
  * no scraping, no rate limits.
  *
- * Run:  NODE_EXTRA_CA_CERTS=./rapidssl-g1.crt.pem pnpm seed:phonedb
+ * Run:  pnpm seed:phonedb
  * Env:
  *   PHONEDB_JSON=path    dataset location (default .seeddata/PhoneSpecsDataset25K.json at repo root)
  *   SEED_MAX_DEVICES=n   cap total devices written
- *   NO_WIPE=1            keep existing devices (default: wipes devices)
- *   ONLY_SMARTPHONES=0   include tablets/watches/etc (default: smartphones only)
+ *   NO_WIPE=1            keep existing devices (default: wipes devices, brands and categories)
+ *   SEED_CATEGORIES=a,b  PhoneDB "Device Category" values to include
+ *                        (default: Smartphone,Tablet,Smartwatch,Notebook,Subnotebook —
+ *                        legacy PDA/PNA/Palmtop classes are excluded)
+ *   ONLY_SMARTPHONES=1   back-compat shortcut for SEED_CATEGORIES=Smartphone
  */
 import { connect, disconnect } from 'mongoose';
 import { config } from 'dotenv';
@@ -20,6 +23,7 @@ import { BrandSchema } from './modules/brands/brand.schema';
 import { CategorySchema } from './modules/categories/category.schema';
 import { UserSchema, UserRole } from './modules/users/schemas/user.schema';
 import { DeviceType } from '@shared/types';
+import { DEVICE_TYPE_CATEGORY } from '@shared/utils/device-class.util';
 import { deriveSpecValues } from '@shared/utils/spec-values';
 import { generateSlug } from './common/utils/slug.util';
 import { cleanName } from './common/utils/device-name.util';
@@ -34,7 +38,20 @@ const DATASET_PATH =
   process.env.PHONEDB_JSON ||
   '/home/recoding/gsmhub/.seeddata/PhoneSpecsDataset25K.json';
 const maxDevices = Number(process.env.SEED_MAX_DEVICES) || 0;
-const onlySmartphones = process.env.ONLY_SMARTPHONES !== '0';
+const onlySmartphones = process.env.ONLY_SMARTPHONES === '1';
+// PhoneDB "Device Category" values to include. Defaults cover the modern
+// classes; PDA/PNA/Palmtop/Smart Camera/HMD stay out unless asked for.
+const seedCategories = new Set(
+  (
+    onlySmartphones
+      ? 'Smartphone'
+      : process.env.SEED_CATEGORIES ||
+        'Smartphone,Tablet,Smartwatch,Notebook,Subnotebook'
+  )
+    .split(',')
+    .map((c) => c.trim())
+    .filter(Boolean),
+);
 const wipe = process.env.NO_WIPE !== '1';
 
 // PhoneDB "Device Category" → our DeviceType
@@ -60,7 +77,7 @@ interface MappedDevice {
   model: string;
   type: DeviceType;
   isActive: boolean;
-  category: string; // brand name — resolved to Category._id before insert
+  category: string; // device class (DEVICE_TYPE_CATEGORY) — resolved to Category._id before insert
   imageUrl?: string;
   releaseDate?: string;
   dimension?: string;
@@ -219,8 +236,9 @@ function mapRecord(rec: RawRecord): MappedDevice | null {
   const sp = rec.specs;
   const brand = v(sp, 'Brand') || 'Unknown';
   const model = v(sp, 'Model') || rec.title;
-  const type = CATEGORY_MAP[v(sp, 'Device Category')] || DeviceType.OTHER;
-  if (onlySmartphones && type !== DeviceType.PHONE) return null;
+  const rawCategory = v(sp, 'Device Category');
+  const type = CATEGORY_MAP[rawCategory] || DeviceType.OTHER;
+  if (!seedCategories.has(rawCategory)) return null;
 
   const name = cleanName(model);
   if (!name) return null;
@@ -259,7 +277,7 @@ function mapRecord(rec: RawRecord): MappedDevice | null {
     model,
     type,
     isActive: true,
-    category: brand,
+    category: DEVICE_TYPE_CATEGORY[type],
     imageUrl: rec.img || undefined,
     releaseDate: normalizeRelease(v(sp, 'Released')) || undefined,
     dimension,
@@ -329,7 +347,8 @@ async function main() {
 
   if (wipe) {
     await DeviceModel.deleteMany({});
-    console.log('Wiped devices collection');
+    await CategoryModel.deleteMany({});
+    console.log('Wiped devices + categories collections');
   }
 
   // --- map records -----------------------------------------------------
@@ -356,19 +375,22 @@ async function main() {
         : ''),
   );
 
-  // --- categories + brands --------------------------------------------
+  // --- categories (device classes) + brands ----------------------------
   const brands = [...new Set([...byKey.values()].map((d) => d.brand))];
-  const catIdByBrand = new Map<string, string>();
-  for (const brand of brands) {
-    const slug = generateSlug(brand) || 'unknown';
+  const classNames = [...new Set([...byKey.values()].map((d) => d.category))];
+  const catIdByName = new Map<string, string>();
+  for (const name of classNames) {
+    const slug = generateSlug(name) || 'other';
     const doc = await CategoryModel.findOneAndUpdate(
-      { $or: [{ slug }, { name: brand }] },
-      { $set: { name: brand, slug } },
+      { $or: [{ slug }, { name }] },
+      { $set: { name, slug } },
       { upsert: true, new: true },
     );
-    if (doc) catIdByBrand.set(brand, (doc as any)._id.toString());
+    if (doc) catIdByName.set(name, (doc as any)._id.toString());
   }
-  console.log(`Categories upserted: ${catIdByBrand.size}`);
+  console.log(
+    `Categories upserted: ${catIdByName.size} (${classNames.join(', ')})`,
+  );
 
   for (const brand of brands) {
     await BrandModel.updateOne(
@@ -403,7 +425,7 @@ async function main() {
   for (const dev of byKey.values()) {
     batch.push({
       ...dev,
-      category: catIdByBrand.get(dev.category) || null,
+      category: catIdByName.get(dev.category) || null,
     });
     if (batch.length >= BATCH) await flush();
   }

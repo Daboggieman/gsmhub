@@ -1,6 +1,11 @@
 import { Injectable, Logger, OnModuleInit, Optional } from '@nestjs/common';
 import { ExternalApiService } from './external-api.service';
 import { Cron } from '@nestjs/schedule';
+import { DeviceType } from '@shared/types';
+import {
+  DEVICE_TYPE_CATEGORY,
+  classifyDeviceType,
+} from '@shared/utils/device-class.util';
 import { DevicesService } from '@modules/devices/devices.service';
 import { CategoriesService } from '@modules/categories/categories.service';
 import { BrandsService } from '@modules/brands/brands.service';
@@ -82,6 +87,21 @@ export class SyncService implements OnModuleInit {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  /**
+   * Set type (if the source didn't) and derive category from it —
+   * `category` is the device class (Smartphones/Tablets/…), never the brand.
+   */
+  private applyDeviceClass(device: {
+    type?: DeviceType;
+    name?: string;
+    model?: string;
+    category?: string;
+  }): void {
+    const type = device.type || classifyDeviceType(device.name || device.model || '');
+    device.type = type;
+    device.category = DEVICE_TYPE_CATEGORY[type];
+  }
+
   async fetchAndSavePhonesByBrand(
     brands: string[],
     deepSync: boolean = false,
@@ -123,7 +143,7 @@ export class SyncService implements OnModuleInit {
                   `Deep sync batch limit (${DEEP_SYNC_BATCH_LIMIT}) reached. Skipping detailed fetch for remaining devices in this session.`,
                 );
                 // Still upsert partial if it doesn't exist
-                devicePartial.category = brand;
+                this.applyDeviceClass(devicePartial);
                 await this.devicesService.upsertDevice(devicePartial, options);
                 continue;
               }
@@ -143,16 +163,16 @@ export class SyncService implements OnModuleInit {
                 devicePartial.rawSlug,
               );
               if (fullDevice) {
-                fullDevice.category = brand;
+                this.applyDeviceClass(fullDevice);
                 await this.devicesService.upsertDevice(fullDevice, options);
                 deepSyncCount++;
               } else {
-                devicePartial.category = brand;
+                this.applyDeviceClass(devicePartial);
                 await this.devicesService.upsertDevice(devicePartial, options);
               }
             } else {
               // Catalog info only (no deep-spec fetch)
-              devicePartial.category = brand;
+              this.applyDeviceClass(devicePartial);
               await this.devicesService.upsertDevice(devicePartial, options);
             }
           } catch (deviceError) {

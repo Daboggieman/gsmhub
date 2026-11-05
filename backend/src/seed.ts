@@ -23,7 +23,10 @@ import {
 } from './modules/users/schemas/user.schema';
 import { GsmarenaScraperService } from './modules/external-api/gsmarena-scraper.service';
 import { CategorySchema } from './modules/categories/category.schema';
-import { DeviceType } from '@shared/types';
+import {
+  DEVICE_TYPE_CATEGORY,
+  classifyDeviceType,
+} from '@shared/utils/device-class.util';
 import { generateSlug } from './common/utils/slug.util';
 
 import * as mongoose from 'mongoose';
@@ -84,7 +87,8 @@ async function seedDB() {
   if (wipe) {
     await DeviceModel.deleteMany({});
     await BrandModel.deleteMany({});
-    console.log('Wiped devices + brands collections');
+    await CategoryModel.deleteMany({});
+    console.log('Wiped devices + brands + categories collections');
   }
 
   const scraper = new GsmarenaScraperService();
@@ -147,7 +151,7 @@ async function seedDB() {
       category: cat._id,
       views: 0,
       isActive: true,
-      type: DeviceType.PHONE,
+      type: partial.type,
     });
   }
 
@@ -233,9 +237,11 @@ async function seedDB() {
         );
         if (!partial) continue;
 
-        partial.type = DeviceType.PHONE;
+        // GSMArena listings mix phones, tablets and watches — classify
+        // from the name; category is the device class, never the brand.
+        partial.type = classifyDeviceType(partial.name || item.name);
         partial.isActive = true;
-        partial.category = brand.name;
+        partial.category = DEVICE_TYPE_CATEGORY[partial.type];
 
         await upsertDevice(partial);
         deviceCount++;

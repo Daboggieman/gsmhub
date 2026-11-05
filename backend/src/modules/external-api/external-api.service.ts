@@ -1,5 +1,5 @@
 import { Injectable, Logger, HttpException, HttpStatus } from '@nestjs/common';
-import { DeviceType } from '@shared/types';
+import { classifyDeviceType } from '@shared/utils/device-class.util';
 import { generateSlug } from '../../common/utils/slug.util';
 import { GsmarenaScraperService } from './gsmarena-scraper.service';
 
@@ -46,7 +46,9 @@ export class ExternalApiService {
           brand: brandName,
           slug: generateSlug(item.name),
           rawSlug: item.slug, // GSMArena page slug for spec fetches
-          type: DeviceType.PHONE,
+          // GSMArena brand listings mix phones, tablets and watches —
+          // classify from the name (iPad / Tab / Watch / Buds …).
+          type: classifyDeviceType(item.name),
           isActive: true,
           specs: [],
           imageUrl: item.imageUrl || '',

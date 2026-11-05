@@ -1,5 +1,9 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Device, DeviceSpec } from '@shared/types';
+import {
+  DEVICE_TYPE_CATEGORY,
+  classifyDeviceType,
+} from '@shared/utils/device-class.util';
 import { generateSlug } from '../../common/utils/slug.util';
 
 export interface GsmarenaBrand {
@@ -218,13 +222,15 @@ export class GsmarenaScraperService {
     };
 
     const slug = generateSlug(name);
+    const type = classifyDeviceType(name);
 
     return {
       slug,
       name,
       brand: brandName,
       model,
-      category: brandName,
+      type,
+      category: DEVICE_TYPE_CATEGORY[type],
       imageUrl,
       description: getSpec('comment') || undefined,
       releaseDate: getSpec('year') || undefined,
