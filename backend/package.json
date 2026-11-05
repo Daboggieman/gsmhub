@@ -21,6 +21,7 @@
     "seed": "ts-node-dev -r tsconfig-paths/register src/seed.ts",
     "seed:gsma": "ts-node -r tsconfig-paths/register --transpile-only src/seed.ts",
     "seed:phonedb": "ts-node -r tsconfig-paths/register --transpile-only src/seed-phonedb.ts",
+    "seed:catalog": "ts-node -r tsconfig-paths/register --transpile-only src/seed-catalog.ts",
     "backfill:spec-values": "ts-node -r tsconfig-paths/register --transpile-only src/backfill-spec-values.ts"
   },
   "dependencies": {

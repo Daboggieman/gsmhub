@@ -1,0 +1,37 @@
+name,brand,model,releaseDate,weight,driverSize,anc,bluetooth,ipRating,earbudBattery,caseBattery,codecs,driverType
+AirPods Pro 2,Apple,AirPods Pro 2,2023,5.3,,Yes,Bluetooth 5.3,IPX4,6h,30h,AAC / SBC,Dynamic driver
+AirPods 4,Apple,AirPods 4,2024,4.3,,No,Bluetooth 5.3,,5h,30h,AAC / SBC,Dynamic driver
+AirPods 4 ANC,Apple,AirPods 4 ANC,2024,4.3,,Yes,Bluetooth 5.3,,5h,30h,AAC / SBC,Dynamic driver
+AirPods Max,Apple,AirPods Max,2020,384.8,,Yes,Bluetooth 5.0,,20h,,AAC / SBC,Dynamic driver
+AirPods 3,Apple,AirPods 3,2021,4.28,,No,Bluetooth 5.0,IPX4,6h,30h,AAC / SBC,Dynamic driver
+Galaxy Buds3 Pro,Samsung,Galaxy Buds3 Pro,2024,5.4,,Yes,Bluetooth 5.4,IP57,6h,26h,SSC / AAC / SBC,Dual driver
+Galaxy Buds3,Samsung,Galaxy Buds3,2024,4.7,,Yes,Bluetooth 5.4,IP57,6h,24h,SSC / AAC / SBC,Dynamic
+Galaxy Buds2 Pro,Samsung,Galaxy Buds2 Pro,2022,5.5,10mm,Yes,Bluetooth 5.3,IPX7,5h,18h,SSC / AAC / SBC,Dual dynamic
+Galaxy Buds2,Samsung,Galaxy Buds2,2021,5.0,11mm,Yes,Bluetooth 5.2,IPX2,5h,15h,AAC / SBC,Dynamic
+Pixel Buds Pro 2,Google,Pixel Buds Pro 2,2024,5.7,,Yes,Bluetooth 5.4,IP54,8h,30h,AAC / SBC,Dynamic
+Pixel Buds Pro,Google,Pixel Buds Pro,2022,6.2,11mm,Yes,Bluetooth 5.3,IPX4,7h,20h,AAC / SBC,Dynamic
+Pixel Buds A-Series,Google,Pixel Buds A-Series,2021,5.1,12mm,No,Bluetooth 5.0,IPX4,5h,19h,AAC / SBC,Dynamic
+WF-1000XM5,Sony,WF-1000XM5,2023,5.9,8.4mm,Yes,Bluetooth 5.3,IPX4,8h,16h,LDAC / AAC / SBC,Dynamic
+WF-1000XM4,Sony,WF-1000XM4,2021,7.3,6mm,Yes,Bluetooth 5.2,IPX4,8h,16h,LDAC / AAC / SBC,Dynamic
+LinkBuds S,Sony,LinkBuds S,2022,4.8,5mm,Yes,Bluetooth 5.2,IPX4,6h,14h,LDAC / AAC / SBC,Dynamic
+WF-C700N,Sony,WF-C700N,2023,4.6,5mm,Yes,Bluetooth 5.2,IPX4,7.5h,15h,SBC / AAC,Dynamic
+QuietComfort Ultra Earbuds,Bose,QuietComfort Ultra Earbuds,2023,6.4,,Yes,Bluetooth 5.3,IPX4,6h,24h,aptX Adaptive / AAC / SBC,Dynamic
+QuietComfort Earbuds II,Bose,QuietComfort Earbuds II,2022,6.2,9.3mm,Yes,Bluetooth 5.3,IPX4,6h,18h,aptX Adaptive / AAC / SBC,Dynamic
+Momentum True Wireless 4,Sennheiser,Momentum True Wireless 4,2024,6.2,7mm,Yes,Bluetooth 5.4,IP54,7.5h,30h,aptX Lossless / AAC / SBC,TrueResponse dynamic
+Elite 10,Jabra,Elite 10,2023,5.9,6mm,Yes,Bluetooth 5.3,IP57,6h,27h,LDAC / AAC / SBC,Dynamic
+Elite 4 Active,Jabra,Elite 4 Active,2022,5.7,6mm,No,Bluetooth 5.2,IP57,7h,28h,AAC / SBC,Dynamic
+Nothing Ear (a),Nothing,Ear (a),2024,4.6,11mm,Yes,Bluetooth 5.3,IP54,5.5h,24.5h,LDAC / AAC / SBC,Dynamic
+Nothing Ear,Nothing,Ear,2024,4.6,11mm,Yes,Bluetooth 5.3,IP54,5.2h,20.5h,LDAC / AAC / SBC,Dynamic
+Nothing Ear (2),Nothing,Ear (2),2023,4.5,11mm,Yes,Bluetooth 5.3,IP54,5.7h,24h,LDAC / AAC / SBC,Dynamic
+Buds Pro 3,OnePlus,Buds Pro 3,2024,5.4,11mm,Yes,Bluetooth 5.4,IP55,6.5h,32h,LHDC 5.0 / AAC / SBC,Dual driver
+Buds Pro 2,OnePlus,Buds Pro 2,2023,4.9,11mm,Yes,Bluetooth 5.3,IP54,5h,39h,LHDC / AAC / SBC,Dynamic
+FreeBuds Pro 3,Huawei,FreeBuds Pro 3,2023,5.8,11mm,Yes,Bluetooth 5.2,IP54,5h,23h,LDAC / AAC / SBC,Dynamic
+FreeBuds Pro 2,Huawei,FreeBuds Pro 2,2022,6.1,11mm,Yes,Bluetooth 5.2,IP54,5.5h,22h,LDAC / AAC / SBC,Dual driver
+Buds 5 Pro,Xiaomi,Buds 5 Pro,2024,,,Yes,Bluetooth 5.3,IP54,6h,38h,LDAC / AAC / SBC,Coaxial dual driver
+Redmi Buds 5 Pro,Xiaomi,Redmi Buds 5 Pro,2024,,,Yes,Bluetooth 5.3,IP54,7h,32h,LDAC / AAC / SBC,Dynamic
+Soundcore Liberty 4 Pro,Anker,Soundcore Liberty 4 Pro,2024,6.2,10.5mm,Yes,Bluetooth 5.4,IPX4,7.5h,25h,LDAC / AAC / SBC,Dual driver
+Liberty 4 NC,Anker,Liberty 4 NC,2023,5.4,11mm,Yes,Bluetooth 5.3,IPX4,10h,42h,LDAC / AAC / SBC,Dynamic
+Beats Fit Pro,Beats,Beats Fit Pro,2021,5.6,,Yes,Bluetooth 5.0,IPX4,6h,24h,AAC / SBC,Dynamic
+Beats Studio Buds +,Beats,Studio Buds +,2023,5.0,8.2mm,Yes,Bluetooth 5.3,IPX4,6h,24h,AAC / SBC,Dynamic
+Live Pro 2,JBL,Live Pro 2,2023,4.7,6.8mm,Yes,Bluetooth 5.3,IPX5,8h,30h,AAC / SBC,Dynamic
+Tour Pro 2,JBL,Tour Pro 2,2023,6.1,10mm,Yes,Bluetooth 5.3,IPX5,8h,30h,LE Audio / AAC / SBC,Dynamic
