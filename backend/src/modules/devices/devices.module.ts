@@ -1,6 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { HttpModule } from '@nestjs/axios';
 import { Device, DeviceSchema } from './device.schema';
 import { Category, CategorySchema } from '../categories/category.schema';
 import { DevicesController } from './devices.controller';
@@ -16,7 +15,6 @@ import { ExternalApiModule } from '../external-api/external-api.module';
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
     ]),
-    HttpModule,
     forwardRef(() => ExternalApiModule), // Circular dependency resolution
     forwardRef(() => CategoriesModule),
     forwardRef(() => PricesModule),
