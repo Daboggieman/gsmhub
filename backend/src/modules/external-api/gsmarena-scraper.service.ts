@@ -221,12 +221,19 @@ export class GsmarenaScraperService {
       return s?.value || undefined;
     };
 
-    const slug = generateSlug(name);
-    const type = classifyDeviceType(name);
+    // Match the PhoneDB/CSV slug scheme (brand + name) so the weekly sync
+    // gap-fills those devices instead of creating near-duplicates. Guard
+    // against names that already start with the brand (double prefix).
+    const fullName =
+      brandName && name.toLowerCase().startsWith(brandName.toLowerCase())
+        ? name
+        : `${brandName} ${name}`.trim();
+    const slug = generateSlug(fullName) || generateSlug(name);
+    const type = classifyDeviceType(fullName);
 
     return {
       slug,
-      name,
+      name: fullName,
       brand: brandName,
       model,
       type,

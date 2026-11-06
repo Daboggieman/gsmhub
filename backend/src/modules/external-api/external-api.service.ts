@@ -44,7 +44,9 @@ export class ExternalApiService {
         results = items.map((item) => ({
           model: item.name,
           brand: brandName,
-          slug: generateSlug(item.name),
+          // Brand-prefixed to match the PhoneDB/CSV slug scheme — the
+          // weekly sync must gap-fill those devices, not duplicate them.
+          slug: generateSlug(`${brandName} ${item.name}`),
           rawSlug: item.slug, // GSMArena page slug for spec fetches
           // GSMArena brand listings mix phones, tablets and watches —
           // classify from the name (iPad / Tab / Watch / Buds …).

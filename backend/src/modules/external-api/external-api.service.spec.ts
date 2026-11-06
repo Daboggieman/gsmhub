@@ -134,6 +134,16 @@ describe('ExternalApiService', () => {
       expect(result).toEqual([]);
     });
 
+    it('should prefix device slugs with the brand to match the PhoneDB/CSV slug scheme', async () => {
+      scraper.fetchDevicesByBrand.mockResolvedValueOnce([
+        { name: 'Galaxy S24', slug: 'galaxy_s24-12814.php' },
+      ]);
+
+      const result = await service.fetchDevicesByBrand('Samsung');
+
+      expect(result[0].slug).toBe('samsung-galaxy-s24');
+    });
+
     describe('type classification', () => {
       it.each([
         ['Galaxy S24', DeviceType.PHONE],
