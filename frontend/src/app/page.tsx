@@ -4,7 +4,7 @@ import DeviceImage from '@/components/devices/DeviceImage';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileAlt, faTabletAlt, faLaptop, faClock, faSearch, faChartLine } from '@fortawesome/free-solid-svg-icons';
+import { faMobileAlt, faTabletAlt, faLaptop, faClock, faSearch, faChartLine, faHeadphones } from '@fortawesome/free-solid-svg-icons';
 
 async function getHomeData() {
   try {
@@ -33,6 +33,7 @@ const CategoryIcon = ({ name }: { name?: string }) => {
   if (n.includes('tablet')) return <FontAwesomeIcon icon={faTabletAlt} />;
   if (n.includes('laptop')) return <FontAwesomeIcon icon={faLaptop} />;
   if (n.includes('watch')) return <FontAwesomeIcon icon={faClock} />;
+  if (n.includes('audio') || n.includes('headphone')) return <FontAwesomeIcon icon={faHeadphones} />;
   return <FontAwesomeIcon icon={faSearch} />;
 };
 
@@ -122,7 +123,7 @@ export default async function Home() {
 
             {/* Popular Categories */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-              {validCategories.slice(0, 4).map((category) => (
+              {validCategories.slice(0, 6).map((category) => (
                 <Link
                   key={category.slug}
                   href={`/categories/${category.slug}`}
