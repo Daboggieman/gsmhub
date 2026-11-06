@@ -1,0 +1,21 @@
+name,brand,model,releaseDate,os,displaySize,displayResolution,refreshRate,chipset,graphicsCard,storage,ram,battery,weight
+MacBook Air M1,Apple,MacBook Air (M1, 2020),2020,macOS,13.3",2560 x 1600,60Hz,Apple M1,7-core GPU,256GB,8GB,49.9 Wh,1.29 kg
+MacBook Air M2,Apple,MacBook Air (M2, 2022),2022,macOS,13.6",2560 x 1664,60Hz,Apple M2,8-core GPU,256GB,8GB,52.6 Wh,1.24 kg
+MacBook Air M3,Apple,MacBook Air 13 (M3, 2024),2024,macOS,13.6",2560 x 1664,60Hz,Apple M3,8-core GPU,256GB,8GB,52.6 Wh,1.24 kg
+MacBook Air 15 M3,Apple,MacBook Air 15 (M3, 2024),2024,macOS,15.3",2880 x 1864,60Hz,Apple M3,10-core GPU,256GB,8GB,53.8 Wh,1.51 kg
+MacBook Pro 14 M4,Apple,MacBook Pro 14 (M4, 2024),2024,macOS,14.2",3024 x 1964,120Hz,Apple M4,10-core GPU,512GB,16GB,72.4 Wh,1.55 kg
+MacBook Pro 14 M4 Pro,Apple,MacBook Pro 14 (M4 Pro, 2024),2024,macOS,14.2",3024 x 1964,120Hz,Apple M4 Pro,14-core GPU,512GB,24GB,72.4 Wh,1.60 kg
+MacBook Pro 16 M4 Pro,Apple,MacBook Pro 16 (M4 Pro, 2024),2024,macOS,16.2",3456 x 2234,120Hz,Apple M4 Pro,16-core GPU,512GB,24GB,100 Wh,2.14 kg
+ThinkPad X1 Carbon Gen 11,Lenovo,ThinkPad X1 Carbon Gen 11,2023,Windows 11 Pro,14",1920 x 1200,60Hz,Intel Core i7-1355U,Intel Iris Xe,512GB,16GB,57 Wh,1.12 kg
+ThinkPad X1 Carbon Gen 12,Lenovo,ThinkPad X1 Carbon Gen 12,2024,Windows 11 Pro,14",1920 x 1200,60Hz,Intel Core Ultra 7 155U,Intel Graphics,512GB,16GB,57 Wh,1.09 kg
+XPS 13 9340,Dell,XPS 13 (9340),2024,Windows 11 Home,13.4",1920 x 1200,120Hz,Intel Core Ultra 7 155H,Intel Arc Graphics,512GB,16GB,55 Wh,1.17 kg
+XPS 15 9530,Dell,XPS 15 (9530),2023,Windows 11 Home,15.6",1920 x 1200,60Hz,Intel Core i7-13700H,Intel Arc A370M,512GB,16GB,86 Wh,1.92 kg
+ROG Zephyrus G14 (2024),ASUS,GA403UV,2024,Windows 11 Home,14",2560 x 1600,120Hz,AMD Ryzen 9 8945HS,NVIDIA RTX 4060,1TB,16GB,73 Wh,1.50 kg
+Zenbook 14 OLED (2024),ASUS,UX3405MA,2024,Windows 11 Home,14",1920 x 1200,60Hz,Intel Core Ultra 7 155H,Intel Arc Graphics,512GB,16GB,75 Wh,1.20 kg
+Spectre x360 14 (2024),HP,Spectre x360 14-eu,2024,Windows 11 Home,14",1920 x 1200,120Hz,Intel Core Ultra 7 155H,Intel Arc Graphics,512GB,16GB,68 Wh,1.44 kg
+Surface Laptop 7 13.8,Microsoft,Surface Laptop 7 (13.8),2024,Windows 11 Home,13.8",2304 x 1536,120Hz,Snapdragon X Elite X1E-80-100,Adreno X1-85,256GB,16GB,66 Wh,1.42 kg
+Yoga Slim 7i Aura Edition,Lenovo,Yoga Slim 7i (2024),2024,Windows 11 Home,15.3",2880 x 1800,120Hz,Intel Core Ultra 7 258V,Intel Arc 140V,1TB,32GB,70 Wh,1.39 kg
+Swift Go 14,Acer,SFX14-72,2024,Windows 11 Home,14",1920 x 1200,60Hz,Intel Core Ultra 7 155H,Intel Arc Graphics,512GB,16GB,65 Wh,1.30 kg
+VivoBook S14,ASUS,VivoBook S14 (2024),2024,Windows 11 Home,14",1920 x 1200,60Hz,Intel Core Ultra 5 125H,Intel Arc Graphics,512GB,16GB,75 Wh,1.30 kg
+MacBook Air M2 15,Apple,MacBook Air 15 (M2, 2023),2023,macOS,15.3",2880 x 1864,60Hz,Apple M2,10-core GPU,256GB,8GB,53.8 Wh,1.51 kg
+Nitro V 15,Acer,ANV15-51,2024,Windows 11 Home,15.6",1920 x 1080,144Hz,Intel Core i5-13420H,NVIDIA RTX 4050,512GB,16GB,57 Wh,2.10 kg

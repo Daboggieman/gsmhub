@@ -237,8 +237,10 @@ async function main() {
           { $set: { name: categoryName, slug } },
           { upsert: true, new: true },
         );
-        categoryId = (doc as any)._id.toString();
-        catIdByName.set(categoryName, categoryId);
+        const newId = (doc as any)?._id?.toString() as string | undefined;
+        if (!newId) throw new Error(`Failed to upsert category ${categoryName}`);
+        categoryId = newId;
+        catIdByName.set(categoryName, newId);
       }
 
       const slug = generateSlug(displayName) || generateSlug(name);

@@ -29,7 +29,7 @@ export const DEVICE_TYPE_CATEGORY: Record<DeviceType, string> = {
  */
 export function classifyDeviceType(name: string): DeviceType {
   const n = (name || '').toLowerCase();
-  if (/buds|pods\b|earbuds|earphones|headphones|headset/.test(n)) {
+  if (/buds|pods\b|earbuds|earphones|headphones|headset|wf-\d|wh-\d/.test(n)) {
     return DeviceType.ACCESSORY;
   }
   if (/smartwatch|\bwatch\b/.test(n)) {

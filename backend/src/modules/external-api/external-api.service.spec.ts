@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { ExternalApiService } from './external-api.service';
 import { GsmarenaScraperService } from './gsmarena-scraper.service';
 import { HttpException } from '@nestjs/common';
+import { DeviceType } from '@shared/types';
 
 describe('ExternalApiService', () => {
   let service: ExternalApiService;
@@ -131,6 +132,32 @@ describe('ExternalApiService', () => {
       const result = await service.fetchDevicesByBrand('Samsung');
 
       expect(result).toEqual([]);
+    });
+
+    describe('type classification', () => {
+      it.each([
+        ['Galaxy S24', DeviceType.PHONE],
+        ['iPhone 15 Pro', DeviceType.PHONE],
+        ['Xperia 1 VI', DeviceType.PHONE],
+        ['Galaxy Tab S9 Ultra', DeviceType.TABLET],
+        ['iPad Pro 13 (2024)', DeviceType.TABLET],
+        ['MatePad Pro 12.2', DeviceType.TABLET],
+        ['Galaxy Watch 7', DeviceType.SMARTWATCH],
+        ['Apple Watch Series 10', DeviceType.SMARTWATCH],
+        ['Watch GT 4', DeviceType.SMARTWATCH],
+        ['Galaxy Buds3 Pro', DeviceType.ACCESSORY],
+        ['AirPods Pro 2', DeviceType.ACCESSORY],
+        ['WF-1000XM5', DeviceType.ACCESSORY],
+      ])('classifies "%s" as %s', async (name, expectedType) => {
+        scraper.fetchDevicesByBrand.mockResolvedValueOnce([
+          { name, slug: 'some_device-1.php' },
+        ]);
+
+        const result = await service.fetchDevicesByBrand('Brand');
+
+        expect(result).toHaveLength(1);
+        expect(result[0].type).toBe(expectedType);
+      });
     });
   });
 });
