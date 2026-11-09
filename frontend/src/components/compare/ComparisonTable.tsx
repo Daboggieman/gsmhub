@@ -132,7 +132,6 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
                         )}
                       </div>
                       <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">Device {idx + 1}</Badge>
-                      <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">Device {idx + 1}</Badge>
                       <span
                         className="text-xl font-black text-gray-900 leading-tight mb-1 line-clamp-2"
                         title={device.name || device.model}
