@@ -1,18 +1,14 @@
 name,brand,model,releaseDate,os,displaySize,displayResolution,weight,battery,batteryLife,waterResistance,gps,bluetooth
 Apple Watch Series 10,Apple,Apple Watch Series 10 (46mm),2024,watchOS 11,46mm,416 x 496,36.4 g,,,50m,GPS + GNSS,Bluetooth 5.3
-Apple Watch Series 10,Apple,Apple Watch Series 10 (42mm),2024,watchOS 11,42mm,374 x 446,30.0 g,,,50m,GPS + GNSS,Bluetooth 5.3
 Apple Watch Series 9,Apple,Apple Watch Series 9 (45mm),2023,watchOS 10,45mm,396 x 484,38.7 g,,,50m,GPS + GNSS,Bluetooth 5.3
 Apple Watch Ultra 2,Apple,Apple Watch Ultra 2 (49mm),2023,watchOS 10,49mm,410 x 502,61.4 g,,,100m + EN13319,Dual-frequency GPS,Bluetooth 5.3
 Apple Watch SE (2nd gen) (44mm),Apple,Apple Watch SE 2 (44mm),2022,watchOS 9,44mm,368 x 448,32.9 g,,,50m,GPS + GNSS,Bluetooth 5.0
 Galaxy Watch 7,Samsung,Galaxy Watch 7 (44mm),2024,Wear OS 5,44mm,466 x 466,33.8 g,300 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
-Galaxy Watch 7,Samsung,Galaxy Watch 7 (40mm),2024,Wear OS 5,40mm,396 x 396,28.8 g,300 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
 Galaxy Watch Ultra,Samsung,Galaxy Watch Ultra (47mm),2024,Wear OS 5,47mm,480 x 480,60.5 g,590 mAh,,10ATM + IP68,Dual-frequency GPS,Bluetooth 5.3
 Galaxy Watch 6 Classic,Samsung,Galaxy Watch 6 Classic (47mm),2023,Wear OS 4,47mm,480 x 480,52.0 g,473 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
-Galaxy Watch 6 Classic,Samsung,Galaxy Watch 6 Classic (43mm),2023,Wear OS 4,43mm,466 x 466,46.5 g,425 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
 Galaxy Watch 5 Pro,Samsung,Galaxy Watch 5 Pro (45mm),2022,Wear OS 3.5,45mm,450 x 450,46.5 g,590 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.2
 Galaxy Watch FE,Samsung,Galaxy Watch FE (40mm),2024,Wear OS 4,40mm,396 x 396,26.3 g,247 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.0
 Pixel Watch 3,Google,Pixel Watch 3 (45mm),2024,Wear OS 5,45mm,384 x 384,37.0 g,384 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
-Pixel Watch 3,Google,Pixel Watch 3 (41mm),2024,Wear OS 5,41mm,320 x 320,31.0 g,307 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.3
 Pixel Watch 2,Google,Pixel Watch 2 (41mm),2023,Wear OS 4,41mm,320 x 320,31.0 g,306 mAh,,5ATM + IP68,GPS + GNSS,Bluetooth 5.0
 OnePlus Watch 2,OnePlus,OnePlus Watch 2 (46mm),2024,Wear OS 4,46mm,466 x 466,49.0 g,500 mAh,100 h (smart mode),5ATM + IP68,Dual-frequency GPS,Bluetooth 5.0
 Amazfit GTR 4 (46mm),Amazfit,GTR 4 (46mm),2022,Zepp OS,46mm,466 x 466,34.0 g,475 mAh,14 d,5ATM,GPS + GNSS,Bluetooth 5.2
