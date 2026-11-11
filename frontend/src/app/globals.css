@@ -6,8 +6,8 @@
 /*
  * Precision Spec design system — ported from media/ui (Stitch exports).
  * Dark theme is the default palette; html.light swaps the same custom
- * properties at runtime, so every bg-*/text-*/border-* token utility
- * flips theme with no component changes.
+ * properties at runtime, so every token utility (bg, text, border) flips
+ * theme with no component changes.
  */
 @theme static {
   /* ---- Colors: dark (default) palette ---- */
