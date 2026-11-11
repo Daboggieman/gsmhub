@@ -1,0 +1,427 @@
+<!DOCTYPE html><html class="dark" lang="en" style="width: 390px; height: 1260px; overflow: hidden; position: relative;"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed":"#002113","on-primary-container":"#f8f7ff","inverse-primary":"#0054d6","surface-container-lowest":"#0a0e16","surface-tint":"#b3c5ff","on-surface":"#dfe2ee","background":"#0f131c","surface-variant":"#31353e","primary-fixed-dim":"#b3c5ff","secondary-fixed-dim":"#47d6ff","secondary-container":"#00d2ff","on-tertiary-container":"#e1ffec","inverse-on-surface":"#2c3039","on-secondary-fixed":"#001f28","surface-dim":"#0f131c","surface-container-high":"#262a33","on-primary":"#002b75","on-surface-variant":"#c2c6d8","on-primary-fixed-variant":"#003fa4","on-primary-fixed":"#001849","on-secondary-container":"#00566a","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","primary-fixed":"#dae1ff","on-error-container":"#ffdad6","on-secondary":"#003543","tertiary":"#4edea3","primary-container":"#0066ff","inverse-surface":"#dfe2ee","on-tertiary":"#003824","surface":"#0f131c","surface-container-highest":"#31353e","secondary-fixed":"#b6ebff","outline":"#8c90a1","error":"#ffb4ab","surface-bright":"#353942","surface-container":"#1c2028","on-error":"#690005","surface-container-low":"#181c24","tertiary-container":"#008259","error-container":"#93000a","secondary":"#a5e7ff","outline-variant":"#424656","tertiary-fixed-dim":"#4edea3","on-tertiary-fixed-variant":"#005236","on-secondary-fixed-variant":"#004e60","primary":"#b3c5ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xs":"0.25rem","space-md":"0.75rem","gutter":"1rem","margin":"1rem","space-lg":"1rem","space-sm":"0.5rem","space-xl":"1.5rem"},"fontFamily":{"headline-md":["Inter"],"body-sm":["Inter"],"headline-xl-mobile":["Inter"],"body-lg":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"label-xs":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"headline-lg":["Inter"]},"fontSize":{"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}],"label-xs":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-14 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary-container text-[22px]">memory</span><span class="font-headline-md text-headline-md tracking-tight text-on-surface uppercase">GSM<span class="text-secondary-container">HUB</span></span></div><span class="px-space-xs py-[2px] bg-surface-container-high rounded-DEFAULT font-label-xs text-label-xs text-secondary tracking-widest uppercase">ADMIN</span></div><div class="flex items-center gap-space-xs"><button aria-label="Search specs" class="w-11 h-11 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full px-gutter pb-6 gap-space-lg">
+<!-- Breadcrumb & Engine Status Row -->
+<div class="flex flex-col gap-space-xs pt-space-sm">
+<div class="flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs tracking-wider">
+<div class="flex items-center gap-1.5 overflow-hidden">
+<span class="hover:text-on-surface cursor-pointer">Home</span>
+<span>/</span>
+<span class="hover:text-on-surface cursor-pointer">Admin</span>
+<span>/</span>
+<span class="text-secondary-container truncate font-label-sm text-label-sm">Catalog Mgmt</span>
+</div>
+<span class="font-mono text-outline shrink-0">v4.12.0 DB</span>
+</div>
+<div class="flex items-center justify-between mt-1">
+<div class="flex items-center gap-2">
+<span class="flex h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-tertiary uppercase tracking-wider">Admin Privileges Active</span>
+</div>
+<span class="bg-surface-container-high text-on-surface-variant px-space-sm py-0.5 rounded-DEFAULT font-label-xs text-label-xs">
+        Node: us-east-4
+      </span>
+</div>
+</div>
+<!-- KPI 2x2 Grid -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Stat 1 -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Total Indexed</span>
+<span class="material-symbols-outlined text-secondary text-[18px]">database</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">15,482</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-tertiary text-[14px]">trending_up</span>
+<span class="font-label-xs text-label-xs text-tertiary">+38 this week</span>
+</div>
+</div>
+<div class="absolute -right-2 -bottom-2 w-10 h-10 bg-secondary/5 rounded-full pointer-events-none"></div>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Lab Audits</span>
+<span class="material-symbols-outlined text-error text-[18px]">biotech</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">19</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="px-1.5 py-0.5 rounded-DEFAULT bg-error-container text-on-error-container font-label-xs text-label-xs font-bold">
+            Pending Bench
+          </span>
+</div>
+</div>
+<div class="absolute -right-2 -bottom-2 w-10 h-10 bg-error/5 rounded-full pointer-events-none"></div>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Crowd Edits</span>
+<span class="material-symbols-outlined text-secondary-container text-[18px]">rate_review</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">42</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-xs text-label-xs text-secondary-container">Open submissions</span>
+</div>
+</div>
+<div class="absolute -right-2 -bottom-2 w-10 h-10 bg-secondary-container/5 rounded-full pointer-events-none"></div>
+</div>
+<!-- Stat 4 -->
+<div class="bg-surface-container p-space-md rounded-lg flex flex-col justify-between shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">Sync Latency</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">speed</span>
+</div>
+<div>
+<div class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">48ms</div>
+<div class="flex items-center gap-1 mt-0.5">
+<span class="font-label-xs text-label-xs text-tertiary">99.98% healthy</span>
+</div>
+</div>
+<div class="absolute -right-2 -bottom-2 w-10 h-10 bg-tertiary/5 rounded-full pointer-events-none"></div>
+</div>
+</div>
+<!-- Primary Action & Search Controls -->
+<div class="flex flex-col gap-space-sm">
+<!-- CTA Button -->
+<button class="w-full h-11 bg-secondary-container text-on-secondary-container font-label-md text-label-md font-semibold rounded-lg flex items-center justify-center gap-space-xs shadow-md active:scale-[0.99] transition-transform">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span>Add New Device Specification</span>
+</button>
+<!-- Search + Filter Bar -->
+<div class="flex items-center gap-space-xs">
+<div class="flex-1 h-10 bg-surface-container-high rounded-lg flex items-center px-space-sm gap-2">
+<span class="material-symbols-outlined text-outline text-[18px]">search</span>
+<input class="bg-transparent text-on-surface placeholder:text-outline text-body-sm font-body-sm w-full focus:outline-none" placeholder="Search model, SoC, or SKU..." type="text">
+<button class="text-outline hover:text-on-surface flex items-center">
+<span class="material-symbols-outlined text-[16px]">cancel</span>
+</button>
+</div>
+<div class="relative">
+<button class="h-10 px-3 bg-surface-container-high text-on-surface rounded-lg flex items-center gap-1.5 active:bg-surface-bright transition-colors" id="filterBtn">
+<span class="material-symbols-outlined text-secondary text-[18px]">tune</span>
+<span class="font-label-sm text-label-sm">Filter</span>
+</button>
+</div>
+</div>
+<!-- Active Filters Micro Badges -->
+<div class="flex items-center gap-space-xs overflow-x-auto py-0.5 no-scrollbar">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider mr-1">Status:</span>
+<button class="px-2 py-0.5 rounded-full bg-secondary-container/15 text-secondary-container font-label-xs text-label-xs whitespace-nowrap flex items-center gap-1">
+        All Statuses
+      </button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs whitespace-nowrap hover:text-on-surface">
+        Published (15.4k)
+      </button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs whitespace-nowrap hover:text-on-surface">
+        Under Audit (19)
+      </button>
+<button class="px-2 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs whitespace-nowrap hover:text-on-surface">
+        Drafts (64)
+      </button>
+</div>
+</div>
+<!-- Device Management List Header -->
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-2">
+<span class="font-headline-md text-headline-md text-on-surface">Catalog Entries</span>
+<span class="bg-surface-container-highest px-2 py-0.5 rounded text-on-surface-variant font-label-xs text-label-xs">15,482</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant font-label-xs text-label-xs">
+<span>Sort:</span>
+<span class="text-secondary-container font-semibold">Latest Edits</span>
+</div>
+</div>
+<!-- Device Cards Stack -->
+<div class="flex flex-col gap-space-sm" id="deviceList">
+<!-- Card 1 -->
+<div class="bg-surface-container rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-10 rounded-lg object-cover bg-surface-container-highest" data-alt="Close up dark minimal render of Samsung Galaxy S25 Ultra titanium camera housing with precision laser optics, tech studio lighting, cyan rim light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZh2E25d5ypOTceiJkwVu_zNNOyVT5hE3887UTsgOB7nMDjUaypCb7Hnec6r__sgsyhBXmwwOhQMtbexDcA1t9cjU59OD-JlDuH8PyCV9i4EbtqDneaLAKJu0rfUjdeZZ7TC2f5VXZnToo1Xz4RZA2592goIRHdCA4GNn89CT81gLPzbOeuE-PcSSAm2yh8W7hXZycvp_liF8wNIHqBO38r3k6fS2bcCHmatDxIvY">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Samsung Galaxy S25 Ultra</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs px-1.5 py-0.5 rounded-DEFAULT font-medium">Published</span>
+<span class="text-outline font-label-xs text-label-xs">SKU: SM-S938B</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface hover:text-secondary-container flex items-center justify-center transition-colors" title="Edit Specs">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container flex items-center justify-center transition-colors" onclick="triggerDeleteModal('Samsung Galaxy S25 Ultra', 'SM-S938B')" title="Delete Device">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+<span class="text-on-surface">Snapdragon 8 Elite</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[14px]">visibility</span>
+<span>184.2k views</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Lab Verified</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-10 rounded-lg object-cover bg-surface-container-highest" data-alt="Side profile render of Apple iPhone 16 Pro Max desert titanium frame and tactile capture button in studio lighting with deep charcoal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4M36c2am7e3SvK4Rqk9-cY84ZnmbBldy6Qfw81urG4uT9JDk9sZIMGJLc5LDZhsBAYzaydWn7AzPzh-40f70yP7NmcSq516YxwEFcynIOIkqJSyIgb3emKJyZshcRn1HF5Cx617J19Cg8s5snQqrRk4jKAkJ9ot_SoTTS7QTq82zXD_y4rkYkdZpfG9tCpX355RqZD8myJGWfjHxnAVZEJuJLodjpCBWE0beELlQ">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Apple iPhone 16 Pro Max</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs px-1.5 py-0.5 rounded-DEFAULT font-medium">Published</span>
+<span class="text-outline font-label-xs text-label-xs">SKU: A3296</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface hover:text-secondary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container flex items-center justify-center transition-colors" onclick="triggerDeleteModal('Apple iPhone 16 Pro Max', 'A3296')">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+<span class="text-on-surface">Apple A18 Pro (3nm)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[14px]">visibility</span>
+<span>162.0k views</span>
+</div>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>Lab Verified</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-10 rounded-lg object-cover bg-surface-container-highest" data-alt="Technical product shot of Xiaomi 15 Pro matte black ceramic body with leica quad lens housing on deep dark background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR7mGhkhaHGQhJoRYXrPoiAe-5ghnKJRTRYx11Ug5P0Gk6XzIlCoB-iWKitMtWVloMrjNWufoOJNiJq550ra5s5L8W2updB4msfuN6XwzZg3tUg3BJkQX8s0TFRwEAbUIL6ytfDPCBj9HOgABY5Ni1QYd1hiLzx2THM5zKxIp_GE89e7TJ2hxUJubcpURkCPxxGCUe-4KHJ3w_SxsFJA-5n8PPmQKVdc6eOSi4yQc">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Xiaomi 15 Pro</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs px-1.5 py-0.5 rounded-DEFAULT font-medium">Published</span>
+<span class="text-outline font-label-xs text-label-xs">SKU: 24101PNABC</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface hover:text-secondary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container flex items-center justify-center transition-colors" onclick="triggerDeleteModal('Xiaomi 15 Pro', '24101PNABC')">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+<span class="text-on-surface">Snapdragon 8 Elite</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[14px]">visibility</span>
+<span>62.4k views</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Updated 4h ago</span>
+</div>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<img class="w-10 h-10 rounded-lg object-cover bg-surface-container-highest" data-alt="OnePlus 13 smartphone circular camera island with Hasselblad branding illuminated by precision electric cyan edge lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIqXtLsYwiWxEKieyyI7ArLKQ-iDdX97US0LHZ77tJ-6FKrTA5dCjACHvtuzo9B17GFvRNxAEayBpgiLzk43xIic84-Jl3psIxl3mi8YRaZcfOqzqqPtbgtpoc0JCGnlRyUn2f9P3PKOznOWFBkQVrHn2fjd9PXDyUsrpYDeNz9yjOS3-eraMv6gPNkr0b2DakWUEf8YcisjVMjtmEnEsjKjkxj7kM_SQD5-lQAVE">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">OnePlus 13</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs px-1.5 py-0.5 rounded-DEFAULT font-medium">Published</span>
+<span class="text-outline font-label-xs text-label-xs">SKU: PJZ110</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface hover:text-secondary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container flex items-center justify-center transition-colors" onclick="triggerDeleteModal('OnePlus 13', 'PJZ110')">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+<span class="text-on-surface">Snapdragon 8 Elite</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-outline text-[14px]">visibility</span>
+<span>54.1k views</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[14px]">history</span>
+<span>Updated 1d ago</span>
+</div>
+</div>
+</div>
+<!-- Card 5 (Draft / Pending) -->
+<div class="bg-surface-container rounded-lg p-space-md shadow-sm flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[22px]">devices</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Nothing Phone (3)</span>
+<div class="flex items-center gap-2 mt-0.5">
+<span class="bg-secondary-container/20 text-secondary-container font-label-xs text-label-xs px-1.5 py-0.5 rounded-DEFAULT font-medium">Draft</span>
+<span class="bg-surface-container-highest text-outline font-label-xs text-label-xs px-1 py-0.5 rounded-DEFAULT">Awaiting AnTuTu</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-on-surface hover:text-secondary-container flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-DEFAULT bg-surface-container-high text-error hover:bg-error-container hover:text-on-error-container flex items-center justify-center transition-colors" onclick="triggerDeleteModal('Nothing Phone (3)', 'AIN065-DRAFT')">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="bg-surface-container-low rounded p-2 flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+<span class="text-on-surface">Dimensity 8400 Ultra</span>
+</div>
+<div class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined text-[14px]">pending</span>
+<span>Audit in Queue</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Delete Protection Callout & Security Notice -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-start gap-space-sm shadow-sm">
+
+<div class="flex flex-col gap-0.5">
+
+
+</div>
+</div>
+<!-- Mobile Pagination Bar -->
+<div class="flex flex-col gap-space-xs pt-1">
+<div class="flex items-center justify-between">
+<span class="text-on-surface-variant font-label-xs text-label-xs">
+        Showing <span class="text-on-surface font-semibold">1-5</span> of <span class="text-on-surface font-semibold">15,482</span> specs
+      </span>
+<div class="flex items-center gap-1 font-label-xs text-label-xs text-outline">
+<span>Rows per page:</span>
+<span class="text-on-surface font-medium bg-surface-container-high px-1.5 py-0.5 rounded">5</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs mt-1">
+<button class="flex-1 h-9 bg-surface-container-high text-outline rounded flex items-center justify-center gap-1 font-label-sm text-label-sm opacity-50 cursor-not-allowed">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+<span>Prev</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="w-9 h-9 rounded bg-secondary-container text-on-secondary-container font-label-sm text-label-sm font-bold flex items-center justify-center">1</button>
+<button class="w-9 h-9 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center justify-center">2</button>
+<button class="w-9 h-9 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center justify-center">3</button>
+<span class="text-outline px-1">...</span>
+<button class="w-9 h-9 rounded bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm flex items-center justify-center">3097</button>
+</div>
+<button class="flex-1 h-9 bg-surface-container-high text-on-surface rounded flex items-center justify-center gap-1 font-label-sm text-label-sm hover:bg-surface-bright active:scale-[0.98] transition-transform">
+<span>Next</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Interactive Modal Backdrop & Content -->
+<div class="hidden fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-surface-container-lowest/80 backdrop-blur-sm p-margin" id="deleteModal">
+<div class="w-full max-w-sm bg-surface-container-low rounded-xl p-space-lg flex flex-col gap-space-md shadow-2xl relative">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-error-container text-on-error-container flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+</div>
+<span class="font-headline-md text-headline-md text-on-surface font-bold">Confirm Deletion</span>
+</div>
+<button class="text-outline hover:text-on-surface" onclick="closeDeleteModal()">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          You are preparing to delete the canonical spec record for:
+        </p>
+<div class="p-space-sm bg-surface-container rounded mt-1">
+<div class="font-label-md text-label-md text-on-surface font-semibold" id="modalDeviceName">Device Name</div>
+<div class="font-label-xs text-label-xs text-outline font-mono" id="modalDeviceSku">SKU: ---</div>
+</div>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">
+          Enter 6-digit Admin PIN
+        </label>
+<div class="flex justify-between gap-1">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" type="password" value="•">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" type="password" value="•">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" type="password" value="•">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" placeholder="-" type="password">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" placeholder="-" type="password">
+<input class="w-10 h-11 text-center bg-surface-container-high text-on-surface font-headline-md rounded focus:outline-none focus:bg-surface-bright" maxlength="1" placeholder="-" type="password">
+</div>
+</div>
+<div class="flex items-center gap-space-sm pt-2">
+<button class="flex-1 h-10 bg-surface-container-high text-on-surface rounded font-label-md text-label-md hover:bg-surface-bright transition-colors" onclick="closeDeleteModal()">
+          Cancel
+        </button>
+<button class="flex-1 h-10 bg-error text-on-error rounded font-label-md text-label-md font-semibold hover:opacity-90 active:scale-95 transition-transform flex items-center justify-center gap-1" onclick="confirmDeleteAction()">
+<span class="material-symbols-outlined text-[18px]">delete_forever</span>
+<span>Delete Spec</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+    function triggerDeleteModal(name, sku) {
+      document.getElementById('modalDeviceName').innerText = name;
+      document.getElementById('modalDeviceSku').innerText = 'SKU: ' + sku;
+      document.getElementById('deleteModal').classList.remove('hidden');
+    }
+
+    function closeDeleteModal() {
+      document.getElementById('deleteModal').classList.add('hidden');
+    }
+
+    function confirmDeleteAction() {
+      const modal = document.getElementById('deleteModal');
+      modal.classList.add('hidden');
+      alert('Specification purged from cache clusters. CDN sync dispatched.');
+    }
+  </script>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.5)]" data-active-classes="text-secondary-container"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Home</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare" href="#"><span class="material-symbols-outlined text-[22px]">compare_arrows</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Compare</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="filter" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Filter</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="favorites" href="#"><span class="material-symbols-outlined text-[22px]">bookmark</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Saved</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 transition-colors text-secondary-container" data-path="admin-control" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Admin</span></a></div></nav>
+
+<div id="snapdom-sandbox" data-snapdom-sandbox="true" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 0px; height: 0px; overflow: hidden;"></div></body></html>

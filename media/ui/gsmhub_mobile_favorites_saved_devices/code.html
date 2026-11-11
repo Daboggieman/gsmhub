@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary-fixed-dim": "#47d6ff", "background": "#0f131c", "surface-container-highest": "#31353e", "primary-fixed-dim": "#b3c5ff", "primary": "#b3c5ff", "on-tertiary": "#003824", "on-secondary-fixed-variant": "#004e60", "on-tertiary-fixed-variant": "#005236", "outline-variant": "#424656", "on-surface-variant": "#c2c6d8", "on-background": "#dfe2ee", "on-tertiary-fixed": "#002113", "surface-container-high": "#262a33", "inverse-on-surface": "#2c3039", "primary-container": "#0066ff", "on-surface": "#dfe2ee", "tertiary-fixed": "#6ffbbe", "secondary": "#a5e7ff", "tertiary-container": "#008259", "surface-bright": "#353942", "secondary-fixed": "#b6ebff", "inverse-primary": "#0054d6", "surface-dim": "#0f131c", "on-error-container": "#ffdad6", "on-secondary-fixed": "#001f28", "on-error": "#690005", "primary-fixed": "#dae1ff", "surface-tint": "#b3c5ff", "on-primary": "#002b75", "on-primary-fixed": "#001849", "inverse-surface": "#dfe2ee", "surface-container-lowest": "#0a0e16", "surface-variant": "#31353e", "error-container": "#93000a", "on-primary-fixed-variant": "#003fa4", "tertiary-fixed-dim": "#4edea3", "surface-container-low": "#181c24", "surface": "#0f131c", "on-primary-container": "#f8f7ff", "on-secondary-container": "#00566a", "on-tertiary-container": "#e1ffec", "secondary-container": "#00d2ff", "tertiary": "#4edea3", "on-secondary": "#003543", "outline": "#8c90a1", "surface-container": "#1c2028", "error": "#ffb4ab" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "gutter": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.5rem", "space-md": "0.75rem", "space-lg": "1rem", "margin": "1rem" }, fontFamily: { "headline-xl-mobile": ["Inter"], "headline-xl": ["Inter"], "label-xs": ["Inter"], "label-md": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"] }, fontSize: { "headline-xl-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}], "headline-xl": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-xs": ["10px", {"lineHeight": "12px", "letterSpacing": "0.06em", "fontWeight": "700"}], "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}], "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}], "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "600"}], "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}], "headline-lg": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}], "headline-md": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.5)]"><div class="h-14 px-space-md flex items-center justify-between gap-space-sm max-w-md mx-auto w-full"><button aria-label="Open Menu" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-secondary focus:outline-none shrink-0" onclick="document.getElementById('mobile-drawer').classList.remove('-translate-x-full');document.getElementById('drawer-backdrop').classList.remove('hidden')" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs shrink-0"><img alt="GSMHub Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDOGQ0phu26RYKPLCF4Dmbj-rDTOWeZrFEf4fEKs6E4YGikj5AJWcPGkPHUqV7InSBvrNaWoFWbNYOjXQUV0vMiYgmywDC9vebz6JRdv_Ka_O-PGImrF-JDa_scuwnDCp2wM-QyO5Itlciy0oGu9qMrjT5uuHvwMCNCZezwfr-Xvjn7ldBqbfk3H5Xc_cid86H7f7MT3IDDLud3vhoLTAMOfcLYnajgGpnaiAqAwGOd"/><span class="font-headline-md text-headline-md tracking-tight text-on-surface hidden xs:inline">GSMHub</span></div><a class="flex-1 flex items-center gap-space-xs h-10 px-space-sm bg-surface-container-highest/60 rounded text-on-surface-variant hover:text-on-surface focus:outline-none" data-path="search-filters" href="#"><span class="material-symbols-outlined text-[18px] text-secondary">search</span><span class="font-body-sm text-body-sm truncate text-outline">Search phones, specs...</span></a><div class="flex items-center gap-space-xs shrink-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEHvcM030Ltwo8u4385ubl82cE3x4sv3eQjg_NYRpHCJh2U2TAZCCo0rm45wHgDFCXsTgI5ke2tsMAHtNyYsVozjMGFXFYOOXlalS2ZlkYE16206qpj_njXB-c4kTrQ15puh02VgJvXSp9jEc-bDuMWQN5cAn1FpAYKgqRHpSTAHUBpZzAtdmMGFCdNmDjCn-HaXkoLMWIi0IF0VrgKIIeBTUCKQt127tYlxeuAY"/></div></div></header><div class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm transition-opacity" id="drawer-backdrop" onclick="this.classList.add('hidden');document.getElementById('mobile-drawer').classList.add('-translate-x-full')"></div><aside class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-surface-container-low flex flex-col -translate-x-full transition-transform duration-300 ease-in-out shadow-[0_20px_40px_-8px_rgba(0,0,0,0.8)]" id="mobile-drawer"><div class="pt-safe px-space-lg pb-space-md flex items-center justify-between bg-surface-container"><div class="flex items-center gap-space-sm"><img alt="GSMHub Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDOGQ0phu26RYKPLCF4Dmbj-rDTOWeZrFEf4fEKs6E4YGikj5AJWcPGkPHUqV7InSBvrNaWoFWbNYOjXQUV0vMiYgmywDC9vebz6JRdv_Ka_O-PGImrF-JDa_scuwnDCp2wM-QyO5Itlciy0oGu9qMrjT5uuHvwMCNCZezwfr-Xvjn7ldBqbfk3H5Xc_cid86H7f7MT3IDDLud3vhoLTAMOfcLYnajgGpnaiAqAwGOd"/><span class="font-headline-md text-headline-md text-on-surface font-bold">GSMHub</span></div><button class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('mobile-drawer').classList.add('-translate-x-full');document.getElementById('drawer-backdrop').classList.add('hidden')" type="button"><span class="material-symbols-outlined text-[22px]">close</span></button></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-xs"><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Database</div><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface" data-path="home" href="#"><span class="material-symbols-outlined text-secondary text-[20px]">home</span><span class="font-label-md text-label-md">Home</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="phones-catalog" href="#"><span class="material-symbols-outlined text-[20px]">smartphone</span><span class="font-label-md text-label-md">Phones</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="tablets-catalog" href="#"><span class="material-symbols-outlined text-[20px]">tablet_mac</span><span class="font-label-md text-label-md">Tablets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="laptops-catalog" href="#"><span class="material-symbols-outlined text-[20px]">laptop_chromebook</span><span class="font-label-md text-label-md">Laptops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="wearables-catalog" href="#"><span class="material-symbols-outlined text-[20px]">watch</span><span class="font-label-md text-label-md">Wearables</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="brands-index" href="#"><span class="material-symbols-outlined text-[20px]">category</span><span class="font-label-md text-label-md">Brands Index</span></a><div class="my-space-xs border-t border-outline-variant/30"></div><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Features &amp; Community</div><a class="flex items-center justify-between px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="compare-matrix" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-secondary text-[20px]">compare_arrows</span><span class="font-label-md text-label-md">Compare Matrix</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold">2</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="favorites" href="#"><span class="material-symbols-outlined text-[20px]">favorite</span><span class="font-label-md text-label-md">Favorites</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="news-and-reviews" href="#"><span class="material-symbols-outlined text-[20px]">newspaper</span><span class="font-label-md text-label-md">News &amp; Reviews</span></a><div class="my-space-xs border-t border-outline-variant/30"></div><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">System</div><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="contact" href="#"><span class="material-symbols-outlined text-[20px]">contact_support</span><span class="font-label-md text-label-md">Contact</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="admin-portal" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="font-label-md text-label-md">Admin</span></a></div><div class="p-space-md pb-safe bg-surface-container"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEHvcM030Ltwo8u4385ubl82cE3x4sv3eQjg_NYRpHCJh2U2TAZCCo0rm45wHgDFCXsTgI5ke2tsMAHtNyYsVozjMGFXFYOOXlalS2ZlkYE16206qpj_njXB-c4kTrQ15puh02VgJvXSp9jEc-bDuMWQN5cAn1FpAYKgqRHpSTAHUBpZzAtdmMGFCdNmDjCn-HaXkoLMWIi0IF0VrgKIIeBTUCKQt127tYlxeuAY"/><div class="flex-1 min-w-0"><div class="font-label-md text-label-md text-on-surface truncate">Tech Analyst</div><div class="font-body-sm text-body-sm text-outline truncate">Pro Member</div></div></div></div></aside><main class="flex-1 flex flex-col relative w-full pt-14 pb-20 bg-surface max-w-md mx-auto"><div class="flex flex-col w-full pb-6 space-y-space-md">
+<!-- 1. Breadcrumbs Context -->
+<div class="px-space-md pt-2 flex items-center gap-1.5 text-outline">
+<a class="font-label-xs text-label-xs hover:text-secondary transition-colors" data-path="home" href="#">HOME</a>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="font-label-xs text-label-xs text-outline">ACCOUNT</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+<span class="font-label-xs text-label-xs text-secondary-fixed-dim">SAVED &amp; WISHLIST</span>
+</div>
+<!-- Page Title & Micro Status -->
+<div class="px-space-md flex items-baseline justify-between">
+<div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface tracking-tight">Devices Hub</h1>
+<p class="font-body-sm text-body-sm text-outline mt-0.5">Real-time alerts, comparison queue &amp; spec tracking</p>
+</div>
+<div class="flex items-center gap-1 px-2 py-1 rounded bg-surface-container-high text-tertiary">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-label-xs text-label-xs font-bold tracking-wider">SYNCED</span>
+</div>
+</div>
+<!-- 3. Summary Stats Banner with Launch 3-Way Compare CTA -->
+<div class="px-space-md">
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-md flex flex-col gap-3">
+<div class="grid grid-cols-3 gap-2">
+<div class="bg-surface-container p-2.5 rounded flex flex-col">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Saved</span>
+<span class="font-headline-md text-headline-md text-on-surface mt-0.5">8</span>
+<span class="font-label-xs text-label-xs text-outline-variant mt-0.5">Across 4 brands</span>
+</div>
+<div class="bg-surface-container p-2.5 rounded flex flex-col">
+<span class="font-label-xs text-label-xs text-tertiary uppercase tracking-wider flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">trending_down</span> Drops
+          </span>
+<span class="font-headline-md text-headline-md text-tertiary mt-0.5">2 Alerted</span>
+<span class="font-label-xs text-label-xs text-outline-variant mt-0.5">Save up to $140</span>
+</div>
+<div class="bg-surface-container p-2.5 rounded flex flex-col">
+<span class="font-label-xs text-label-xs text-secondary-container uppercase tracking-wider flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">sync_alt</span> Compare
+          </span>
+<span class="font-headline-md text-headline-md text-secondary mt-0.5">3 Queued</span>
+<span class="font-label-xs text-label-xs text-outline-variant mt-0.5">Max 4 items</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<div class="flex -space-x-2 overflow-hidden items-center pl-1">
+<div class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface font-bold">S24</div>
+<div class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface font-bold">16P</div>
+<div class="inline-block h-6 w-6 rounded-full ring-2 ring-surface-container bg-surface-container-highest flex items-center justify-center text-[10px] text-on-surface font-bold">OP12</div>
+</div>
+<a class="flex-1 ml-3 h-10 px-space-md bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-1.5 shadow-sm active:scale-[0.98] transition-transform" data-path="compare-matrix" href="#">
+<span class="material-symbols-outlined text-[18px]">compare_arrows</span>
+<span class="font-label-md text-label-md font-semibold tracking-wide">Launch 3-Way Compare</span>
+</a>
+</div>
+</div>
+</div>
+<!-- 2. Tabs / Filter Segment -->
+<div class="px-space-md">
+<div class="flex items-center gap-1 bg-surface-container-lowest p-1 rounded-xl">
+<button class="flex-1 py-2 px-1 text-center rounded font-label-md text-label-md transition-colors bg-surface-container-high text-on-surface font-semibold shadow-sm flex items-center justify-center gap-1" id="tab-all" onclick="switchHubTab('all')">
+<span>All Saved</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container text-secondary text-[10px] font-bold">8</span>
+</button>
+<button class="flex-1 py-2 px-1 text-center rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1" id="tab-compare" onclick="switchHubTab('compare')">
+<span>Compare Tray</span>
+<span class="px-1.5 py-0.2 rounded-full bg-surface-container-high text-outline text-[10px] font-bold">3</span>
+</button>
+<button class="flex-1 py-2 px-1 text-center rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1" id="tab-deals" onclick="switchHubTab('deals')">
+<span>Price Drops</span>
+<span class="px-1.5 py-0.2 rounded-full bg-tertiary-container text-on-tertiary-container text-[10px] font-bold">4</span>
+</button>
+<button class="p-2 rounded text-outline hover:text-secondary transition-colors" id="tab-empty" onclick="switchHubTab('empty')" title="Toggle Empty State View">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+</div>
+</div>
+<!-- 5. Quick Actions Bar / Batch Management -->
+<div class="px-space-md flex items-center justify-between" id="batch-actions-bar">
+<label class="flex items-center gap-2 cursor-pointer select-none">
+<input class="w-4 h-4 rounded bg-surface-container-highest checked:bg-secondary-container accent-[#00d2ff] cursor-pointer" id="select-all-checkbox" onchange="toggleSelectAll(this)" type="checkbox"/>
+<span class="font-label-sm text-label-sm text-outline">Select All (8)</span>
+</label>
+<div class="flex items-center gap-2">
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-on-surface-variant hover:text-on-surface active:scale-95 transition-all text-xs font-label-sm" onclick="triggerExportNotice()">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+<span>Export Spec (CSV)</span>
+</button>
+<button class="flex items-center gap-1 px-2.5 py-1 rounded bg-surface-container text-outline hover:text-error active:scale-95 transition-all text-xs font-label-sm" onclick="triggerClearAllPrompt()">
+<span class="material-symbols-outlined text-[14px]">delete_sweep</span>
+<span>Clear</span>
+</button>
+</div>
+</div>
+<!-- Export Toast Alert (Hidden initially) -->
+<div class="hidden mx-space-md p-2.5 rounded bg-surface-container-high text-secondary flex items-center justify-between text-xs font-label-sm animate-pulse" id="export-toast">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+<span>Generating PDF/CSV hardware matrix for 8 items...</span>
+</div>
+<button class="text-outline hover:text-on-surface" onclick="document.getElementById('export-toast').classList.add('hidden')">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+<!-- 4. Device Card Grid / List (Populated Section) -->
+<div class="px-space-md space-y-space-sm" id="populated-list">
+<!-- Card 1: Samsung S24 Ultra -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative flex flex-col gap-2.5 transition-all duration-200">
+<div class="flex gap-space-sm">
+<!-- Selector checkbox + Product Render Placeholder -->
+<div class="flex flex-col items-center justify-between shrink-0">
+<input class="device-checkbox w-4 h-4 rounded bg-surface-container-highest accent-[#00d2ff]" type="checkbox"/>
+<div class="w-20 h-24 rounded bg-surface-container flex items-center justify-center p-1 mt-1 overflow-hidden">
+<img class="object-contain w-full h-full" data-alt="High tech minimal studio photo of Samsung Galaxy S24 Ultra titanium gray chassis showing sharp edges and distinct camera array against dark studio background with subtle cyan rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDb1IjJIdZrbSU7-tH6JxywB_HhplTzHnGbj9qtfPiWsH1Y6Yz6KhAGrZ3qm0_LsE8TtPl0Jgfr--A19l5eXnPZ4SoBKRFK2EoTvDk3tZZu3SLte1xpXpuZEtqiPlnw0VaARZrQjx3eZCmvPtRMiIbEtdXGpiS5I_SJCuMWBbGWdEeHuGaKv2hEAPhRPdgEDcFfE5A96DSSxtkokENALcGciXjANiqLtTEB4Y8PdjY"/>
+</div>
+</div>
+<!-- Info & Badges -->
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 flex-wrap mb-1">
+<span class="px-1.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-xs text-label-xs font-bold tracking-tight">-$120 DROP</span>
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold">QUEUED #1</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-outline font-label-xs text-label-xs font-medium">FLAGSHIP</span>
+</div>
+<a class="font-headline-md text-headline-md text-on-surface truncate block hover:text-secondary transition-colors" data-path="device-detail" href="#">Samsung Galaxy S24 Ultra</a>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5 mt-0.5">
+<span>Snapdragon 8 Gen 3</span>
+<span>•</span>
+<span>12GB RAM</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span>200MP Quad</span>
+<span>•</span>
+<span>5000 mAh (45W)</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-2 pt-2 bg-surface-container-lowest/40 px-2 py-1.5 rounded">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">$1,179</span>
+<span class="font-body-sm text-body-sm line-through text-outline">$1,299</span>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary font-mono">Best: Amazon Prime</span>
+</div>
+</div>
+</div>
+<!-- Actions Strip -->
+<div class="flex items-center justify-between pt-1 gap-2">
+<button class="flex-1 h-8 rounded bg-secondary-container text-on-secondary flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform" onclick="toggleCompareSlot(this, 'S24 Ultra')">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>In Compare Tray</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container text-on-surface-variant hover:text-secondary flex items-center justify-center text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px] mr-1">notifications_active</span> Alert $1,150
+        </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-error-container text-outline hover:text-on-error-container flex items-center justify-center transition-colors" onclick="removeCard(this)">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Card 2: Apple iPhone 16 Pro Max -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative flex flex-col gap-2.5 transition-all duration-200">
+<div class="flex gap-space-sm">
+<div class="flex flex-col items-center justify-between shrink-0">
+<input class="device-checkbox w-4 h-4 rounded bg-surface-container-highest accent-[#00d2ff]" type="checkbox"/>
+<div class="w-20 h-24 rounded bg-surface-container flex items-center justify-center p-1 mt-1 overflow-hidden">
+<img class="object-contain w-full h-full" data-alt="Futuristic studio product rendering of natural titanium iPhone 16 Pro Max showing frosted matte glass back and titanium frame surrounded by deep slate moody lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCXNs6MnkVVOTW6xxcGB-tL8aOZV2oCActdmUvGDeKvguWHNOSi1JBIoXpkF_YU0wX1YtMw20ObBuxED2IcRpvkRZnopsFtQ_0fpGkp_3_PPjPqEw07zQAW4HRNnLybWs5izNhHEejHHP4LrrD6vHfl840Afg-ma5lVR4RHiVoSLPm94EdHzutFEPkFp_1nzyfYa69QhZ8cOnNftxhtdFB_jfo6ZLp0k9EETjogb_0"/>
+</div>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 flex-wrap mb-1">
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold">QUEUED #2</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-outline font-label-xs text-label-xs font-medium">FLAGSHIP</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-secondary font-label-xs text-label-xs font-mono">STABLE PRICE</span>
+</div>
+<a class="font-headline-md text-headline-md text-on-surface truncate block hover:text-secondary transition-colors" data-path="device-detail" href="#">iPhone 16 Pro Max</a>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5 mt-0.5">
+<span>Apple A18 Pro (3nm)</span>
+<span>•</span>
+<span>8GB RAM</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span>48MP Fusion Triple</span>
+<span>•</span>
+<span>4685 mAh</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-2 pt-2 bg-surface-container-lowest/40 px-2 py-1.5 rounded">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">$1,199</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline font-mono">Best: Apple Direct</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 gap-2">
+<button class="flex-1 h-8 rounded bg-secondary-container text-on-secondary flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform" onclick="toggleCompareSlot(this, 'iPhone 16 Pro Max')">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>In Compare Tray</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container text-on-surface-variant hover:text-secondary flex items-center justify-center text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px] mr-1">add_alert</span> Watch Price
+        </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-error-container text-outline hover:text-on-error-container flex items-center justify-center transition-colors" onclick="removeCard(this)">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Card 3: OnePlus 12 -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative flex flex-col gap-2.5 transition-all duration-200">
+<div class="flex gap-space-sm">
+<div class="flex flex-col items-center justify-between shrink-0">
+<input class="device-checkbox w-4 h-4 rounded bg-surface-container-highest accent-[#00d2ff]" type="checkbox"/>
+<div class="w-20 h-24 rounded bg-surface-container flex items-center justify-center p-1 mt-1 overflow-hidden">
+<img class="object-contain w-full h-full" data-alt="Emerald green OnePlus 12 flagship phone render showing circular Hasselblad camera module reflecting glossy highlights on dark high-tech reflective background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCLe0dn2YGhGBzqylwLlYv6yx40DKuadxyD3uSQbjXYl2zwdfvjnCpO0XMrD2fJk94dlTFgjBqwrS-WhDt73OR6t9YtKXMNuuOpvUZrPgj3zH896Ac_s0zzJAo2BXnX41nnxUFzUkhtTBZ9K2FYqaXVlN4zxPtlKVCVCyBmNM0bXkj-ANa647vqtrkDtf9ByETu3ohhzU_uRcQgzGbN7q5hNt88cX_IAxO0a5GgRZQ"/>
+</div>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 flex-wrap mb-1">
+<span class="px-1.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-xs text-label-xs font-bold tracking-tight">-$100 DROP</span>
+<span class="px-1.5 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold">QUEUED #3</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-tertiary-fixed font-label-xs text-label-xs">VALUE HERO</span>
+</div>
+<a class="font-headline-md text-headline-md text-on-surface truncate block hover:text-secondary transition-colors" data-path="device-detail" href="#">OnePlus 12 5G</a>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5 mt-0.5">
+<span>Snapdragon 8 Gen 3</span>
+<span>•</span>
+<span>16GB LPDDR5X</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span>Hasselblad 50MP</span>
+<span>•</span>
+<span>5400 mAh (100W)</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-2 pt-2 bg-surface-container-lowest/40 px-2 py-1.5 rounded">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">$699</span>
+<span class="font-body-sm text-body-sm line-through text-outline">$799</span>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary font-mono">Best: Best Buy</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 gap-2">
+<button class="flex-1 h-8 rounded bg-secondary-container text-on-secondary flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform" onclick="toggleCompareSlot(this, 'OnePlus 12')">
+<span class="material-symbols-outlined text-[16px]">check</span>
+<span>In Compare Tray</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container text-on-surface-variant hover:text-secondary flex items-center justify-center text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px] mr-1">history</span> 30d Trend
+        </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-error-container text-outline hover:text-on-error-container flex items-center justify-center transition-colors" onclick="removeCard(this)">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Card 4: Google Pixel 9 Pro XL -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative flex flex-col gap-2.5 transition-all duration-200">
+<div class="flex gap-space-sm">
+<div class="flex flex-col items-center justify-between shrink-0">
+<input class="device-checkbox w-4 h-4 rounded bg-surface-container-highest accent-[#00d2ff]" type="checkbox"/>
+<div class="w-20 h-24 rounded bg-surface-container flex items-center justify-center p-1 mt-1 overflow-hidden">
+<img class="object-contain w-full h-full" data-alt="Obsidian Google Pixel 9 Pro XL with pill-shaped camera visor visor horizontal bar modern industrial product photo studio dark backdrop" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACsR12modGg0-9BtQjsYmeX5kS8KKabULBila1dJVL-oyiQ82SV5t3oXez1DfFw4yXNns41xm8Sg8_6t7PrRughBeQTrKyUK6H6LjWqOww_W7SXA4nMRT5V1T7GkG9LtscHf9DUsNWbXGi48DKocn8et74KvjySyqz5KX9ad2vdyhZ5GFGlMOR5bJslX14QirAzZ1HFHL7mxxj9hd1H3e2H6yQyYfdsqaDUsPumUg"/>
+</div>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 flex-wrap mb-1">
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-secondary font-label-xs text-label-xs font-medium">AI CAMERA LEADER</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-outline font-label-xs text-label-xs">16GB RAM</span>
+</div>
+<a class="font-headline-md text-headline-md text-on-surface truncate block hover:text-secondary transition-colors" data-path="device-detail" href="#">Google Pixel 9 Pro XL</a>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5 mt-0.5">
+<span>Google Tensor G4</span>
+<span>•</span>
+<span>16GB RAM</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span>50MP + 48MP Tele</span>
+<span>•</span>
+<span>5060 mAh (37W)</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-2 pt-2 bg-surface-container-lowest/40 px-2 py-1.5 rounded">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">$1,099</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline font-mono">Best: Google Store</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 gap-2">
+<button class="flex-1 h-8 rounded bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform" onclick="toggleCompareSlot(this, 'Pixel 9 Pro XL')">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add to Compare</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container text-on-surface-variant hover:text-secondary flex items-center justify-center text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px] mr-1">add_alert</span> Watch Price
+        </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-error-container text-outline hover:text-on-error-container flex items-center justify-center transition-colors" onclick="removeCard(this)">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<!-- Card 5: Xiaomi 14 Ultra -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative flex flex-col gap-2.5 transition-all duration-200">
+<div class="flex gap-space-sm">
+<div class="flex flex-col items-center justify-between shrink-0">
+<input class="device-checkbox w-4 h-4 rounded bg-surface-container-highest accent-[#00d2ff]" type="checkbox"/>
+<div class="w-20 h-24 rounded bg-surface-container flex items-center justify-center p-1 mt-1 overflow-hidden">
+<img class="object-contain w-full h-full" data-alt="Xiaomi 14 Ultra photography powerhouse smartphone white vegan leather rear texture with massive circular Leica quad camera ring dark minimal studio set" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBQLbEnnN3rEwwJGapiJbkJViZ20u3j1_z0NR2IRqK-WSsTEJ5fRRN1N8yBYgSLhLAn_DinY4mNRxGcsR1zU1oHPzRW5OkonO2VVGMUsq-RQk4iNBbB0HfHE2m3FYvP8_Z01lcnTXtoPUeb4WtLuxFz_MfVSY3jaFsxj1RF3Ghrx1rCtEEWKQ-GH8mQgFc0p-kOpHtOK1T9zTufs6zBJJWrBfwuF46oFC0hGZBmIkU"/>
+</div>
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 flex-wrap mb-1">
+<span class="px-1.5 py-0.5 rounded-full bg-tertiary-container text-on-tertiary-container font-label-xs text-label-xs font-bold tracking-tight">-$140 DROP</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container text-outline font-label-xs text-label-xs">1-INCH SENSOR</span>
+</div>
+<a class="font-headline-md text-headline-md text-on-surface truncate block hover:text-secondary transition-colors" data-path="device-detail" href="#">Xiaomi 14 Ultra Leica</a>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5 mt-0.5">
+<span>Snapdragon 8 Gen 3</span>
+<span>•</span>
+<span>16GB RAM</span>
+</div>
+<div class="font-body-sm text-body-sm text-outline flex items-center gap-1.5">
+<span>Quad 50MP Leica</span>
+<span>•</span>
+<span>5000 mAh (90W)</span>
+</div>
+</div>
+<div class="flex items-baseline justify-between mt-2 pt-2 bg-surface-container-lowest/40 px-2 py-1.5 rounded">
+<div class="flex items-baseline gap-1.5">
+<span class="font-headline-md text-headline-md text-on-surface tracking-tight font-bold">$1,059</span>
+<span class="font-body-sm text-body-sm line-through text-outline">$1,199</span>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary font-mono">Best: B&amp;H Photo</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 gap-2">
+<button class="flex-1 h-8 rounded bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform" onclick="toggleCompareSlot(this, 'Xiaomi 14 Ultra')">
+<span class="material-symbols-outlined text-[16px]">add</span>
+<span>Add to Compare</span>
+</button>
+<button class="h-8 px-3 rounded bg-surface-container text-on-surface-variant hover:text-secondary flex items-center justify-center text-xs font-label-sm">
+<span class="material-symbols-outlined text-[16px] mr-1">history</span> 30d Trend
+        </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-error-container text-outline hover:text-on-error-container flex items-center justify-center transition-colors" onclick="removeCard(this)">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- 6. Secondary / Empty State Variant Container (Toggleable) -->
+<div class="hidden px-space-md py-4" id="empty-state-view">
+<div class="bg-surface-container-low rounded-xl p-space-xl flex flex-col items-center text-center shadow-lg">
+<div class="w-16 h-16 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary mb-4 shadow-inner">
+<span class="material-symbols-outlined text-[32px]">bookmark_border</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface">No Devices Saved Yet</h2>
+<p class="font-body-md text-body-md text-outline max-w-xs mt-2">
+        Tap the bookmark or compare icon on any technical specification sheet to track price alerts and compare flagship silicon side-by-side.
+      </p>
+<div class="w-full bg-surface-container p-3 rounded-lg mt-5 mb-5 text-left flex items-start gap-2.5">
+<span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">lightbulb</span>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold block">Pro Tech Tip</span>
+<span class="font-body-sm text-body-sm text-outline">You can queue up to 4 devices across brands for instant side-by-side spec delta highlighting.</span>
+</div>
+</div>
+<div class="w-full flex flex-col gap-2">
+<a class="w-full h-11 bg-primary-container text-on-primary-container rounded flex items-center justify-center gap-2 font-label-md text-label-md font-semibold active:scale-[0.98] transition-transform" data-path="phones-catalog" href="#">
+<span class="material-symbols-outlined text-[18px]">travel_explore</span>
+<span>Browse Top Flagships</span>
+</a>
+<button class="w-full h-10 bg-surface-container text-secondary rounded flex items-center justify-center gap-1 font-label-md text-label-md active:scale-[0.98] transition-transform" onclick="switchHubTab('all')">
+<span>Return to Saved List (8)</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Informative Toast Container -->
+<div class="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 bg-surface-container-highest/95 backdrop-blur-md px-4 py-2 rounded-full shadow-2xl flex items-center gap-2 opacity-0 pointer-events-none transition-opacity duration-300" id="action-feedback">
+<span class="material-symbols-outlined text-secondary text-[16px]">info</span>
+<span class="font-label-sm text-label-sm text-on-surface" id="action-feedback-text">Device removed</span>
+</div>
+</div>
+<script>
+  // Tab Switching Functionality
+  function switchHubTab(tabName) {
+    const tabAll = document.getElementById('tab-all');
+    const tabCompare = document.getElementById('tab-compare');
+    const tabDeals = document.getElementById('tab-deals');
+    const populated = document.getElementById('populated-list');
+    const empty = document.getElementById('empty-state-view');
+    const batchBar = document.getElementById('batch-actions-bar');
+
+    const resetTabStyles = (el) => {
+      el.className = "flex-1 py-2 px-1 text-center rounded font-label-md text-label-md transition-colors text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1";
+    };
+    const setActiveTabStyles = (el) => {
+      el.className = "flex-1 py-2 px-1 text-center rounded font-label-md text-label-md transition-colors bg-surface-container-high text-on-surface font-semibold shadow-sm flex items-center justify-center gap-1";
+    };
+
+    resetTabStyles(tabAll);
+    resetTabStyles(tabCompare);
+    resetTabStyles(tabDeals);
+
+    if (tabName === 'empty') {
+      populated.classList.add('hidden');
+      batchBar.classList.add('hidden');
+      empty.classList.remove('hidden');
+      showFeedback('Previewing Empty State view');
+      return;
+    }
+
+    populated.classList.remove('hidden');
+    batchBar.classList.remove('hidden');
+    empty.classList.add('hidden');
+
+    if (tabName === 'all') {
+      setActiveTabStyles(tabAll);
+      filterCards('all');
+    } else if (tabName === 'compare') {
+      setActiveTabStyles(tabCompare);
+      filterCards('compare');
+    } else if (tabName === 'deals') {
+      setActiveTabStyles(tabDeals);
+      filterCards('deals');
+    }
+  }
+
+  // Filter Cards by Subcategory
+  function filterCards(type) {
+    const cards = document.querySelectorAll('#populated-list > div');
+    cards.forEach(card => {
+      if (type === 'all') {
+        card.style.display = 'flex';
+      } else if (type === 'compare') {
+        const hasQueued = card.innerText.includes('QUEUED') || card.innerText.includes('In Compare Tray');
+        card.style.display = hasQueued ? 'flex' : 'none';
+      } else if (type === 'deals') {
+        const hasDrop = card.innerText.includes('DROP');
+        card.style.display = hasDrop ? 'flex' : 'none';
+      }
+    });
+  }
+
+  // Card Removal with Delightful UI Feedback
+  function removeCard(btn) {
+    const card = btn.closest('.bg-surface-container-low');
+    card.style.opacity = '0';
+    card.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+      card.remove();
+      const remaining = document.querySelectorAll('#populated-list > div').length;
+      if (remaining === 0) {
+        switchHubTab('empty');
+      } else {
+        showFeedback('Removed device from Saved list');
+      }
+    }, 200);
+  }
+
+  // Compare Toggle in Card
+  function toggleCompareSlot(btn, deviceName) {
+    const isQueued = btn.innerText.includes('In Compare');
+    if (isQueued) {
+      btn.className = "flex-1 h-8 rounded bg-surface-container text-on-surface-variant hover:text-on-surface flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform";
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">add</span><span>Add to Compare</span>';
+      showFeedback(deviceName + ' removed from tray');
+    } else {
+      btn.className = "flex-1 h-8 rounded bg-secondary-container text-on-secondary flex items-center justify-center gap-1 text-xs font-label-sm active:scale-95 transition-transform";
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span><span>In Compare Tray</span>';
+      showFeedback(deviceName + ' added to 3-way matrix');
+    }
+  }
+
+  // Select All Checkbox Handler
+  function toggleSelectAll(masterCheckbox) {
+    const checkboxes = document.querySelectorAll('.device-checkbox');
+    checkboxes.forEach(cb => cb.checked = masterCheckbox.checked);
+    showFeedback(masterCheckbox.checked ? 'All 8 devices selected' : 'Deselected all');
+  }
+
+  // Export Spec Matrix Trigger
+  function triggerExportNotice() {
+    const toast = document.getElementById('export-toast');
+    toast.classList.remove('hidden');
+    setTimeout(() => {
+      toast.classList.add('hidden');
+    }, 4500);
+  }
+
+  // Prompt Clear All Action
+  function triggerClearAllPrompt() {
+    if (confirm("Remove all 8 devices from Saved Hub?")) {
+      switchHubTab('empty');
+    }
+  }
+
+  // Ephemeral Feedback Toast
+  function showFeedback(text) {
+    const el = document.getElementById('action-feedback');
+    const label = document.getElementById('action-feedback-text');
+    label.innerText = text;
+    el.style.opacity = '1';
+    el.style.pointerEvents = 'auto';
+    setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.pointerEvents = 'none';
+    }, 2200);
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-low/95 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]" data-active-classes="text-secondary"><div class="flex justify-around items-center h-16 max-w-md mx-auto px-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-xs text-label-xs mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[24px]">compare_arrows</span><span class="absolute -top-1 -right-2 px-1.5 py-0.2 bg-secondary-container text-on-secondary font-label-xs text-[9px] font-bold rounded-full">2</span></div><span class="font-label-xs text-label-xs mt-0.5">Compare</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="search-filters" href="#"><span class="material-symbols-outlined text-[24px]">tune</span><span class="font-label-xs text-label-xs mt-0.5">Filter</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="favorites" href="#"><span class="material-symbols-outlined text-[24px]">favorite</span><span class="font-label-xs text-label-xs mt-0.5">Favorites</span></a><button class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('mobile-drawer').classList.remove('-translate-x-full');document.getElementById('drawer-backdrop').classList.remove('hidden')" type="button"><span class="material-symbols-outlined text-[24px]">menu_open</span><span class="font-label-xs text-label-xs mt-0.5">Menu</span></button></div></nav></body></html>

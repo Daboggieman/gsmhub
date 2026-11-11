@@ -1,0 +1,668 @@
+<!DOCTYPE html><html class="dark" lang="en" style="width: 390px; height: 2223px; overflow: hidden; position: relative;"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"><meta content="mobile_tab" name="shell-type"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"><link href="https://fonts.googleapis.com" rel="preconnect"><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "secondary-fixed-dim": "#47d6ff", "background": "#0f131c", "surface-container-highest": "#31353e", "primary-fixed-dim": "#b3c5ff", "primary": "#b3c5ff", "on-tertiary": "#003824", "on-secondary-fixed-variant": "#004e60", "on-tertiary-fixed-variant": "#005236", "outline-variant": "#424656", "on-surface-variant": "#c2c6d8", "on-background": "#dfe2ee", "on-tertiary-fixed": "#002113", "surface-container-high": "#262a33", "inverse-on-surface": "#2c3039", "primary-container": "#0066ff", "on-surface": "#dfe2ee", "tertiary-fixed": "#6ffbbe", "secondary": "#a5e7ff", "tertiary-container": "#008259", "surface-bright": "#353942", "secondary-fixed": "#b6ebff", "inverse-primary": "#0054d6", "surface-dim": "#0f131c", "on-error-container": "#ffdad6", "on-secondary-fixed": "#001f28", "on-error": "#690005", "primary-fixed": "#dae1ff", "surface-tint": "#b3c5ff", "on-primary": "#002b75", "on-primary-fixed": "#001849", "inverse-surface": "#dfe2ee", "surface-container-lowest": "#0a0e16", "surface-variant": "#31353e", "error-container": "#93000a", "on-primary-fixed-variant": "#003fa4", "tertiary-fixed-dim": "#4edea3", "surface-container-low": "#181c24", "surface": "#0f131c", "on-primary-container": "#f8f7ff", "on-secondary-container": "#00566a", "on-tertiary-container": "#e1ffec", "secondary-container": "#00d2ff", "tertiary": "#4edea3", "on-secondary": "#003543", "outline": "#8c90a1", "surface-container": "#1c2028", "error": "#ffb4ab" }, borderRadius: { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, spacing: { "gutter": "1rem", "space-sm": "0.5rem", "space-xs": "0.25rem", "space-xl": "1.5rem", "space-md": "0.75rem", "space-lg": "1rem", "margin": "1rem" }, fontFamily: { "headline-xl-mobile": ["Inter"], "headline-xl": ["Inter"], "label-xs": ["Inter"], "label-md": ["Inter"], "body-sm": ["Inter"], "label-sm": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "body-md": ["Inter"], "headline-md": ["Inter"] }, fontSize: { "headline-xl-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}], "headline-xl": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}], "label-xs": ["10px", {"lineHeight": "12px", "letterSpacing": "0.06em", "fontWeight": "700"}], "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}], "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}], "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "600"}], "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}], "headline-lg": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}], "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}], "headline-md": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface-container-low/90 backdrop-blur-xl shadow-[0_4px_20px_rgba(0,0,0,0.5)]"><div class="h-14 px-space-md flex items-center justify-between gap-space-sm max-w-md mx-auto w-full"><button aria-label="Open Menu" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-secondary focus:outline-none shrink-0" onclick="document.getElementById('mobile-drawer').classList.remove('-translate-x-full');document.getElementById('drawer-backdrop').classList.remove('hidden')" type="button"><span class="material-symbols-outlined text-[24px]">menu</span></button><div class="flex items-center gap-space-xs shrink-0"><img alt="GSMHub Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDOGQ0phu26RYKPLCF4Dmbj-rDTOWeZrFEf4fEKs6E4YGikj5AJWcPGkPHUqV7InSBvrNaWoFWbNYOjXQUV0vMiYgmywDC9vebz6JRdv_Ka_O-PGImrF-JDa_scuwnDCp2wM-QyO5Itlciy0oGu9qMrjT5uuHvwMCNCZezwfr-Xvjn7ldBqbfk3H5Xc_cid86H7f7MT3IDDLud3vhoLTAMOfcLYnajgGpnaiAqAwGOd"><span class="font-headline-md text-headline-md tracking-tight text-on-surface hidden xs:inline">GSMHub</span></div><a class="flex-1 flex items-center gap-space-xs h-10 px-space-sm bg-surface-container-highest/60 rounded text-on-surface-variant hover:text-on-surface focus:outline-none" data-path="search-filters" href="#"><span class="material-symbols-outlined text-[18px] text-secondary">search</span><span class="font-body-sm text-body-sm truncate text-outline">Search phones, specs...</span></a><div class="flex items-center gap-space-xs shrink-0"><img alt="Profile" class="w-8 h-8 rounded-full object-cover shrink-0" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEHvcM030Ltwo8u4385ubl82cE3x4sv3eQjg_NYRpHCJh2U2TAZCCo0rm45wHgDFCXsTgI5ke2tsMAHtNyYsVozjMGFXFYOOXlalS2ZlkYE16206qpj_njXB-c4kTrQ15puh02VgJvXSp9jEc-bDuMWQN5cAn1FpAYKgqRHpSTAHUBpZzAtdmMGFCdNmDjCn-HaXkoLMWIi0IF0VrgKIIeBTUCKQt127tYlxeuAY"></div></div></header><div class="hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm transition-opacity" id="drawer-backdrop" onclick="this.classList.add('hidden');document.getElementById('mobile-drawer').classList.add('-translate-x-full')"></div><aside class="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-surface-container-low flex flex-col -translate-x-full transition-transform duration-300 ease-in-out shadow-[0_20px_40px_-8px_rgba(0,0,0,0.8)]" id="mobile-drawer"><div class="pt-safe px-space-lg pb-space-md flex items-center justify-between bg-surface-container"><div class="flex items-center gap-space-sm"><img alt="GSMHub Logo" class="h-7 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/ALJJyrDOGQ0phu26RYKPLCF4Dmbj-rDTOWeZrFEf4fEKs6E4YGikj5AJWcPGkPHUqV7InSBvrNaWoFWbNYOjXQUV0vMiYgmywDC9vebz6JRdv_Ka_O-PGImrF-JDa_scuwnDCp2wM-QyO5Itlciy0oGu9qMrjT5uuHvwMCNCZezwfr-Xvjn7ldBqbfk3H5Xc_cid86H7f7MT3IDDLud3vhoLTAMOfcLYnajgGpnaiAqAwGOd"><span class="font-headline-md text-headline-md text-on-surface font-bold">GSMHub</span></div><button class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('mobile-drawer').classList.add('-translate-x-full');document.getElementById('drawer-backdrop').classList.add('hidden')" type="button"><span class="material-symbols-outlined text-[22px]">close</span></button></div><div class="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-xs"><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Database</div><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface" data-path="home" href="#"><span class="material-symbols-outlined text-secondary text-[20px]">home</span><span class="font-label-md text-label-md">Home</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="phones-catalog" href="#"><span class="material-symbols-outlined text-[20px]">smartphone</span><span class="font-label-md text-label-md">Phones</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="tablets-catalog" href="#"><span class="material-symbols-outlined text-[20px]">tablet_mac</span><span class="font-label-md text-label-md">Tablets</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="laptops-catalog" href="#"><span class="material-symbols-outlined text-[20px]">laptop_chromebook</span><span class="font-label-md text-label-md">Laptops</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="wearables-catalog" href="#"><span class="material-symbols-outlined text-[20px]">watch</span><span class="font-label-md text-label-md">Wearables</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="brands-index" href="#"><span class="material-symbols-outlined text-[20px]">category</span><span class="font-label-md text-label-md">Brands Index</span></a><div class="my-space-xs border-t border-outline-variant/30"></div><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Features &amp; Community</div><a class="flex items-center justify-between px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="compare-matrix" href="#"><div class="flex items-center gap-space-md"><span class="material-symbols-outlined text-secondary text-[20px]">compare_arrows</span><span class="font-label-md text-label-md">Compare Matrix</span></div><span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold">2</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="favorites" href="#"><span class="material-symbols-outlined text-[20px]">favorite</span><span class="font-label-md text-label-md">Favorites</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="news-and-reviews" href="#"><span class="material-symbols-outlined text-[20px]">newspaper</span><span class="font-label-md text-label-md">News &amp; Reviews</span></a><div class="my-space-xs border-t border-outline-variant/30"></div><div class="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">System</div><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="contact" href="#"><span class="material-symbols-outlined text-[20px]">contact_support</span><span class="font-label-md text-label-md">Contact</span></a><a class="flex items-center gap-space-md px-space-md py-space-sm rounded hover:bg-surface-container text-on-surface-variant hover:text-on-surface" data-path="admin-portal" href="#"><span class="material-symbols-outlined text-[20px]">admin_panel_settings</span><span class="font-label-md text-label-md">Admin</span></a></div><div class="p-space-md pb-safe bg-surface-container"><div class="flex items-center gap-space-sm"><img alt="Profile" class="w-9 h-9 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClEHvcM030Ltwo8u4385ubl82cE3x4sv3eQjg_NYRpHCJh2U2TAZCCo0rm45wHgDFCXsTgI5ke2tsMAHtNyYsVozjMGFXFYOOXlalS2ZlkYE16206qpj_njXB-c4kTrQ15puh02VgJvXSp9jEc-bDuMWQN5cAn1FpAYKgqRHpSTAHUBpZzAtdmMGFCdNmDjCn-HaXkoLMWIi0IF0VrgKIIeBTUCKQt127tYlxeuAY"><div class="flex-1 min-w-0"><div class="font-label-md text-label-md text-on-surface truncate">Tech Analyst</div><div class="font-body-sm text-body-sm text-outline truncate">Pro Member</div></div></div></div></aside><main class="flex-1 flex flex-col relative w-full pt-14 pb-20 bg-surface max-w-md mx-auto"><div class="flex flex-col w-full text-on-surface">
+<!-- 1. Breadcrumb Bar -->
+<section class="px-space-md py-space-xs flex items-center gap-1.5 text-on-surface-variant font-label-xs text-label-xs overflow-x-auto no-scrollbar">
+<a class="hover:text-secondary flex items-center gap-1 shrink-0" data-path="home" href="#">
+<span class="material-symbols-outlined text-[14px]">home</span>
+<span>Home</span>
+</a>
+<span class="text-outline-variant shrink-0">/</span>
+<a class="hover:text-secondary shrink-0" data-path="brands-index" href="#">Categories</a>
+<span class="text-outline-variant shrink-0">/</span>
+<span class="text-secondary font-semibold shrink-0">Smartphones</span>
+</section>
+<!-- 2. Category Header & Sub-category Pills -->
+<header class="px-space-md pt-space-xs pb-space-md flex flex-col gap-space-sm">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex-1">
+<div class="flex items-center gap-space-xs mb-1">
+<span class="p-1 rounded bg-secondary/10 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[20px]">smartphone</span>
+</span>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface font-bold tracking-tight">Smartphones Database</h1>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+          8,410 verified devices indexed with benchmark scores and battery lab runtimes.
+        </p>
+</div>
+
+</div>
+<!-- Quick Sub-Category Pills (Horizontal Scroll) -->
+<div class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5" id="category-pills">
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-secondary-container text-on-secondary font-label-sm text-label-sm font-semibold shadow-sm transition-all">
+        All Smartphones
+      </button>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">
+        Flagships 2025
+      </button>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">
+        Foldables &amp; Flips
+      </button>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">
+        Gaming Phones
+      </button>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">
+        Mid-Range Value
+      </button>
+<button class="shrink-0 px-3 py-1.5 rounded-full bg-surface-container-high text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors">
+        Battery Champions
+      </button>
+</div>
+</header>
+<!-- 3. Category Metric Banner / Lab Stats -->
+<section class="px-space-md mb-space-md">
+<div class="grid grid-cols-3 gap-2">
+<!-- Stat 1 -->
+<div class="bg-surface-container-low p-2.5 rounded flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Avg Screen</span>
+<span class="material-symbols-outlined text-secondary text-[14px]">aspect_ratio</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">6.67"</div>
+<span class="font-label-xs text-label-xs text-tertiary mt-1">AMOLED 120Hz+</span>
+</div>
+<!-- Stat 2 -->
+<div class="bg-surface-container-low p-2.5 rounded flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Top SoC</span>
+<span class="material-symbols-outlined text-secondary text-[14px]">memory</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold truncate">SD 8 Gen 3</div>
+<span class="font-label-xs text-label-xs text-on-surface-variant mt-1 truncate">/ D9300+</span>
+</div>
+<!-- Stat 3 -->
+<div class="bg-surface-container-low p-2.5 rounded flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Median Batt</span>
+<span class="material-symbols-outlined text-tertiary text-[14px]">battery_charging_full</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface font-bold">5,100<span class="font-body-sm text-body-sm font-normal text-outline">mAh</span></div>
+<span class="font-label-xs text-label-xs text-tertiary mt-1">+14h Active Lab</span>
+</div>
+</div>
+</section>
+<!-- 4. Filter & Sort Sticky Control Bar -->
+<section class="sticky top-14 z-30 px-space-md py-2.5 bg-surface-container-low/95 backdrop-blur-md shadow-md mb-space-md">
+<div class="flex items-center justify-between gap-2">
+<!-- Filter Trigger -->
+<button class="flex items-center gap-1.5 px-3 py-1.5 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded font-label-md text-label-md transition-colors shadow-sm" id="filter-btn">
+<span class="material-symbols-outlined text-[16px] text-secondary">tune</span>
+<span>Filters</span>
+<span class="w-4 h-4 rounded-full bg-secondary-container text-on-secondary font-label-xs text-[10px] flex items-center justify-center font-bold">4</span>
+</button>
+<!-- Sort & Display Controls -->
+<div class="flex items-center gap-2">
+<div class="relative">
+<select class="appearance-none bg-surface-container-high text-on-surface font-label-sm text-label-sm py-1.5 pl-2.5 pr-7 rounded focus:outline-none focus:ring-1 focus:ring-secondary cursor-pointer">
+<option>Highest Lab Score</option>
+<option>Newest Releases</option>
+<option>Lowest Price First</option>
+<option>Battery Endurance</option>
+<option>DxOMark Rating</option>
+</select>
+<span class="material-symbols-outlined absolute right-1.5 top-1/2 -translate-y-1/2 text-[16px] pointer-events-none text-outline">expand_more</span>
+</div>
+<!-- Grid/List Switch -->
+<div class="flex items-center bg-surface-container-high rounded p-0.5">
+<button aria-label="Grid view" class="p-1 rounded bg-secondary-container text-on-secondary transition-all" id="grid-view-btn">
+<span class="material-symbols-outlined text-[16px]">grid_view</span>
+</button>
+<button aria-label="List view" class="p-1 rounded text-on-surface-variant hover:text-on-surface transition-all" id="list-view-btn">
+<span class="material-symbols-outlined text-[16px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 5. Featured Category Device Hero: Editor's Benchmark King -->
+<section class="px-space-md mb-space-md">
+<div class="relative bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-low rounded-xl p-space-md overflow-hidden shadow-lg">
+<!-- Glow Accent -->
+<div class="absolute -top-12 -right-12 w-40 h-40 bg-secondary-container/15 rounded-full blur-3xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="px-2 py-0.5 rounded-full bg-secondary-container text-on-secondary font-label-xs text-label-xs font-bold tracking-wider uppercase">
+            Editor's Benchmark King
+          </span>
+<div class="flex items-center gap-1 bg-surface-container-lowest/80 px-2 py-0.5 rounded text-tertiary font-label-sm text-label-sm font-bold">
+<span class="material-symbols-outlined text-[14px]">verified</span>
+<span>9.4 / 10 Lab</span>
+</div>
+</div>
+<div class="flex items-center gap-3">
+<!-- Thumbnail -->
+<div class="relative w-24 h-28 shrink-0 flex items-center justify-center bg-surface-container-lowest/60 rounded p-1">
+<img alt="Samsung Galaxy S25 Ultra" class="w-full h-full object-contain" data-alt="Studio technical product photograph of a modern sleek Samsung Galaxy S25 Ultra smartphone in titanium grey, dramatic studio rim lighting, reflective high tech styling, dark contrast background, commercial 8k render." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAT-y2QOlWDbu_iMBwXz7ygVGJVclR-jSH1-Gat9qgkNdtUywLTl65_elavDw07NNyL0f9dulhSXS365sONEJLFFwWnJsMUjBQ2k2dP8_OHuHP44V3km6VtwDst5FouyQ9VZGwA1LtLWvHY6tyBg9XlqnDb8icIKXjpGPP7kh2odA0iGh4SwD0fQUFqY3rRPRXNS4eMd7PcT421mRxM1v1ECk7zcPkEGrzdEf-9aTA">
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-high/90 text-secondary font-label-xs text-[9px] rounded">
+              2025
+            </span>
+</div>
+<!-- Quick Details -->
+<div class="flex-1 min-w-0">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wide">Samsung Flagship</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold truncate">Galaxy S25 Ultra</h2>
+<div class="mt-1 flex flex-col gap-1 text-on-surface-variant font-body-sm text-body-sm">
+<span class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-secondary">memory</span>
+<span>Snapdragon 8 Elite (3nm)</span>
+</span>
+<span class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[14px] text-secondary">photo_camera</span>
+<span>200MP Quad OIS + 50MP 5x</span>
+</span>
+<span class="flex items-center gap-1 text-tertiary font-semibold truncate">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+<span>5,000 mAh • 45W Ultra PD</span>
+</span>
+</div>
+</div>
+</div>
+<!-- Metric Row -->
+<div class="grid grid-cols-3 gap-1.5 py-1.5 bg-surface-container-lowest/40 rounded text-center">
+<div>
+<span class="font-label-xs text-[9px] text-outline block">ANTUTU v10</span>
+<span class="font-label-sm text-label-sm text-on-surface font-bold">2,884,190</span>
+</div>
+<div>
+<span class="font-label-xs text-[9px] text-outline block">BATTERY RUN</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">16h 42m</span>
+</div>
+<div>
+<span class="font-label-xs text-[9px] text-outline block">BASE PRICE</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">$1,299</span>
+</div>
+</div>
+<!-- Action CTAs -->
+<div class="flex items-center gap-2 pt-1">
+<a class="flex-1 py-2 px-3 bg-secondary-container hover:bg-secondary-fixed text-on-secondary rounded font-label-md text-label-md font-semibold text-center transition-colors shadow-sm" data-path="device-detail" href="#">
+            View Full Specs
+          </a>
+<button class="px-3 py-2 bg-surface-container-high hover:bg-surface-container-highest text-secondary rounded flex items-center justify-center gap-1 font-label-md text-label-md transition-colors" title="Compare S25 Ultra">
+<span class="material-symbols-outlined text-[16px]">compare_arrows</span>
+<span>Compare</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- 6. Device Catalog Grid / List Container -->
+<section class="px-space-md mb-space-lg">
+<div class="flex items-center justify-between mb-space-sm">
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Latest Ranked Smartphones</h3>
+<span class="font-label-xs text-label-xs text-outline font-medium">8,410 Total Records</span>
+</div>
+<!-- Active Grid Cards (2 columns on mobile) -->
+<div class="grid grid-cols-2 gap-2.5" id="catalog-container">
+<!-- Card 1: Apple iPhone 16 Pro Max -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            APPLE
+          </span>
+<button aria-label="Bookmark iPhone 16 Pro Max" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="iPhone 16 Pro Max" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="Apple iPhone 16 Pro Max titanium desert finish smartphone product image isolated on dark graphite studio backdrop with subtle moody reflections high tech luxury." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCDwFs8nSm_GPQhI-HFTX40YZRrGEbn4ZxRMRkJgoOJdjBIuMxEka3Da3EMbReUXzNuIiAawRlUHj4K6GVPes_3ooOZ_zx1RVZgjZGqTS-jA7JqpwCV6-YRBRzIN5QEqXD5ra6uiKmQbTqBlFu0SkVyQQnFmrsb3n1GR9OE-yTIQccmCeIen_iSV6GYOhylnuwpv3yTabafKhKXcuVUZm_gi_rF8kowggVJ4eS0RqI">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.3 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">iPhone 16 Pro Max</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>A18 Pro (3nm)</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>48MP Fusion 5x</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>4,685 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$1,199</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 2: Galaxy S24 Ultra -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            SAMSUNG
+          </span>
+<button aria-label="Bookmark Galaxy S24 Ultra" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="Galaxy S24 Ultra" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="Samsung Galaxy S24 Ultra smartphone in Titanium Black sitting upright with S-pen visible on minimal slate surface studio rim illumination." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjVHBaIQ7OrFvL2nubVeqR0SVOhkvA2itoVpEEwuZYTc9yScQe_Y0CR3bRoUMqOqtuMB_LUyabd1hHff__8FNNuO4EWnAJUexJAtGZRRhea0pyVnuJ3Ps0b1Uuu-cg8fgWcdxtealsQdu1-7FNpuvFrOyt7XupHVyNbXU76kVT22DSJpQf6YjjylvnnKpO3ZXzhvIFc-ca8NPKL0l7mABH1NTks38T3qq94UkThbc">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.1 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">Galaxy S24 Ultra</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>SD 8 Gen 3</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>200MP Quad OIS</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>5,000 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$1,049</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 3: Google Pixel 9 Pro XL -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            GOOGLE
+          </span>
+<button aria-label="Bookmark Pixel 9 Pro XL" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="Google Pixel 9 Pro XL" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="Google Pixel 9 Pro XL modern phone obsidian black with rounded camera visor bar clean angled studio view on dark tech environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJgBgjCen9-oKgveNDshjrbhP8MhwwTJ0LDezGF8AvBVCk6AI9OwXOo8QNykO94o-Eh52o030HC9r_XZ6Ogy7rkgFSv4XNwadLOYn4_cQ4bmNu0UtnYAsvmmViFH5y66C9C_lYk21bj64xc3Jx1ThU9OE4Nhow33YGf2xC_wWeqio-odRoLcxQEiDCUehC1Hi-KVwueWGjk0qOqhSDjv4WEMye25X-bNRCQvN5dTo">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.0 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">Pixel 9 Pro XL</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>Google Tensor G4</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>50MP + 48MP 5x</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>5,060 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$1,099</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 4: OnePlus 13 -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            ONEPLUS
+          </span>
+<button aria-label="Bookmark OnePlus 13" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="OnePlus 13" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="OnePlus 13 smartphone in midnight blue with circular Hasselblad camera module studio clean render minimal reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWs5SIknPs6EzRYDjEA7VksgwUIb_DrqeNghvHn8pt_H8zdDIv_PTtdQJvVegXBQVtRWzmKwHXQ1eaNv7js--k96kgh-nXD3w8wk_SiQeigosm_TmEA8b0aL8Z-qgBZ_OkiEMXfnO3bQq-BJw6sQoXoqMNduCfX_p7l6q6hLcM8FHTuEoD2Xzol9j2oKqnBDQt81vCUOj_-IWAQw5b4YmBNJMymcyu3aZqDr3tnkI">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.2 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">OnePlus 13</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>SD 8 Elite</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>Triple 50MP Hasselblad</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>6,000 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$899</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 5: Xiaomi 15 Pro -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            XIAOMI
+          </span>
+<button aria-label="Bookmark Xiaomi 15 Pro" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="Xiaomi 15 Pro" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="Xiaomi 15 Pro smartphone silver mirror edition Leica camera block product rendering front and back dark clean aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvQ5o7uLxkbWLVajI-AUrlhAQn10B0VuVPIF0LjNR91O2w1slz1u1qxPBDJXfMVubJceRUUh0z5gtdiTEsJQdLM2A_ozXB-gDxCp821M1S8bo-PErFKBjs9Ln03gwIDlQZ7tQNu9Yxcmj6d-z9sMOQG-iILkd7rgFBS3qugVufIkTYRem0hqW9p6JlyKGqw6ArRAdTf3MXifumD2EvHIFCND2Sa3T5--WsKMSruPs">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.1 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">Xiaomi 15 Pro</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>SD 8 Elite</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>Leica Summilux 50MP</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>6,100 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$790</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 6: Asus ROG Phone 9 Pro -->
+<article class="bg-surface-container-low rounded p-2.5 flex flex-col justify-between relative shadow-sm group">
+<div class="flex items-center justify-between mb-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[10px] text-secondary font-bold">
+            ASUS ROG
+          </span>
+<button aria-label="Bookmark ROG Phone 9 Pro" class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<div class="w-full h-28 flex items-center justify-center bg-surface-container-lowest/40 rounded mb-2 relative overflow-hidden">
+<img alt="ROG Phone 9 Pro" class="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105" data-alt="Asus ROG Phone 9 Pro gaming smartphone with matrix LED rear display cyberpunk aesthetic neon accents on dark background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCj0ZkU7Loe0AfP7ycRpUxuVKOg6bFkdtJyrxYs0zYb5hl1o_9lj2qolowZsAxfKa0-69RwM-q4o6BnDpPo_5qx48eHRtzB0Pc1A3nnAJwMI1fW_q7G1__CKbmIWJfXCBnIKkTxOhwtY9y3VXCjiTiKISZKJMFjzqdP4fIIfSRtGTJgXOIjY_aLdx07VBH7sWYw-kWjIRDo2OEOzx4mR06Vy6QIXb__zicXBtb54PM">
+<span class="absolute bottom-1 left-1 px-1 bg-tertiary-container/30 text-tertiary font-label-xs text-[9px] rounded font-bold">
+            9.3 LAB
+          </span>
+</div>
+<div class="flex flex-col flex-1 justify-between">
+<div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate">ROG Phone 9 Pro</h4>
+<div class="space-y-1 my-1.5 text-on-surface-variant font-body-sm text-[11px]">
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+<span>SD 8 Elite (185Hz)</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-secondary">photo_camera</span>
+<span>50MP Gimbal OIS</span>
+</div>
+<div class="flex items-center gap-1 truncate">
+<span class="material-symbols-outlined text-[13px] text-tertiary">battery_charging_full</span>
+<span>5,800 mAh</span>
+</div>
+</div>
+</div>
+<div class="pt-2 border-t-0 flex items-center justify-between mt-auto">
+<span class="font-label-md text-label-md font-bold text-on-surface">$1,199</span>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-secondary-container hover:text-on-secondary rounded text-secondary font-label-xs text-[10px] font-bold flex items-center gap-0.5 transition-colors">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>COMPARE</span>
+</button>
+</div>
+</div>
+</article>
+<!-- Card 7 (Full width feature slot): Nothing Phone (2a) Plus -->
+<article class="col-span-2 bg-surface-container-low rounded p-3 flex items-center gap-3 relative shadow-sm">
+<div class="w-24 h-24 shrink-0 bg-surface-container-lowest/50 rounded flex items-center justify-center p-1">
+<img alt="Nothing Phone 2a Plus" class="h-20 w-auto object-contain" data-alt="Nothing Phone 2a Plus smartphone with transparent rear glass casing and white glyph LED interfaces dark atmospheric render." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDWmttilKeL8_-08v9fbckgSDGqJc_P9g83pa5xwF8VBCkBxBo8pJ8OXOhOS7MEqUVPVJayq6MB1kbVBBfDvCOpP0yev6CwToBiP6JsDQ0nhjzXzY0DeXRkFKJv3kt4DYvAWFdmvZQp_2DsGQe0hUz4GxnlqSlawRC_lpbqO5sSQAQcmHtDQqZbuUF6kxDkFjzLeglEr8XX1yXw3cMu596myqy8qPP2Ju1Oqs164bw">
+</div>
+<div class="flex-1 min-w-0 flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high font-label-xs text-[9px] text-tertiary font-bold">
+              BEST VALUE MID-RANGER
+            </span>
+<button class="text-outline hover:text-error transition-colors p-0.5">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+<h4 class="font-label-md text-label-md text-on-surface font-bold truncate mt-0.5">Nothing Phone (2a) Plus</h4>
+<div class="grid grid-cols-2 gap-1 my-1 text-on-surface-variant font-body-sm text-[11px]">
+<span class="truncate">Dimensity 7350 Pro</span>
+<span class="truncate">50MP + 50MP UW</span>
+<span class="truncate text-tertiary">5,000 mAh • 50W</span>
+<span class="font-bold text-on-surface">$399 Official</span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<a class="py-1 px-2.5 bg-secondary-container hover:bg-secondary-fixed text-on-secondary rounded font-label-xs text-label-xs font-semibold" data-path="device-detail" href="#">
+              Specs
+            </a>
+<button class="py-1 px-2.5 bg-surface-container-high text-secondary rounded font-label-xs text-label-xs font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">compare_arrows</span>
+<span>Compare</span>
+</button>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- 7. Secondary Discovery Block: Top Brands in Category -->
+<section class="px-space-md mb-space-lg">
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">Top Phone Brands</h3>
+</div>
+<a class="text-secondary font-label-sm text-label-sm hover:underline flex items-center" data-path="brands-index" href="#">
+<span>All 82 Brands</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</a>
+</div>
+<div class="grid grid-cols-5 gap-2 text-center">
+<!-- Samsung -->
+<a class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-1" data-path="phones-catalog" href="#">
+<span class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">
+            S
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold truncate w-full">Samsung</span>
+<span class="font-label-xs text-[9px] text-outline">428 devs</span>
+</a>
+<!-- Apple -->
+<a class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-1" data-path="phones-catalog" href="#">
+<span class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">
+            A
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold truncate w-full">Apple</span>
+<span class="font-label-xs text-[9px] text-outline">134 devs</span>
+</a>
+<!-- Xiaomi -->
+<a class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-1" data-path="phones-catalog" href="#">
+<span class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">
+            Mi
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold truncate w-full">Xiaomi</span>
+<span class="font-label-xs text-[9px] text-outline">392 devs</span>
+</a>
+<!-- OnePlus -->
+<a class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-1" data-path="phones-catalog" href="#">
+<span class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">
+            1+
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold truncate w-full">OnePlus</span>
+<span class="font-label-xs text-[9px] text-outline">94 devs</span>
+</a>
+<!-- Vivo -->
+<a class="p-2 rounded bg-surface-container hover:bg-surface-container-high transition-colors flex flex-col items-center justify-center gap-1" data-path="phones-catalog" href="#">
+<span class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-bold text-xs">
+            V
+          </span>
+<span class="font-label-xs text-label-xs text-on-surface font-semibold truncate w-full">Vivo</span>
+<span class="font-label-xs text-[9px] text-outline">248 devs</span>
+</a>
+</div>
+</div>
+</section>
+<!-- 8. Standard Pagination Bar -->
+<section class="px-space-md mb-space-lg flex flex-col items-center gap-3">
+<div class="text-on-surface-variant font-body-sm text-body-sm">
+      Showing <span class="text-on-surface font-semibold">1–24</span> of <span class="text-on-surface font-semibold">8,410</span> smartphones
+    </div>
+<!-- Pagination Pill controls -->
+<div class="flex items-center gap-1.5">
+<button class="w-8 h-8 rounded bg-surface-container-high text-outline hover:text-on-surface flex items-center justify-center transition-colors disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 rounded bg-secondary-container text-on-secondary font-label-sm text-label-sm font-bold shadow-sm">
+        1
+      </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors">
+        2
+      </button>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors">
+        3
+      </button>
+<span class="px-1 text-outline font-label-sm">...</span>
+<button class="w-8 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors">
+        351
+      </button>
+<button class="w-8 h-8 rounded bg-surface-container-high text-on-surface hover:bg-surface-container-highest flex items-center justify-center transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</section>
+<!-- 9. Footer Links & Quick Specs Note -->
+<footer class="px-space-md py-space-lg bg-surface-container-lowest mt-space-md rounded-t-xl text-outline font-body-sm text-[12px] space-y-4">
+<div class="flex items-center justify-between pb-3 border-b-0 border-outline-variant/30">
+<div class="flex items-center gap-1.5">
+
+
+</div>
+
+</div>
+
+<div class="flex flex-wrap gap-x-4 gap-y-2 font-label-sm text-label-sm pt-2 text-on-surface-variant">
+<a class="hover:text-secondary" data-path="phones-catalog" href="#">Phones</a>
+<a class="hover:text-secondary" data-path="compare-matrix" href="#">Matrix Compare</a>
+<a class="hover:text-secondary" data-path="search-filters" href="#">Filter Engine</a>
+<a class="hover:text-secondary" data-path="news-and-reviews" href="#">Reviews</a>
+<a class="hover:text-secondary" data-path="contact" href="#">Submit Corrections</a>
+</div>
+<div class="text-[11px] text-outline-variant pt-2">
+      © 2025 GSMHub Specifications Platform. High precision database.
+    </div>
+</footer>
+</div>
+<!-- Client-Side Micro-Interactions Script -->
+<script>
+  (function() {
+    // Grid vs List view toggle
+    const gridBtn = document.getElementById('grid-view-btn');
+    const listBtn = document.getElementById('list-view-btn');
+    const catalog = document.getElementById('catalog-container');
+
+    if (gridBtn && listBtn && catalog) {
+      listBtn.addEventListener('click', () => {
+        catalog.classList.remove('grid-cols-2');
+        catalog.classList.add('grid-cols-1');
+        listBtn.classList.add('bg-secondary-container', 'text-on-secondary');
+        listBtn.classList.remove('text-on-surface-variant');
+        gridBtn.classList.remove('bg-secondary-container', 'text-on-secondary');
+        gridBtn.classList.add('text-on-surface-variant');
+      });
+
+      gridBtn.addEventListener('click', () => {
+        catalog.classList.add('grid-cols-2');
+        catalog.classList.remove('grid-cols-1');
+        gridBtn.classList.add('bg-secondary-container', 'text-on-secondary');
+        gridBtn.classList.remove('text-on-surface-variant');
+        listBtn.classList.remove('bg-secondary-container', 'text-on-secondary');
+        listBtn.classList.add('text-on-surface-variant');
+      });
+    }
+
+    // Category pills active state switch
+    const pills = document.querySelectorAll('#category-pills button');
+    pills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        pills.forEach(p => {
+          p.classList.remove('bg-secondary-container', 'text-on-secondary', 'font-semibold', 'shadow-sm');
+          p.classList.add('bg-surface-container-high', 'text-on-surface-variant');
+        });
+        pill.classList.add('bg-secondary-container', 'text-on-secondary', 'font-semibold', 'shadow-sm');
+        pill.classList.remove('bg-surface-container-high', 'text-on-surface-variant');
+      });
+    });
+
+    // Favorite heart icon toggling
+    const favButtons = document.querySelectorAll('button[aria-label^="Bookmark"]');
+    favButtons.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (icon) {
+          if (icon.classList.contains('text-error')) {
+            icon.classList.remove('text-error');
+            icon.style.fontVariationSettings = "'FILL' 0";
+          } else {
+            icon.classList.add('text-error');
+            icon.style.fontVariationSettings = "'FILL' 1";
+          }
+        }
+      });
+    });
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-low/95 backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.5)]" data-active-classes="text-secondary"><div class="flex justify-around items-center h-16 max-w-md mx-auto px-space-xs"><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[24px]">home</span><span class="font-label-xs text-label-xs mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#"><div class="relative flex items-center justify-center"><span class="material-symbols-outlined text-[24px]">compare_arrows</span><span class="absolute -top-1 -right-2 px-1.5 py-0.2 bg-secondary-container text-on-secondary font-label-xs text-[9px] font-bold rounded-full">2</span></div><span class="font-label-xs text-label-xs mt-0.5">Compare</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="search-filters" href="#"><span class="material-symbols-outlined text-[24px]">tune</span><span class="font-label-xs text-label-xs mt-0.5">Filter</span></a><a class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" data-path="favorites" href="#"><span class="material-symbols-outlined text-[24px]">favorite</span><span class="font-label-xs text-label-xs mt-0.5">Favorites</span></a><button class="flex flex-col items-center justify-center w-14 h-14 text-on-surface-variant hover:text-on-surface transition-colors" onclick="document.getElementById('mobile-drawer').classList.remove('-translate-x-full');document.getElementById('drawer-backdrop').classList.remove('hidden')" type="button"><span class="material-symbols-outlined text-[24px]">menu_open</span><span class="font-label-xs text-label-xs mt-0.5">Menu</span></button></div></nav>
+
+</body></html>

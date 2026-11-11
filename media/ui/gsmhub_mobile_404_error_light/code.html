@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>GSMHub Laboratory Database</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-dim": "#d2d9f4", "secondary": "#006398", "surface-container": "#eaedff", "on-surface-variant": "#424656", "surface-bright": "#faf8ff", "secondary-container": "#5bb8fe", "primary-fixed-dim": "#b3c5ff", "on-error-container": "#93000a", "on-primary-fixed-variant": "#003fa4", "outline-variant": "#c2c6d8", "on-secondary-container": "#00476e", "on-primary-fixed": "#001849", "on-secondary": "#ffffff", "on-secondary-fixed-variant": "#004b73", "on-tertiary-fixed-variant": "#005236", "tertiary": "#006645", "secondary-fixed": "#cce5ff", "tertiary-fixed-dim": "#4edea3", "secondary-fixed-dim": "#93ccff", "outline": "#727687", "background": "#faf8ff", "surface": "#faf8ff", "surface-container-high": "#e2e7ff", "on-background": "#131b2e", "surface-tint": "#0054d6", "on-primary-container": "#f8f7ff", "on-tertiary-fixed": "#002113", "tertiary-container": "#008259", "on-error": "#ffffff", "tertiary-fixed": "#6ffbbe", "inverse-surface": "#283044", "on-tertiary": "#ffffff", "surface-container-highest": "#dae2fd", "primary-fixed": "#dae1ff", "surface-container-low": "#f2f3ff", "on-surface": "#131b2e", "on-tertiary-container": "#e1ffec", "inverse-on-surface": "#eef0ff", "on-primary": "#ffffff", "inverse-primary": "#b3c5ff", "primary": "#0050cb", "surface-container-lowest": "#ffffff", "primary-container": "#0066ff", "surface-variant": "#dae2fd", "on-secondary-fixed": "#001d31", "error": "#ba1a1a", "error-container": "#ffdad6" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-md": "0.75rem", "margin-mobile": "1rem", "gutter-mobile": "0.75rem", "gutter": "1rem", "space-lg": "1rem", "space-xl": "1.5rem", "margin": "1.5rem", "space-xs": "0.25rem", "space-sm": "0.5rem" }, "fontFamily": { "label-sm": ["Inter"], "label-md": ["Inter"], "headline-lg-mobile": ["Inter"], "headline-md": ["Inter"], "headline-xl": ["Inter"], "body-md": ["Inter"], "label-mono": ["Inter"], "headline-sm": ["Inter"], "body-sm": ["Inter"], "body-lg": ["Inter"], "headline-xl-mobile": ["Inter"], "headline-lg": ["Inter"] }, "fontSize": { "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "label-mono": ["11px", { "lineHeight": "14px", "letterSpacing": "0.01em", "fontWeight": "500" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "body-lg": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-xl-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }] } } } }</script></head><body class="bg-surface font-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] pt-safe"><div class="h-16 px-margin-mobile flex items-center justify-between gap-space-xs"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs"><div class="w-7 h-7 rounded bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">memory</span></div><span class="font-headline-sm text-headline-sm uppercase tracking-tight text-on-surface">GSM<span class="text-primary">Hub</span></span></div><div class="flex items-center gap-1"><span class="font-label-sm text-label-sm px-1.5 py-0.5 rounded bg-surface-container-high text-primary tracking-wider uppercase">LAB-SPEC</span><span class="font-label-mono text-label-mono px-1.5 py-0.5 rounded bg-tertiary-fixed-dim/20 text-tertiary font-semibold flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px]">verified</span>17025</span></div></div><div class="flex items-center gap-1"><a aria-label="Search Specifications" class="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface rounded" data-path="search" href="#"><span class="material-symbols-outlined text-[20px]">search</span></a><a aria-label="Device Comparison Bench" class="relative w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface rounded" data-path="compare" href="#"><span class="material-symbols-outlined text-[20px]">compare_arrows</span><span class="absolute top-2 right-2 w-4 h-4 rounded-full bg-primary text-on-primary font-label-mono text-[9px] font-bold flex items-center justify-center leading-none">2</span></a><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-20 bg-surface"><div class="flex flex-col w-full pb-8">
+<!-- Error Status Ribbon -->
+<div class="w-full bg-error-container text-on-error-container px-margin-mobile py-2.5 flex items-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined text-[18px] text-error flex-shrink-0 animate-pulse">warning</span>
+<div class="flex-1 min-w-0">
+<p class="font-label-mono text-label-mono text-error uppercase truncate font-bold tracking-tight">
+        HTTP 404: SPECIMEN_NOT_FOUND // RIG FAULT LEVEL-1
+      </p>
+<p class="font-label-sm text-label-sm text-on-error-container/80 truncate">
+        SUB-SYS: ERR_METROLOGY_NODE_UNRESOLVED • ISO-17025
+      </p>
+</div>
+<span class="font-label-mono text-label-mono px-1.5 py-0.5 rounded bg-error/10 text-error font-semibold flex-shrink-0">
+      CRIT_0x04
+    </span>
+</div>
+<div class="px-margin-mobile flex flex-col gap-space-lg mt-space-md">
+<!-- Visual Circuit / Optical Metrology Diagnostic Beam Diagram -->
+<div class="w-full rounded-xl bg-surface-container p-space-md shadow-sm relative overflow-hidden">
+<!-- Diagnostics Header Tag -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-1.5">
+<span class="inline-block w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span class="font-label-mono text-label-mono text-on-surface-variant uppercase tracking-wider font-semibold">
+            OPTICAL FLUX INTERRUPT DIAGNOSTIC
+          </span>
+</div>
+<span class="font-label-mono text-label-mono text-error font-bold bg-surface-container-highest px-1.5 py-0.5 rounded">
+          OPEN_CIRCUIT
+        </span>
+</div>
+<!-- Schematic SVG Representation -->
+<div class="w-full bg-surface-container-lowest rounded-lg p-space-sm flex flex-col gap-space-xs shadow-sm mt-1">
+<svg class="w-full h-auto" fill="none" viewbox="0 0 340 76" xmlns="http://www.w3.org/2000/svg">
+<!-- Grid lines background -->
+<pattern height="10" id="grid" patternunits="userSpaceOnUse" width="10">
+<path d="M 10 0 L 0 0 0 10" fill="none" stroke="#eaedff" stroke-width="0.5"></path>
+</pattern>
+<rect fill="url(#grid)" height="76" opacity="0.7" width="340"></rect>
+<!-- TX Node (EMIT) -->
+<rect fill="#0066ff" height="36" rx="4" width="60" x="6" y="20"></rect>
+<text fill="#ffffff" font-family="Inter" font-size="9" font-weight="700" text-anchor="middle" x="36" y="36">EMIT_TX</text>
+<text fill="#dae1ff" font-family="Inter" font-size="7" text-anchor="middle" x="36" y="48">LASER-RIG-A</text>
+<!-- Beam Segment 1 (Healthy) -->
+<line stroke="#0066ff" stroke-dasharray="4 2" stroke-width="2.5" x1="66" x2="140" y1="38" y2="38"></line>
+<circle cx="103" cy="38" fill="#0066ff" r="3"></circle>
+<!-- Fault Break Zone -->
+<circle cx="170" cy="38" fill="#ffdad6" r="16"></circle>
+<circle cx="170" cy="38" fill="#ba1a1a" opacity="0.2" r="8"></circle>
+<line stroke="#ba1a1a" stroke-linecap="round" stroke-width="2.5" x1="162" x2="178" y1="30" y2="46"></line>
+<line stroke="#ba1a1a" stroke-linecap="round" stroke-width="2.5" x1="178" x2="162" y1="30" y2="46"></line>
+<text fill="#ba1a1a" font-family="Inter" font-size="7.5" font-weight="700" text-anchor="middle" x="170" y="66">Δ -100% FLUX LOSS</text>
+<!-- Beam Segment 2 (Interrupted/Null) -->
+<line stroke="#c2c6d8" stroke-dasharray="3 3" stroke-width="1.5" x1="186" x2="264" y1="38" y2="38"></line>
+<!-- RX Node (RX_NULL) -->
+<rect fill="#eaedff" height="36" rx="4" width="70" x="264" y="20"></rect>
+<text fill="#424656" font-family="Inter" font-size="9" font-weight="700" text-anchor="middle" x="299" y="36">RX_NULL</text>
+<text fill="#ba1a1a" font-family="Inter" font-size="7" font-weight="600" text-anchor="middle" x="299" y="48">ZERO SIGNAL</text>
+</svg>
+<!-- Technical Telemetry Readout Strip -->
+<div class="grid grid-cols-3 gap-1 pt-1 bg-surface-container-low p-2 rounded">
+<div>
+<div class="font-label-mono text-[9px] text-on-surface-variant uppercase">TX_REF</div>
+<div class="font-label-mono text-label-mono text-on-surface font-semibold truncate">ISO-17025-RIG</div>
+</div>
+<div>
+<div class="font-label-mono text-[9px] text-on-surface-variant uppercase">IMPEDANCE</div>
+<div class="font-label-mono text-label-mono text-error font-semibold truncate">∞ (OPEN_CKT)</div>
+</div>
+<div>
+<div class="font-label-mono text-[9px] text-on-surface-variant uppercase">BEAM STATUS</div>
+<div class="font-label-mono text-label-mono text-error font-semibold truncate">INTERRUPTED</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Error Heading & Scientific Subtext -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-6 rounded-full bg-primary flex-shrink-0"></span>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight font-bold">
+          Hardware Specimen Not Found
+        </h1>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        The requested specimen identifier or calibration dataset could not be located in the GSMHub ISO/IEC 17025 metrology ledger. The record may have been archived during automated firmware re-indexing, withheld under NDA testbench quarantine, or requested via an invalid SKU or FCC Hardware ID.
+      </p>
+</div>
+<!-- Telemetry Exception Dump Box -->
+<div class="w-full rounded-xl bg-surface-container-low p-space-md shadow-sm">
+<div class="flex items-center justify-between pb-space-xs mb- space-xs">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-secondary">terminal</span>
+<span class="font-label-mono text-label-mono text-secondary uppercase font-bold tracking-wider">
+            TELEMETRY EXCEPTION DUMP
+          </span>
+</div>
+<button class="font-label-mono text-[10px] uppercase font-semibold text-primary hover:text-on-primary-fixed-variant bg-surface-container-highest px-2 py-0.5 rounded transition-colors flex items-center gap-1" id="copy-telemetry-btn">
+<span class="material-symbols-outlined text-[12px]">content_copy</span>
+<span id="copy-btn-text">Copy</span>
+</button>
+</div>
+<div class="font-label-mono text-label-mono text-on-surface flex flex-col gap-1.5 bg-surface-container-lowest p- space-sm rounded-lg shadow-inner">
+<div class="flex justify-between items-center gap-2 py-0.5">
+<span class="text-on-surface-variant/70 uppercase">REQUESTED_URI:</span>
+<span class="text-error font-semibold truncate">/specimens/snapdragon-8-elite-v3-lab</span>
+</div>
+<div class="flex justify-between items-center gap-2 py-0.5">
+<span class="text-on-surface-variant/70 uppercase">CLUSTER_NODE:</span>
+<span class="text-on-surface font-semibold truncate">US-WEST-04.GSMHUB.NET</span>
+</div>
+<div class="flex justify-between items-center gap-2 py-0.5">
+<span class="text-on-surface-variant/70 uppercase">QUERY_HASH:</span>
+<span class="text-secondary font-semibold font-mono tracking-tight">0x8F32CBA1970254EE</span>
+</div>
+<div class="flex justify-between items-center gap-2 py-0.5">
+<span class="text-on-surface-variant/70 uppercase">LEDGER_STATE:</span>
+<span class="text-tertiary font-semibold flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            REINDEX_CYCLE_IDLE
+          </span>
+</div>
+</div>
+</div>
+<!-- Recovery Vector Search Box -->
+<div class="w-full rounded-xl bg-surface-container p-space-md flex flex-col gap-space-sm shadow-sm">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-primary">manage_search</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Metrology Ledger Recovery</h2>
+</div>
+<div class="flex flex-col gap-2">
+<div class="relative w-full">
+<input class="w-full h-11 pl-10 pr-24 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md placeholder:text-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="specimen-search-input" placeholder="Search specimen model, FCC ID, or SoC..." type="text" value="Galaxy S25 Ultra"/>
+<span class="material-symbols-outlined absolute left-3 top-3 text-[20px] text-on-surface-variant">search</span>
+<button class="absolute right-1.5 top-1.5 h-8 px-3 rounded bg-primary text-on-primary font-label-sm text-label-sm tracking-wider uppercase font-bold hover:bg-on-primary-fixed-variant transition-colors flex items-center gap-1 shadow-sm" id="execute-lookup-btn">
+<span>Lookup</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</button>
+</div>
+<!-- Frequent Queries Badges -->
+<div class="flex flex-col gap-1.5 pt-1">
+<span class="font-label-mono text-[10px] text-on-surface-variant uppercase font-semibold">Active Calibrated Traces:</span>
+<div class="flex flex-wrap gap-1.5">
+<button class="query-chip font-label-mono text-label-mono px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-primary">bolt</span>
+              Samsung Galaxy S25 Ultra
+            </button>
+<button class="query-chip font-label-mono text-label-mono px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-secondary">memory</span>
+              Apple iPhone 16 Pro Max
+            </button>
+<button class="query-chip font-label-mono text-label-mono px-2.5 py-1 rounded bg-surface-container-lowest text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-tertiary">developer_board</span>
+              Snapdragon 8 Elite
+            </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Navigation Cards Grid (2x2) -->
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Recovery Sectors</h2>
+<span class="font-label-mono text-label-mono text-on-surface-variant">INDEX 01-04</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- 01 Telemetry Home -->
+<a class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-28 group" data-path="home" href="#">
+<div class="flex items-start justify-between w-full">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-on-primary transition-colors">
+<span class="material-symbols-outlined text-[18px]">speed</span>
+</span>
+<span class="font-label-mono text-[11px] font-bold text-on-surface-variant/60">01</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm uppercase font-bold text-on-surface group-hover:text-primary transition-colors">Telemetry Home</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant truncate">Master Bench Matrix</div>
+</div>
+</a>
+<!-- 02 Brands A-Z -->
+<a class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-28 group" data-path="search" href="#">
+<div class="flex items-start justify-between w-full">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high text-secondary flex items-center justify-center group-hover:bg-secondary group-hover:text-on-secondary transition-colors">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+</span>
+<span class="font-label-mono text-[11px] font-bold text-on-surface-variant/60">02</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm uppercase font-bold text-on-surface group-hover:text-secondary transition-colors">Brands A-Z</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant truncate">142 OEM Repositories</div>
+</div>
+</a>
+<!-- 03 Active Test Rigs -->
+<a class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-28 group" data-path="reviews" href="#">
+<div class="flex items-start justify-between w-full">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high text-tertiary flex items-center justify-center group-hover:bg-tertiary group-hover:text-on-tertiary transition-colors">
+<span class="material-symbols-outlined text-[18px]">biotech</span>
+</span>
+<span class="font-label-mono text-[11px] font-bold text-on-surface-variant/60">03</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm uppercase font-bold text-on-surface group-hover:text-tertiary transition-colors">Active Test Rigs</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant truncate">ISO Chamber Calibrations</div>
+</div>
+</a>
+<!-- 04 Report Missing Specimen -->
+<a class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm hover:shadow-md transition-all flex flex-col justify-between h-28 group" data-path="admin-dashboard" href="#">
+<div class="flex items-start justify-between w-full">
+<span class="w-8 h-8 rounded-lg bg-surface-container-high text-error flex items-center justify-center group-hover:bg-error group-hover:text-on-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">flag</span>
+</span>
+<span class="font-label-mono text-[11px] font-bold text-on-surface-variant/60">04</span>
+</div>
+<div>
+<div class="font-label-sm text-label-sm uppercase font-bold text-on-surface group-hover:text-error transition-colors">Report Specimen</div>
+<div class="font-body-sm text-[11px] text-on-surface-variant truncate">Dispatch Ingestion Ticket</div>
+</div>
+</a>
+</div>
+</div>
+<!-- Calibrated Alternative Specimen Recommendations -->
+<div class="flex flex-col gap-space-xs mt-space-xs">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[18px] text-tertiary">verified</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Calibrated Alternates</h2>
+</div>
+<span class="font-label-mono text-[10px] text-tertiary font-bold px-2 py-0.5 rounded bg-tertiary-fixed-dim/20">
+          BENCH CERTIFIED
+        </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+        High-affinity baseline hardware specimens currently available in active laboratory storage:
+      </p>
+<div class="flex flex-col gap-space-xs">
+<!-- Card 1: Samsung Galaxy S25 Ultra -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between gap-space-sm hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Close-up studio laboratory photography of a high-end Samsung Galaxy S25 Ultra titanium frame phone mounted on an ISO metrology optical testing bench, surgical lighting, metallic reflections, ultra crisp technical details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDA3tYGg50Y8KAnLH4l5G_E4iPSmL51J-JL6E8CQ2Dc3Z93_h-KcldfJpKSg1q_JRlpgbs-JZ7nFKSadaXyf6H6tWN3n-zsVJpDPRH3RdV8Te8_4WBK_qNb6uDw2f8ILzVke4XzQR8aWpdm6cjVsGNOFFK5RQ389XVM7Vc0fgiodOCc7zB9tmKmssgUrd0xkt_WZ9qijKr2KQaQfDe3yWLTaFoJ6TrzveDqpDMFMgs"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-label-sm text-label-sm font-bold text-on-surface truncate">Samsung Galaxy S25 Ultra</h3>
+<span class="font-label-mono text-[9px] px-1 rounded bg-tertiary/10 text-tertiary font-bold flex-shrink-0">READY</span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant truncate mt-0.5">
+              OLED Lum: <span class="text-on-surface font-semibold">2,780 cd/m²</span> • Snap 8 Elite
+            </p>
+</div>
+<a class="h-8 px-2.5 rounded bg-surface-container-high text-primary font-label-mono text-[10px] font-bold uppercase hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-1 flex-shrink-0" data-path="reviews" href="#">
+<span>Dossier</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+</a>
+</div>
+<!-- Card 2: Apple iPhone 16 Pro Max -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between gap-space-sm hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="Technical laboratory inspection photography of Apple iPhone 16 Pro Max natural titanium casing under calibrated daylight LED illuminators with spectrophotometer sensors in foreground" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBKpuhYN2QjjMVDcQ4VmNI-APnQPn9SExCIpYDZS-LWdz2uZzg-0WnAwx0GOlEaQuQru7nMjT-L1V9NSxcyI8MH1RWWyP4nmnGVASyrgZhVRNC-JYxgZMaw0QQU_MgXf9ukipJ13mY6U3F8YXEUrcQuY5bBypYm-NZ3NtIrULEGUwDs1aIo4_YAobUMuhL-dWmwmYOVygC1IXUpMys0FmFKezx7WUBSs2QML2recMs"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-label-sm text-label-sm font-bold text-on-surface truncate">Apple iPhone 16 Pro Max</h3>
+<span class="font-label-mono text-[9px] px-1 rounded bg-secondary/10 text-secondary font-bold flex-shrink-0">TESTED</span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant truncate mt-0.5">
+              A18 Pro • Sustained: <span class="text-on-surface font-semibold">94.2%</span> • Delta E 0.8
+            </p>
+</div>
+<a class="h-8 px-2.5 rounded bg-surface-container-high text-primary font-label-mono text-[10px] font-bold uppercase hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-1 flex-shrink-0" data-path="reviews" href="#">
+<span>Dossier</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+</a>
+</div>
+<!-- Card 3: Vivo X100 Ultra -->
+<div class="p-space-md rounded-xl bg-surface-container-lowest shadow-sm flex items-center justify-between gap-space-sm hover:bg-surface-container-low transition-colors">
+<div class="w-12 h-12 rounded-lg bg-surface-container flex-shrink-0 overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="High precision optical bench rig testing the camera module of Vivo X100 Ultra with Zeiss T* coating reflecting cyan and amber spectral rings in a cleanroom darkroom" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMDD3vQfzRCSXb7pA3DuOhHWZiyb30EAY4r9GXK7-UycGOZYf5MRBxp8kVrLnyTYIO7IZ4KA1GVsIvn94vT99ALnOQoFLaTqkXPniQOJNSo8YwLc2sVTzsUFWfsPxB-nGuZEmqBtXr_jPzu03AjSTXPDI5aX0HjoczEN5sHO3b1DnxB3T-rpkJqtRAu9-58b7oHIJhbvjY1HrdSjrNOxX8lkBcy_1iWlPFSO1zWBg"/>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-1.5">
+<h3 class="font-label-sm text-label-sm font-bold text-on-surface truncate">Vivo X100 Ultra</h3>
+<span class="font-label-mono text-[9px] px-1 rounded bg-primary/10 text-primary font-bold flex-shrink-0">TRACE</span>
+</div>
+<p class="font-label-mono text-[11px] text-on-surface-variant truncate mt-0.5">
+              200MP APO Tele • MTF50: <span class="text-on-surface font-semibold">2,410 LP/PH</span>
+</p>
+</div>
+<a class="h-8 px-2.5 rounded bg-surface-container-high text-primary font-label-mono text-[10px] font-bold uppercase hover:bg-primary hover:text-on-primary transition-colors flex items-center gap-1 flex-shrink-0" data-path="reviews" href="#">
+<span>Dossier</span>
+<span class="material-symbols-outlined text-[12px]">chevron_right</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Metrology Lab Certification Footer Stamp -->
+<div class="mt-space-md p-space-md rounded-xl bg-surface-container-low flex items-center justify-between text-on-surface-variant">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[20px] text-tertiary">health_and_safety</span>
+<div class="flex flex-col">
+<span class="font-label-mono text-[10px] font-bold text-on-surface uppercase">ISO/IEC 17025 ACCREDITED</span>
+<span class="font-label-mono text-[9px] text-on-surface-variant">CERT NO: GSM-MET-2025-0814-D</span>
+</div>
+</div>
+<span class="font-label-mono text-[10px] px-2 py-0.5 rounded bg-surface-container-highest text-on-surface font-semibold">
+        SEC_NODE_OK
+      </span>
+</div>
+</div>
+</div>
+<script>
+  (function initErrorStateInteractions() {
+    const copyBtn = document.getElementById('copy-telemetry-btn');
+    const copyText = document.getElementById('copy-btn-text');
+    if (copyBtn && copyText) {
+      copyBtn.addEventListener('click', () => {
+        const textToCopy = "URI: /specimens/snapdragon-8-elite-v3-lab\\nNODE: US-WEST-04.GSMHUB.NET\\nHASH: 0x8F32CBA1970254EE\\nSTATE: REINDEX_CYCLE_IDLE\\nFAULT: ERR_METROLOGY_NODE_UNRESOLVED";
+        navigator.clipboard?.writeText(textToCopy).catch(() => {});
+        copyText.textContent = "COPIED";
+        copyBtn.classList.add('bg-tertiary-fixed-dim/40', 'text-tertiary');
+        setTimeout(() => {
+          copyText.textContent = "Copy";
+          copyBtn.classList.remove('bg-tertiary-fixed-dim/40', 'text-tertiary');
+        }, 1800);
+      });
+    }
+
+    const searchInput = document.getElementById('specimen-search-input');
+    const lookupBtn = document.getElementById('execute-lookup-btn');
+    const chips = document.querySelectorAll('.query-chip');
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const query = chip.textContent.trim();
+        if (searchInput) {
+          searchInput.value = query;
+          searchInput.focus();
+        }
+      });
+    });
+
+    if (lookupBtn && searchInput) {
+      lookupBtn.addEventListener('click', () => {
+        const val = searchInput.value.trim();
+        if (val) {
+          lookupBtn.innerHTML = `<span class="material-symbols-outlined text-[14px] animate-spin">refresh</span><span>Scanning...</span>`;
+          setTimeout(() => {
+            lookupBtn.innerHTML = `<span>Lookup</span><span class="material-symbols-outlined text-[14px]">arrow_forward</span>`;
+          }, 1000);
+        }
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/95 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.03)]" data-active-classes="text-primary font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex-1 flex flex-col items-center justify-center h-full text-on-surface-variant hover:text-primary transition-colors" data-path="home" href="#"><span class="material-symbols-outlined text-[22px]">dashboard</span><span class="font-label-sm text-label-sm tracking-normal">Home</span></a><a class="flex-1 flex flex-col items-center justify-center h-full text-on-surface-variant hover:text-primary transition-colors" data-path="compare" href="#"><span class="material-symbols-outlined text-[22px]">compare_arrows</span><span class="font-label-sm text-label-sm tracking-normal">Compare</span></a><a class="flex-1 flex flex-col items-center justify-center h-full text-on-surface-variant hover:text-primary transition-colors" data-path="search" href="#"><span class="material-symbols-outlined text-[22px]">manage_search</span><span class="font-label-sm text-label-sm tracking-normal">Search</span></a><a class="flex-1 flex flex-col items-center justify-center h-full text-on-surface-variant hover:text-primary transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[22px]">biotech</span><span class="font-label-sm text-label-sm tracking-normal">Reviews</span></a><a class="flex-1 flex flex-col items-center justify-center h-full text-on-surface-variant hover:text-primary transition-colors" data-path="admin-dashboard" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-sm text-label-sm tracking-normal">Admin</span></a></div></nav></body></html>

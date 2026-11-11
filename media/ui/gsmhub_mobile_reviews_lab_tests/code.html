@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed":"#002113","on-primary-container":"#f8f7ff","inverse-primary":"#0054d6","surface-container-lowest":"#0a0e16","surface-tint":"#b3c5ff","on-surface":"#dfe2ee","background":"#0f131c","surface-variant":"#31353e","primary-fixed-dim":"#b3c5ff","secondary-fixed-dim":"#47d6ff","secondary-container":"#00d2ff","on-tertiary-container":"#e1ffec","inverse-on-surface":"#2c3039","on-secondary-fixed":"#001f28","surface-dim":"#0f131c","surface-container-high":"#262a33","on-primary":"#002b75","on-surface-variant":"#c2c6d8","on-primary-fixed-variant":"#003fa4","on-primary-fixed":"#001849","on-secondary-container":"#00566a","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","primary-fixed":"#dae1ff","on-error-container":"#ffdad6","on-secondary":"#003543","tertiary":"#4edea3","primary-container":"#0066ff","inverse-surface":"#dfe2ee","on-tertiary":"#003824","surface":"#0f131c","surface-container-highest":"#31353e","secondary-fixed":"#b6ebff","outline":"#8c90a1","error":"#ffb4ab","surface-bright":"#353942","surface-container":"#1c2028","on-error":"#690005","surface-container-low":"#181c24","tertiary-container":"#008259","error-container":"#93000a","secondary":"#a5e7ff","outline-variant":"#424656","tertiary-fixed-dim":"#4edea3","on-tertiary-fixed-variant":"#005236","on-secondary-fixed-variant":"#004e60","primary":"#b3c5ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xs":"0.25rem","space-md":"0.75rem","gutter":"1rem","margin":"1rem","space-lg":"1rem","space-sm":"0.5rem","space-xl":"1.5rem"},"fontFamily":{"headline-md":["Inter"],"body-sm":["Inter"],"headline-xl-mobile":["Inter"],"body-lg":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"label-xs":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"headline-lg":["Inter"]},"fontSize":{"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}],"label-xs":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-14 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary-container text-[22px]">memory</span><span class="font-headline-md text-headline-md tracking-tight text-on-surface uppercase">GSM<span class="text-secondary-container">HUB</span></span></div><span class="px-space-xs py-[2px] bg-surface-container-high rounded-DEFAULT font-label-xs text-label-xs text-secondary tracking-widest uppercase">LAB</span></div><div class="flex items-center gap-space-xs"><button aria-label="Search specs and reviews" class="w-11 h-11 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">search</span></button><a aria-label="User profile and settings" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0" href="#"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></a></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full px-margin pb-12 gap-space-lg text-on-surface">
+<!-- Breadcrumb Navigation -->
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant font-label-sm text-label-sm pt-space-sm overflow-x-auto whitespace-nowrap">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">home</span>
+<span>Home</span>
+</a>
+<span class="material-symbols-outlined text-[12px] text-outline-variant">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Editorial</a>
+<span class="material-symbols-outlined text-[12px] text-outline-variant">chevron_right</span>
+<span class="text-secondary-container font-label-md text-label-md">Lab Reviews</span>
+</nav>
+<!-- Editorial Section Header -->
+<section class="flex flex-col gap-space-xs bg-surface-container-low p-space-lg rounded-xl relative overflow-hidden shadow-sm">
+<div class="absolute -right-12 -top-12 w-44 h-44 rounded-full bg-secondary-container/5 blur-3xl pointer-events-none"></div>
+<div class="flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs uppercase tracking-wider flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+        Calibrated Metrics
+      </span>
+<span class="font-label-xs text-label-xs text-on-surface-variant">ISO/IEC 17025 Standard Lab</span>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface font-bold tracking-tight">
+      Hardware Lab Reviews &amp; Benchmarks
+    </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+      Unbiased teardowns, optical bench tests, calibrated battery loops, and sustained thermal stress tests.
+    </p>
+<!-- Lab Metrics Quick Bar -->
+<div class="grid grid-cols-3 gap-space-sm pt-space-xs mt-space-xs">
+<div class="bg-surface-container px-space-sm py-space-xs rounded-lg flex flex-col">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Active Units</span>
+<span class="font-headline-md text-headline-md text-on-surface">342 Devices</span>
+</div>
+<div class="bg-surface-container px-space-sm py-space-xs rounded-lg flex flex-col">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Lux Bench</span>
+<span class="font-headline-md text-headline-md text-secondary-container">0.1 - 4500 nit</span>
+</div>
+<div class="bg-surface-container px-space-sm py-space-xs rounded-lg flex flex-col">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Thermal Rig</span>
+<span class="font-headline-md text-headline-md text-tertiary">Fluke Ti480</span>
+</div>
+</div>
+</section>
+<!-- Filter & Category Tabs -->
+<div class="flex items-center gap-space-xs overflow-x-auto no-scrollbar py-space-xs -mx-margin px-margin">
+<button class="px-space-md py-space-xs bg-secondary-container text-on-secondary-container font-label-sm text-label-sm rounded-full whitespace-nowrap shadow-sm font-semibold transition-all">
+      All Reviews (342)
+    </button>
+<button class="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm rounded-full whitespace-nowrap transition-colors">
+      Flagships 2025
+    </button>
+<button class="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm rounded-full whitespace-nowrap transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">battery_charging_full</span>
+      Battery Tests
+    </button>
+<button class="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm rounded-full whitespace-nowrap transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">photo_camera</span>
+      Camera Shootouts
+    </button>
+<button class="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm rounded-full whitespace-nowrap transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">thermostat</span>
+      Thermal Benchmarks
+    </button>
+</div>
+<!-- Featured Review Card (Hero Anchor) -->
+<article class="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-md">
+<!-- Image & Score Overlay -->
+<div class="relative w-full h-52 bg-surface-container-high overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="Technical product render of Samsung Galaxy S25 Ultra lying on an anti-static electronics test bench with laser measurement grid lines in high-contrast deep charcoal and subtle cyan backlighting, studio macro hardware photo." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDTgw7GyWu--zwbmwLF-7WWoG1o1hfIT7UDCO20fqL2uFSR-oA1hQXa37qwpEIFhHK2vzWJo_OIU094fCR8OcQAiFtpL51G4XYj36YZK_Iz5XJUT_hhJquJ_iOm7OamSxfP58p_qrWZutlIfEwJsvuQrXI35Sv19dv9eh8k1AJvR4xh4Z2oE-8fNqEy5LgS0mx3zBWu2oZ99RpDN9hsgN3vzdY3-n9K_0kpARKnZcI"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-surface-container-low/40 to-transparent"></div>
+<!-- Badges -->
+<div class="absolute top-space-sm left-space-sm flex items-center gap-space-xs">
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-primary-container text-on-primary-container font-label-xs text-label-xs uppercase font-bold tracking-wider">
+          Editor's Choice
+        </span>
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-lowest/80 backdrop-blur-md text-secondary-container font-label-xs text-label-xs">
+          Comprehensive Lab
+        </span>
+</div>
+<div class="absolute top-space-sm right-space-sm bg-surface-container-lowest/90 backdrop-blur-md px-space-sm py-1 rounded-lg flex items-center gap-1 shadow-sm">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.4</span>
+<div class="flex flex-col leading-none">
+<span class="font-label-xs text-label-xs text-on-surface-variant">/ 10</span>
+<span class="font-label-xs text-[9px] uppercase tracking-wider text-outline">GSM Score</span>
+</div>
+</div>
+<div class="absolute bottom-space-sm left-space-sm right-space-sm">
+<span class="font-label-xs text-label-xs text-secondary-container uppercase tracking-widest font-semibold">Flagship Teardown &amp; Bench</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold leading-tight line-clamp-1">
+          Samsung Galaxy S25 Ultra Comprehensive Lab Review
+        </h2>
+</div>
+</div>
+<!-- Specs Matrix Pills -->
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="grid grid-cols-3 gap-space-xs bg-surface-container px-space-sm py-space-sm rounded-lg">
+<div class="flex flex-col min-w-0">
+<span class="font-label-xs text-label-xs text-outline truncate uppercase">Platform</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">Snapdragon 8 Elite</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-xs text-label-xs text-outline truncate uppercase">Primary Imager</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">200MP ISOCELL HP2</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-xs text-label-xs text-outline truncate uppercase">Cell Pack</span>
+<span class="font-label-md text-label-md text-on-surface font-medium truncate">5000 mAh (45W)</span>
+</div>
+</div>
+<!-- Verdict Highlights Callout -->
+<div class="flex flex-col gap-space-xs bg-surface-container-high/60 p-space-sm rounded-lg">
+<div class="flex items-center justify-between text-on-surface font-label-xs text-label-xs uppercase font-semibold">
+<span class="flex items-center gap-1 text-secondary-container">
+<span class="material-symbols-outlined text-[15px]">verified</span>
+            Lab Verdict Findings
+          </span>
+<span class="text-tertiary">Tested Firmware: S938USQU0</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<div class="flex flex-col">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Active Runtime</span>
+<span class="font-label-sm text-label-sm text-tertiary font-bold">16h 42m</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-1 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 94%;"></div>
+</div>
+<span class="font-label-xs text-label-xs text-outline mt-0.5">Class Leader (+18% vs S24U)</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">GPU Throttle</span>
+<span class="font-label-sm text-label-sm text-secondary font-bold">81.4% Sustained</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5 mt-1 overflow-hidden">
+<div class="bg-secondary-container h-full rounded-full" style="width: 81.4%;"></div>
+</div>
+<span class="font-label-xs text-label-xs text-outline mt-0.5">3DMark Solar Bay 20m Loop</span>
+</div>
+</div>
+</div>
+<!-- Author and Meta -->
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary-container font-bold text-label-sm shrink-0">
+            AT
+          </div>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">Dr. Aris Thorne</span>
+<span class="font-body-sm text-body-sm text-outline truncate">Chief Hardware Analyst • 2d ago • 18 min</span>
+</div>
+</div>
+<a class="px-space-md py-space-sm bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md font-semibold hover:bg-primary hover:text-on-primary transition-all flex items-center gap-1 shadow-sm shrink-0" href="#">
+<span>Read Review</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+</div>
+</article>
+<!-- Section Title: Recent Lab Reviews -->
+<div class="flex items-center justify-between pt-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">science</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold tracking-tight">Recent Lab Reviews</h2>
+</div>
+<span class="font-label-xs text-label-xs text-on-surface-variant">Live Calibrated Feed</span>
+</div>
+<!-- Recent Reviews: 2-Column Responsive Matrix Grid -->
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+<!-- Card 1: iPhone 16 Pro Max -->
+<article class="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative w-full h-36 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Overhead close-up studio shot of the desert titanium Apple iPhone 16 Pro Max camera plateau resting on precision dark laboratory test staging with calibrated millimeter reticles." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDknHurc0J6cCgFjtJcN3T5sJuGLREi2P3c8B2Fsm8F6k6LlzBGEiZ_xZQfUPktRAkGN1-nsoHR2j1-L_omuPf8J-MD3b0QPJ1gDBFRAZWC-dmtrH3GV-i4ibv_8ocTpHxaWOC-2HoaIuGkgvDuKMLGvp1aZDfR4MsasiBC3EhoqCmvTQMDRTThtwVPsY6OIKoXVEesB0rrCy18wspf8aZBeA1cCy3M0XAL5moJ9U"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<span class="absolute top-2 left-2 px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-lowest/80 backdrop-blur-md text-secondary-container font-label-xs text-label-xs">
+          Apple iOS 18
+        </span>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.3</span>
+<span class="font-label-xs text-label-xs text-outline">/10</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-xs flex-grow justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold line-clamp-1">Apple iPhone 16 Pro Max</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">
+            Apple A18 Pro 3nm silicon benchmarked alongside ProRAW 48MP optical dispersion analysis.
+          </p>
+</div>
+<div class="flex flex-col gap-1 pt-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Active Runtime</span>
+<span class="text-tertiary font-bold">17h 24m (Lab High)</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Thermal Core</span>
+<span class="text-on-surface">39.2°C Max Outer</span>
+</div>
+</div>
+<a class="mt-space-xs w-full py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" href="#">
+<span>Read Lab Test</span>
+<span class="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Card 2: Xiaomi 15 Pro -->
+<article class="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative w-full h-36 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Hardware photography of Xiaomi 15 Pro smartphone back panel highlighting Leica Summilux lens arrangement under laboratory diagnostic lights in a cleanroom dark atmosphere." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe0XlqJXL46romMzJxp0pnqovA6eIL4JR4U11nk68L9jPNPrbpeDq958q-4OPqguZYajaxPMHzbUmY0l95FLhVRaFgJxTnr_0Rcp6vQLsZUVT0g7RAO4jXz1t_Wox4kD6-b-h7cZ2uZL72okTWHdGSlKM2S2rT6SiFl6GjKLvY-WH6FDIxcjKYCCGPe4yRR-bvSBGgbbMJ1PYyRISNzsxzYcJjeivCCBimkbemS4Y"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<span class="absolute top-2 left-2 px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-lowest/80 backdrop-blur-md text-secondary-container font-label-xs text-label-xs">
+          HyperOS 2.0
+        </span>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.1</span>
+<span class="font-label-xs text-label-xs text-outline">/10</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-xs flex-grow justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold line-clamp-1">Xiaomi 15 Pro Lab Test</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">
+            Snapdragon 8 Elite silicon paired with full Leica Summilux teardown and 6100 mAh cell curve.
+          </p>
+</div>
+<div class="flex flex-col gap-1 pt-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Fast Charge 90W</span>
+<span class="text-secondary-container font-bold">100% in 28m</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Display Peak</span>
+<span class="text-on-surface">3210 nits Calibrated</span>
+</div>
+</div>
+<a class="mt-space-xs w-full py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" href="#">
+<span>Read Lab Test</span>
+<span class="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Card 3: OnePlus 13 -->
+<article class="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative w-full h-36 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="OnePlus 13 mobile phone undergoing extreme graphics stress benchmarking, displaying screen metrics with an external heat probe clamped to the aluminum frame in dark studio lab." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwkHwuBvXuO2F-Ezl4LaOCHIzNZf_5wjnqOmMNhYRDhd_rR678sU3MopYJGNNz0hB0jrvmOj1ijtGjc1AveQ9lx2U4iXvK2ynded-8vRrLy6I8zC38FjPu2ZqQlHbf9NswGrfh1W8hed6mDZRVR1itMFnwPDbPiYL5VuW8zP0Y4j0fe8U0ZDs1vIP8eMTuzxPf4_hTid1BYPOkj6RAuoacpWx5iipn1cyjG-Nkopk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<span class="absolute top-2 left-2 px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-lowest/80 backdrop-blur-md text-secondary-container font-label-xs text-label-xs">
+          Thermal Focus
+        </span>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.2</span>
+<span class="font-label-xs text-label-xs text-outline">/10</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-xs flex-grow justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold line-clamp-1">OnePlus 13 Thermal &amp; Gaming</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">
+            6000 mAh Glacier battery architecture tested through an extreme 120 FPS sustained Genshin loop.
+          </p>
+</div>
+<div class="flex flex-col gap-1 pt-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Genshin 120 FPS</span>
+<span class="text-tertiary font-bold">118.4 FPS Avg</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">VC Vapor Chamber</span>
+<span class="text-on-surface">9,925 mm² Area</span>
+</div>
+</div>
+<a class="mt-space-xs w-full py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" href="#">
+<span>Read Lab Test</span>
+<span class="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Card 4: Google Pixel 9 Pro XL -->
+<article class="flex flex-col bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="relative w-full h-36 bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Google Pixel 9 Pro XL camera visor mounted onto an optical collimator optical bench during calibrated low-light test in a scientific electronics engineering lab." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYs5GvHlft62W_idd9v-bM_qXtImY8hEW0hqqUx8Xk-43ZZhMAR6nR5Mh-ix7w9C2A1tS8eQni43QbqI3E0glf6G9l2WBQJWNvAU3d1_HuY3obKMJ13f5AczQYGiyMHxJJNaRkPMST3tAjRGMeGM46uTuzKuc1SzLxUDa8vGT1711jibq1CcoQ2Gh-dxqZTwmm6xEowbVVlXwL0WHta4AI48sqbJ-M9LQcqpKe4Ng"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent"></div>
+<span class="absolute top-2 left-2 px-space-xs py-0.5 rounded-DEFAULT bg-surface-container-lowest/80 backdrop-blur-md text-secondary-container font-label-xs text-label-xs">
+          Optical Lab
+        </span>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.0</span>
+<span class="font-label-xs text-label-xs text-outline">/10</span>
+</div>
+</div>
+<div class="p-space-md flex flex-col gap-space-xs flex-grow justify-between">
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold line-clamp-1">Google Pixel 9 Pro XL Camera</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-2 mt-0.5">
+            Tensor G4 image signal processor shootout, DxOMark Lab rival 158 pts, and Night Sight spectra.
+          </p>
+</div>
+<div class="flex flex-col gap-1 pt-space-xs">
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Optics Score</span>
+<span class="text-secondary-container font-bold">158 pts (Top 3)</span>
+</div>
+<div class="flex items-center justify-between font-label-sm text-label-sm py-1 bg-surface-container px-2 rounded-DEFAULT">
+<span class="text-outline">Color Delta E</span>
+<span class="text-on-surface">1.12 Ultra-Accurate</span>
+</div>
+</div>
+<a class="mt-space-xs w-full py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" href="#">
+<span>Read Lab Test</span>
+<span class="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+</a>
+</div>
+</article>
+<!-- Card 5: Asus ROG Phone 9 Pro (Single spanning highlight card on mobile) -->
+<article class="flex flex-col sm:col-span-2 bg-surface-container-low rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+<div class="flex flex-col sm:flex-row">
+<div class="relative sm:w-1/2 h-36 sm:h-auto bg-surface-container-high">
+<img class="w-full h-full object-cover" data-alt="Asus ROG Phone 9 Pro cybernetic gaming phone with rear AniMe Matrix LED lighting illuminated on an oscilloscope workbench in an engineering laboratory." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBJ7bfdmSZKzRkasV3BvjFZUi8JkxeluK6KvxMP3lHxwdGcZUgWl8nU0YkizQwHOuerhhZnUwFtBH5WJG2FazLpgHrwONeuUalPhylTS8V58z8BppB3YmKYdJytOQJS0z4NOskZpYk_HSpQxRZ2qWexibbW_epcPfc8zhuZ67Miw1uusnvmkbwOwpLq1LdR3CCAVwbbqBukB_yqsd8EHrrB19nyBH_U5b4covjdPZM"/>
+<div class="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-surface-container-low via-transparent to-transparent"></div>
+<div class="absolute top-2 right-2 bg-surface-container-lowest/90 backdrop-blur-md px-1.5 py-0.5 rounded-lg flex items-center gap-1">
+<span class="font-headline-md text-headline-md text-secondary-container font-bold">9.3</span>
+<span class="font-label-xs text-label-xs text-outline">/10</span>
+</div>
+</div>
+<div class="p-space-md sm:w-1/2 flex flex-col justify-between gap-space-xs">
+<div>
+<span class="px-space-xs py-0.5 rounded-DEFAULT bg-surface-container text-secondary font-label-xs text-label-xs uppercase">185Hz Refresh Peak</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-1">Asus ROG Phone 9 Pro Lab Suite</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+              Active AeroCooler X Pro benchmarks, 185Hz LTPO high-frame latency analysis, and AirTrigger ultrasonic sensor polling accuracy.
+            </p>
+</div>
+<div class="grid grid-cols-2 gap-space-xs my-space-xs">
+<div class="bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="font-label-xs text-label-xs text-outline block">Geekbench Multi</span>
+<span class="font-label-md text-label-md text-on-surface font-bold">10,482 pts</span>
+</div>
+<div class="bg-surface-container p-space-xs rounded-DEFAULT">
+<span class="font-label-xs text-label-xs text-outline block">AeroCooler Delta</span>
+<span class="font-label-md text-label-md text-tertiary font-bold">-14.2°C Chill</span>
+</div>
+</div>
+<a class="w-full py-2 bg-surface-container-high hover:bg-surface-bright text-on-surface rounded-lg font-label-sm text-label-sm font-semibold flex items-center justify-center gap-1 transition-colors" href="#">
+<span>Read Hardware Suite</span>
+<span class="material-symbols-outlined text-[14px]">arrow_right_alt</span>
+</a>
+</div>
+</div>
+</article>
+</div>
+<!-- Benchmarks Direct Comparison Tool Banner -->
+<section class="flex flex-col bg-surface-container p-space-lg rounded-xl shadow-md gap-space-md relative overflow-hidden">
+<div class="absolute -right-8 -bottom-8 w-36 h-36 rounded-full bg-primary-container/10 blur-2xl pointer-events-none"></div>
+<div class="flex items-start gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-secondary-container/15 text-secondary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[28px]">query_stats</span>
+</div>
+<div class="flex flex-col gap-0.5">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-xs text-label-xs bg-secondary-container/20 text-secondary-container px-space-xs py-0.5 rounded-DEFAULT uppercase tracking-wider font-bold">Interactive Matrix</span>
+<span class="font-label-xs text-label-xs text-outline">Real Silicon Runs</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold">Direct Benchmark Tool</h3>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+          Compare calibrated synthetic benchmarks (AnTuTu v10, Geekbench 6, 3DMark Solar Bay) side-by-side across any two phones.
+        </p>
+</div>
+</div>
+<!-- Micro Preview Chart of Benchmarks -->
+<div class="bg-surface-container-low p-space-sm rounded-lg flex flex-col gap-space-xs">
+<div class="flex justify-between items-center text-label-xs font-label-xs text-outline">
+<span>AnTuTu v10 Benchmark Delta</span>
+<span class="text-secondary-container">Device 1 vs Device 2</span>
+</div>
+<div class="flex flex-col gap-1.5">
+<div>
+<div class="flex justify-between text-body-sm font-body-sm py-0.5">
+<span class="text-on-surface truncate">S25 Ultra (8 Elite)</span>
+<span class="font-semibold text-secondary-container">3,082,144</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5">
+<div class="bg-secondary-container h-full rounded-full" style="width: 98%;"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm font-body-sm py-0.5">
+<span class="text-on-surface truncate">iPhone 16 Pro Max (A18 Pro)</span>
+<span class="font-semibold text-primary">2,891,420</span>
+</div>
+<div class="w-full bg-surface-container rounded-full h-1.5">
+<div class="bg-primary-container h-full rounded-full" style="width: 91%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- CTA Button -->
+<a class="w-full py-space-sm bg-secondary-container hover:bg-secondary text-on-secondary-container rounded-lg font-label-md text-label-md font-bold text-center flex items-center justify-center gap-space-xs transition-colors shadow-sm" href="#">
+<span class="material-symbols-outlined text-[18px]">compare_arrows</span>
+<span>Launch Benchmark Tool</span>
+</a>
+</section>
+<!-- Calibrated Lab Pagination Controls -->
+<div class="flex flex-col sm:flex-row items-center justify-between gap-space-sm pt-space-xs">
+<span class="font-body-sm text-body-sm text-outline">
+      Showing <span class="text-on-surface font-semibold">1 - 6</span> of 342 laboratory analyses
+    </span>
+<div class="flex items-center gap-1">
+<button aria-label="Previous Page" class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container-low text-outline-variant opacity-50 cursor-not-allowed" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold shadow-sm">
+        1
+      </button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md">
+        2
+      </button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md">
+        3
+      </button>
+<span class="w-8 flex items-center justify-center text-outline text-label-md">...</span>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md">
+        29
+      </button>
+<button aria-label="Next Page" class="w-9 h-9 flex items-center justify-center rounded-lg bg-surface-container text-on-surface hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Micro Technical Disclaimer Footer Badge -->
+<div class="flex items-center justify-center gap-space-xs text-outline font-label-xs text-label-xs py-space-sm opacity-70">
+<span class="material-symbols-outlined text-[14px]">precision_manufacturing</span>
+<span>Tests standardized under controlled 22°C ambient room temperature with Calman display calibrator.</span>
+</div>
+</div></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.5)]" data-active-classes="text-secondary-container"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Home</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare" href="#"><span class="material-symbols-outlined text-[22px]">compare_arrows</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Compare</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="browse" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Browse</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="reviews" href="#"><span class="material-symbols-outlined text-[22px]">science</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Reviews</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="saved" href="#"><span class="material-symbols-outlined text-[22px]">bookmarks</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Saved</span></a></div></nav></body></html>

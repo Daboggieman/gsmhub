@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><title>Reviews Hub - GSMHub</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100%;margin:0;padding:0;background-color:#faf8ff;}body{overscroll-behavior-y:none;-webkit-tap-highlight-color:transparent;font-family:'Inter',sans-serif;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "error": "#ba1a1a", "inverse-surface": "#283044", "on-secondary-container": "#00476e", "inverse-on-surface": "#eef0ff", "primary-fixed": "#dae1ff", "tertiary-fixed-dim": "#4edea3", "on-primary-fixed-variant": "#003fa4", "on-surface": "#131b2e", "surface-container-low": "#f2f3ff", "on-tertiary": "#ffffff", "on-background": "#131b2e", "on-surface-variant": "#424656", "secondary-container": "#5bb8fe", "surface-container-lowest": "#ffffff", "tertiary-fixed": "#6ffbbe", "outline": "#727687", "surface-bright": "#faf8ff", "surface-container-highest": "#dae2fd", "on-secondary": "#ffffff", "background": "#faf8ff", "surface-variant": "#dae2fd", "surface-dim": "#d2d9f4", "surface-tint": "#0054d6", "surface": "#faf8ff", "inverse-primary": "#b3c5ff", "tertiary": "#006645", "on-primary": "#ffffff", "on-error": "#ffffff", "secondary-fixed-dim": "#93ccff", "on-secondary-fixed": "#001d31", "on-secondary-fixed-variant": "#004b73", "on-error-container": "#93000a", "surface-container-high": "#e2e7ff", "primary-fixed-dim": "#b3c5ff", "secondary-fixed": "#cce5ff", "on-primary-fixed": "#001849", "surface-container": "#eaedff", "on-primary-container": "#f8f7ff", "on-tertiary-fixed-variant": "#005236", "primary": "#0050cb", "primary-container": "#0066ff", "error-container": "#ffdad6", "outline-variant": "#c2c6d8", "on-tertiary-fixed": "#002113", "secondary": "#006398", "tertiary-container": "#008259", "on-tertiary-container": "#e1ffec" }, "borderRadius": { "DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem" }, "spacing": { "space-sm": "0.5rem", "gutter-mobile": "0.75rem", "margin": "1.5rem", "gutter": "1rem", "space-xl": "1.5rem", "space-lg": "1rem", "space-xs": "0.25rem", "space-md": "0.75rem", "margin-mobile": "1rem" }, "fontFamily": { "body-md": ["Inter"], "body-sm": ["Inter"], "headline-xl-mobile": ["Inter"], "headline-md": ["Inter"], "label-sm": ["Inter"], "headline-sm": ["Inter"], "headline-xl": ["Inter"], "headline-lg-mobile": ["Inter"], "label-mono": ["Inter"], "body-lg": ["Inter"], "headline-lg": ["Inter"], "label-md": ["Inter"] }, "fontSize": { "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }], "headline-xl-mobile": ["28px", { "lineHeight": "34px", "letterSpacing": "-0.025em", "fontWeight": "700" }], "headline-md": ["20px", { "lineHeight": "26px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-sm": ["16px", { "lineHeight": "22px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.03em", "fontWeight": "700" }], "headline-lg-mobile": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.015em", "fontWeight": "600" }], "label-mono": ["11px", { "lineHeight": "14px", "letterSpacing": "0.01em", "fontWeight": "500" }], "body-lg": ["15px", { "lineHeight": "22px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-primary selection:text-on-primary"><header class="fixed top-0 inset-x-0 z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 px-margin-mobile flex items-center justify-between"><div class="flex items-center gap-space-xs"><div class="flex items-center gap-1"><span class="text-headline-sm font-headline-sm tracking-tight text-on-surface">GSM<span class="text-primary-container font-headline-sm">HUB</span></span><span class="px-1.5 py-0.5 rounded-lg bg-surface-container-high text-primary font-label-sm text-label-sm uppercase tracking-wider">ISO-17025</span></div></div><div class="flex items-center gap-space-xs"><a class="min-w-[44px] min-h-[44px] flex items-center justify-center" data-path="compare-matrix" href="#"><div class="flex items-center gap-1 bg-surface-container px-2 py-1 rounded-full"><span class="material-symbols-outlined text-secondary text-[16px]">compare_arrows</span><span class="font-label-mono text-label-mono text-secondary font-bold">2</span></div></a><button aria-label="Search telemetry" class="min-w-[44px] min-h-[44px] flex items-center justify-center text-on-surface-variant hover:text-on-surface"><span class="material-symbols-outlined text-[20px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center ml-1"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full pb-8">
+<!-- Editorial Subheader Ribbon & Telemetry Ticker -->
+<section class="bg-surface-container-low px-margin-mobile py-2.5">
+<div class="flex items-center justify-between gap-2">
+<div class="flex items-center gap-2 min-w-0">
+<span class="relative flex h-2 w-2 flex-shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-tertiary-container opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-tertiary"></span>
+</span>
+<span class="font-label-mono text-label-mono text-tertiary uppercase tracking-wider truncate font-semibold">
+          LIVE INGESTION WIRE // 24/7 REGULATORY CRAWL
+        </span>
+</div>
+<div class="flex items-center gap-1.5 flex-shrink-0">
+<span class="font-label-mono text-label-mono text-on-surface-variant font-medium">SYNC #089-B</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+</div>
+</div>
+<!-- Filter Chips Horizontal Scroll -->
+<div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-2 pb-0.5" id="topic-filter-bar">
+<button class="filter-chip px-2.5 py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm whitespace-nowrap active:opacity-90">
+        All News
+      </button>
+<button class="filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface">
+        Silicon &amp; Fab
+      </button>
+<button class="filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface">
+        FCC / Regulatory
+      </button>
+<button class="filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface">
+        Camera MTF
+      </button>
+<button class="filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface">
+        Battery Tech
+      </button>
+<button class="filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface">
+        Leaks &amp; Rumors
+      </button>
+</div>
+</section>
+<!-- Breaking Hardware Dossier (Hero Lead Card) -->
+<article class="px-margin-mobile pt-3 pb-2">
+<div class="bg-surface-container-lowest rounded-xl p-3.5 shadow-sm">
+<!-- Dossier Header Badges -->
+<div class="flex flex-wrap items-center justify-between gap-1.5 pb-2">
+<span class="bg-primary-fixed text-on-primary-fixed-variant px-2 py-0.5 rounded font-label-sm text-label-sm uppercase tracking-wide">
+          BREAKING HARDWARE DOSSIER • SILICON ARCHITECTURE
+        </span>
+<span class="bg-surface-container-high text-on-surface-variant font-label-mono text-label-mono px-1.5 py-0.5 rounded">
+          ISO #NIST-2025-089
+        </span>
+</div>
+<!-- Main Headline -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface font-bold tracking-tight mt-1 leading-snug">
+        TSMC 2nm N2 Production Accelerated: Apple A19 Pro &amp; Next-Gen Snapdragon GAAFET Architecture Leak Reveals Transistor Density Gains
+      </h1>
+<!-- Scientific Author Byline & Telemetry Meta -->
+<div class="flex flex-wrap items-center gap-x-2 gap-y-1 text-on-surface-variant mt-2 pb-2">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px] text-primary">verified_user</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold">Dr. Aris Thorne</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">(Chief Silicon Metrologist)</span>
+</div>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">42 mins ago</span>
+<span class="text-outline-variant font-body-sm">•</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">8 min read</span>
+</div>
+<!-- Technical Metrology Diagram Card -->
+<div class="rounded-lg bg-surface-container overflow-hidden my-2.5">
+<div class="relative w-full h-44 bg-surface-dim">
+<img class="w-full h-full object-cover" data-alt="High-resolution laboratory scanning electron microscope SEM cross section showing 4-tier nanosheet GAAFET gate all around silicon ribbon transistors at 2nm scale. Precision chromatic aberration grid calibration overlay with cyan and cobalt engineering crosshairs, labeled nano-channel dimensions, and technical metrology telemetry markings in crisp laboratory white lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYV9e9_wl_f2OSyQ6EnfvNZlsfP8DpYOpe1JH_tl4VZRme3WbemJcbr6cnR1BB-RoY3SiDj34L7P4296Ymgu0cKcoQMS9soX3gjQyQ8Xuy6VRYfGrSJ0neo7SDCGARVyF57qcPyJv-Weo9GjRNRsgMMwJ-d0NkcDBdraKnrA-PZ-Kbdc1Nptg3R0ZAzet6PC6HrdBwNXgUGSKh-i8mX_Z288J8EuJI0txKH1uqTyk"/>
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/80 via-transparent to-transparent flex flex-col justify-end p-2.5">
+<div class="flex items-center justify-between text-inverse-on-surface">
+<span class="font-label-mono text-label-mono font-bold tracking-wide">
+                TSMC N2 GAAFET: 4-Tier Suspended Ribbon Cross-Section
+              </span>
+<span class="bg-primary/90 text-on-primary px-1.5 py-0.5 rounded font-label-mono text-label-mono">
+                0.12 nm/px
+              </span>
+</div>
+<div class="flex items-center gap-2 text-inverse-on-surface/80 font-label-mono text-label-mono text-[10px] mt-0.5">
+<span>Rig-B Spectrophotometry</span>
+<span>•</span>
+<span>TEM Resolution: Sub-Ångström</span>
+</div>
+</div>
+</div>
+<!-- Pull-Quote Specimen Callout -->
+<div class="p-2.5 bg-surface-container-high flex items-start gap-2">
+<span class="material-symbols-outlined text-primary text-[20px] flex-shrink-0 mt-0.5">format_quote</span>
+<p class="font-body-md text-body-md text-on-surface italic font-medium leading-tight">
+            “Gate-all-around architecture eliminates quantum tunneling leakage above 4.40 GHz, marking the first stable sub-0.65V rail since FinFET inception.”
+          </p>
+</div>
+</div>
+<!-- Quick Specimen Delta Preview Pill Group -->
+<div class="bg-surface-container-low rounded-lg p-2.5 mt-2 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-on-surface-variant font-bold">
+            SPECIMEN DELTA: AP-A19-PRO-2NM
+          </span>
+<span class="bg-tertiary-fixed text-on-tertiary-fixed font-label-mono text-label-mono px-1.5 py-0.2 rounded font-bold">
+            VERIFIED BENCH
+          </span>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-0.5">
+<div class="bg-surface-container-lowest rounded p-2 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Density Gain</span>
+<span class="font-label-md text-label-md text-tertiary font-bold">+20.03%</span>
+</div>
+<div class="bg-surface-container-lowest rounded p-2 flex items-center justify-between">
+<span class="font-body-sm text-body-sm text-on-surface-variant">Power @ Iso-Clock</span>
+<span class="font-label-md text-label-md text-primary font-bold">-28.0%</span>
+</div>
+</div>
+</div>
+</div>
+</article>
+<!-- Real-Time Ingestion Wire (Chronological Feed) -->
+<section class="px-margin-mobile pt-3">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[20px]">rss_feed</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">
+          Real-Time Ingestion Wire
+        </h2>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant bg-surface-container px-2 py-0.5 rounded">
+        Auto-Sync: 10s
+      </span>
+</div>
+<div class="space-y-2 mt-1">
+<!-- Feed Item 1: FCC Filing -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm font-semibold uppercase">
+              FCC Filing
+            </span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">ID: BCG-A3294</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant font-medium">8m ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-1 leading-snug">
+          Apple iPhone 17 Prototype (BCG-A3294): Wi-Fi 7 320MHz &amp; UWB Gen-2 EIRP Telemetry Registered
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Measured peak transmission: +21.4 dBm EIRP across UNII-7 band. Low-power direct silicon RF front-end modules flagged.
+        </p>
+<div class="flex items-center gap-3 mt-2 font-label-mono text-label-mono text-primary font-medium">
+<span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[14px]">attachment</span> 14 Telemetry PDFs</span>
+<span class="text-outline-variant">•</span>
+<span class="flex items-center gap-0.5 text-tertiary"><span class="material-symbols-outlined text-[14px]">check_circle</span> Lab Verified</span>
+</div>
+</div>
+<!-- Feed Item 2: Geekbench Repo -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-primary-fixed text-on-primary-fixed-variant font-label-sm text-label-sm font-semibold uppercase">
+              Geekbench 6 Repo
+            </span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Oryon V2 @ 4.61 GHz</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant font-medium">24m ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-1 leading-snug">
+          Snapdragon 8 Gen 5 Specimen “Sun”: Single-Core 3,892 / Multi-Core 11,408 Ingested
+        </h3>
+<div class="grid grid-cols-2 gap-2 mt-2 bg-surface-container-low rounded p-2">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Single-Core</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">3,892 <span class="font-label-mono text-[10px] text-tertiary">(+14.8%)</span></span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Multi-Core</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">11,408 <span class="font-label-mono text-[10px] text-tertiary">(+18.2%)</span></span>
+</div>
+</div>
+</div>
+<!-- Feed Item 3: TENAA / MIIT Ingestion -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-semibold uppercase">
+              TENAA / MIIT Ingestion
+            </span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">25010PN30C</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant font-medium">49m ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-1 leading-snug">
+          Xiaomi 15 Ultra: Dual-Cell 6,000mAh Si-C Battery &amp; 90W PPS Certification Verified
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Silicon-carbon cathode chemistry confirmed with 790 Wh/L volumetric energy density. 50W wireless coil thickness verified at 0.38mm.
+        </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="bg-surface-container px-2 py-0.5 rounded font-label-mono text-label-mono text-on-surface-variant">Volumetric: 790 Wh/L</span>
+<span class="bg-surface-container px-2 py-0.5 rounded font-label-mono text-label-mono text-on-surface-variant">PPS VBUS: 20V/4.5A</span>
+</div>
+</div>
+<!-- Feed Item 4: 3C Regulatory Log -->
+<div class="bg-surface-container-lowest rounded-xl p-3 shadow-sm hover:bg-surface-container-low transition-colors cursor-pointer">
+<div class="flex items-center justify-between pb-1">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-sm text-label-sm font-semibold uppercase">
+              3C Regulatory Log
+            </span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">V2415A</span>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant font-medium">1h ago</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-semibold mt-1 leading-snug">
+          Vivo V2415A 120W GaN SuperCharge Adapter Certification Cleared
+        </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+          Navitas GaNFast IC integrated. Rated efficiency 94.2% at 230V AC input.
+        </p>
+</div>
+</div>
+</section>
+<!-- Interactive Hardware Engineer Polling Card -->
+<section class="px-margin-mobile pt-4">
+<div class="bg-surface-container-lowest rounded-xl p-3.5 shadow-sm" id="engineer-poll">
+<div class="flex items-center justify-between pb-1.5">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[18px]">psychology</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-secondary font-bold">
+            SILICON ENGINEER DEBATE // LAB FORUM
+          </span>
+</div>
+<span class="bg-surface-container px-2 py-0.5 rounded font-label-mono text-label-mono text-on-surface-variant font-medium">
+          1,842 Votes
+        </span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold mt-1">
+        Thermal Dissipation Strategy for 2025 Flagships at &gt;14W Peak Load?
+      </h3>
+<div class="space-y-2 mt-3" id="poll-options">
+<!-- Option 1 -->
+<button class="poll-btn w-full text-left bg-surface-container-low hover:bg-surface-container rounded-lg p-2.5 transition-all relative overflow-hidden group" data-pct="42">
+<div class="absolute inset-y-0 left-0 bg-primary/10 rounded-lg transition-all duration-500" style="width: 42%;"></div>
+<div class="relative flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface font-medium flex items-center gap-1.5">
+<span class="w-3.5 h-3.5 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-[9px]">A</span>
+              Sub-Ambient Micro-Peltier TEC
+            </span>
+<span class="font-label-mono text-label-mono text-primary font-bold">42%</span>
+</div>
+</button>
+<!-- Option 2 -->
+<button class="poll-btn w-full text-left bg-surface-container-low hover:bg-surface-container rounded-lg p-2.5 transition-all relative overflow-hidden group" data-pct="38">
+<div class="absolute inset-y-0 left-0 bg-primary/10 rounded-lg transition-all duration-500" style="width: 38%;"></div>
+<div class="relative flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface font-medium flex items-center gap-1.5">
+<span class="w-3.5 h-3.5 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-[9px]">B</span>
+              Multi-Layer Dual VC (12,000mm²)
+            </span>
+<span class="font-label-mono text-label-mono text-primary font-bold">38%</span>
+</div>
+</button>
+<!-- Option 3 -->
+<button class="poll-btn w-full text-left bg-surface-container-low hover:bg-surface-container rounded-lg p-2.5 transition-all relative overflow-hidden group" data-pct="20">
+<div class="absolute inset-y-0 left-0 bg-primary/10 rounded-lg transition-all duration-500" style="width: 20%;"></div>
+<div class="relative flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface font-medium flex items-center gap-1.5">
+<span class="w-3.5 h-3.5 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-[9px]">C</span>
+              Liquid-Infused Graphene Interposer
+            </span>
+<span class="font-label-mono text-label-mono text-primary font-bold">20%</span>
+</div>
+</button>
+</div>
+<div class="flex items-center justify-between mt-2.5 pt-1 text-on-surface-variant font-label-mono text-label-mono">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-tertiary">check</span> Peer-reviewed respondents only
+        </span>
+<span class="text-primary font-semibold" id="poll-feedback">Tap option to vote</span>
+</div>
+</div>
+</section>
+<!-- Most Calibrated Reviews Ranking Mini-Widget -->
+<section class="px-margin-mobile pt-4">
+<div class="bg-surface-container-lowest rounded-xl p-3.5 shadow-sm">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-primary text-[18px]">verified</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface font-bold tracking-tight">
+            Calibrated Display &amp; Thermal Ranks
+          </h3>
+</div>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Feb 2025 Cycle</span>
+</div>
+<div class="divide-y divide-surface-container-high/40">
+<!-- Rank 01 -->
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-label-mono text-label-mono font-bold text-primary w-4">01</span>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Galaxy S25 Ultra</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">M14 OLED • 2,600 nits lab peak</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0 flex items-center gap-2">
+<div class="flex flex-col text-right">
+<span class="font-label-mono text-label-mono font-bold text-tertiary">ΔE 0.62</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant">98.9% Stab.</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Rank 02 -->
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-label-mono text-label-mono font-bold text-on-surface-variant w-4">02</span>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">iPhone 16 Pro Max</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">ProMotion OLED • 2,000 nits lab peak</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0 flex items-center gap-2">
+<div class="flex flex-col text-right">
+<span class="font-label-mono text-label-mono font-bold text-tertiary">ΔE 0.74</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant">97.4% Stab.</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Rank 03 -->
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-label-mono text-label-mono font-bold text-on-surface-variant w-4">03</span>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">Pixel 9 Pro XL</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Super Actua • 2,150 nits lab peak</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0 flex items-center gap-2">
+<div class="flex flex-col text-right">
+<span class="font-label-mono text-label-mono font-bold text-tertiary">ΔE 0.81</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant">95.8% Stab.</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+</div>
+</div>
+<!-- Rank 04 -->
+<div class="py-2 flex items-center justify-between">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="font-label-mono text-label-mono font-bold text-on-surface-variant w-4">04</span>
+<div class="flex flex-col min-w-0">
+<span class="font-body-md text-body-md text-on-surface font-semibold truncate">OnePlus 13</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">BOE X2 2K • 4,500 nits lab local</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0 flex items-center gap-2">
+<div class="flex flex-col text-right">
+<span class="font-label-mono text-label-mono font-bold text-tertiary">ΔE 0.89</span>
+<span class="font-label-mono text-[10px] text-on-surface-variant">96.1% Stab.</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant text-[16px]">chevron_right</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Technical Whitepaper & BibTeX Export Actions Bar -->
+<section class="px-margin-mobile pt-4">
+<div class="bg-surface-container-high rounded-xl p-3 flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-on-surface-variant font-bold">
+          LAB CITATION &amp; ARTIFACT EXPORT
+        </span>
+<span class="font-label-mono text-label-mono text-primary font-semibold">IEEE-C95.1</span>
+</div>
+<div class="grid grid-cols-1 gap-1.5 pt-1">
+<!-- Download Whitepaper -->
+<button class="flex items-center justify-center gap-2 w-full py-2 px-3 rounded bg-primary text-on-primary font-label-md text-label-md font-semibold active:opacity-90 transition-opacity" id="btn-download-pdf">
+<span class="material-symbols-outlined text-[18px]">download_for_offline</span>
+<span>Download Telemetry Whitepaper (.PDF)</span>
+</button>
+<div class="grid grid-cols-2 gap-2">
+<!-- Export BibTeX -->
+<button class="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md font-medium hover:bg-surface-container transition-colors" id="btn-copy-bibtex">
+<span class="material-symbols-outlined text-[16px] text-secondary">code</span>
+<span id="bibtex-label">BibTeX Citation</span>
+</button>
+<!-- Share Dossier -->
+<button class="flex items-center justify-center gap-1.5 py-2 px-2.5 rounded bg-surface-container-lowest text-on-surface font-label-md text-label-md font-medium hover:bg-surface-container transition-colors" id="btn-share-dossier">
+<span class="material-symbols-outlined text-[16px] text-primary">ios_share</span>
+<span id="share-label">Share Dossier</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<script>
+  (function() {
+    // Topic filter interaction
+    const filterButtons = document.querySelectorAll('#topic-filter-bar button');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => {
+          b.className = 'filter-chip px-2.5 py-1 rounded bg-surface-container text-on-surface-variant font-label-sm text-label-sm whitespace-nowrap hover:text-on-surface';
+        });
+        btn.className = 'filter-chip px-2.5 py-1 rounded bg-primary text-on-primary font-label-sm text-label-sm whitespace-nowrap active:opacity-90';
+      });
+    });
+
+    // Hardware engineer poll interaction
+    const pollButtons = document.querySelectorAll('#poll-options .poll-btn');
+    const pollFeedback = document.getElementById('poll-feedback');
+    let voted = false;
+
+    pollButtons.forEach((btn, idx) => {
+      btn.addEventListener('click', () => {
+        if (voted) return;
+        voted = true;
+        btn.classList.add('bg-primary-fixed');
+        pollFeedback.textContent = 'Vote recorded in NIST telemetry DB';
+        pollFeedback.className = 'text-tertiary font-semibold flex items-center gap-1';
+        pollFeedback.innerHTML = '<span class="material-symbols-outlined text-[14px]">done_all</span> Verified Vote Logged';
+      });
+    });
+
+    // BibTeX copy interaction
+    const bibtexBtn = document.getElementById('btn-copy-bibtex');
+    const bibtexLabel = document.getElementById('bibtex-label');
+    bibtexBtn.addEventListener('click', () => {
+      bibtexLabel.textContent = 'Copied to Clipboard!';
+      setTimeout(() => {
+        bibtexLabel.textContent = 'BibTeX Citation';
+      }, 2200);
+    });
+
+    // Share dossier interaction
+    const shareBtn = document.getElementById('btn-share-dossier');
+    const shareLabel = document.getElementById('share-label');
+    shareBtn.addEventListener('click', () => {
+      if (navigator.share) {
+        navigator.share({
+          title: 'GSMHub Dossier: TSMC 2nm N2 Production Acceleration',
+          url: window.location.href
+        }).catch(() => {});
+      } else {
+        shareLabel.textContent = 'Link Copied!';
+        setTimeout(() => {
+          shareLabel.textContent = 'Share Dossier';
+        }, 2200);
+      }
+    });
+
+    // PDF Download state
+    const pdfBtn = document.getElementById('btn-download-pdf');
+    pdfBtn.addEventListener('click', () => {
+      const originalText = pdfBtn.innerHTML;
+      pdfBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">refresh</span> Generating Digest...';
+      setTimeout(() => {
+        pdfBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">file_download_done</span> Telemetry Digest Cached';
+        setTimeout(() => {
+          pdfBtn.innerHTML = originalText;
+        }, 2500);
+      }, 1200);
+    });
+  })();
+</script></main><nav class="fixed bottom-0 inset-x-0 z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-1px_8px_rgba(0,0,0,0.03)]" data-active-classes="text-primary-container font-semibold"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center w-14 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="home-hub" href="#"><span class="material-symbols-outlined text-[20px]">grid_view</span><span class="font-label-sm text-label-sm mt-0.5">Home</span></a><a class="flex flex-col items-center justify-center w-14 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#"><span class="material-symbols-outlined text-[20px]">balance</span><span class="font-label-sm text-label-sm mt-0.5">Compare</span></a><a class="flex flex-col items-center justify-center w-14 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="search-database" href="#"><span class="material-symbols-outlined text-[20px]">tune</span><span class="font-label-sm text-label-sm mt-0.5">Search</span></a><a aria-current="page" class="flex flex-col items-center justify-center w-14 h-12 transition-colors text-primary-container font-semibold" data-path="reviews-hub" href="#"><span class="material-symbols-outlined text-[20px]">science</span><span class="font-label-sm text-label-sm mt-0.5">Reviews</span></a><a class="flex flex-col items-center justify-center w-14 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="user-dossier" href="#"><span class="material-symbols-outlined text-[20px]">account_circle</span><span class="font-label-sm text-label-sm mt-0.5">Profile</span></a></div></nav></body></html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>GSMHub Laboratory &amp; Hardware Registry</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-container":"#5bb8fe","surface-container-high":"#e2e7ff","on-primary":"#ffffff","on-secondary-fixed":"#001d31","on-secondary":"#ffffff","error-container":"#ffdad6","on-primary-container":"#f8f7ff","surface-container-low":"#f2f3ff","on-surface":"#131b2e","tertiary-fixed-dim":"#4edea3","surface-container-lowest":"#ffffff","on-surface-variant":"#424656","surface-container":"#eaedff","on-tertiary-fixed-variant":"#005236","tertiary-container":"#008259","primary-fixed":"#dae1ff","on-tertiary":"#ffffff","surface-bright":"#faf8ff","on-error":"#ffffff","inverse-primary":"#b3c5ff","inverse-on-surface":"#eef0ff","error":"#ba1a1a","surface-container-highest":"#dae2fd","outline":"#727687","inverse-surface":"#283044","tertiary-fixed":"#6ffbbe","surface-dim":"#d2d9f4","primary-container":"#0066ff","secondary-fixed-dim":"#93ccff","surface":"#faf8ff","on-background":"#131b2e","on-primary-fixed":"#001849","on-error-container":"#93000a","surface-tint":"#0054d6","on-primary-fixed-variant":"#003fa4","secondary":"#006398","on-secondary-container":"#00476e","on-tertiary-container":"#e1ffec","tertiary":"#006645","primary":"#0050cb","secondary-fixed":"#cce5ff","surface-variant":"#dae2fd","background":"#faf8ff","primary-fixed-dim":"#b3c5ff","on-secondary-fixed-variant":"#004b73","outline-variant":"#c2c6d8"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-mobile":"1rem","margin":"1.5rem","space-xl":"1.5rem","space-sm":"0.5rem","space-md":"0.75rem","gutter":"1rem","space-lg":"1rem","gutter-mobile":"0.75rem","space-xs":"0.25rem"},"fontFamily":{"body-lg":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"headline-xl-mobile":["Inter"],"label-mono":["Inter"],"label-sm":["Inter"],"headline-lg":["Inter"],"headline-sm":["Inter"],"headline-md":["Inter"],"headline-lg-mobile":["Inter"],"headline-xl":["Inter"]},"fontSize":{"body-lg":["15px",{"lineHeight":"22px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-mono":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg-mobile":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b border-outline-variant/40"><div class="h-14 w-full px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-xs" data-path="smartphones" href="#"><div class="w-6 h-6 bg-primary-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[16px]">terminal</span></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-bold">GSM<span class="text-primary-container">HUB</span></span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 bg-surface-container-low border border-outline-variant/50 rounded"><span class="w-1.5 h-1.5 rounded-full bg-tertiary-container animate-pulse"></span><span class="font-label-mono text-label-mono text-on-surface-variant uppercase">15,482 DEVICES • 48ms Sync</span></div></div><div class="hidden lg:flex items-center flex-1 max-w-xs mx-space-sm"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-[16px]">search</span><input class="w-full h-8 pl-8 pr-12 bg-surface-container-lowest border border-outline-variant/60 rounded font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="Search hardware telemetry..." type="text"/><span class="absolute right-space-sm font-label-mono text-label-mono px-1 py-0.5 bg-surface-container-low border border-outline-variant/40 rounded text-outline">⌘K</span></div></div><nav class="hidden md:flex items-center gap-space-md h-full" data-active-classes="text-primary font-bold border-b-2 border-primary"><a aria-current="page" class="h-full flex items-center transition-colors text-primary font-bold border-b-2 border-primary" data-path="smartphones" href="#">Smartphones</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#">Compare Matrix</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="lab-reviews" href="#">Lab Reviews</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="news-wire" href="#">News Wire</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="brands-a-z" href="#">Brands A-Z</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><a class="px-space-sm py-1 bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/60 rounded flex items-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="saved-benchmarks" href="#"><span class="font-label-sm text-label-sm">Saved</span><span class="font-label-mono text-label-mono px-1 py-0.2 bg-surface-container-high rounded text-on-surface">3</span></a><a class="px-space-sm py-1 bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/60 rounded flex items-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#"><span class="font-label-sm text-label-sm">Compare</span><span class="font-label-mono text-label-mono px-1 py-0.2 bg-primary-container text-on-primary rounded">2</span></a></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<div class="w-full bg-surface-container-low py-space-sm px-margin">
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<nav class="flex items-center gap-space-xs font-label-mono text-label-mono text-outline">
+<a class="hover:text-primary transition-colors" href="#">REGISTRY</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">SMARTPHONES</a>
+<span>/</span>
+<a class="hover:text-primary transition-colors" href="#">SAMSUNG</a>
+<span>/</span>
+<span class="text-on-surface font-bold tracking-tight">GALAXY S25 ULTRA</span>
+<span class="px-space-xs py-0.5 bg-surface-container-high text-on-surface-variant rounded text-[10px]">SM-S938B/DS</span>
+</nav>
+<div class="flex items-center gap-space-md font-label-mono text-label-mono">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="w-2 h-2 rounded-full bg-tertiary-container animate-pulse"></span>
+<span>CALIBRATED LAB TELEMETRY ACTIVE</span>
+</div>
+<span class="text-outline">SERIAL REF: #GSM-2025-089A</span>
+</div>
+</div>
+</div>
+<section class="w-full bg-surface-container-lowest px-margin py-space-lg shadow-sm">
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-lg">
+<div class="space-y-space-xs">
+<div class="flex flex-wrap items-center gap-space-xs">
+<span class="px-space-sm py-0.5 bg-primary-container text-on-primary font-label-sm text-label-sm uppercase rounded">旗舰 FLAGSHIP ARCHITECTURE</span>
+<span class="px-space-sm py-0.5 bg-surface-container-high text-on-surface font-label-mono text-label-mono rounded">N3E FABRICATION</span>
+<span class="px-space-sm py-0.5 bg-surface-container-low text-secondary font-label-mono text-label-mono rounded">EU/GLOBAL DUAL-SIM</span>
+</div>
+<div class="flex flex-wrap items-baseline gap-space-md">
+<h1 class="font-headline-xl text-headline-xl tracking-tight text-on-surface font-bold">Samsung Galaxy S25 Ultra</h1>
+<span class="font-body-lg text-body-lg text-outline">Silicon Model: Snapdragon 8 Elite Platform</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 font-body-sm text-body-sm text-on-surface-variant">
+<span><strong class="text-on-surface">Announced:</strong> Jan 22, 2025</span>
+<span class="text-outline">•</span>
+<span><strong class="text-on-surface">Release Status:</strong> Available Globally (Feb 2025)</span>
+<span class="text-outline">•</span>
+<span><strong class="text-on-surface">MSRP:</strong> $1,299 USD (Base 12GB/256GB)</span>
+<span class="text-outline">•</span>
+<span class="text-tertiary font-semibold flex items-center gap-1"><span class="material-symbols-outlined text-[15px]">verified</span> ISO-17025 Calibrated</span>
+</div>
+</div>
+<div class="flex items-stretch gap-space-md shrink-0">
+<div class="bg-surface-container-low rounded-xl px-space-md py-space-sm flex flex-col justify-between">
+<div class="flex items-center justify-between gap-space-sm">
+<span class="font-label-mono text-label-mono uppercase text-outline">METROLOGY SCORE</span>
+<span class="material-symbols-outlined text-primary text-[18px]">verified_user</span>
+</div>
+<div class="flex items-baseline gap-1 my-1">
+<span class="font-headline-xl text-headline-xl font-bold text-primary tracking-tight">94.2</span>
+<span class="font-label-mono text-label-mono text-outline">/100</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary">TIER-1 EXCELLENCE • LAB TESTED</span>
+</div>
+<div class="flex flex-col justify-between gap-space-xs">
+<div class="flex items-center gap-space-xs">
+<button class="h-8 px-space-sm bg-primary-container text-on-primary hover:bg-primary font-label-md text-label-md rounded flex items-center gap-1 transition-all" id="compareBtn">
+<span class="material-symbols-outlined text-[16px]">compare_arrows</span>
+<span>Compare (2)</span>
+</button>
+<button class="h-8 px-space-sm bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md rounded flex items-center gap-1 transition-all" id="saveDossierBtn">
+<span class="material-symbols-outlined text-[16px]">bookmark_add</span>
+<span>Save Dossier</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="h-8 px-space-sm bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant font-label-mono text-label-mono rounded flex items-center gap-1 transition-all w-full justify-center" id="downloadSpecBtn">
+<span class="material-symbols-outlined text-[16px]">download</span>
+<span>Raw JSON/CSV</span>
+</button>
+<button class="h-8 px-space-sm bg-surface-container-low hover:bg-surface-container-high text-outline hover:text-on-surface rounded flex items-center justify-center transition-all" id="calLogBtn">
+<span class="material-symbols-outlined text-[16px]">query_stats</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="w-full px-margin py-space-lg">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<div class="lg:col-span-8 space-y-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex flex-col md:flex-row gap-space-md items-center">
+<div class="w-full md:w-5/12 h-80 bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between relative overflow-hidden">
+<div class="flex justify-between items-center z-10">
+<span class="font-label-mono text-label-mono px-2 py-0.5 bg-surface-container-lowest text-on-surface rounded font-bold">TITANIUM SILVERBLUE</span>
+<span class="font-label-mono text-label-mono text-outline">CHASSIS 360°</span>
+</div>
+<div class="relative w-full h-56 flex items-center justify-center">
+<img class="object-contain max-h-full transition-transform hover:scale-105 duration-300 drop-shadow-md" data-alt="A clean, studio lit laboratory render of the Samsung Galaxy S25 Ultra smartphone on an off-white anodized aluminium turntable. High precision macro view of the titanium frame with ultra-flat bezel edges, sharp square corners, embedded S-Pen slot, and distinct quadruple circular lens array. Clinical lighting, cool bluish reflections, crisp technical photography aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDT4wXvULE9PLZZ1cxmMvwNdgj5tmxqRYJLrNoFC8HBrxsB__Q15DTzcLTnTDsVr7YkPMb2NfIuYnngDo_J11ueH0zGOPA48h3Pb0KKifH7QIQoQjuWSbvYhMWO3jBYUhTLXt7UxaQ8owiRqpKnqUL796ixRKIn0KD_X0Vo9YjO-GDwzmD1D4l0hiHHkhnICoKPXl-6WvuoQE1h3IDbB91H-y976oPhKoodEOxXPco"/>
+</div>
+<div class="flex items-center justify-between text-outline font-label-mono text-label-mono z-10">
+<span>162.8 x 77.6 x 8.2 mm</span>
+<span>219 GRAMS</span>
+</div>
+</div>
+<div class="w-full md:w-7/12 flex flex-col justify-between h-full space-y-space-sm">
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-primary font-bold uppercase">Silicon Die &amp; Metrology Validation</span>
+<span class="font-label-mono text-label-mono text-outline">RUN ID #9932</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Qualcomm Snapdragon 8 Elite</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Built on TSMC's 2nd-gen 3nm (N3E) process node with customized dual Oryon V2 prime cores at 4.32GHz and six performance cores at 3.53GHz. Features high-bandwidth LPDDR5X interconnect reaching 8533 MT/s.</p>
+</div>
+<div class="grid grid-cols-3 gap-space-xs py-space-xs">
+<div class="p-space-xs bg-surface-container-low rounded">
+<span class="block font-label-mono text-label-mono text-outline">CPU CLUSTER</span>
+<span class="block font-headline-sm text-headline-sm font-bold text-on-surface">2+6 Cores</span>
+<span class="block font-label-mono text-[10px] text-tertiary">Peak 4.32 GHz</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded">
+<span class="block font-label-mono text-label-mono text-outline">GPU TELEMETRY</span>
+<span class="block font-headline-sm text-headline-sm font-bold text-on-surface">Adreno 830</span>
+<span class="block font-label-mono text-[10px] text-primary">Sliced Shader Arch</span>
+</div>
+<div class="p-space-xs bg-surface-container-low rounded">
+<span class="block font-label-mono text-label-mono text-outline">NPU CAPACITY</span>
+<span class="block font-headline-sm text-headline-sm font-bold text-on-surface">Hexagon NPU</span>
+<span class="block font-label-mono text-[10px] text-tertiary">80 TOPS INT8</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-sm rounded space-y-1">
+<div class="flex justify-between items-center font-label-mono text-label-mono">
+<span class="text-on-surface font-semibold">SUSTAINED THERMAL PROFILE (1HR EXTREME LOOP)</span>
+<span class="text-tertiary font-bold">84.6% STABILITY</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden flex">
+<div class="bg-primary-container h-full" style="width: 84.6%"></div>
+<div class="bg-error-container h-full" style="width: 15.4%"></div>
+</div>
+<div class="flex justify-between text-outline font-label-mono text-[10px]">
+<span>Vapor Chamber Area: 11,400mm² (+38% vs S24U)</span>
+<span>Peak Surface: 42.1°C</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-sm">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">01 / PANEL EMISSION</span>
+<span class="material-symbols-outlined text-primary text-[20px]">tv</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">6.8" Dynamic AMOLED 2X</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">3120 x 1440 QHD+, 1-120Hz LTPO Variable</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">Peak HDR Nit:</span>
+<span class="text-on-surface font-semibold">2,618 nits (Lab measured)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Color Delta-E:</span>
+<span class="text-tertiary font-semibold">0.78 (Calman Traceable)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Anti-Reflective:</span>
+<span class="text-on-surface">Gorilla Armor Glass 2</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">02 / OPTICAL BENCH</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">photo_camera</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">200MP + Quad Tele System</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">ISOCELL HP2 1/1.3", 5x Periscope 50MP</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">Main Sensor:</span>
+<span class="text-on-surface font-semibold">200MP f/1.7 OIS 24mm</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Periscope Tele:</span>
+<span class="text-on-surface font-semibold">50MP 5x (IMX854, 115mm)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Ultra-Wide:</span>
+<span class="text-on-surface">50MP f/1.9 120° Dual Pixel</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">03 / CELL &amp; CHARGING</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">battery_charging_full</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">5,000 mAh Li-Ion</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Dual-Cell Silicon-Carbon Blend</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">USB-PD 3.0:</span>
+<span class="text-on-surface font-semibold">45W Wired (0-65% in 30m)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Qi2 Magnetic:</span>
+<span class="text-on-surface font-semibold">15W Fast Wireless</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Reverse Wireless:</span>
+<span class="text-on-surface">4.5W Wireless PowerShare</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">04 / MEMORY BUS</span>
+<span class="material-symbols-outlined text-primary text-[20px]">memory</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">12GB / 16GB LPDDR5X</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">UFS 4.0 4-Lane High Throughput</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">Seq Read:</span>
+<span class="text-tertiary font-semibold">4,280 MB/s</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Seq Write:</span>
+<span class="text-tertiary font-semibold">3,120 MB/s</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">RAM Clock:</span>
+<span class="text-on-surface">8,533 MT/s</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">05 / CHASSIS INTEGRITY</span>
+<span class="material-symbols-outlined text-on-surface text-[20px]">shield</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Grade 5 Titanium</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">S-Pen Integrated (2.8ms Latency)</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">Ingress Level:</span>
+<span class="text-tertiary font-semibold">IP68 (1.5m, 30 mins)</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Drop Rating:</span>
+<span class="text-on-surface">2.0m onto Concrete</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Stylus Sensor:</span>
+<span class="text-on-surface">Wacom 4,096 Levels</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col justify-between space-y-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono text-outline uppercase font-semibold">06 / RF &amp; COMMS</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">wifi_tethering</span>
+</div>
+<div>
+<div class="font-headline-sm text-headline-sm font-bold text-on-surface">Wi-Fi 7 + Sub6/mmW</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Snapdragon X80 5G Modem-RF</p>
+</div>
+<div class="space-y-1 bg-surface-container-low p-space-xs rounded font-label-mono text-label-mono">
+<div class="flex justify-between">
+<span class="text-outline">5G Downlink:</span>
+<span class="text-on-surface font-semibold">Up to 10 Gbps</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Bluetooth:</span>
+<span class="text-on-surface font-semibold">5.4, LE Audio, Auracast</span>
+</div>
+<div class="flex justify-between">
+<span class="text-outline">Positioning:</span>
+<span class="text-on-surface">L1+L5 Dual GNSS</span>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden">
+<div class="p-space-md bg-surface-container-low flex flex-wrap items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">table_rows</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Exhaustive Laboratory Specification Registry</h3>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="px-space-xs py-0.5 bg-surface-container-lowest text-on-surface font-label-mono text-label-mono rounded shadow-sm">EXPAND ALL</button>
+<button class="px-space-xs py-0.5 bg-surface-container-high text-on-surface-variant font-label-mono text-label-mono rounded">METRIC UNITS</button>
+</div>
+</div>
+<div class="p-space-md space-y-space-md">
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-md text-label-md text-primary uppercase font-bold tracking-wider">01. WIRELESS NETWORK &amp; RF BANDS</span>
+<span class="font-label-mono text-label-mono text-outline">IEEE 802.11be • 3GPP Rel 18</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 text-body-sm font-body-sm">
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Technology</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">GSM / CDMA / HSPA / EVDO / LTE / 5G (Sub-6GHz and mmWave dual-carrier support)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">2G / 3G Bands</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">GSM 850 / 900 / 1800 / 1900 - SIM 1 &amp; SIM 2; HSDPA 850 / 900 / 1700(AWS) / 1900 / 2100</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">4G LTE Bands</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface font-label-mono text-label-mono">1, 2, 3, 4, 5, 7, 8, 12, 13, 17, 18, 19, 20, 25, 26, 28, 32, 38, 39, 40, 41, 66 - Global Carrier Aggregation Cat 24</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">5G NR Bands</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface font-label-mono text-label-mono">n1, n2, n3, n5, n7, n8, n12, n20, n25, n28, n38, n40, n41, n66, n75, n77, n78, n257, n258, n260, n261 SA/NSA/Sub6/mmWave</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">SIM Configuration</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Nano-SIM and eSIM, or Dual SIM (2 Nano-SIMs and eSIM, dual stand-by)</div>
+</div>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-md text-label-md text-primary uppercase font-bold tracking-wider">02. BODY &amp; MECHANICAL STRUCTURE</span>
+<span class="font-label-mono text-label-mono text-outline">METROLOGY SPEC 2025</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 text-body-sm font-body-sm">
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Dimensions</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">162.8 x 77.6 x 8.2 mm (6.41 x 3.06 x 0.32 inches)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Calibrated Mass</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">219.0 g ± 0.2g (7.72 oz)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Material Composition</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Corning Gorilla Armor Glass 2 (front &amp; rear), aerospace-grade Grade 5 Titanium structural alloy frame</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Ingress Resistance</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">IP68 certified (submersion up to 1.5 meters fresh water for 30 consecutive minutes)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Stylus (S-Pen)</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Spring-loaded internal housing, Bluetooth LE integration, 2.8ms pen latency, accelerometer &amp; gyroscope gesture tracking</div>
+</div>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-md text-label-md text-primary uppercase font-bold tracking-wider">03. PLATFORM ARCHITECTURE &amp; OS</span>
+<span class="font-label-mono text-label-mono text-outline">LINUX KERNEL 6.6</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 text-body-sm font-body-sm">
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Operating System</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Android 15 with One UI 7.0 (Certified 7 major Android OS upgrades and 7 years of monthly security patches)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Chipset</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Qualcomm SM8750-AB Snapdragon 8 Elite (3 nm N3E)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Central Processor</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface font-label-mono text-label-mono">Octa-core (2x4.32 GHz Oryon V2 Phoenix L + 6x3.53 GHz Oryon V2 Phoenix M)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Graphics Engine</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Adreno 830 (1,100 MHz, Hardware Ray Tracing, Vulkan 1.3, OpenCL 3.0 FP)</div>
+</div>
+</div>
+<div class="space-y-space-xs">
+<div class="flex items-center justify-between pb-space-xs">
+<span class="font-label-md text-label-md text-primary uppercase font-bold tracking-wider">04. AUDIO, INTERFACES &amp; I/O</span>
+<span class="font-label-mono text-label-mono text-outline">AUDIO LAB MEASURED</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-12 text-body-sm font-body-sm">
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Acoustic Output</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Stereo transducers tuned by AKG, 32-bit/384kHz audio playback, Dolby Atmos certification (-24.8 LUFS Very Good)</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">WLAN / Wi-Fi</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">Wi-Fi 802.11 a/b/g/n/ac/6e/7, tri-band, Wi-Fi Direct, 320MHz channel support</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Bluetooth Core</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">5.4, A2DP, LE, aptX HD, aptX Adaptive, LDAC, LC3 codec support</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Wired Bus (USB)</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">USB Type-C 3.2 Gen 2 (10 Gbps), DisplayPort 1.4 alt mode (4K@60Hz HDR), OTG, Samsung DeX hardware mode</div>
+<div class="md:col-span-3 p-space-xs bg-surface-container-low text-on-surface-variant font-medium">Ultra-Wideband</div>
+<div class="md:col-span-9 p-space-xs bg-surface-container-lowest text-on-surface">UWB chip embedded (IEEE 802.15.4z compliant for high precision spatial tracking &amp; digital car keys)</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-4 space-y-space-md">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">science</span>
+<h3 class="font-headline-sm text-headline-sm font-bold text-on-surface">Laboratory Benchmarks</h3>
+</div>
+<span class="px-space-xs py-0.5 bg-surface-container-low font-label-mono text-label-mono text-outline rounded">ISO 17025</span>
+</div>
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-label-mono text-label-mono">
+<span class="text-on-surface font-semibold">SUSTAINED THERMAL THROTTLING LOOP</span>
+<span class="text-tertiary font-bold">84.6% STABILITY</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg space-y-space-xs">
+<div class="h-28 w-full flex items-end gap-1.5 pt-2">
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 100%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">4.3GHz</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 98%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">98%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 94%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">94%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 89%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">89%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 87%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">87%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 85%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">85%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 85%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">85%</span></div>
+<div class="flex-1 bg-primary-container rounded-t flex flex-col justify-end" style="height: 84.6%"><span class="text-[9px] text-on-primary font-mono text-center mb-1">84.6%</span></div>
+</div>
+<div class="flex justify-between font-label-mono text-[10px] text-outline">
+<span>Loop 01 (Cold)</span>
+<span>Loop 10 (Steady)</span>
+<span>Loop 20 (Sustained)</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant pt-1">3DMark Wild Life Extreme 20-Run Test. Zero catastrophic downclocking observed thanks to revised vapor heatsink dissipation.</p>
+</div>
+</div>
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-label-mono text-label-mono">
+<span class="text-on-surface font-semibold">PHOTOMETRIC LUMINANCE TEST</span>
+<span class="text-primary font-bold">2,618 NITS MAX</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg space-y-space-sm">
+<div class="space-y-1.5 font-label-mono text-label-mono">
+<div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface">Peak HDR (1% APL):</span>
+<span class="text-on-surface font-bold">2,618 nits</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 100%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface">High Brightness Mode (100% APL):</span>
+<span class="text-on-surface font-bold">1,754 nits</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 67%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface">Manual Max White:</span>
+<span class="text-on-surface font-bold">780 nits</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-outline h-full" style="width: 30%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface">Minimum Floor (Night/Reading):</span>
+<span class="text-tertiary font-bold">0.8 nits (PWM Safe)</span>
+</div>
+<div class="w-full bg-surface-container-high h-2 rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 2%"></div>
+</div>
+</div>
+</div>
+<div class="font-label-mono text-[10px] text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+<span>Calibrated with Konica Minolta CS-2000 Spectroradiometer</span>
+</div>
+</div>
+</div>
+<div class="space-y-space-xs">
+<div class="flex justify-between items-center font-label-mono text-label-mono">
+<span class="text-on-surface font-semibold">BATTERY ENDURANCE PROTOCOL</span>
+<span class="text-tertiary font-bold">16H 45M ACTIVE USE</span>
+</div>
+<div class="p-space-sm bg-surface-container-low rounded-lg space-y-space-xs font-label-mono text-label-mono">
+<div class="grid grid-cols-2 gap-space-xs">
+<div class="p-space-xs bg-surface-container-lowest rounded shadow-sm">
+<span class="text-outline block text-[10px]">WEB BROWSING</span>
+<span class="text-headline-sm text-headline-sm font-bold text-on-surface">19h 22m</span>
+<span class="text-tertiary text-[10px]">+14% vs S24 Ultra</span>
+</div>
+<div class="p-space-xs bg-surface-container-lowest rounded shadow-sm">
+<span class="text-outline block text-[10px]">VIDEO PLAYBACK</span>
+<span class="text-headline-sm text-headline-sm font-bold text-on-surface">27h 10m</span>
+<span class="text-tertiary text-[10px]">Continuous 1080p</span>
+</div>
+<div class="p-space-xs bg-surface-container-lowest rounded shadow-sm">
+<span class="text-outline block text-[10px]">3D GAMING</span>
+<span class="text-headline-sm text-headline-sm font-bold text-on-surface">09h 40m</span>
+<span class="text-primary text-[10px]">60FPS Fixed Load</span>
+</div>
+<div class="p-space-xs bg-surface-container-lowest rounded shadow-sm">
+<span class="text-outline block text-[10px]">VOICE CELLULAR</span>
+<span class="text-headline-sm text-headline-sm font-bold text-on-surface">36h 15m</span>
+<span class="text-outline text-[10px]">VoNR Active</span>
+</div>
+</div>
+<div class="pt-space-xs flex justify-between text-outline text-[10px]">
+<span>GSMHub Standard V3.4 Protocol</span>
+<span>200 Nits Constant Lux</span>
+</div>
+</div>
+</div>
+<div class="p-space-sm bg-surface-container-high rounded-lg flex items-center justify-between">
+<div class="space-y-0.5">
+<div class="font-label-md text-label-md text-on-surface font-bold">Metrology Lab Report PDF</div>
+<div class="font-label-mono text-label-mono text-outline">Ref: LAB-S25U-9938B-V1.pdf (4.8 MB)</div>
+</div>
+<a class="px-space-sm py-1 bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary font-label-mono text-label-mono rounded shadow-sm flex items-center gap-1 transition-all" href="#">
+<span>View</span>
+<span class="material-symbols-outlined text-[14px]">open_in_new</span>
+</a>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-sm">
+<div class="flex items-center justify-between">
+<h4 class="font-headline-sm text-headline-sm font-bold text-on-surface">Market Competitors</h4>
+<span class="font-label-mono text-label-mono text-outline">CLASS A MATCHES</span>
+</div>
+<div class="space-y-space-xs">
+<a class="p-space-xs rounded bg-surface-container-low hover:bg-surface-container flex items-center justify-between transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center font-label-mono text-[11px] font-bold text-primary">APL</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">iPhone 16 Pro Max</div>
+<div class="font-label-mono text-[10px] text-outline">A18 Pro • 48MP • 4,685mAh</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-mono text-label-mono font-bold text-primary">93.8</div>
+<div class="font-label-mono text-[10px] text-outline">Score</div>
+</div>
+</a>
+<a class="p-space-xs rounded bg-surface-container-low hover:bg-surface-container flex items-center justify-between transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center font-label-mono text-[11px] font-bold text-secondary">GGL</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Pixel 9 Pro XL</div>
+<div class="font-label-mono text-[10px] text-outline">Tensor G4 • 50MP • 5,060mAh</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-mono text-label-mono font-bold text-secondary">91.4</div>
+<div class="font-label-mono text-[10px] text-outline">Score</div>
+</div>
+</a>
+<a class="p-space-xs rounded bg-surface-container-low hover:bg-surface-container flex items-center justify-between transition-colors" href="#">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded bg-surface-container-lowest flex items-center justify-center font-label-mono text-[11px] font-bold text-tertiary">XIA</div>
+<div>
+<div class="font-label-md text-label-md text-on-surface font-bold">Xiaomi 15 Ultra</div>
+<div class="font-label-mono text-[10px] text-outline">SD 8 Elite • 1" Sony • 6,000mAh</div>
+</div>
+</div>
+<div class="text-right">
+<div class="font-label-mono text-label-mono font-bold text-tertiary">94.0</div>
+<div class="font-label-mono text-[10px] text-outline">Score</div>
+</div>
+</a>
+</div>
+<button class="w-full py-1.5 bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-md text-label-md rounded flex items-center justify-center gap-1 transition-all">
+<span>Launch 4-Way Head-to-Head Matrix</span>
+<span class="material-symbols-outlined text-[16px]">trending_flat</span>
+</button>
+</div>
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm space-y-space-xs">
+<div class="flex items-center gap-space-xs text-primary">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+<span class="font-label-md text-label-md font-bold uppercase tracking-wider">Calibration Traceability</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Telemetry harvested under controlled 23°C ambient room temperatures in an RF-shielded Faraday enclosure. Instruments calibrated annually by accredited metrology authorities adhering to ISO/IEC 17025 standard operating procedures.
+          </p>
+<div class="flex items-center gap-space-xs pt-1 font-label-mono text-[10px] text-outline">
+<span>NEXT AUDIT: OCT 2025</span>
+<span>•</span>
+<span>STATION: BERLIN-MET-03</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed bottom-6 right-6 bg-inverse-surface text-inverse-on-surface px-space-md py-space-sm rounded-lg shadow-xl font-label-mono text-label-mono flex items-center gap-space-sm transition-all duration-300 opacity-0 pointer-events-none translate-y-2 z-50" id="toastNotification">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-[18px]">check_circle</span>
+<span id="toastMsg">Telemetry Dossier saved to local bench!</span>
+</div>
+<script>
+    (function () {
+      function showToast(message) {
+        var toast = document.getElementById('toastNotification');
+        var msgEl = document.getElementById('toastMsg');
+        if (!toast || !msgEl) return;
+        msgEl.innerText = message;
+        toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-2');
+        toast.classList.add('opacity-100', 'translate-y-0');
+        setTimeout(function () {
+          toast.classList.remove('opacity-100', 'translate-y-0');
+          toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-2');
+        }, 2500);
+      }
+
+      var saveBtn = document.getElementById('saveDossierBtn');
+      if (saveBtn) {
+        saveBtn.addEventListener('click', function () {
+          showToast('Galaxy S25 Ultra saved to your active Dossier.');
+        });
+      }
+
+      var compareBtn = document.getElementById('compareBtn');
+      if (compareBtn) {
+        compareBtn.addEventListener('click', function () {
+          showToast('Added to live comparator matrix (Queue: 3).');
+        });
+      }
+
+      var downloadBtn = document.getElementById('downloadSpecBtn');
+      if (downloadBtn) {
+        downloadBtn.addEventListener('click', function () {
+          showToast('Generating calibrated JSON spec telemetry...');
+        });
+      }
+
+      var calLogBtn = document.getElementById('calLogBtn');
+      if (calLogBtn) {
+        calLogBtn.addEventListener('click', function () {
+          showToast('Metrology run logs verified (48ms sync).');
+        });
+      }
+    })();
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/40 mt-space-xl"><div class="w-full px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-space-xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><div class="w-5 h-5 bg-primary-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[14px]">terminal</span></div><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface">GSM<span class="text-primary-container">HUB</span></span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Standardized laboratory device characterization, electrical calibration telemetry, and open specification indexing for computing appliances.</p><div class="flex items-center gap-space-xs pt-space-xs"><div class="px-space-sm py-0.5 border border-outline-variant/50 rounded bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant">BUILD v4.19.8-LTS</div></div></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Hardware Registry</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">SoC Architecture Index</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Modem &amp; RF Frequency Bands</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">CMOS Sensor Specifications</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Display Emission Profiles</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Lab Protocols</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Sustained Thermal Stress Methodology</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Luminance &amp; Delta-E Colorimetry</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Battery Discharge Impedance</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">RF Chamber Attenuation Testing</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Engineering &amp; Data</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Public Raw Telemetry API</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Bulk CSV/Parquet Exports</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Metrology Traceability Docs</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Calibrated Instrument Logs</a></li></ul></div></div><div class="pt-space-lg border-t border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-wrap items-center gap-space-sm"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-tertiary text-[16px]">verified</span><span class="font-label-mono text-label-mono font-bold text-on-surface">ISO 9001:2015</span><span class="font-label-sm text-label-sm text-outline">QMS CERTIFIED</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-secondary text-[16px]">biotech</span><span class="font-label-mono text-label-mono font-bold text-on-surface">ISO/IEC 17025:2017</span><span class="font-label-sm text-label-sm text-outline">TESTING ACCREDITED</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-primary text-[16px]">precision_manufacturing</span><span class="font-label-mono text-label-mono font-bold text-on-surface">NIST TRACEABLE</span></div></div><div class="font-label-mono text-label-mono text-outline text-center md:text-right">© 2025 GSMHub Laboratory Consortium. All calibrated benchmarks &amp; telemetry sheets reserved.</div></div></div></footer></body></html>

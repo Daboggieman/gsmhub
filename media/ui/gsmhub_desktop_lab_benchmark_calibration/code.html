@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><title>GSMHub LAB ADMIN — Device Catalog &amp; Benchmark Calibration</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"error-container":"#93000a","surface-container-low":"#181c24","surface-container":"#1c2028","on-tertiary-fixed-variant":"#005236","outline-variant":"#424656","tertiary":"#4edea3","tertiary-container":"#008259","on-surface-variant":"#c2c6d8","on-surface":"#dfe2ee","error":"#ffb4ab","surface-bright":"#353942","on-primary-fixed":"#001849","primary-fixed":"#dae1ff","on-secondary-container":"#00566a","on-secondary-fixed-variant":"#004e60","outline":"#8c90a1","secondary-container":"#00d2ff","tertiary-fixed":"#6ffbbe","secondary-fixed":"#b6ebff","tertiary-fixed-dim":"#4edea3","inverse-surface":"#dfe2ee","inverse-on-surface":"#2c3039","background":"#0f131c","on-tertiary-fixed":"#002113","on-error-container":"#ffdad6","on-background":"#dfe2ee","surface-dim":"#0f131c","surface-variant":"#31353e","on-primary-fixed-variant":"#003fa4","inverse-primary":"#0054d6","surface":"#0f131c","secondary":"#a5e7ff","surface-tint":"#b3c5ff","on-secondary-fixed":"#001f28","primary-container":"#0066ff","on-primary":"#002b75","on-error":"#690005","surface-container-lowest":"#0a0e16","on-tertiary":"#003824","surface-container-high":"#262a33","on-tertiary-container":"#e1ffec","surface-container-highest":"#31353e","on-secondary":"#003543","primary":"#b3c5ff","on-primary-container":"#f8f7ff","primary-fixed-dim":"#b3c5ff","secondary-fixed-dim":"#47d6ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xl":"1.5rem","gutter":"1rem","space-lg":"1rem","space-xs":"0.25rem","space-md":"0.75rem","margin":"1rem","space-sm":"0.5rem"},"fontFamily":{"label-sm":["Inter"],"label-md":["Inter"],"label-xs":["Inter"],"body-lg":["Inter"],"headline-xl-mobile":["Inter"],"headline-lg":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"body-sm":["Inter"],"headline-xl":["Inter"]},"fontSize":{"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"label-xs":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen"><header class="fixed top-0 left-0 w-full z-50 bg-surface/95 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.5)] border-b border-surface-container-highest/60"><div class="h-14 w-full px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs group" data-path="gsmhub-desktop-admin-catalog-control" href="#"><div class="w-7 h-7 rounded bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[18px]">biotech</span></div><span class="font-headline-md text-headline-md tracking-tight text-on-surface font-bold">GSM<span class="text-secondary-container">Hub</span><span class="ml-2 text-primary font-label-sm text-label-sm px-2 py-0.5 rounded bg-surface-container-high tracking-wider uppercase">LAB ADMIN</span></span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-xs text-label-xs text-tertiary uppercase tracking-wider">DB Heartbeat OK</span><span class="text-outline text-label-xs">•</span><span class="font-label-xs text-label-xs text-on-surface-variant">v4.19.8-dev</span></div></div><div class="flex-1 max-w-lg mx-auto hidden lg:block"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">terminal</span><input class="w-full h-9 pl-9 pr-14 bg-surface-container-low rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all font-mono" placeholder="Quick lookup by SKU, Model ID, FCC ID, or SoC codename..." type="text"/><kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-xs text-label-xs uppercase">⌘/</kbd></div></div><nav class="hidden md:flex items-center gap-space-xs shrink-0" data-active-classes="bg-surface-container-highest text-on-surface rounded-lg"><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="gsmhub-desktop-admin-catalog-control" href="#">Device Catalog</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="gsmhub-desktop-admin-specs-editor" href="#">Specs Editor</a><a aria-current="page" class="px-space-md py-1.5 font-label-md transition-colors bg-surface-container-highest text-on-surface rounded-lg" data-path="gsmhub-desktop-lab-benchmark-calibration" href="#">Bench Calibration</a></nav><div class="flex items-center gap-space-sm shrink-0"><div class="hidden sm:flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container text-on-surface-variant"><span class="material-symbols-outlined text-outline text-[16px]">tune</span><span class="font-label-xs text-label-xs text-outline uppercase">Rig Preset:</span><span class="font-label-xs text-label-xs text-secondary-container font-mono font-bold">ISO-17025-A</span></div><button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-tertiary">sync</span><span class="hidden sm:inline font-label-sm text-label-sm">Push Live</span></button><div class="flex items-center gap-space-xs pl-space-xs"><div class="w-8 h-8 rounded-full bg-secondary-container/20 border border-secondary-container/40 flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-secondary-container text-[18px]">engineering</span></div><div class="hidden sm:flex flex-col"><span class="font-label-sm text-label-sm text-on-surface leading-none">Lead Architect</span><span class="font-label-xs text-label-xs text-outline leading-tight">Tier-3 Access</span></div></div></div></div></header><aside class="fixed top-14 left-0 bottom-0 w-64 bg-surface-container-lowest border-r border-surface-container-highest/60 flex flex-col z-40 overflow-y-auto"><div class="p-space-md border-b border-surface-container-highest/40"><div class="flex items-center justify-between"><span class="font-label-xs text-label-xs uppercase tracking-wider text-outline font-bold">Lab Admin Scope</span><span class="px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary font-label-xs text-label-xs font-mono">CAL-CERT</span></div></div><div class="p-space-sm flex-1"><p class="px-space-md py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Core Workflows</p><nav class="space-y-0.5" data-active-classes="bg-surface-container-high text-secondary-container font-semibold rounded-lg"><a class="block px-space-md py-2 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="gsmhub-desktop-admin-catalog-control" href="#">Device Catalog</a><a class="block px-space-md py-2 rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container transition-colors" data-path="gsmhub-desktop-admin-specs-editor" href="#">Specs Editor</a><a aria-current="page" class="block px-space-md py-2 transition-colors bg-surface-container-high text-secondary-container font-semibold rounded-lg" data-path="gsmhub-desktop-lab-benchmark-calibration" href="#">Bench Calibration</a></nav><div class="my-space-md border-t border-surface-container-highest/40"></div><p class="px-space-md py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">Lab Telemetry Monitors</p><div class="space-y-1 mt-1"><div class="px-space-md py-2 rounded-lg bg-surface-container/60 border border-surface-container-highest/40"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface font-medium">Spectroradiometer</span><span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span></div><div class="flex items-center justify-between mt-1"><span class="font-label-xs text-label-xs text-outline font-mono">Konica CS-2000</span><span class="font-label-xs text-label-xs text-tertiary font-mono">0.001 cd/m²</span></div></div><div class="px-space-md py-2 rounded-lg bg-surface-container/60 border border-surface-container-highest/40"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface font-medium">Thermal Chamber A</span><span class="w-2 h-2 rounded-full bg-secondary-container"></span></div><div class="flex items-center justify-between mt-1"><span class="font-label-xs text-label-xs text-outline font-mono">Espec ENX12-4CW</span><span class="font-label-xs text-label-xs text-secondary-container font-mono">23.0°C ±0.1</span></div></div><div class="px-space-md py-2 rounded-lg bg-surface-container/60 border border-surface-container-highest/40"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface font-medium">Battery Analyzer Rig</span><span class="w-2 h-2 rounded-full bg-tertiary"></span></div><div class="flex items-center justify-between mt-1"><span class="font-label-xs text-label-xs text-outline font-mono">Keysight N6705C</span><span class="font-label-xs text-label-xs text-tertiary font-mono">4.201V / 0.0mA</span></div></div><div class="px-space-md py-2 rounded-lg bg-surface-container/60 border border-surface-container-highest/40"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface font-medium">RF Anechoic Chamber</span><span class="w-2 h-2 rounded-full bg-outline"></span></div><div class="flex items-center justify-between mt-1"><span class="font-label-xs text-label-xs text-outline font-mono">R&amp;S CMX500</span><span class="font-label-xs text-label-xs text-outline font-mono">STANDBY</span></div></div></div></div><div class="p-space-md bg-surface-container-low border-t border-surface-container-highest/60"><div class="flex items-center justify-between"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[16px]">verified</span><span class="font-label-xs text-label-xs text-on-surface-variant font-mono">ISO/IEC 17025 Lock</span></div><span class="font-label-xs text-label-xs text-tertiary font-bold tracking-wider">VALID</span></div></div></aside><main class="w-full pt-14 pl-64 min-h-screen bg-surface"><div class="flex flex-col w-full">
+<!-- Top Metrology Status Ribbon & Context Header -->
+<div class="p-space-lg space-y-space-md">
+<!-- Breadcrumb & Session Meta -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<nav class="flex items-center gap-space-xs font-label-xs text-label-xs text-outline tracking-wider uppercase">
+<a class="hover:text-on-surface transition-colors" href="#">Home</a>
+<span>/</span>
+<a class="hover:text-on-surface transition-colors" href="#">Admin</a>
+<span>/</span>
+<a class="hover:text-on-surface transition-colors" href="#">Lab Engineering &amp; Metrology</a>
+<span>/</span>
+<span class="text-secondary-container font-mono font-bold">Rig Calibration &amp; Test Orchestration</span>
+</nav>
+<div class="flex items-center gap-space-md font-mono text-label-xs text-outline">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>NIST SYNC: <strong class="text-on-surface font-semibold">14:28:49.022 UTC</strong></span>
+</div>
+<span class="text-surface-variant">•</span>
+<div>RIG CLUSTER: <span class="text-secondary font-semibold">ALPHA-ZONE-BAY4</span></div>
+</div>
+</div>
+<!-- Main Title & Device Select Header Bar -->
+<div class="bg-surface-container-low rounded-xl p-space-md flex flex-col xl:flex-row xl:items-center justify-between gap-space-md shadow-sm">
+<!-- Left: Title & Specimen Dropdown -->
+<div class="space-y-space-xs">
+<div class="flex items-center gap-space-sm flex-wrap">
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-secondary-container font-mono text-label-xs font-bold uppercase tracking-wider">
+            RIG TELEMETRY // ISO/IEC 17025
+          </span>
+<span class="px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-mono text-label-xs uppercase">
+            CAL CERT #NIST-88492-2025
+          </span>
+<span class="text-outline text-label-xs font-mono">NODE ID: LAB-RIG-004-ORCA</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">
+          Hardware Benchmark Calibration &amp; Metrology Engine
+        </h1>
+<!-- Specimen Selection Row -->
+<div class="flex items-center gap-space-sm pt-1">
+<label class="font-label-xs text-label-xs text-outline uppercase tracking-wider flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-secondary">devices</span> Specimen:
+          </label>
+<div class="relative inline-block">
+<select class="appearance-none bg-surface-container-high text-on-surface font-mono font-semibold text-label-md pl-3 pr-8 py-1.5 rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary-container cursor-pointer" id="specimen-selector">
+<option selected="" value="s25u">Samsung Galaxy S25 Ultra (SM-S938B/DS • Batch #REV-9014 • Jet Black • 12GB/512GB)</option>
+<option value="ip16pm">Apple iPhone 16 Pro Max (A3296 • Batch #REV-8802 • Desert Titanium • 8GB/256GB)</option>
+<option value="x15p">Xiaomi 15 Pro (24101PNB7C • Batch #REV-9110 • Spruce Green • 16GB/512GB)</option>
+</select>
+<span class="material-symbols-outlined absolute right-2 top-2 pointer-events-none text-outline text-[16px]">expand_more</span>
+</div>
+<div class="hidden sm:flex items-center gap-1.5 ml-2">
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-container-highest text-on-surface-variant font-mono text-label-xs transition-colors" type="button">
+              Quick Swap: iPhone 16PM
+            </button>
+<button class="px-2 py-1 rounded bg-surface-container hover:bg-surface-container-highest text-on-surface-variant font-mono text-label-xs transition-colors" type="button">
+              Xiaomi 15 Pro
+            </button>
+</div>
+</div>
+</div>
+<!-- Right: Primary Operations Bar -->
+<div class="flex flex-wrap items-center gap-space-xs shrink-0">
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors shadow-sm" id="btn-recalibrate" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary-container">refresh</span>
+<span>Recalibrate All</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-tertiary">picture_as_pdf</span>
+<span>Cert PDF/NIST</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">save</span>
+<span>Snapshot</span>
+</button>
+<button class="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-error-container hover:bg-error-container/80 text-on-error-container font-label-md text-label-md font-bold transition-colors shadow-sm" id="btn-emergency-abort" type="button">
+<span class="material-symbols-outlined text-[16px]">dangerous</span>
+<span>EMERGENCY ABORT</span>
+</button>
+</div>
+</div>
+<!-- Status KPI Metrology Strip -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- KPI 1 -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase tracking-wider">ISO-17025 Metrology Lock</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified</span>
+</div>
+<div class="font-mono text-headline-md font-bold text-tertiary tracking-tight">VERIFIED ACTIVE</div>
+<div class="font-mono text-label-xs text-on-surface-variant mt-1 flex items-center justify-between">
+<span>Drift Margin: Safe</span>
+<span class="text-tertiary font-bold">NIST-TRACEABLE</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-tertiary"></div>
+</div>
+<!-- KPI 2 -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase tracking-wider">Ambient Cell Climate</span>
+<span class="material-symbols-outlined text-secondary-container text-[18px]">thermostat</span>
+</div>
+<div class="font-mono text-headline-md font-bold text-on-surface tracking-tight">22.0°C <span class="text-label-sm font-normal text-outline">±0.1°C</span></div>
+<div class="font-mono text-label-xs text-on-surface-variant mt-1 flex items-center justify-between">
+<span>RH: 44.2%</span>
+<span>Baro: 1013.25 hPa</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary-container"></div>
+</div>
+<!-- KPI 3 -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase tracking-wider">Calibration Drift</span>
+<span class="material-symbols-outlined text-tertiary text-[18px]">balance</span>
+</div>
+<div class="font-mono text-headline-md font-bold text-tertiary tracking-tight">±0.04% <span class="text-label-sm font-normal text-outline">Delta Max</span></div>
+<div class="font-mono text-label-xs text-on-surface-variant mt-1 flex items-center justify-between">
+<span>Tolerance: &lt; 0.15%</span>
+<span class="text-tertiary font-semibold">Optimal</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-tertiary"></div>
+</div>
+<!-- KPI 4 -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm relative overflow-hidden">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase tracking-wider">Active Rig Bench Orchestration</span>
+<span class="material-symbols-outlined text-primary text-[18px]">hub</span>
+</div>
+<div class="font-mono text-headline-md font-bold text-primary tracking-tight">4 Running <span class="text-label-sm font-normal text-outline">/ 0 Fault</span></div>
+<div class="font-mono text-label-xs text-on-surface-variant mt-1 flex items-center justify-between">
+<span>Queue Load: 1 Test</span>
+<span class="text-secondary font-semibold">100% Rig Health</span>
+</div>
+<div class="absolute bottom-0 left-0 right-0 h-0.5 bg-primary-container"></div>
+</div>
+</div>
+</div>
+<!-- Primary 4-Rig Metrology Workbench Grid -->
+<div class="px-space-lg pb-space-lg">
+<div class="grid grid-cols-1 xl:grid-cols-2 gap-space-lg">
+<!-- ================= RIG #01: Konica Minolta CS-2000 Spectroradiometer ================= -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<!-- Instrument Header -->
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container/60 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[20px]">light_mode</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-label-xs text-secondary-container">RIG-01</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold leading-tight">
+                    Konica Minolta CS-2000 Spectroradiometer
+                  </h2>
+</div>
+<div class="font-mono text-label-xs text-outline">Target: S25 Ultra Display Center Spot (0.8mm Optical Aperture)</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-tertiary-container/30 text-tertiary font-mono text-label-xs font-bold shrink-0">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>RUNNING (100% APL)</span>
+</div>
+</div>
+<!-- Specimen Preview Snapshot + Primary Numbers -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-space-md my-space-sm">
+<!-- Left: Live Readout Cards (7 Cols) -->
+<div class="md:col-span-7 grid grid-cols-2 gap-space-xs">
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Luminance (HBM Peak)</div>
+<div class="font-mono text-headline-md font-bold text-secondary-container mt-0.5">1,852.4 <span class="text-label-xs text-outline">nits</span></div>
+<div class="font-mono text-label-xs text-tertiary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+<span>Target: 1,850 cd/m² (+0.1%)</span>
+</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Color Temp (CCT)</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">6504 K</div>
+<div class="font-mono text-label-xs text-tertiary mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+<span>D65 Reference Matched</span>
+</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Delta E (Avg ΔE 2000)</div>
+<div class="font-mono text-headline-md font-bold text-tertiary mt-0.5">0.54</div>
+<div class="font-mono text-label-xs text-outline mt-1">NBS Threshold: &lt; 1.0 (Lab Grade)</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Display Gamma</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">2.203</div>
+<div class="font-mono text-label-xs text-outline mt-1">Nominal curve: 2.200 (sRGB)</div>
+</div>
+</div>
+<!-- Right: CIE 1931 Chromaticity Gamut Vector Map (5 Cols) -->
+<div class="md:col-span-5 bg-surface-container-lowest p-2.5 rounded-lg flex flex-col justify-between">
+<div class="flex items-center justify-between mb-1">
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">CIE 1931 xy Chromaticity</span>
+<span class="font-mono text-label-xs text-secondary">DCI-P3: 99.8%</span>
+</div>
+<!-- Inline SVG CIE 1931 Color Triangle -->
+<div class="w-full flex justify-center items-center py-1">
+<svg class="w-36 h-32 overflow-visible" viewbox="0 0 160 140">
+<!-- Spectral Locus Horseshoe Curve -->
+<path d="M 20 120 Q 30 70 65 30 T 115 25 T 140 70 Q 145 95 130 120 Z" fill="rgba(78, 222, 163, 0.08)" stroke="#424656" stroke-dasharray="2 2" stroke-width="1.2"></path>
+<!-- sRGB reference boundary -->
+<polygon fill="none" points="50,110 55,50 115,80" stroke="#8c90a1" stroke-opacity="0.6" stroke-width="1"></polygon>
+<!-- DCI-P3 calibrated measured boundary -->
+<polygon fill="rgba(0, 210, 255, 0.15)" points="42,114 48,36 130,86" stroke="#00d2ff" stroke-width="1.8"></polygon>
+<!-- Reference White Point D65 marker -->
+<circle cx="78" cy="74" fill="#dfe2ee" r="3.5" stroke="#0066ff" stroke-width="1.5"></circle>
+<text fill="#dfe2ee" font-family="monospace" font-size="7" x="84" y="73">D65 (0.3127, 0.3290)</text>
+<!-- Live Sample Readout Point -->
+<circle class="animate-ping" cx="78.2" cy="74.1" fill="#4edea3" r="2"></circle>
+<circle cx="78.2" cy="74.1" fill="#4edea3" r="2"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-label-xs font-mono text-on-surface-variant pt-1 border-t border-surface-variant/40">
+<span>sRGB Coverage: 100%</span>
+<span class="text-tertiary">Rec.2020: 82.4%</span>
+</div>
+</div>
+</div>
+<!-- Delta E Grayscale Histogram Bar Graph -->
+<div class="bg-surface-container rounded-lg p-space-sm my-space-xs">
+<div class="flex items-center justify-between text-label-xs font-mono mb-1.5">
+<span class="text-outline uppercase">10-Step Grayscale ΔE Calibration Accuracy</span>
+<span class="text-tertiary">Max ΔE: 0.89 (at 10% Gray)</span>
+</div>
+<div class="grid grid-cols-10 gap-1.5 h-10 items-end">
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t" style="height: 38%;"></div>
+<span class="font-mono text-[9px] text-outline">10</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 45%;"></div>
+<span class="font-mono text-[9px] text-outline">20</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 30%;"></div>
+<span class="font-mono text-[9px] text-outline">30</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 22%;"></div>
+<span class="font-mono text-[9px] text-outline">40</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 18%;"></div>
+<span class="font-mono text-[9px] text-outline">50</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 25%;"></div>
+<span class="font-mono text-[9px] text-outline">60</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 28%;"></div>
+<span class="font-mono text-[9px] text-outline">70</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 35%;"></div>
+<span class="font-mono text-[9px] text-outline">80</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-tertiary rounded-t" style="height: 29%;"></div>
+<span class="font-mono text-[9px] text-outline">90</span>
+</div>
+<div class="flex flex-col items-center gap-0.5 h-full justify-end">
+<div class="w-full bg-secondary-container rounded-t" style="height: 42%;"></div>
+<span class="font-mono text-[9px] text-outline">100</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Rig #01 Action Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-sm border-t border-surface-variant/40 mt-space-sm">
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Zero Point Calibrate
+            </button>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Optical Offset (-0.02)
+            </button>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-xs text-label-xs font-semibold hover:opacity-90 transition-opacity flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">flash_on</span> Trigger 1% APL Flash (2,600 nits)
+          </button>
+</div>
+</div>
+<!-- ================= RIG #02: Fluke Ti480 Pro & FLIR Thermal Chamber ================= -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<!-- Instrument Header -->
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container/60 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-error">
+<span class="material-symbols-outlined text-[20px]">local_fire_department</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-label-xs text-error">RIG-02</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold leading-tight">
+                    Fluke Ti480 Pro &amp; FLIR Thermal Stress Chamber
+                  </h2>
+</div>
+<div class="font-mono text-label-xs text-outline">Target: Snapdragon 8 Elite (Oryon) + Titanium Chassis Skin</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-error-container/40 text-error font-mono text-label-xs font-bold shrink-0">
+<span class="w-2 h-2 rounded-full bg-error animate-ping"></span>
+<span>LOOP 14 / 20 (3DMark)</span>
+</div>
+</div>
+<!-- Real-Time Thermal Readings -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs my-space-sm">
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Peak Skin Temp</div>
+<div class="font-mono text-headline-md font-bold text-secondary-container mt-0.5">41.2°C</div>
+<div class="font-mono text-label-xs text-tertiary mt-1">Safe (&lt; 44.0°C)</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">SoC Die Estimate</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">64.8°C</div>
+<div class="font-mono text-label-xs text-outline mt-1">T-Junction: 105°C</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Chamber Exhaust</div>
+<div class="font-mono text-headline-md font-bold text-tertiary mt-0.5">25.1°C</div>
+<div class="font-mono text-label-xs text-tertiary mt-1">ΔT Chamber: 0.1°C</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">VC Heat Flux</div>
+<div class="font-mono text-headline-md font-bold text-primary mt-0.5">14.2 <span class="text-label-xs text-outline">W/cm²</span></div>
+<div class="font-mono text-label-xs text-outline mt-1">Vapor Conduct OK</div>
+</div>
+</div>
+<!-- 20-Minute Ray-Tracing Loop Stability Graph -->
+<div class="bg-surface-container-lowest rounded-lg p-space-sm my-space-xs">
+<div class="flex items-center justify-between text-label-xs font-mono mb-1">
+<div class="flex items-center gap-2">
+<span class="text-outline uppercase">3DMark Solar Bay Ray-Tracing Stress Curve</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-secondary-container">81.4% Stability</span>
+</div>
+<span class="text-error font-semibold">Throttling Threshold: 44.0°C</span>
+</div>
+<div class="w-full h-28 relative">
+<svg class="w-full h-full preserve-3d" viewbox="0 0 500 110">
+<!-- Grid Lines -->
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="500" y1="20" y2="20"></line>
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="500" y1="55" y2="55"></line>
+<line stroke="#31353e" stroke-dasharray="3 3" stroke-width="1" x1="0" x2="500" y1="90" y2="90"></line>
+<!-- Throttling Ceiling Threshold Line -->
+<line stroke="#ffb4ab" stroke-dasharray="4 2" stroke-width="1.2" x1="0" x2="500" y1="28" y2="28"></line>
+<text fill="#ffb4ab" font-family="monospace" font-size="9" x="4" y="24">44.0°C THRESHOLD</text>
+<!-- Gradient Area Fill -->
+<defs>
+<lineargradient id="thermalGrad" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#00d2ff" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#00d2ff" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Measured Temperature Line (Past Loops 1-14) -->
+<path d="M 0 95 L 35 90 L 70 80 L 105 68 L 140 55 L 175 48 L 210 44 L 245 42 L 280 41 L 315 40 L 350 39.5 L 350 110 L 0 110 Z" fill="url(#thermalGrad)"></path>
+<path d="M 0 95 L 35 90 L 70 80 L 105 68 L 140 55 L 175 48 L 210 44 L 245 42 L 280 41 L 315 40 L 350 39.5" fill="none" stroke="#00d2ff" stroke-width="2.2"></path>
+<!-- Projected Loops 15-20 (Dotted) -->
+<path d="M 350 39.5 L 385 39.0 L 420 38.8 L 455 38.6 L 500 38.5" fill="none" stroke="#8c90a1" stroke-dasharray="4 4" stroke-width="1.5"></path>
+<!-- Active Pulsating Point Loop 14 -->
+<circle class="animate-ping" cx="350" cy="39.5" fill="#47d6ff" r="5"></circle>
+<circle cx="350" cy="39.5" fill="#ffffff" r="3.5"></circle>
+<text fill="#47d6ff" font-family="monospace" font-size="9" font-weight="bold" x="325" y="28">L14: 41.2°C</text>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-outline pt-1">
+<span>Loop 1 (Cold Start 23°C)</span>
+<span>Loop 7 (T-Peak 38°C)</span>
+<span class="text-secondary font-bold">Loop 14 (Active 41.2°C)</span>
+<span>Loop 20 (Sustained)</span>
+</div>
+</div>
+</div>
+<!-- Rig #02 Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-sm border-t border-surface-variant/40 mt-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="flex items-center gap-1 font-mono text-label-xs text-on-surface">
+<span class="text-outline">FAN:</span>
+<span class="text-secondary font-bold">1,800 RPM</span>
+</div>
+<div class="flex items-center gap-1 font-mono text-label-xs text-on-surface">
+<span class="text-outline">PELTIER:</span>
+<span class="text-tertiary font-bold">25.0°C LOCK</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Pause Loop
+            </button>
+<button class="px-2.5 py-1.5 rounded-lg bg-error-container/30 hover:bg-error-container/50 text-error font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Inject +5W Thermal Pulse
+            </button>
+</div>
+</div>
+</div>
+<!-- ================= RIG #03: Chroma 63102A DC Load & Battery Power Analyzer ================= -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<!-- Instrument Header -->
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container/60 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-tertiary">
+<span class="material-symbols-outlined text-[20px]">battery_charging_full</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-label-xs text-tertiary">RIG-03</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold leading-tight">
+                    Chroma 63102A DC Load &amp; Programmable Supply
+                  </h2>
+</div>
+<div class="font-mono text-label-xs text-outline">Battery &amp; Charging Controller: 5,000 mAh Li-Ion Dual Cell</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-tertiary-container/30 text-tertiary font-mono text-label-xs font-bold shrink-0">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span>CYCLER ACTIVE: SCRIPT v4.2</span>
+</div>
+</div>
+<!-- Telemetry Numbers -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs my-space-sm">
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Cell Voltage</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">3.842 <span class="text-label-xs text-outline">V</span></div>
+<div class="font-mono text-label-xs text-tertiary mt-1">Discharge plateau</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Current Draw</div>
+<div class="font-mono text-headline-md font-bold text-secondary-container mt-0.5">-1,240 <span class="text-label-xs text-outline">mA</span></div>
+<div class="font-mono text-label-xs text-outline mt-1">Load resistance 3.10 Ω</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Dissipation Power</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">4.76 <span class="text-label-xs text-outline">W</span></div>
+<div class="font-mono text-label-xs text-outline mt-1">Average draw active</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Active Endurance</div>
+<div class="font-mono text-headline-md font-bold text-tertiary mt-0.5">16h 42m</div>
+<div class="font-mono text-label-xs text-tertiary mt-1">Projected run time</div>
+</div>
+</div>
+<!-- Capacity Counter + Charging Step Knee Chart -->
+<div class="bg-surface-container-lowest rounded-lg p-space-sm my-space-xs space-y-2">
+<div class="flex items-center justify-between text-label-xs font-mono">
+<span class="text-outline uppercase">Accumulated Discharge Capacity</span>
+<span class="text-on-surface font-semibold">2,410 / 5,000 mAh (<strong class="text-secondary-container">48.2%</strong>)</span>
+</div>
+<!-- Progress Bar -->
+<div class="w-full h-2.5 bg-surface-container-high rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full transition-all duration-500" style="width: 48.2%;"></div>
+</div>
+<!-- Fast Charge Curve Preview -->
+<div class="pt-2">
+<div class="flex items-center justify-between text-label-xs font-mono mb-1">
+<span class="text-outline uppercase">45W USB-PD PPS Step-Down Curve Reference</span>
+<span class="text-secondary font-mono">Peak: 44.2W @ 9.8V/4.5A</span>
+</div>
+<div class="h-16 w-full">
+<svg class="w-full h-full" viewbox="0 0 500 70">
+<path d="M 0 10 L 80 10 L 140 18 L 220 22 L 300 38 L 400 55 L 500 62" fill="none" stroke="#4edea3" stroke-width="2"></path>
+<circle cx="80" cy="10" fill="#4edea3" r="3"></circle>
+<text fill="#dfe2ee" font-family="monospace" font-size="8" x="85" y="10">44.2W Knee</text>
+<circle cx="300" cy="38" fill="#00d2ff" r="3"></circle>
+<text fill="#00d2ff" font-family="monospace" font-size="8" x="305" y="36">25W Step</text>
+<line stroke="#31353e" stroke-width="1" x1="0" x2="500" y1="65" y2="65"></line>
+</svg>
+</div>
+</div>
+</div>
+</div>
+<!-- Rig #03 Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-sm border-t border-surface-variant/40 mt-space-sm">
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Step Sweep (0.1V)
+            </button>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Simulate 45W PPS Handshake
+            </button>
+</div>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high text-outline hover:text-on-surface font-label-xs text-label-xs font-mono transition-colors flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">shield</span> Safety Cutoff (50°C)
+          </button>
+</div>
+</div>
+<!-- ================= RIG #04: Audio Precision APx555 B-Format Acoustic Suite ================= -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<!-- Instrument Header -->
+<div>
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container/60 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-lg bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">graphic_eq</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-mono font-bold text-label-xs text-primary">RIG-04</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-semibold leading-tight">
+                    Audio Precision APx555 Anechoic Acoustic Rig
+                  </h2>
+</div>
+<div class="font-mono text-label-xs text-outline">Target: Stereo Speakers (Bottom Woofer + Earpiece Receiver Array)</div>
+</div>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded-full bg-surface-container-highest text-on-surface-variant font-mono text-label-xs font-bold shrink-0">
+<span class="w-2 h-2 rounded-full bg-outline"></span>
+<span>STANDBY / CAL READY</span>
+</div>
+</div>
+<!-- Telemetry Numbers -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-space-xs my-space-sm">
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Integrated LUFS</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">-24.1 <span class="text-label-xs text-outline">LUFS</span></div>
+<div class="font-mono text-label-xs text-tertiary mt-1">EBU R128 Matched</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">THD+N @ 1kHz 85dB</div>
+<div class="font-mono text-headline-md font-bold text-tertiary mt-0.5">0.42 %</div>
+<div class="font-mono text-label-xs text-tertiary mt-1">Ultra Clean (&lt; 1%)</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Low-Cut Freq (F0)</div>
+<div class="font-mono text-headline-md font-bold text-secondary-container mt-0.5">78 Hz</div>
+<div class="font-mono text-label-xs text-outline mt-1">Bass extension -3dB</div>
+</div>
+<div class="bg-surface-container p-2.5 rounded-lg">
+<div class="font-label-xs text-label-xs text-outline uppercase">Mic Sensitivity</div>
+<div class="font-mono text-headline-md font-bold text-on-surface mt-0.5">-42.0 <span class="text-label-xs text-outline">dBFS</span></div>
+<div class="font-mono text-label-xs text-outline mt-1">Anechoic Calibrated</div>
+</div>
+</div>
+<!-- Frequency Response Curve SVG -->
+<div class="bg-surface-container-lowest rounded-lg p-space-sm my-space-xs">
+<div class="flex items-center justify-between text-label-xs font-mono mb-1">
+<span class="text-outline uppercase">Frequency Response Profile (20Hz - 20kHz)</span>
+<span class="text-primary font-mono font-bold">Harman Target Overlay: PASS</span>
+</div>
+<div class="h-28 w-full">
+<svg class="w-full h-full" viewbox="0 0 500 110">
+<!-- Logarithmic grid guides -->
+<line stroke="#31353e" stroke-dasharray="2 2" stroke-width="0.8" x1="80" x2="80" y1="0" y2="100"></line>
+<line stroke="#31353e" stroke-dasharray="2 2" stroke-width="0.8" x1="180" x2="180" y1="0" y2="100"></line>
+<line stroke="#31353e" stroke-dasharray="2 2" stroke-width="0.8" x1="320" x2="320" y1="0" y2="100"></line>
+<line stroke="#31353e" stroke-dasharray="2 2" stroke-width="0.8" x1="440" x2="440" y1="0" y2="100"></line>
+<!-- 0dB baseline -->
+<line stroke="#424656" stroke-width="1" x1="0" x2="500" y1="50" y2="50"></line>
+<!-- Target Curve envelope (dim) -->
+<path d="M 0 85 Q 80 50 180 50 T 320 48 T 440 52 L 500 70" fill="none" stroke="#8c90a1" stroke-dasharray="4 2" stroke-opacity="0.4" stroke-width="1"></path>
+<!-- Measured Audio Response Curve -->
+<path d="M 0 92 Q 60 70 80 56 T 140 48 T 220 50 T 300 46 T 380 54 T 460 48 T 500 68" fill="none" stroke="#dae1ff" stroke-width="2"></path>
+<circle cx="80" cy="56" fill="#00d2ff" r="3"></circle>
+<circle cx="300" cy="46" fill="#4edea3" r="3"></circle>
+</svg>
+</div>
+<div class="flex items-center justify-between text-[10px] font-mono text-outline pt-1">
+<span>20 Hz (Sub)</span>
+<span>100 Hz</span>
+<span>1 kHz (Mid)</span>
+<span>8 kHz</span>
+<span>20 kHz (Air)</span>
+</div>
+</div>
+</div>
+<!-- Rig #04 Controls -->
+<div class="flex flex-wrap items-center justify-between gap-space-xs pt-space-sm border-t border-surface-variant/40 mt-space-sm">
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Calibrate Mic Sens (-42.0 dBFS)
+            </button>
+<button class="px-2.5 py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-xs text-label-xs font-mono transition-colors" type="button">
+              Phase Alignment Test
+            </button>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary-fixed font-label-xs text-label-xs font-bold hover:opacity-90 transition-opacity flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">volume_up</span> Run Pink Noise Sweep (30s)
+          </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Section: Automated Batch Test Queue & Metrology Audit Log -->
+<div class="px-space-lg pb-space-xl">
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Automated Batch Test Queue Table (7 cols) -->
+<div class="xl:col-span-7 bg-surface-container-low rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">queue_play_next</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-semibold">
+                Lab Metrology Orchestration Queue
+              </h3>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-outline font-mono text-label-xs">
+              4 TOTAL JOBS
+            </span>
+</div>
+<!-- Queue Table -->
+<div class="overflow-x-auto">
+<table class="w-full text-left font-mono text-label-xs">
+<thead>
+<tr class="text-outline uppercase border-b border-surface-variant/60 pb-2">
+<th class="py-2 pr-3 font-semibold">Job ID</th>
+<th class="py-2 pr-3 font-semibold">Device Under Test</th>
+<th class="py-2 pr-3 font-semibold">Test Specification</th>
+<th class="py-2 pr-3 font-semibold">Bench Rig</th>
+<th class="py-2 font-semibold">Status / Progress</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-variant/30 text-on-surface">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-2.5 pr-3 text-secondary-container font-bold">#L9014-01</td>
+<td class="py-2.5 pr-3 font-semibold">Galaxy S25 Ultra</td>
+<td class="py-2.5 pr-3 text-on-surface-variant">200MP MTF Lens Resolving Chart</td>
+<td class="py-2.5 pr-3 text-outline">Rig #05 Optical</td>
+<td class="py-2.5">
+<div class="flex items-center gap-2">
+<div class="w-16 h-1.5 bg-surface-container-high rounded-full overflow-hidden">
+<div class="bg-secondary-container h-full" style="width: 88%;"></div>
+</div>
+<span class="text-secondary-container font-bold">RUN (88%)</span>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-2.5 pr-3 text-secondary-container font-bold">#L9014-02</td>
+<td class="py-2.5 pr-3 font-semibold">Galaxy S25 Ultra</td>
+<td class="py-2.5 pr-3 text-on-surface-variant">5G mmWave Beamforming RF Sweeper</td>
+<td class="py-2.5 pr-3 text-outline">Rig #06 R&amp;S CMX</td>
+<td class="py-2.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-outline">QUEUED (Bay 2)</span>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-2.5 pr-3 text-outline">#L9012-04</td>
+<td class="py-2.5 pr-3">iPhone 16 Pro Max</td>
+<td class="py-2.5 pr-3 text-on-surface-variant">Battery Aging 100-Cycle High-Load</td>
+<td class="py-2.5 pr-3 text-outline">Rig #03 Chroma</td>
+<td class="py-2.5">
+<span class="px-1.5 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-bold">PASSED (ISO 17025)</span>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container/50 transition-colors">
+<td class="py-2.5 pr-3 text-outline">#L9011-08</td>
+<td class="py-2.5 pr-3">Xiaomi 15 Pro</td>
+<td class="py-2.5 pr-3 text-on-surface-variant">90W HyperCharge Delta-T Thermal Curve</td>
+<td class="py-2.5 pr-3 text-outline">Rig #02 FLIR</td>
+<td class="py-2.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-tertiary">COMPLETE (37.2°C)</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-sm border-t border-surface-variant/40 mt-space-sm text-label-xs font-mono text-outline">
+<span>Worker Threads: 8 / 8 Active</span>
+<button class="text-secondary-container hover:underline font-semibold flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[14px]">add</span> Add Specimen Job to Queue
+          </button>
+</div>
+</div>
+<!-- Metrology Terminal Audit Log & Master Sign-off (5 cols) -->
+<div class="xl:col-span-5 bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">terminal</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">
+                Audit Trail Telemetry Stream
+              </span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-mono text-label-xs text-tertiary font-bold">LIVE METROLOGY FEED</span>
+</div>
+</div>
+<!-- Terminal Log Box -->
+<div class="bg-surface-container-lowest p-3 rounded-lg font-mono text-label-xs space-y-1.5 text-on-surface-variant h-44 overflow-y-auto">
+<div class="text-outline">[14:22:10 UTC] NIST Traceable Spectro Zero-Offset aligned. Photodiode calibrated against standard lamp #SL-994.</div>
+<div class="text-tertiary">[14:23:45 UTC] Chamber thermal drift settled at ±0.03°C. Commencing 20m 3DMark ray-tracing loop #1.</div>
+<div class="text-outline">[14:25:01 UTC] APx555 Sweeper: Anechoic background ambient verified at 14.8 dBA SPL. Noise floor nominal.</div>
+<div class="text-secondary-container">[14:28:12 UTC] PPS step-down detected: 44.2W -&gt; 38.0W @ 22% SoC. Handshake latency 12ms.</div>
+<div class="text-on-surface font-semibold">[14:28:44 UTC] Loop 14: Titanium skin sensor: 41.2°C. Vapor chamber heat dissipation nominal at 14.2 W/cm².</div>
+<div class="text-primary font-bold animate-pulse">&gt; Rig #01: Ready to ingest 1% APL HDR flash trigger packet...</div>
+</div>
+</div>
+<!-- Master Signature & Commit Button -->
+<div class="pt-space-md border-t border-surface-variant/40 mt-space-sm space-y-space-sm">
+<div class="flex items-center justify-between text-label-xs font-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[16px]">fingerprint</span>
+<div>
+<span class="text-outline">AUDITOR: </span>
+<span class="text-on-surface font-semibold">Dr. Aris Thorne (ISO-17025 Lead)</span>
+</div>
+</div>
+<span class="text-outline truncate max-w-[150px]">SHA: e4b1...88c4</span>
+</div>
+<button class="w-full py-2.5 px-4 rounded-lg bg-primary-container hover:bg-primary-container/90 text-on-primary-container font-label-md text-label-md font-bold transition-all shadow-md flex items-center justify-center gap-2" type="button">
+<span class="material-symbols-outlined text-[18px]">publish</span>
+<span>Commit Calibrated Telemetry to Public Device Database</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Client-side micro-interactions for rig recalibration & emergency abort notification -->
+<script>
+  (function() {
+    const recalibrateBtn = document.getElementById('btn-recalibrate');
+    const emergencyBtn = document.getElementById('btn-emergency-abort');
+    const specimenSelect = document.getElementById('specimen-selector');
+
+    if (recalibrateBtn) {
+      recalibrateBtn.addEventListener('click', function() {
+        const icon = this.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.classList.add('animate-spin');
+          setTimeout(() => {
+            icon.classList.remove('animate-spin');
+          }, 1200);
+        }
+      });
+    }
+
+    if (emergencyBtn) {
+      emergencyBtn.addEventListener('click', function() {
+        if (confirm('CRITICAL ALERT: Immediately trigger emergency load cutoff and thermal chamber depressurization?')) {
+          alert('Emergency safety sequence engaged: Loads isolated. Thermal chiller idle.');
+        }
+      });
+    }
+
+    if (specimenSelect) {
+      specimenSelect.addEventListener('change', function() {
+        // Mock specimen reload indicator
+        document.body.style.opacity = '0.92';
+        setTimeout(() => {
+          document.body.style.opacity = '1.0';
+        }, 150);
+      });
+    }
+  })();
+</script></main></body></html>

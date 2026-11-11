@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>GSMHub Laboratory &amp; Hardware Registry</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"secondary-container":"#5bb8fe","surface-container-high":"#e2e7ff","on-primary":"#ffffff","on-secondary-fixed":"#001d31","on-secondary":"#ffffff","error-container":"#ffdad6","on-primary-container":"#f8f7ff","surface-container-low":"#f2f3ff","on-surface":"#131b2e","tertiary-fixed-dim":"#4edea3","surface-container-lowest":"#ffffff","on-surface-variant":"#424656","surface-container":"#eaedff","on-tertiary-fixed-variant":"#005236","tertiary-container":"#008259","primary-fixed":"#dae1ff","on-tertiary":"#ffffff","surface-bright":"#faf8ff","on-error":"#ffffff","inverse-primary":"#b3c5ff","inverse-on-surface":"#eef0ff","error":"#ba1a1a","surface-container-highest":"#dae2fd","outline":"#727687","inverse-surface":"#283044","tertiary-fixed":"#6ffbbe","surface-dim":"#d2d9f4","primary-container":"#0066ff","secondary-fixed-dim":"#93ccff","surface":"#faf8ff","on-background":"#131b2e","on-primary-fixed":"#001849","on-error-container":"#93000a","surface-tint":"#0054d6","on-primary-fixed-variant":"#003fa4","secondary":"#006398","on-secondary-container":"#00476e","on-tertiary-container":"#e1ffec","tertiary":"#006645","primary":"#0050cb","secondary-fixed":"#cce5ff","surface-variant":"#dae2fd","background":"#faf8ff","primary-fixed-dim":"#b3c5ff","on-secondary-fixed-variant":"#004b73","outline-variant":"#c2c6d8"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"margin-mobile":"1rem","margin":"1.5rem","space-xl":"1.5rem","space-sm":"0.5rem","space-md":"0.75rem","gutter":"1rem","space-lg":"1rem","gutter-mobile":"0.75rem","space-xs":"0.25rem"},"fontFamily":{"body-lg":["Inter"],"label-md":["Inter"],"body-sm":["Inter"],"body-md":["Inter"],"headline-xl-mobile":["Inter"],"label-mono":["Inter"],"label-sm":["Inter"],"headline-lg":["Inter"],"headline-sm":["Inter"],"headline-md":["Inter"],"headline-lg-mobile":["Inter"],"headline-xl":["Inter"]},"fontSize":{"body-lg":["15px",{"lineHeight":"22px","fontWeight":"400"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-xl-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.025em","fontWeight":"700"}],"label-mono":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg-mobile":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}]}}}}</script></head><body class="bg-background font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 w-full z-50 bg-surface-container-lowest border-b border-outline-variant/40"><div class="h-14 w-full px-margin flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-xs" data-path="smartphones" href="#"><div class="w-6 h-6 bg-primary-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[16px]">terminal</span></div><span class="font-headline-sm text-headline-sm tracking-tight text-on-surface font-bold">GSM<span class="text-primary-container">HUB</span></span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 bg-surface-container-low border border-outline-variant/50 rounded"><span class="w-1.5 h-1.5 rounded-full bg-tertiary-container animate-pulse"></span><span class="font-label-mono text-label-mono text-on-surface-variant uppercase">15,482 DEVICES • 48ms Sync</span></div></div><div class="hidden lg:flex items-center flex-1 max-w-xs mx-space-sm"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-outline text-[16px]">search</span><input class="w-full h-8 pl-8 pr-12 bg-surface-container-lowest border border-outline-variant/60 rounded font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:border-primary-container focus:ring-1 focus:ring-primary-container" placeholder="Search hardware telemetry..." type="text"/><span class="absolute right-space-sm font-label-mono text-label-mono px-1 py-0.5 bg-surface-container-low border border-outline-variant/40 rounded text-outline">⌘K</span></div></div><nav class="hidden md:flex items-center gap-space-md h-full" data-active-classes="text-primary font-bold border-b-2 border-primary"><a aria-current="page" class="h-full flex items-center transition-colors text-primary font-bold border-b-2 border-primary" data-path="smartphones" href="#">Smartphones</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#">Compare Matrix</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="lab-reviews" href="#">Lab Reviews</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="news-wire" href="#">News Wire</a><a class="h-full flex items-center font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors" data-path="brands-a-z" href="#">Brands A-Z</a></nav><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><a class="px-space-sm py-1 bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/60 rounded flex items-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="saved-benchmarks" href="#"><span class="font-label-sm text-label-sm">Saved</span><span class="font-label-mono text-label-mono px-1 py-0.2 bg-surface-container-high rounded text-on-surface">3</span></a><a class="px-space-sm py-1 bg-surface-container-lowest hover:bg-surface-container-low border border-outline-variant/60 rounded flex items-center gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare-matrix" href="#"><span class="font-label-sm text-label-sm">Compare</span><span class="font-label-mono text-label-mono px-1 py-0.2 bg-primary-container text-on-primary rounded">2</span></a></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 bg-background min-h-screen"><div class="flex flex-col w-full">
+<!-- Telemetry Calibration Ticker & Ingestion Stream -->
+<section class="w-full bg-surface-container-low px-margin py-space-sm shadow-sm relative overflow-hidden">
+<div class="w-full flex flex-wrap items-center justify-between gap-space-md">
+<!-- Live Metrology Stream Indicators -->
+<div class="flex flex-wrap items-center gap-space-md">
+<div class="flex items-center gap-space-xs px-space-sm py-1 bg-surface-container-lowest rounded shadow-sm">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-ping"></span>
+<span class="font-label-mono text-label-mono font-bold text-tertiary">CALIBRATED RIG #04</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">NIST-TRACEABLE</span>
+</div>
+<div class="hidden md:flex items-center gap-space-sm font-label-mono text-label-mono text-on-surface">
+<span class="text-on-surface-variant">HW REVISION:</span>
+<span class="font-bold text-primary">v4.19.8-PROD</span>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant">INGESTED:</span>
+<span class="font-bold">15,482 SPECIMENS</span>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant">DELTA-E BENCH:</span>
+<span class="text-tertiary font-bold">0.68 RMS</span>
+<span class="text-outline-variant">•</span>
+<span class="text-on-surface-variant">BUS LATENCY:</span>
+<span class="text-secondary font-bold">1.2ms</span>
+</div>
+</div>
+<!-- Quick Telemetry Filter Pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-wider pr-1">Filter:</span>
+<button class="px-space-sm py-0.5 bg-primary-container text-on-primary rounded font-label-mono text-label-mono transition-transform hover:scale-105">TSMC 3nm (N3E)</button>
+<button class="px-space-sm py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container-high rounded font-label-mono text-label-mono transition-colors">1-Inch LYT-900</button>
+<button class="px-space-sm py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container-high rounded font-label-mono text-label-mono transition-colors">LTPO &gt;3000nits</button>
+<button class="px-space-sm py-0.5 bg-surface-container-lowest text-on-surface hover:bg-surface-container-high rounded font-label-mono text-label-mono transition-colors">Si/C &gt;5500mAh</button>
+</div>
+</div>
+</section>
+<!-- Main Dashboard Body -->
+<div class="w-full px-margin py-space-lg space-y-space-xl">
+<!-- Top Grid: Interactive 3-Way Comparator Launch Dock & Telemetry Command Bar -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-md">
+<div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md pb-space-md mb-space-md bg-surface-container-low/40 p-space-md rounded-lg">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<span class="font-label-mono text-label-mono uppercase tracking-widest text-primary font-bold">Multi-Specimen Comparative Bus</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">Simultaneously evaluate differential spectra, sustained TDP curves, and silicon microarchitecture across up to 3 mobile devices.</p>
+</div>
+<div class="flex items-center gap-space-xs">
+<span class="font-label-mono text-label-mono px-2 py-1 bg-surface-container text-on-surface rounded">SLOTS OCCUPIED: <span class="font-bold text-primary" id="comp-count">2</span>/3</span>
+<button class="px-space-sm py-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm rounded transition-colors" id="reset-comparator">Clear Bus</button>
+</div>
+</div>
+<!-- Comparator Tray -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-gutter items-stretch">
+<!-- Slot 1: S25 Ultra -->
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between relative group">
+<div class="absolute top-2 right-2 flex items-center gap-1">
+<span class="px-1.5 py-0.5 bg-primary text-on-primary font-label-mono text-label-mono rounded">SLOT 01</span>
+<button class="w-5 h-5 bg-surface-container rounded-full flex items-center justify-center text-outline hover:text-error transition-colors" title="Remove device">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm mb-space-sm">
+<div class="w-12 h-16 rounded bg-surface-container-lowest p-1 shadow-inner shrink-0 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-contain" data-alt="Titanium gray flagship smartphone high precision engineering render studio lighting studio setup white background isometric perspective" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDg-2hh5aPcPbMqz50-H7JJxzT5YT2gyMYva_6gg_KC16wNYGAyMsBYxMNeaLwMnVRMZRoSOGSaA1hFtS1NQZ8fJ1D2GdcFYsg6hA9nJTTcUx0ogIWjigitbJBMOrApcBRpCDs1WzAAgdOD0hSq8Jcqas7YJLw-U0BzUZIYxXlT6yhFGYfDFowWHU9dwjSJr0eW5OuxQGVyC-a5q3HNr99tIVXWdDWk2fWKKu99r4o"/>
+</div>
+<div class="min-w-0 pr-6">
+<span class="font-label-mono text-label-mono text-primary font-bold">SAMSUNG</span>
+<h3 class="font-headline-sm text-headline-sm truncate text-on-surface">Galaxy S25 Ultra</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">SM-S938B/DS • 12GB/512GB</span>
+</div>
+</div>
+<div class="space-y-1 bg-surface-container-lowest p-2 rounded text-body-sm font-body-sm">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>SoC Node</span>
+<span class="font-mono text-on-surface font-semibold">Snapdragon 8 Elite (3nm)</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Sensor Format</span>
+<span class="font-mono text-on-surface font-semibold">200MP ISOCELL HP2</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Max Luminance</span>
+<span class="font-mono text-tertiary font-semibold">2600 nits (ΔE 0.72)</span>
+</div>
+</div>
+</div>
+<!-- Slot 2: iPhone 16 Pro Max -->
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between relative group">
+<div class="absolute top-2 right-2 flex items-center gap-1">
+<span class="px-1.5 py-0.5 bg-primary text-on-primary font-label-mono text-label-mono rounded">SLOT 02</span>
+<button class="w-5 h-5 bg-surface-container rounded-full flex items-center justify-center text-outline hover:text-error transition-colors" title="Remove device">
+<span class="material-symbols-outlined text-[14px]">close</span>
+</button>
+</div>
+<div class="flex items-center gap-space-sm mb-space-sm">
+<div class="w-12 h-16 rounded bg-surface-container-lowest p-1 shadow-inner shrink-0 overflow-hidden flex items-center justify-center">
+<img class="w-full h-full object-contain" data-alt="Natural titanium slate modern smartphone flagship front and angled edge minimalist studio product shot isolated clean lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD16zkawB2cUS4gBngikTJkQpDzAvyBX0T6ZH-9c46W_Au0GiUR78ZXcx3DymO1rkECCd4SsRynm4odeV5QlBJFTsEvcj19CdUinvJUDrOPeSaNHYmbvylb9s5R_hS0Hs6sVx3rN_Rc00PvkP4X23LhHzsr6TuyvPfxsgxq2FKnIOb4AxJpMSVkttCONX77TXogEzoCXNM1jO48t_-He_KT66YTFs7jIWqKoDi2PVA"/>
+</div>
+<div class="min-w-0 pr-6">
+<span class="font-label-mono text-label-mono text-primary font-bold">APPLE</span>
+<h3 class="font-headline-sm text-headline-sm truncate text-on-surface">iPhone 16 Pro Max</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant font-mono">A3296 • 8GB/256GB</span>
+</div>
+</div>
+<div class="space-y-1 bg-surface-container-lowest p-2 rounded text-body-sm font-body-sm">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>SoC Node</span>
+<span class="font-mono text-on-surface font-semibold">Apple A18 Pro (N3P)</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Sensor Format</span>
+<span class="font-mono text-on-surface font-semibold">48MP 1/1.28" Fusion</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Max Luminance</span>
+<span class="font-mono text-tertiary font-semibold">2000 nits (ΔE 0.54)</span>
+</div>
+</div>
+</div>
+<!-- Slot 3: Empty / Interactive Quick Add -->
+<div class="bg-surface-container/60 hover:bg-surface-container-low transition-colors p-space-md rounded-lg flex flex-col justify-center items-center text-center cursor-pointer shadow-sm" id="slot-3-box">
+<div class="w-10 h-10 rounded-full bg-primary-fixed flex items-center justify-center text-primary mb-space-sm group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[24px]">add</span>
+</div>
+<span class="font-label-md text-label-md font-bold text-on-surface">Insert 3rd Specimen</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant mt-1">Suggested: Vivo X100 Ultra or Xiaomi 15 Pro</span>
+<div class="mt-space-sm flex gap-1">
+<button class="px-2 py-0.5 bg-surface-container-lowest hover:bg-surface-container-high rounded text-primary font-label-mono text-label-mono">+ Vivo X100</button>
+<button class="px-2 py-0.5 bg-surface-container-lowest hover:bg-surface-container-high rounded text-primary font-label-mono text-label-mono">+ Xiaomi 15</button>
+</div>
+</div>
+<!-- Action Column -->
+<div class="bg-surface-container-highest p-space-md rounded-lg flex flex-col justify-between">
+<div>
+<div class="flex items-center gap-1 text-primary mb-1">
+<span class="material-symbols-outlined text-[18px]">difference</span>
+<span class="font-label-mono text-label-mono font-bold uppercase tracking-wider">Delta Inspector</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">328 attributes synchronized across Display, Thermal Throttling, Optical Dynamic Range, and Radio Bands.</p>
+</div>
+<div class="space-y-space-xs mt-space-md">
+<a class="w-full py-2.5 px-space-md bg-primary-container hover:bg-primary text-on-primary rounded font-label-md text-label-md text-center font-bold flex items-center justify-center gap-space-xs shadow-md transition-all" data-path="compare-matrix" href="#">
+<span>Execute Differential Matrix</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+<div class="flex items-center justify-center gap-space-xs text-outline text-label-mono font-label-mono">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+<span>SYNCHRONIZED ISO/IEC METRICS</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Featured Hardware Dossiers & Trending Flagship Telemetry Bento Grid -->
+<section class="w-full space-y-space-md">
+<div class="flex flex-col md:flex-row items-start md:items-end justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-xs text-primary mb-0.5">
+<span class="material-symbols-outlined text-[18px]">verified_user</span>
+<span class="font-label-mono text-label-mono font-bold tracking-wider uppercase">Metrology Lab Spotlight</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">Active Benchmarking Dossiers</h2>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-low p-1 rounded">
+<button class="px-space-sm py-1 bg-surface-container-lowest font-label-mono text-label-mono font-bold rounded shadow-sm text-primary">All Flagships</button>
+<button class="px-space-sm py-1 hover:bg-surface-container font-label-mono text-label-mono rounded text-on-surface-variant transition-colors">Sensor Size &gt; 1"</button>
+<button class="px-space-sm py-1 hover:bg-surface-container font-label-mono text-label-mono rounded text-on-surface-variant transition-colors">Fast Charging &gt; 90W</button>
+<button class="px-space-sm py-1 hover:bg-surface-container font-label-mono text-label-mono rounded text-on-surface-variant transition-colors">Sub-6 &amp; mmWave</button>
+</div>
+</div>
+<!-- Bento Cards Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-gutter">
+<!-- Dossier 1: Samsung S25 Ultra -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+<div>
+<!-- Header Bar -->
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low/50 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<span class="px-2 py-0.5 bg-primary-fixed text-on-primary-fixed font-label-mono text-label-mono rounded font-bold">SERIAL #9482-KR</span>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-tertiary font-label-mono text-label-mono font-bold">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>GSMSCORE 95.8</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md mb-space-md">
+<div class="w-20 h-24 rounded-lg bg-surface-container-low flex items-center justify-center p-2 shrink-0">
+<img class="w-full h-full object-contain" data-alt="Samsung Galaxy flagship dark sleek phone device with sharp angles quad camera module on clean studio background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqJd-OREMkAkNXnYYUHMqMzBXnlialZ0sGx5GwNfKLBHtU_XyntDmF7ZXgsikQSp9M2BlBRwVfBz9Aiulingh4q2pJA6sEa5elP0QfBJhXR6B0YnfGvr5bJDIw-VlKJR-P4EK0uOo-Z0G9I3rOi4BiVUIt59W3OmZHVg0kIRgDefoHr0eo56wFlfHuvRUL-sYkqorKHKMnIPhh7fghUtcE1HQukUjUQtuiSkTLeWg"/>
+</div>
+<div class="min-w-0">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-outline">Samsung Electronics</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">Galaxy S25 Ultra</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Announced Jan 2025 • Android 15</span>
+</div>
+</div>
+<!-- Telemetry Attributes Matrix -->
+<div class="space-y-1.5 font-body-sm text-body-sm">
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Processor</span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite (3nm TSMC)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Primary Imager</span>
+<span class="font-mono font-semibold text-on-surface">200 MP, f/1.7, 1/1.3" OIS</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Display Spec</span>
+<span class="font-mono font-semibold text-on-surface">6.86" 120Hz LTPO (ΔE 0.72)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Battery / Charge</span>
+<span class="font-mono font-semibold text-tertiary">5000 mAh • 45W PPS PD3.0</span>
+</div>
+</div>
+<!-- Live Benchmark Spark -->
+<div class="mt-space-md p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface-variant">3DMark Solar Bay Stability</span>
+<span class="font-bold text-primary">74.2%</span>
+</div>
+<!-- Mini SVG Throttle Line Chart -->
+<svg class="w-full h-8 text-primary" preserveaspectratio="none" viewbox="0 0 100 25">
+<polyline fill="none" points="0,5 15,6 30,7 45,9 60,11 75,13 90,14 100,14" stroke="currentColor" stroke-width="2"></polyline>
+<polyline fill="rgba(0,102,255,0.1)" points="0,5 15,6 30,7 45,9 60,11 75,13 90,14 100,14 100,25 0,25" stroke="none"></polyline>
+</svg>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between gap-space-xs">
+<a class="flex-1 py-1.5 px-space-sm bg-surface-container-low hover:bg-surface-container-high rounded text-center font-label-md text-label-md text-primary font-semibold transition-colors" href="#">Telemetry Log</a>
+<button class="px-space-sm py-1.5 bg-primary-container hover:bg-primary text-on-primary rounded font-label-md text-label-md font-semibold transition-colors" title="Pin to Compare Bus">
+<span class="material-symbols-outlined text-[16px] align-middle">add_chart</span>
+</button>
+</div>
+</div>
+<!-- Dossier 2: Apple iPhone 16 Pro Max -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-secondary/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+<div>
+<!-- Header Bar -->
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low/50 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface font-label-mono text-label-mono rounded font-bold">SERIAL #1892-CA</span>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-tertiary font-label-mono text-label-mono font-bold">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>GSMSCORE 96.1</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md mb-space-md">
+<div class="w-20 h-24 rounded-lg bg-surface-container-low flex items-center justify-center p-2 shrink-0">
+<img class="w-full h-full object-contain" data-alt="Apple iPhone 16 Pro Max natural titanium finish rear camera triple lens layout on pristine laboratory table top" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyS8_fPjZyV_okOm6nHiVSaAPt4mZJwrc1OlplD_3uXSv8GhN_Ml7QSKGL8s-e4EF2tKmMYaaooAGCCbekTOjXCLnngx0pVU9RyLqLJJ1KEXiG5dTofbsY7piLDpQeiRHw-8JweELXwHvwE6CKYNObEEhcYeLPtW0HzLRN_ku5JhtMsAflI0jzvm0TcXsnmJlmtmXk8DOsN9y0nJumDc1QsG2OcR3jTqIKMQ8-sgg"/>
+</div>
+<div class="min-w-0">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-outline">Apple Inc.</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">iPhone 16 Pro Max</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Announced Sep 2024 • iOS 18.2</span>
+</div>
+</div>
+<!-- Telemetry Attributes Matrix -->
+<div class="space-y-1.5 font-body-sm text-body-sm">
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Processor</span>
+<span class="font-mono font-semibold text-on-surface">Apple A18 Pro (3nm N3P)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Primary Imager</span>
+<span class="font-mono font-semibold text-on-surface">48 MP, f/1.8, 24mm Fusion</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Display Spec</span>
+<span class="font-mono font-semibold text-on-surface">6.9" Super Retina XDR (ΔE 0.54)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Battery / Charge</span>
+<span class="font-mono font-semibold text-tertiary">4685 mAh • 27W USB-C 3.2</span>
+</div>
+</div>
+<!-- Live Benchmark Spark -->
+<div class="mt-space-md p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface-variant">Geekbench 6 Multi-Core</span>
+<span class="font-bold text-secondary">8,742 pts</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden">
+<div class="bg-secondary h-full rounded-full" style="width: 94%"></div>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between gap-space-xs">
+<a class="flex-1 py-1.5 px-space-sm bg-surface-container-low hover:bg-surface-container-high rounded text-center font-label-md text-label-md text-primary font-semibold transition-colors" href="#">Telemetry Log</a>
+<button class="px-space-sm py-1.5 bg-primary-container hover:bg-primary text-on-primary rounded font-label-md text-label-md font-semibold transition-colors" title="Pin to Compare Bus">
+<span class="material-symbols-outlined text-[16px] align-middle">add_chart</span>
+</button>
+</div>
+</div>
+<!-- Dossier 3: Vivo X100 Ultra -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-tertiary/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+<div>
+<!-- Header Bar -->
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low/50 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<span class="px-2 py-0.5 bg-tertiary-fixed-dim/30 text-on-surface font-label-mono text-label-mono rounded font-bold">SERIAL #3319-CN</span>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-tertiary font-label-mono text-label-mono font-bold">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>GSMSCORE 94.7</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md mb-space-md">
+<div class="w-20 h-24 rounded-lg bg-surface-container-low flex items-center justify-center p-2 shrink-0">
+<img class="w-full h-full object-contain" data-alt="Vivo X100 Ultra smartphone titanium finish with massive Zeiss circular camera array isolated on high-tech diagnostic table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD7sSW8ELRq46uQsXdJDobfDkCgo-JgffqB15hssjJxgwF-ZJWniPt30m05MYR4ojg6dJGAHLyKbMfRo3o6xYdiNa3vhNperepeBC-SGsV3CDEgx2nTTBP2Wo7oGVHUkDzRByoksEsTY4yb9dfu_0MZfqtg-QK3QjsRS5YBbfLgMubBgCWvScXLhuLa30LfLv8u_4x5btBQP_JGH1akjg-N6S9UosOqqO3q9vMvEmc"/>
+</div>
+<div class="min-w-0">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-outline">Vivo Mobile</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">Vivo X100 Ultra</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Announced May 2024 • OriginOS 4</span>
+</div>
+</div>
+<!-- Telemetry Attributes Matrix -->
+<div class="space-y-1.5 font-body-sm text-body-sm">
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Processor</span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Gen 3 (4nm)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Optics Core</span>
+<span class="font-mono font-semibold text-tertiary">50MP 1" LYT-900 + 200MP HP9</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Display Spec</span>
+<span class="font-mono font-semibold text-on-surface">6.78" 2K Samsung E7 AMOLED</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Battery / Charge</span>
+<span class="font-mono font-semibold text-on-surface">5500 mAh • 80W FlashCharge</span>
+</div>
+</div>
+<!-- Live Benchmark Spark -->
+<div class="mt-space-md p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface-variant">Optics Resolving Power</span>
+<span class="font-bold text-tertiary">3,420 LP/PH</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 98%"></div>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between gap-space-xs">
+<a class="flex-1 py-1.5 px-space-sm bg-surface-container-low hover:bg-surface-container-high rounded text-center font-label-md text-label-md text-primary font-semibold transition-colors" href="#">Telemetry Log</a>
+<button class="px-space-sm py-1.5 bg-primary-container hover:bg-primary text-on-primary rounded font-label-md text-label-md font-semibold transition-colors" title="Pin to Compare Bus">
+<span class="material-symbols-outlined text-[16px] align-middle">add_chart</span>
+</button>
+</div>
+</div>
+<!-- Dossier 4: Xiaomi 15 Pro -->
+<div class="bg-surface-container-lowest rounded-xl p-space-md shadow-md flex flex-col justify-between hover:shadow-xl transition-shadow relative overflow-hidden group">
+<div class="absolute -right-8 -top-8 w-32 h-32 bg-primary-container/5 rounded-full pointer-events-none group-hover:scale-125 transition-transform duration-500"></div>
+<div>
+<!-- Header Bar -->
+<div class="flex items-center justify-between pb-space-sm mb-space-sm bg-surface-container-low/50 -mx-space-md -mt-space-md px-space-md pt-space-md rounded-t-xl">
+<span class="px-2 py-0.5 bg-surface-container-highest text-on-surface font-label-mono text-label-mono rounded font-bold">SERIAL #0812-CN</span>
+<div class="flex items-center gap-1 bg-tertiary-fixed-dim/20 px-2 py-0.5 rounded text-tertiary font-label-mono text-label-mono font-bold">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>GSMSCORE 94.3</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md mb-space-md">
+<div class="w-20 h-24 rounded-lg bg-surface-container-low flex items-center justify-center p-2 shrink-0">
+<img class="w-full h-full object-contain" data-alt="Xiaomi 15 Pro ceramic and metal smartphone Leica co-engineered triple lens camera module studio lighting close-up product photograph" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB9E0d6FlzlbWo-1GflkXz3GQ3jBBPFbZWI1c6j0w-R2VAzGY8xmV22EjBBYHt6M6XjU3XvJO-TQzGp9-umyYk1JWe5iBgYY0oB5VEPpK6kpGH9POPCKqeVvtfc_VuhvGvzC3-qhn60AVQyv2GGdymBauyEqpA0SGbNYQaLiBKUjUBGjBogyRDEvH1d0fh2LkcdwGD5msVmUBnionnLwgZeOD6kTNSr7Rvwv7JNCec"/>
+</div>
+<div class="min-w-0">
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-outline">Xiaomi Communications</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold truncate">Xiaomi 15 Pro</h3>
+<span class="font-body-sm text-body-sm text-on-surface-variant block">Announced Oct 2024 • HyperOS 2</span>
+</div>
+</div>
+<!-- Telemetry Attributes Matrix -->
+<div class="space-y-1.5 font-body-sm text-body-sm">
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Processor</span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite (3nm TSMC)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Primary Imager</span>
+<span class="font-mono font-semibold text-on-surface">50MP OmniVision Light Fusion 900</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Display Spec</span>
+<span class="font-mono font-semibold text-on-surface">6.73" 2K OLED (3200 nits Peak)</span>
+</div>
+<div class="bg-surface-container-low p-2 rounded flex items-center justify-between">
+<span class="text-on-surface-variant font-label-sm text-label-sm">Battery / Charge</span>
+<span class="font-mono font-semibold text-tertiary">6100 mAh Si-C • 90W HyperCharge</span>
+</div>
+</div>
+<!-- Live Benchmark Spark -->
+<div class="mt-space-md p-space-sm bg-surface-container rounded">
+<div class="flex items-center justify-between font-label-mono text-label-mono mb-1">
+<span class="text-on-surface-variant">Sustained Battery Run-time</span>
+<span class="font-bold text-tertiary">17h 48m</span>
+</div>
+<div class="w-full bg-surface-container-highest rounded-full h-2 overflow-hidden">
+<div class="bg-tertiary h-full rounded-full" style="width: 96%"></div>
+</div>
+</div>
+</div>
+<div class="pt-space-md mt-space-md flex items-center justify-between gap-space-xs">
+<a class="flex-1 py-1.5 px-space-sm bg-surface-container-low hover:bg-surface-container-high rounded text-center font-label-md text-label-md text-primary font-semibold transition-colors" href="#">Telemetry Log</a>
+<button class="px-space-sm py-1.5 bg-primary-container hover:bg-primary text-on-primary rounded font-label-md text-label-md font-semibold transition-colors" title="Pin to Compare Bus">
+<span class="material-symbols-outlined text-[16px] align-middle">add_chart</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Mid Section: Silicon Telemetry Leaderboards & Spectroradiometer Calibrations (Split Layout) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column (8 cols): Metrology Lab Charts & Thermal Stability Benchmarks -->
+<section class="lg:col-span-8 bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-sm pb-space-sm border-b border-outline-variant/30">
+<div>
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary text-[20px]">monitor_heart</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-secondary font-bold">Standardized Test Series #089</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold">Thermal Dissipation &amp; Sustained Compute Profile</h3>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-space-sm py-1 bg-surface-container-low font-label-mono text-label-mono text-on-surface rounded font-semibold">3DMark Solar Bay</button>
+<button class="px-space-sm py-1 hover:bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant rounded transition-colors">Geekbench 6 Multi</button>
+<button class="px-space-sm py-1 hover:bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant rounded transition-colors">GFXBench Aztec 1440p</button>
+</div>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">20-minute continuous ray tracing workload measured inside 22.0°C isothermal environmental chamber. Surface temperature logged via calibrated FLIR thermal sensors.</p>
+<!-- Benchmark Comparison Chart Table -->
+<div class="space-y-space-sm">
+<!-- Row 1 -->
+<div class="bg-surface-container-low p-space-sm rounded-lg space-y-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 font-label-mono text-label-mono font-bold text-outline">01</span>
+<span class="font-semibold text-on-surface">Samsung Galaxy S25 Ultra (Snapdragon 8 Elite)</span>
+</div>
+<div class="flex items-center gap-space-md font-mono text-label-sm">
+<span class="text-on-surface-variant">Max: <strong class="text-on-surface">8,912</strong></span>
+<span class="text-on-surface-variant">Min: <strong class="text-on-surface">6,612</strong></span>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed-dim/30 text-tertiary font-bold">74.2% Stability</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden flex">
+<div class="bg-primary h-full rounded-l-full" style="width: 74.2%"></div>
+<div class="bg-error/30 h-full" style="width: 25.8%"></div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="bg-surface-container-low p-space-sm rounded-lg space-y-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 font-label-mono text-label-mono font-bold text-outline">02</span>
+<span class="font-semibold text-on-surface">Apple iPhone 16 Pro Max (A18 Pro)</span>
+</div>
+<div class="flex items-center gap-space-md font-mono text-label-sm">
+<span class="text-on-surface-variant">Max: <strong class="text-on-surface">8,410</strong></span>
+<span class="text-on-surface-variant">Min: <strong class="text-on-surface">5,988</strong></span>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed-dim/30 text-tertiary font-bold">71.2% Stability</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden flex">
+<div class="bg-secondary h-full rounded-l-full" style="width: 71.2%"></div>
+<div class="bg-error/30 h-full" style="width: 28.8%"></div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="bg-surface-container-low p-space-sm rounded-lg space-y-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 font-label-mono text-label-mono font-bold text-outline">03</span>
+<span class="font-semibold text-on-surface">Vivo X100 Ultra (Snapdragon 8 Gen 3)</span>
+</div>
+<div class="flex items-center gap-space-md font-mono text-label-sm">
+<span class="text-on-surface-variant">Max: <strong class="text-on-surface">5,420</strong></span>
+<span class="text-on-surface-variant">Min: <strong class="text-on-surface">3,980</strong></span>
+<span class="px-2 py-0.5 rounded bg-tertiary-fixed-dim/30 text-tertiary font-bold">73.4% Stability</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden flex">
+<div class="bg-primary/80 h-full rounded-l-full" style="width: 73.4%"></div>
+<div class="bg-error/30 h-full" style="width: 26.6%"></div>
+</div>
+</div>
+<!-- Row 4 -->
+<div class="bg-surface-container-low p-space-sm rounded-lg space-y-1">
+<div class="flex items-center justify-between text-body-sm font-body-sm">
+<div class="flex items-center gap-space-sm">
+<span class="w-6 font-label-mono text-label-mono font-bold text-outline">04</span>
+<span class="font-semibold text-on-surface">Google Pixel 9 Pro XL (Tensor G4)</span>
+</div>
+<div class="flex items-center gap-space-md font-mono text-label-sm">
+<span class="text-on-surface-variant">Max: <strong class="text-on-surface">4,520</strong></span>
+<span class="text-on-surface-variant">Min: <strong class="text-on-surface">2,510</strong></span>
+<span class="px-2 py-0.5 rounded bg-error-container text-error font-bold">55.5% Stability</span>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest h-3 rounded-full overflow-hidden flex">
+<div class="bg-outline h-full rounded-l-full" style="width: 55.5%"></div>
+<div class="bg-error/40 h-full" style="width: 44.5%"></div>
+</div>
+</div>
+</div>
+<!-- Metric Details Strip -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-space-sm pt-space-xs">
+<div class="bg-surface-container p-space-sm rounded flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">thermostat</span>
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block">Peak Surface Temp</span>
+<span class="font-mono text-on-surface font-bold text-headline-sm">43.8°C <span class="font-label-mono text-label-mono text-on-surface-variant font-normal">(@18m mark)</span></span>
+</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary text-[24px]">bolt</span>
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block">Mean Package Power</span>
+<span class="font-mono text-on-surface font-bold text-headline-sm">11.4 W <span class="font-label-mono text-label-mono text-on-surface-variant font-normal">(SoC Rail)</span></span>
+</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[24px]">speed</span>
+<div>
+<span class="font-label-mono text-label-mono text-outline uppercase block">Chamber Equilibrium</span>
+<span class="font-mono text-on-surface font-bold text-headline-sm">22.0°C ±0.1</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Right Column (4 cols): Spectroradiometer Colorimetry Calibration Index -->
+<section class="lg:col-span-4 bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-sm border-b border-outline-variant/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">palette</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-tertiary font-bold">Photo Research PR-670</span>
+</div>
+<span class="font-label-mono text-label-mono px-1.5 py-0.5 bg-surface-container text-outline rounded">D65 WHITE</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold mt-space-sm">Color Accuracy (Delta-E 2000)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Lower value indicates superior laboratory color reproduction against sRGB and DCI-P3 target profiles.</p>
+<!-- Delta-E Leaderboard -->
+<div class="space-y-2 mt-space-md">
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="font-semibold text-on-surface">iPhone 16 Pro Max</span>
+</div>
+<div class="font-mono font-bold text-tertiary">ΔE 0.54 <span class="font-label-mono text-label-mono text-outline font-normal">(Rank #1)</span></div>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-tertiary"></span>
+<span class="font-semibold text-on-surface">Sony Xperia 1 VI (Creator Mode)</span>
+</div>
+<div class="font-mono font-bold text-tertiary">ΔE 0.61 <span class="font-label-mono text-label-mono text-outline font-normal">(Rank #2)</span></div>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-secondary"></span>
+<span class="font-semibold text-on-surface">Galaxy S25 Ultra (Natural)</span>
+</div>
+<div class="font-mono font-bold text-secondary">ΔE 0.72 <span class="font-label-mono text-label-mono text-outline font-normal">(Rank #3)</span></div>
+</div>
+<div class="flex items-center justify-between p-2 rounded bg-surface-container-low font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-primary"></span>
+<span class="font-semibold text-on-surface">Google Pixel 9 Pro XL</span>
+</div>
+<div class="font-mono font-bold text-primary">ΔE 0.88 <span class="font-label-mono text-label-mono text-outline font-normal">(Rank #4)</span></div>
+</div>
+</div>
+</div>
+<div class="bg-surface-container p-space-sm rounded-lg mt-space-md">
+<div class="flex items-center justify-between font-label-mono text-label-mono text-outline mb-1">
+<span>METHODOLOGY NOTE</span>
+<span>CIE 1931 2°</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Calibrated at 200 cd/m² luminance target under 5000K darkroom ambient. Zero ambient reflections enabled.</p>
+</div>
+</section>
+</div>
+<!-- Silicon & Sensor Direct Directory: Brands Matrix -->
+<section class="w-full bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-xs pb-space-sm border-b border-outline-variant/30">
+<div>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-primary font-bold">Device Registry Catalog</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface font-bold">Manufacturers &amp; Architecture Directory</h2>
+</div>
+<a class="font-label-md text-label-md text-primary hover:underline flex items-center gap-1 font-semibold" data-path="brands-a-z" href="#">
+<span>View All 184 OEM Registries</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</a>
+</div>
+<!-- Brands Grid -->
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-gutter">
+<!-- Samsung -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-primary">S</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Samsung</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">1,418 Models</span>
+</a>
+<!-- Apple -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-on-surface">A</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Apple</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">118 Models</span>
+</a>
+<!-- Xiaomi -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-secondary">X</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Xiaomi</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">924 Models</span>
+</a>
+<!-- Google -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-tertiary">G</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Google</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">54 Models</span>
+</a>
+<!-- OnePlus -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-error">1+</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">OnePlus</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">162 Models</span>
+</a>
+<!-- Sony -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-on-surface">S</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Sony</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">392 Models</span>
+</a>
+<!-- Vivo -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-primary-container">V</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Vivo</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">580 Models</span>
+</a>
+<!-- Asus -->
+<a class="p-space-md bg-surface-container-low hover:bg-surface-container-high rounded-lg text-center transition-all hover:-translate-y-0.5 group shadow-sm flex flex-col justify-between items-center" href="#">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center mb-2 shadow-sm group-hover:scale-105 transition-transform">
+<span class="font-bold text-headline-sm text-secondary">A</span>
+</div>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold group-hover:text-primary transition-colors">Asus</span>
+<span class="font-label-mono text-label-mono text-outline mt-1">214 Models</span>
+</a>
+</div>
+</section>
+<!-- Bottom Section: Homologation Pipeline & Engineering Teardown Wire -->
+<section class="w-full grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Regulatory Ingestion Feed (FCC / TENAA / 3C / Geekbench leaks) (7 cols) -->
+<div class="lg:col-span-7 bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">rss_feed</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-primary font-bold">Homologation &amp; Regulatory Feed</span>
+</div>
+<span class="font-label-mono text-label-mono text-tertiary flex items-center gap-1 font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>LIVE INGEST
+          </span>
+</div>
+<div class="space-y-space-sm">
+<!-- Item 1 -->
+<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex items-start justify-between gap-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.2 bg-primary-container text-on-primary font-label-mono text-label-mono rounded">FCC ID</span>
+<span class="font-label-mono text-label-mono text-outline">A3LSM-S938B • 14m ago</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Samsung SM-S938B certified with Wi-Fi 7 (802.11be), UWB, and 45W PPS PD charging</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Conducted emissions report reveals multi-band mmWave n258/n260/n261 SAR exposure levels within 1.18 W/kg threshold.</p>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 mt-1">arrow_outward</span>
+</div>
+<!-- Item 2 -->
+<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex items-start justify-between gap-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.2 bg-tertiary text-on-tertiary font-label-mono text-label-mono rounded">TENAA FILING</span>
+<span class="font-label-mono text-label-mono text-outline">24129PN74C • 48m ago</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Xiaomi 15 Ultra homologation reveals dual periscope modules: 50MP 3x + 200MP 4.3x</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Total device chassis depth confirmed at 9.4mm with 6000mAh dual-cell silicon-carbon battery chemistry.</p>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 mt-1">arrow_outward</span>
+</div>
+<!-- Item 3 -->
+<div class="p-space-sm bg-surface-container-low hover:bg-surface-container rounded-lg transition-colors flex items-start justify-between gap-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-1.5 py-0.2 bg-secondary text-on-secondary font-label-mono text-label-mono rounded">BLUETOOTH SIG</span>
+<span class="font-label-mono text-label-mono text-outline">QDID 218942 • 2h ago</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-semibold">Sony Xperia 1 VII enters qualification with Bluetooth 5.4 and LE Audio LC3 codec</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Integrated Qualcomm FastConnect 7900 subsystem validated with sub-millisecond Auracast synchronization.</p>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px] shrink-0 mt-1">arrow_outward</span>
+</div>
+</div>
+</div>
+<!-- Lab Teardown & Metrology Whitepapers (5 cols) -->
+<div class="lg:col-span-5 bg-surface-container-lowest rounded-xl p-space-lg shadow-md space-y-space-md flex flex-col justify-between">
+<div class="space-y-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant/30">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">science</span>
+<span class="font-label-mono text-label-mono uppercase tracking-wider text-primary font-bold">Lab Whitepapers &amp; Teardowns</span>
+</div>
+<a class="font-label-mono text-label-mono text-primary font-semibold hover:underline" data-path="lab-reviews" href="#">ALL REVIEWS</a>
+</div>
+<!-- Featured Lab Article Card -->
+<div class="bg-surface-container-low rounded-lg p-space-sm space-y-space-sm">
+<div class="w-full h-36 rounded overflow-hidden relative">
+<img class="w-full h-full object-cover" data-alt="High tech microscopic silicon wafer motherboard semiconductor die teardown laboratory electron microscope imagery with blue highlights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkJDxtkXGJsEuvjp0CAdhvbDzgpgTsigjxq9iVFw3vkxsRqmBohvjBeSIJ2E_YO8DbQlbghrhQ35o6C6t3NBur41vXFvNkjoCrkeOwM01U0YE67zfo4fCFLBtc3qqLp6B3i0BdbTxdpUoUl6PLf2PhGEYTTNYrvi7o91xwRFhOkm21DBbbkBjtGjhKBaZWSBH_2gi0Hdg9An25dHd9C3Jtocc5tOSbHiRNJOCsrQY"/>
+<div class="absolute top-2 left-2 bg-on-surface/80 backdrop-blur-sm px-2 py-0.5 rounded text-surface font-label-mono text-label-mono">TEARDOWN #104</div>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface font-bold">Vapor Chamber Heatpipe Phase-Change Dynamics: S25 Ultra vs iPhone 16 Pro Max</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">X-ray computed tomography reveals micro-wick sintering densities and capillary thermal fluid circulation under sustained 12W loads.</p>
+</div>
+<div class="p-space-sm bg-surface-container rounded-lg flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[24px]">terminal</span>
+<div>
+<span class="font-label-mono text-label-mono text-outline block">PUBLIC TELEMETRY API</span>
+<span class="font-body-sm text-body-sm font-semibold text-on-surface">REST &amp; GraphQL v2 Endpoint</span>
+</div>
+</div>
+<button class="px-space-sm py-1 bg-surface-container-lowest hover:bg-surface-container-high rounded font-label-mono text-label-mono text-primary font-bold transition-colors">API Docs</button>
+</div>
+</div>
+<div class="pt-space-xs text-outline font-label-mono text-label-mono flex justify-between items-center">
+<span>GSMHUB LAB CONSORTIUM</span>
+<span>EST. 2000 • MUNICH / TAIPEI</span>
+</div>
+</div>
+</section>
+</div>
+<!-- Inline Script for Light Metrology Micro-Interactions -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Comparator dynamic counter interaction
+      const clearBtn = document.getElementById('reset-comparator');
+      const countEl = document.getElementById('comp-count');
+      const slot3 = document.getElementById('slot-3-box');
+
+      if (clearBtn && countEl) {
+        clearBtn.addEventListener('click', () => {
+          countEl.textContent = '0';
+          clearBtn.textContent = 'Bus Cleared';
+          clearBtn.classList.add('bg-error-container', 'text-error');
+          setTimeout(() => {
+            clearBtn.textContent = 'Clear Bus';
+            clearBtn.classList.remove('bg-error-container', 'text-error');
+            countEl.textContent = '2';
+          }, 2000);
+        });
+      }
+
+      if (slot3 && countEl) {
+        slot3.addEventListener('click', () => {
+          countEl.textContent = '3';
+          slot3.classList.add('bg-tertiary-fixed-dim/20');
+          slot3.innerHTML = `
+            <div class="flex items-center gap-2 text-tertiary font-bold font-label-md">
+              <span class="material-symbols-outlined text-[20px]">check_circle</span>
+              <span>Vivo X100 Ultra Queued</span>
+            </div>
+            <span class="font-label-mono text-label-mono text-on-surface-variant mt-1">Bus ready for differential execution</span>
+          `;
+        });
+      }
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest border-t border-outline-variant/40 mt-space-xl"><div class="w-full px-margin py-space-xl"><div class="grid grid-cols-1 md:grid-cols-4 gap-gutter mb-space-xl"><div class="space-y-space-sm"><div class="flex items-center gap-space-xs"><div class="w-5 h-5 bg-primary-container rounded flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[14px]">terminal</span></div><span class="font-headline-sm text-headline-sm font-bold tracking-tight text-on-surface">GSM<span class="text-primary-container">HUB</span></span></div><p class="font-body-sm text-body-sm text-on-surface-variant">Standardized laboratory device characterization, electrical calibration telemetry, and open specification indexing for computing appliances.</p><div class="flex items-center gap-space-xs pt-space-xs"><div class="px-space-sm py-0.5 border border-outline-variant/50 rounded bg-surface-container-low font-label-mono text-label-mono text-on-surface-variant">BUILD v4.19.8-LTS</div></div></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Hardware Registry</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">SoC Architecture Index</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Modem &amp; RF Frequency Bands</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">CMOS Sensor Specifications</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Display Emission Profiles</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Lab Protocols</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Sustained Thermal Stress Methodology</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Luminance &amp; Delta-E Colorimetry</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Battery Discharge Impedance</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">RF Chamber Attenuation Testing</a></li></ul></div><div class="space-y-space-xs"><span class="font-label-sm text-label-sm uppercase tracking-wider text-outline">Engineering &amp; Data</span><ul class="space-y-space-xs"><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Public Raw Telemetry API</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Bulk CSV/Parquet Exports</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Metrology Traceability Docs</a></li><li class="font-body-sm text-body-sm text-on-surface-variant hover:text-on-surface"><a href="#">Calibrated Instrument Logs</a></li></ul></div></div><div class="pt-space-lg border-t border-outline-variant/30 flex flex-col md:flex-row items-center justify-between gap-space-md"><div class="flex flex-wrap items-center gap-space-sm"><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-tertiary text-[16px]">verified</span><span class="font-label-mono text-label-mono font-bold text-on-surface">ISO 9001:2015</span><span class="font-label-sm text-label-sm text-outline">QMS CERTIFIED</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-secondary text-[16px]">biotech</span><span class="font-label-mono text-label-mono font-bold text-on-surface">ISO/IEC 17025:2017</span><span class="font-label-sm text-label-sm text-outline">TESTING ACCREDITED</span></div><div class="flex items-center gap-space-xs px-space-sm py-1 rounded bg-surface-container-low border border-outline-variant/50"><span class="material-symbols-outlined text-primary text-[16px]">precision_manufacturing</span><span class="font-label-mono text-label-mono font-bold text-on-surface">NIST TRACEABLE</span></div></div><div class="font-label-mono text-label-mono text-outline text-center md:text-right">© 2025 GSMHub Laboratory Consortium. All calibrated benchmarks &amp; telemetry sheets reserved.</div></div></div></footer></body></html>

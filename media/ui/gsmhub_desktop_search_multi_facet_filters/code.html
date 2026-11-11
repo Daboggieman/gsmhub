@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+  darkMode: "class",
+  theme: {
+    extend: {
+      "colors": {
+        "on-tertiary": "#003824",
+        "surface-container-highest": "#31353e",
+        "tertiary": "#4edea3",
+        "primary-fixed-dim": "#b3c5ff",
+        "on-secondary": "#003543",
+        "on-surface": "#dfe2ee",
+        "secondary-container": "#00d2ff",
+        "on-tertiary-fixed-variant": "#005236",
+        "surface-bright": "#353942",
+        "primary": "#b3c5ff",
+        "on-background": "#dfe2ee",
+        "inverse-primary": "#0054d6",
+        "surface-dim": "#0f131c",
+        "on-tertiary-container": "#e1ffec",
+        "surface-container-low": "#181c24",
+        "surface-tint": "#b3c5ff",
+        "on-error-container": "#ffdad6",
+        "on-error": "#690005",
+        "error-container": "#93000a",
+        "on-primary-fixed-variant": "#003fa4",
+        "background": "#0f131c",
+        "surface-container": "#1c2028",
+        "outline-variant": "#424656",
+        "tertiary-fixed": "#6ffbbe",
+        "inverse-on-surface": "#2c3039",
+        "secondary-fixed": "#b6ebff",
+        "inverse-surface": "#dfe2ee",
+        "error": "#ffb4ab",
+        "primary-container": "#0066ff",
+        "on-secondary-fixed-variant": "#004e60",
+        "on-secondary-container": "#00566a",
+        "on-primary-fixed": "#001849",
+        "surface": "#0f131c",
+        "secondary": "#a5e7ff",
+        "on-primary": "#002b75",
+        "primary-fixed": "#dae1ff",
+        "on-surface-variant": "#c2c6d8",
+        "surface-container-high": "#262a33",
+        "surface-container-lowest": "#0a0e16",
+        "surface-variant": "#31353e",
+        "secondary-fixed-dim": "#47d6ff",
+        "on-secondary-fixed": "#001f28",
+        "on-primary-container": "#f8f7ff",
+        "on-tertiary-fixed": "#002113",
+        "tertiary-container": "#008259",
+        "tertiary-fixed-dim": "#4edea3",
+        "outline": "#8c90a1"
+      },
+      "borderRadius": {
+        "DEFAULT": "0.125rem",
+        "lg": "0.25rem",
+        "xl": "0.5rem",
+        "full": "0.75rem"
+      },
+      "spacing": {
+        "space-xl": "1.5rem",
+        "margin": "1rem",
+        "space-lg": "1rem",
+        "space-xs": "0.25rem",
+        "space-sm": "0.5rem",
+        "space-md": "0.75rem",
+        "gutter": "1rem"
+      },
+      "fontFamily": {
+        "body-lg": ["Inter"],
+        "body-sm": ["Inter"],
+        "headline-xl": ["Inter"],
+        "label-md": ["Inter"],
+        "label-xs": ["Inter"],
+        "body-md": ["Inter"],
+        "headline-xl-mobile": ["Inter"],
+        "headline-md": ["Inter"],
+        "headline-lg": ["Inter"],
+        "label-sm": ["Inter"]
+      },
+      "fontSize": {
+        "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+        "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+        "headline-xl": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+        "label-md": ["13px", {"lineHeight": "18px", "fontWeight": "500"}],
+        "label-xs": ["10px", {"lineHeight": "12px", "letterSpacing": "0.06em", "fontWeight": "700"}],
+        "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+        "headline-xl-mobile": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "700"}],
+        "headline-md": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+        "headline-lg": ["22px", {"lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+        "label-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.03em", "fontWeight": "600"}]
+      }
+    }
+  }
+}</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-14 max-w-[1440px] mx-auto px-margin flex items-center justify-between gap-space-lg"><div class="flex items-center gap-space-lg"><a class="flex items-center gap-space-xs" href="#"><span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">GSM<span class="text-secondary-container">HUB</span></span><span class="px-space-xs py-[2px] bg-secondary-container/15 text-secondary-container font-label-xs text-label-xs uppercase tracking-wider rounded-DEFAULT">LAB</span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container-low rounded-lg"><span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-xs text-label-xs text-on-surface-variant font-mono uppercase tracking-wider">15,482 DEVICES • 48ms Sync</span></div></div><div class="hidden lg:flex items-center flex-1 max-w-sm"><div class="relative w-full flex items-center"><span class="material-symbols-outlined absolute left-space-sm text-[18px] text-outline pointer-events-none">search</span><input class="w-full h-[34px] pl-8 pr-12 bg-surface-container-low text-on-surface placeholder:text-outline font-body-sm text-body-sm rounded-lg focus:outline-none focus:ring-1 focus:ring-secondary-container" placeholder="Search 12,000+ phones, chips, specs..." readonly="" type="text"/><kbd class="absolute right-space-sm px-1.5 py-0.5 bg-surface-container-highest text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT uppercase">⌘K</kbd></div></div><nav class="hidden md:flex items-center gap-space-xs" data-active-classes="bg-surface-container text-on-surface font-semibold"><a aria-current="page" class="px-space-sm py-space-xs transition-colors rounded-lg bg-surface-container text-on-surface font-semibold" data-path="smartphones" href="#">Smartphones</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="compare-matrix" href="#">Compare Matrix</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="lab-reviews" href="#">Lab Reviews</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="news-wire" href="#">News Wire</a><a class="px-space-sm py-space-xs font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" data-path="brands-a-z" href="#">Brands A-Z</a></nav><div class="flex items-center gap-space-md"><button aria-label="Saved devices" class="relative p-space-xs text-on-surface-variant hover:text-on-surface transition-colors rounded-lg" type="button"><span class="material-symbols-outlined text-[20px]">bookmark</span><span class="absolute top-0 right-0 w-4 h-4 bg-primary-container text-on-primary-container font-label-xs text-label-xs flex items-center justify-center rounded-full">3</span></button><button class="flex items-center gap-space-xs px-space-sm py-space-xs bg-surface-container-high hover:bg-surface-container-highest text-on-surface transition-colors rounded-lg font-label-sm text-label-sm" type="button"><span class="material-symbols-outlined text-[16px] text-secondary-container">compare_arrows</span><span class="hidden sm:inline font-semibold">Tray</span><span class="px-1.5 py-0.2 bg-secondary-container text-on-secondary font-label-xs text-label-xs rounded-full font-bold">2</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 bg-surface min-h-[calc(100vh-280px)]"><div class="flex flex-col w-full">
+<!-- Command Bar / Search & Telemetry Summary Header -->
+<section class="w-full bg-surface-container-low/70 backdrop-blur-md pb-space-lg pt-space-md">
+<div class="max-w-[1440px] mx-auto px-margin flex flex-col gap-space-md">
+<!-- Breadcrumb & Telemetry Status -->
+<div class="flex flex-wrap items-center justify-between gap-space-sm">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs font-label-sm text-label-sm text-on-surface-variant">
+<a class="hover:text-secondary-container transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">home</span>
+<span>Home</span>
+</a>
+<span class="text-outline">/</span>
+<a class="hover:text-secondary-container transition-colors" href="#">Hardware Database</a>
+<span class="text-outline">/</span>
+<span class="text-on-surface font-semibold">Advanced Spec Filter</span>
+</nav>
+<div class="flex items-center gap-space-sm font-label-xs text-label-xs">
+<span class="px-space-sm py-[3px] bg-surface-container-high rounded-full text-secondary-container font-mono flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-pulse"></span>
+            QUERY LATENCY: 14ms
+          </span>
+<span class="text-outline hidden sm:inline">•</span>
+<span class="text-on-surface-variant hidden sm:inline">INDEX REVISION 2025.04.12</span>
+</div>
+</div>
+<!-- Main Filter Search Input with Inline Predicate Chips -->
+<div class="relative w-full bg-surface-container rounded-xl p-space-xs shadow-xl">
+<div class="flex flex-wrap items-center gap-space-xs bg-surface-container-lowest rounded-lg px-space-md py-space-xs min-h-[46px]">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">filter_alt</span>
+<!-- Query Syntax Pills -->
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="inline-flex items-center gap-1 bg-surface-container-high text-secondary-container font-label-xs text-label-xs px-2 py-1 rounded-DEFAULT font-mono">
+<span class="text-outline">soc:</span>"Snapdragon 8 Elite"
+              <button class="hover:text-error text-outline transition-colors text-[13px] leading-none ml-0.5">×</button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-high text-secondary-container font-label-xs text-label-xs px-2 py-1 rounded-DEFAULT font-mono">
+<span class="text-outline">batt:</span>&gt;= 5000 mAh
+              <button class="hover:text-error text-outline transition-colors text-[13px] leading-none ml-0.5">×</button>
+</span>
+<span class="inline-flex items-center gap-1 bg-surface-container-high text-secondary-container font-label-xs text-label-xs px-2 py-1 rounded-DEFAULT font-mono">
+<span class="text-outline">panel:</span>120Hz LTPO
+              <button class="hover:text-error text-outline transition-colors text-[13px] leading-none ml-0.5">×</button>
+</span>
+</div>
+<!-- Free-text input typing slot -->
+<input class="flex-1 min-w-[220px] bg-transparent text-on-surface font-body-sm text-body-sm placeholder:text-outline focus:outline-none px-2 py-1" placeholder="Search phone model, sensor SKU (IMX989, HP2), modem, lithography..." type="text"/>
+<!-- Action buttons inside search box -->
+<div class="flex items-center gap-space-xs ml-auto">
+<button class="px-space-sm py-1 bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded-DEFAULT font-label-xs text-label-xs uppercase transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+              Syntax Help
+            </button>
+<button class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all flex items-center gap-1 shadow-md">
+<span class="material-symbols-outlined text-[16px]">search</span>
+              Run Filter
+            </button>
+</div>
+</div>
+</div>
+<!-- Quick Preset Buttons & Active Chips Bar -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md pt-space-xs">
+<!-- Preset pills -->
+<div class="flex items-center gap-space-xs overflow-x-auto pb-1 lg:pb-0">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider shrink-0 mr-1">Presets:</span>
+<button class="px-2.5 py-1 bg-secondary-container/15 text-secondary-container hover:bg-secondary-container/25 rounded-full font-label-xs text-label-xs font-semibold whitespace-nowrap transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">bolt</span> 2025 Flagships
+          </button>
+<button class="px-2.5 py-1 bg-surface-container text-on-surface-variant hover:text-on-surface rounded-full font-label-xs text-label-xs whitespace-nowrap transition-colors">
+            Compact Powerhouses (≤6.3")
+          </button>
+<button class="px-2.5 py-1 bg-surface-container text-on-surface-variant hover:text-on-surface rounded-full font-label-xs text-label-xs whitespace-nowrap transition-colors">
+            Battery Champions (6000mAh+)
+          </button>
+<button class="px-2.5 py-1 bg-surface-container text-on-surface-variant hover:text-on-surface rounded-full font-label-xs text-label-xs whitespace-nowrap transition-colors">
+            Periscope Shootout
+          </button>
+<button class="px-2.5 py-1 bg-surface-container text-on-surface-variant hover:text-on-surface rounded-full font-label-xs text-label-xs whitespace-nowrap transition-colors">
+            Sub-$700 Flagship Killers
+          </button>
+</div>
+<!-- Telemetry Count & View Switcher -->
+<div class="flex items-center justify-between lg:justify-end gap-space-lg shrink-0">
+<div class="flex items-center gap-space-xs">
+<span class="font-headline-md text-headline-md font-bold text-on-surface">48</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant leading-none">matching flagships <span class="text-outline">/ 15,482 indexed</span></span>
+</div>
+<!-- Sort dropdown & Layout Toggles -->
+<div class="flex items-center gap-space-xs">
+<div class="relative">
+<select class="bg-surface-container text-on-surface font-label-sm text-label-sm rounded-lg px-2.5 py-1.5 pr-7 appearance-none focus:outline-none focus:ring-1 focus:ring-secondary-container cursor-pointer">
+<option selected="">Sort: Highest GSMHub Score</option>
+<option>Sort: Latest Release (2025)</option>
+<option>Sort: Price: Low to High</option>
+<option>Sort: Battery Endurance Loop (hrs)</option>
+<option>Sort: Spectrometer Peak Lux</option>
+<option>Sort: DxOMark Camera Score</option>
+</select>
+<span class="material-symbols-outlined text-[16px] text-outline absolute right-2 top-2 pointer-events-none">expand_more</span>
+</div>
+<!-- View switcher tabs -->
+<div class="flex items-center bg-surface-container p-0.5 rounded-lg">
+<button class="p-1 bg-surface-container-highest text-secondary-container rounded-DEFAULT" title="Dense Grid View">
+<span class="material-symbols-outlined text-[18px]">grid_view</span>
+</button>
+<button class="p-1 text-on-surface-variant hover:text-on-surface rounded-DEFAULT transition-colors" title="Spec Table View">
+<span class="material-symbols-outlined text-[18px]">table_rows</span>
+</button>
+<button class="p-1 text-on-surface-variant hover:text-on-surface rounded-DEFAULT transition-colors" title="Compact List">
+<span class="material-symbols-outlined text-[18px]">view_agenda</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Active Filter Chips Row -->
+<div class="flex flex-wrap items-center gap-space-xs pt-1">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider">Active Applied:</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-full flex items-center gap-1">
+          SoC: Snapdragon 8 Elite
+          <span class="material-symbols-outlined text-[13px] text-outline hover:text-error cursor-pointer">close</span>
+</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-full flex items-center gap-1">
+          RAM ≥ 12GB
+          <span class="material-symbols-outlined text-[13px] text-outline hover:text-error cursor-pointer">close</span>
+</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-full flex items-center gap-1">
+          Periscope Telephoto (5x+)
+          <span class="material-symbols-outlined text-[13px] text-outline hover:text-error cursor-pointer">close</span>
+</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-full flex items-center gap-1">
+          Ingress: IP68 / IP69
+          <span class="material-symbols-outlined text-[13px] text-outline hover:text-error cursor-pointer">close</span>
+</span>
+<span class="px-2 py-0.5 bg-surface-container-high text-on-surface font-label-xs text-label-xs rounded-full flex items-center gap-1">
+          Release: 2024 – 2025
+          <span class="material-symbols-outlined text-[13px] text-outline hover:text-error cursor-pointer">close</span>
+</span>
+<button class="font-label-xs text-label-xs text-secondary-container hover:underline ml-space-xs uppercase tracking-wider">
+          Reset All (5)
+        </button>
+</div>
+</div>
+</section>
+<!-- Main Multi-Column Workspace: 12 Columns -->
+<main class="w-full max-w-[1440px] mx-auto px-margin py-space-xl">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT COLUMN: Sticky Multi-Facet Filter Drawer (3.5 cols on desktop) -->
+<aside class="lg:col-span-4 xl:col-span-3 lg:sticky lg:top-20 space-y-space-md">
+<!-- Filter Card Container -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-xl flex flex-col gap-space-md">
+<!-- Drawer Header -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">tune</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Parametric Filters</h3>
+</div>
+<button class="font-label-xs text-label-xs text-secondary-container hover:underline uppercase tracking-wider">Clear</button>
+</div>
+<!-- Section 1: Silicon & Processing Architecture -->
+<div class="space-y-space-sm bg-surface-container rounded-lg p-space-sm">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">memory</span> Chipset / Silicon
+              </span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_less</span>
+</div>
+<!-- Brand pills -->
+<div class="grid grid-cols-2 gap-1 pt-1">
+<label class="flex items-center gap-1.5 p-1.5 bg-surface-container-low rounded-DEFAULT text-on-surface font-body-sm text-body-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<input checked="" class="accent-secondary-container rounded-DEFAULT" type="checkbox"/>
+<span class="truncate">Qualcomm</span>
+<span class="text-outline font-mono text-[10px] ml-auto">28</span>
+</label>
+<label class="flex items-center gap-1.5 p-1.5 bg-surface-container-low rounded-DEFAULT text-on-surface font-body-sm text-body-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<input checked="" class="accent-secondary-container rounded-DEFAULT" type="checkbox"/>
+<span class="truncate">Apple Silicon</span>
+<span class="text-outline font-mono text-[10px] ml-auto">6</span>
+</label>
+<label class="flex items-center gap-1.5 p-1.5 bg-surface-container-low rounded-DEFAULT text-on-surface font-body-sm text-body-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<input class="accent-secondary-container rounded-DEFAULT" type="checkbox"/>
+<span class="truncate">MediaTek</span>
+<span class="text-outline font-mono text-[10px] ml-auto">11</span>
+</label>
+<label class="flex items-center gap-1.5 p-1.5 bg-surface-container-low rounded-DEFAULT text-on-surface font-body-sm text-body-sm cursor-pointer hover:bg-surface-container-high transition-colors">
+<input class="accent-secondary-container rounded-DEFAULT" type="checkbox"/>
+<span class="truncate">Google Tensor</span>
+<span class="text-outline font-mono text-[10px] ml-auto">3</span>
+</label>
+</div>
+<!-- Specific SoC Models Checklist -->
+<div class="space-y-1 pt-1">
+<span class="font-label-xs text-label-xs text-outline uppercase tracking-wider block">Leading Microarchitectures:</span>
+<div class="space-y-1">
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Snapdragon 8 Elite (3nm Oryon)</span>
+</span>
+<span class="font-mono text-outline text-[11px]">14</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Apple A18 Pro (3nm N3E)</span>
+</span>
+<span class="font-mono text-outline text-[11px]">2</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input class="accent-secondary-container" type="checkbox"/>
+<span>Dimensity 9400 (All-Big-Core)</span>
+</span>
+<span class="font-mono text-outline text-[11px]">8</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input class="accent-secondary-container" type="checkbox"/>
+<span>Snapdragon 8 Gen 3 Leading</span>
+</span>
+<span class="font-mono text-outline text-[11px]">24</span>
+</label>
+</div>
+</div>
+<!-- Lithography Segment -->
+<div class="flex items-center justify-between pt-1 font-label-xs text-label-xs">
+<span class="text-outline uppercase tracking-wider">Lithography Node:</span>
+<div class="flex gap-1">
+<span class="px-1.5 py-0.5 bg-surface-container-highest text-secondary-container rounded-DEFAULT cursor-pointer font-mono font-bold">3nm TSMC</span>
+<span class="px-1.5 py-0.5 bg-surface-container-low text-on-surface-variant hover:text-on-surface rounded-DEFAULT cursor-pointer font-mono">4nm</span>
+</div>
+</div>
+</div>
+<!-- Section 2: Display & Panel Spectrometry -->
+<div class="space-y-space-sm bg-surface-container rounded-lg p-space-sm">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">smartphone</span> Display &amp; Panel
+              </span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_less</span>
+</div>
+<!-- Size Slider -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-xs text-label-xs">
+<span class="text-outline uppercase">Diagonal Span:</span>
+<span class="font-mono text-secondary-container font-semibold">6.2" – 6.9"</span>
+</div>
+<input class="w-full accent-secondary-container h-1 bg-surface-container-highest rounded-lg cursor-pointer" max="7.0" min="5.8" step="0.1" type="range" value="6.7"/>
+</div>
+<!-- Refresh Rate Multi-Select -->
+<div class="space-y-1">
+<span class="font-label-xs text-label-xs text-outline uppercase block">Refresh Rate Target:</span>
+<div class="grid grid-cols-3 gap-1 font-label-xs text-label-xs font-mono text-center">
+<span class="p-1 bg-secondary-container/20 text-secondary-container font-bold rounded-DEFAULT cursor-pointer">120Hz LTPO</span>
+<span class="p-1 bg-surface-container-low text-on-surface-variant hover:text-on-surface rounded-DEFAULT cursor-pointer">144Hz</span>
+<span class="p-1 bg-surface-container-low text-on-surface-variant hover:text-on-surface rounded-DEFAULT cursor-pointer">165Hz</span>
+</div>
+</div>
+<!-- Peak Brightness Threshold -->
+<div class="space-y-1 pt-1">
+<div class="flex justify-between font-label-xs text-label-xs">
+<span class="text-outline uppercase">Min Peak Brightness:</span>
+<span class="font-mono text-tertiary font-bold">&gt;= 2,500 nits</span>
+</div>
+<input class="w-full accent-tertiary h-1 bg-surface-container-highest rounded-lg cursor-pointer" max="4500" min="1000" step="250" type="range" value="2500"/>
+<div class="flex justify-between text-outline font-mono text-[9px]">
+<span>1,000 nits</span>
+<span>2,600 nits</span>
+<span>4,500 nits</span>
+</div>
+</div>
+</div>
+<!-- Section 3: Camera & Optics Subsystem -->
+<div class="space-y-space-sm bg-surface-container rounded-lg p-space-sm">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">photo_camera</span> Camera &amp; Optics
+              </span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_less</span>
+</div>
+<div class="space-y-1">
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Periscope Optical Zoom ≥ 5x</span>
+</span>
+<span class="font-mono text-outline text-[11px]">18</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Sensor Type ≥ 1/1.3" or 1.0"</span>
+</span>
+<span class="font-mono text-outline text-[11px]">12</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Optical Image Stabilization (OIS)</span>
+</span>
+<span class="font-mono text-outline text-[11px]">46</span>
+</label>
+<label class="flex items-center justify-between text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer">
+<span class="flex items-center gap-1.5">
+<input class="accent-secondary-container" type="checkbox"/>
+<span>8K @ 30fps HDR Capture</span>
+</span>
+<span class="font-mono text-outline text-[11px]">22</span>
+</label>
+</div>
+</div>
+<!-- Section 4: Battery & Wattage Curves -->
+<div class="space-y-space-sm bg-surface-container rounded-lg p-space-sm">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">battery_charging_full</span> Battery &amp; Wattage
+              </span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_less</span>
+</div>
+<!-- Capacity slider -->
+<div class="space-y-1">
+<div class="flex justify-between font-label-xs text-label-xs">
+<span class="text-outline uppercase">Min Capacity:</span>
+<span class="font-mono text-secondary-container font-semibold">5,000 mAh</span>
+</div>
+<input class="w-full accent-secondary-container h-1 bg-surface-container-highest rounded-lg cursor-pointer" max="6500" min="4000" step="200" type="range" value="5000"/>
+</div>
+<!-- Charging Speeds -->
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-xs text-label-xs text-outline uppercase">Fast Charging:</span>
+<div class="flex gap-1 font-label-xs text-label-xs font-mono">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container rounded-DEFAULT cursor-pointer">45W+</span>
+<span class="px-2 py-0.5 bg-surface-container-low text-on-surface-variant hover:text-on-surface rounded-DEFAULT cursor-pointer">100W+</span>
+</div>
+</div>
+<label class="flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface hover:text-secondary-container cursor-pointer pt-1">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>Qi2 / Wireless Fast Charging</span>
+</label>
+</div>
+<!-- Section 5: Chassis, Ingress & Pricing -->
+<div class="space-y-space-sm bg-surface-container rounded-lg p-space-sm">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<span class="font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary-container flex items-center gap-1">
+<span class="material-symbols-outlined text-[15px]">shield</span> Chassis &amp; Valuation
+              </span>
+<span class="material-symbols-outlined text-[16px] text-outline">expand_less</span>
+</div>
+<!-- Ingress pills -->
+<div class="space-y-1">
+<span class="font-label-xs text-label-xs text-outline uppercase block">Ingress Protection:</span>
+<div class="grid grid-cols-2 gap-1 font-label-xs text-label-xs font-mono">
+<label class="flex items-center gap-1 p-1 bg-surface-container-low rounded-DEFAULT cursor-pointer">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>IP68 Certified</span>
+</label>
+<label class="flex items-center gap-1 p-1 bg-surface-container-low rounded-DEFAULT cursor-pointer">
+<input checked="" class="accent-secondary-container" type="checkbox"/>
+<span>IP69 Submersible</span>
+</label>
+</div>
+</div>
+<!-- Price Range -->
+<div class="space-y-1 pt-1">
+<div class="flex justify-between font-label-xs text-label-xs">
+<span class="text-outline uppercase">Budget Ceiling:</span>
+<span class="font-mono text-tertiary font-bold">≤ $1,400 USD</span>
+</div>
+<input class="w-full accent-tertiary h-1 bg-surface-container-highest rounded-lg cursor-pointer" max="2000" min="400" step="50" type="range" value="1400"/>
+</div>
+</div>
+<!-- Quick Apply / Reset Footer -->
+<div class="pt-space-xs flex items-center gap-space-xs">
+<button class="flex-1 py-2 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all text-center">
+              Apply 18 Filters
+            </button>
+<button class="p-2 bg-surface-container text-on-surface-variant hover:text-on-surface rounded-lg transition-colors" title="Save Query Predicate">
+<span class="material-symbols-outlined text-[18px]">bookmark_add</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- RIGHT COLUMN: 8 High-Density Device Cards (8.5 cols on desktop) -->
+<section class="lg:col-span-8 xl:col-span-9 space-y-space-lg">
+<!-- Live Matrix Filter Banner with Micro Benchmark Chart -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-lg flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md">
+<div class="space-y-1">
+<div class="flex items-center gap-space-xs">
+<span class="px-2 py-0.5 bg-primary-container text-on-primary-container font-label-xs text-label-xs font-bold rounded-DEFAULT">TELEMETRY BENCH</span>
+<span class="font-mono text-on-surface-variant text-label-xs">FILTER BATCH #2025-Q1</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface">Showing top flagships ranked by composite <strong class="text-secondary-container">GSMHub Lab Endurance Score</strong> across 400-lux calibrated runs.</p>
+</div>
+<!-- Mini Inline SVG Micro-Graph (Endurance Curve sample) -->
+<div class="bg-surface-container-high rounded-lg p-space-xs flex items-center gap-space-sm shrink-0">
+<div class="space-y-0.5">
+<span class="font-label-xs text-label-xs text-outline block uppercase">Lab Mean</span>
+<span class="font-mono text-tertiary font-bold text-headline-md leading-none">16.4h</span>
+</div>
+<svg class="w-28 h-10 text-secondary-container" fill="none" viewbox="0 0 100 36" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 30 Q 20 28, 35 18 T 70 12 T 100 4" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></path>
+<path d="M0 30 Q 20 28, 35 18 T 70 12 T 100 4 L 100 36 L 0 36 Z" fill="currentColor" fill-opacity="0.15"></path>
+<circle cx="70" cy="12" fill="#00d2ff" r="3"></circle>
+</svg>
+</div>
+</div>
+<!-- 8 Data-Dense Spec Cards Grid (2-columns on tablet/desktop) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- CARD 1: Samsung Galaxy S25 Ultra -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<!-- Ambient subtle gradient glow -->
+<div class="absolute -right-12 -top-12 w-36 h-36 bg-secondary-container/5 rounded-full blur-2xl pointer-events-none"></div>
+<!-- Top Row: OEM pill, Price & Favorite button -->
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Samsung</span>
+<span class="px-2 py-0.5 bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs rounded-full font-mono font-semibold">Street: $1,199</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">2025 Flagship</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<!-- Product Visual + Title Header -->
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Samsung Galaxy S25 Ultra" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Studio technical product render of Samsung Galaxy S25 Ultra smartphone in Titanium Gray with sharp angular edges, isolated quad camera lenses on matte glass back, high-contrast cool moody studio lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgyZ8jU1d2vb9rKaCa4jkEgNsRidy4-ouu233sQQF21QtHJOvsk2fciizmIPHEMckl_WrIKxzNuX6UsMNo1-g5Rz7uLX5ZppXvLohDijTGpckFc0zj_997FPbxr4G0TO0uitWHrCYj8GYOim1ISRGwLcqer8pha_r9LTFzuGMIBsDZgKItvFRERB-YcwAC6CMDXFPASEQyCMdeBHEM_bISbmCBGRZoA1g_S-61IpM"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.86"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">Galaxy S25 Ultra</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">SKU: SM-S938B • 219g Titanium</p>
+<!-- GSMHub Platinum Score Pill -->
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.6</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (LAB PLATINUM)</span>
+</div>
+</div>
+</div>
+<!-- Dense Spec Matrix Grid (4 Key Telemetry Rows) -->
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite for Galaxy (3nm)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.86" Dynamic AMOLED 2X, 120Hz, 2600 nits</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">200MP Main (1/1.3") + 50MP 5x Periscope OIS</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">5,000 mAh • 45W PD3.0 • 15W Qi2</span>
+</div>
+</div>
+<!-- Action Tray inside Card -->
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px- space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 2: Apple iPhone 16 Pro Max -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="absolute -right-12 -top-12 w-36 h-36 bg-primary-container/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-primary-fixed-dim font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Apple</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface font-label-xs text-label-xs rounded-full font-mono font-semibold">$1,199 (256GB)</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">iOS 18.3</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Apple iPhone 16 Pro Max" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Official technical isometric angle render of Apple iPhone 16 Pro Max in Natural Titanium finish, triangular camera plateau with 3 large sapphire lenses, high-end commercial dark background styling." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVYYzEIe-oa1CMGxgYLDKIblg5ov3Ot41E4xtk-iKZmHjJWvWFVBeGncL81jN8iV98w7GtWxhWX3K64YDsBI0Wh3_qYKs-NqjEEERm1oMiUYgU16Xp18Kbp0DiaGcLJbe_kyhDxkvEe_50-1zj8PTgUscs77x3fwiBwE4l24x1eqw96gNv52kzb-6CsuCDCQowwrm7n8hFwGWwHYJM7ZNJEdbXUvrZMsPCQKJe3f4"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.90"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-primary transition-colors">iPhone 16 Pro Max</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">A3296 • 227g Grade 5 Titanium</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-primary">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.5</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (LAB PLATINUM)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-primary">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Apple A18 Pro (3nm N3E • 6-Core GPU)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-primary">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.9" Super Retina XDR OLED, 120Hz ProMotion</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-primary">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">48MP Fusion + 48MP UW + 12MP 5x Tetraprism</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-primary">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">4,685 mAh • 30W PD • 25W MagSafe Qi2</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 3: OnePlus 13 -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">OnePlus</span>
+<span class="px-2 py-0.5 bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs rounded-full font-mono font-semibold">$899 Deal</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">IP68 / IP69</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="OnePlus 13" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Precise studio render of OnePlus 13 in Midnight Black with circular Hasselblad camera housing offset to side, ceramic finish accents on aluminum frame, dark precision tech lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcTmvC0AYB7gUFFP8cLKWcHQU4xInTUDjnfkOlR4_mGL0vcOG14sORCOU6pMAOu0XvQ3tnD2t_liFhnQJFiqHXpyAFShOAP6TovorBxr1vT0eq9D6kXg_-m9Lw7CDOylZc7qna904h96BKM7jXSOTkAqfpdUkPZAk9wH_hbX1kcNGfxNsC3qbjhU-8JfMoQ5ElNmUVQMKWnwgivOGmfFwDJdQYqqBIPm-4sbc5k3s"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.82"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">OnePlus 13</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">PJZ110 • 213g • Hasselblad Co-Op</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.4</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (GOLD+)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite • 16GB LPDDR5X</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.82" BOE X2 Oriental OLED, 120Hz LTPO</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP Sony LYT-808 + 50MP 3x Tri-prism OIS</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">6,000 mAh Glacier • 100W SuperVOOC</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 4: Xiaomi 15 Pro -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Xiaomi</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface font-label-xs text-label-xs rounded-full font-mono font-semibold">€790 CN Ref</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">Leica Optics</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Xiaomi 15 Pro" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Technical product photograph of Xiaomi 15 Pro smartphone in Titanium Silver, prominent squircle Leica camera bump with triple 50MP lenses, precision industrial design aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBc5N1OiX-1UlaFugS5P_EG6roafohdFz7Od6Ysplei4uZ7oaxrUfjftAVVsa8zeLmLAN9zAcDvUg784XtM0nwdqPlz43FUi1NSVlTCwKANC97MnIapZtrJz4nP36_c_-u76yZf5cWY3MdU8tOnaxfebgaXuooNCFmqF0pZirA5QLGDfzWGHMHVqOsbLOmZyXCwFG-wema3RzX8w_Di9lN1QhtdUlW22b9spUO_Gmg"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.73"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">Xiaomi 15 Pro</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">24101PNB7C • 213g • Dragon Crystal 2</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.4</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (GOLD+)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite (3nm TSMC)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.73" CSOT M9 AMOLED, 120Hz, 3200 nits</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP OmniVision Light Hunter 900 + 5x Periscope</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">6,100 mAh • 90W HyperCharge • 50W Qi</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 5: Google Pixel 9 Pro XL -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Google</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface font-label-xs text-label-xs rounded-full font-mono font-semibold">$1,099 MSRP</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">7y Android OS</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Google Pixel 9 Pro XL" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Google Pixel 9 Pro XL technical spec illustration in Obsidian Black with pill-shaped horizontal metal camera visor, triple sensor module, polished aluminum rails, tech catalog render style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDVo0aLpAd3TSbcZCBmAJCwy8BMqCjyo7KBusjLD2BWP3TUBrvExiWhprPA_l8x4wVutgCXA9QF_7hxzE4AJlPLMSPizcFhI5mQ8A0mczouHCCgr5Kbhm4gKASwfgrl9v8FxqDgwuOJDUj9fmSPMP5k3C7vnSPaQP7G-QDvXf4cmYEWa22O2p0gkdrwmXyHzZFR2sDiBcW3537vx2ItwGOzKgxzKW-0AdHSQG1HoYY"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.80"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">Pixel 9 Pro XL</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">G180U • 221g • Gemini Nano On-Device</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.2</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (GOLD)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Google Tensor G4 (4nm) • Titan M2</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.8" Super Actua LTPO OLED, 1-120Hz, 3000 nits</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP Octa PD + 48MP UW + 48MP 5x Periscope</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">5,060 mAh • 37W PPS • 23W Wireless</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 6: Asus ROG Phone 9 Pro -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Asus ROG</span>
+<span class="px-2 py-0.5 bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs rounded-full font-mono font-semibold">$1,199 Gamer</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">185Hz Screen</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Asus ROG Phone 9 Pro" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Asus ROG Phone 9 Pro high-tech gaming phone technical cutout render showing AniMe Vision LED matrix back panel, cybernetic angular lines, dark futuristic tech background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAh1yOrBo7nErDIj2RU_v-8w5u7HDfnrXjL5Q3ZyzcDo3Kuv1n_F4xX6GzUX6sbIKNO5QIwY3HzSzKoJennNbpc0tjPvSC5AIWABRz6ugcMLBXlbYQHphuh3FWQcPqCgcc1hhpc91gNsiBd5EITviSvmY5V-HP8IqnEbKdDw92WI17wTvludDZqXemL25hdFiyi8LIE8I1EAkUsQnErubr_3YAw0gMZuzxEj9Q5HDA"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.78"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">ROG Phone 9 Pro</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">AI9401 • 227g • AirTrigger 8 Haptics</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.3</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (GAMING LEADER)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite (Active AeroCooler)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.78" Samsung E6 AMOLED, 185Hz Turbo, 2500 nits</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP Gimbal OIS + 32MP 3x Telephoto</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">5,800 mAh Dual • 65W HyperCharge Dual-USB</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 7: Vivo X100 Ultra -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Vivo</span>
+<span class="px-2 py-0.5 bg-surface-container text-on-surface font-label-xs text-label-xs rounded-full font-mono font-semibold">$949 Global</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">200MP APO</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Vivo X100 Ultra" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Technical product catalog image of Vivo X100 Ultra with enormous circular Zeiss T* coated camera lens housing, sunburst titanium finish on chassis, dark technical studio setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCzwWZ25MIYLjTQXjEaUNw-bNXSKqHLqnAPtJrJj91aYFVYcsWiNffA4ehmAu7R-vM1Xsu4yBe4fWR3FmbqpDDvY2lCiqDc1pxvdquPBK67G8uK183D8Szinswo8uPdgW_LWCOLCz7L_OV0HD1bSOKc3FmD6NrqpL574SDZuHGBlQ3arMMcvel7IqWAs6p-YhjeGrEQdC2lfQKIt9WoS7zztSe2yg-jmVr5y4Su0A"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.78"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">Vivo X100 Ultra</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">V2366GA • 229g • Zeiss APO Certified</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.5</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (OPTICS KING)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Gen 3 Leading • Vivo V3+ ISP</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.78" Samsung E7 2K AMOLED, 120Hz, 3000 nits</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP Sony LYT-900 (1.0") + 200MP HP9 Periscope</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">5,500 mAh Semi-solid • 80W FlashCharge</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+<!-- CARD 8: Honor Magic 7 Pro -->
+<article class="bg-surface-container-low rounded-xl p-space-md shadow-lg hover:shadow-2xl transition-all flex flex-col justify-between group relative overflow-hidden">
+<div class="flex items-start justify-between gap-space-sm mb-space-sm">
+<div class="flex flex-wrap items-center gap-1.5">
+<span class="px-2 py-0.5 bg-surface-container-highest text-secondary-container font-label-xs text-label-xs font-bold rounded-DEFAULT uppercase tracking-wider">Honor</span>
+<span class="px-2 py-0.5 bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs rounded-full font-mono font-semibold">$899 New</span>
+<span class="px-1.5 py-0.5 bg-surface-container text-on-surface-variant font-label-xs text-label-xs rounded-DEFAULT">4320Hz PWM</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1 text-on-surface-variant hover:text-error transition-colors rounded-DEFAULT" title="Bookmark">
+<span class="material-symbols-outlined text-[18px]">favorite</span>
+</button>
+</div>
+</div>
+<div class="flex gap-space-md items-center mb-space-md">
+<div class="w-24 h-28 bg-surface-container rounded-lg p-2 flex items-center justify-center shrink-0 relative">
+<img alt="Honor Magic 7 Pro" class="w-full h-full object-contain filter drop-shadow-md group-hover:scale-105 transition-transform duration-300" data-alt="Honor Magic 7 Pro smartphone in Velvet Black studio shot with symmetrical squircle camera housing, metallic outer bezel ring, clean high-tech minimal background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHbiJ7dc_oLWStZ9XmLv4iFRVr66EsqLbhgkrLCmlQMXiuyOw_L7Fb2uebbXhjVJhNf_zhffvcb6bcNvjkl7vOMbzErS3wgV32sSrtUbb45u4a2N3IIDbjUU3CgQpxZ91UiHI_svJKvpbk5t_HMGukVtnYP9Tan7_HY_BvTb-ntZw1AHWLfo_P4o_ULm1D4a4dzBETfAoi0_PDjuZeXW2jojc9lkuXYCdTCkihdkQ"/>
+<span class="absolute bottom-1 right-1 px-1 bg-surface-container-lowest/80 text-[9px] font-mono text-outline rounded">6.80"</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2 mb-1">
+<h4 class="font-headline-md text-headline-md font-bold text-on-surface truncate group-hover:text-secondary-container transition-colors">Honor Magic 7 Pro</h4>
+</div>
+<p class="font-mono text-outline text-[11px] mb-2">PTP-AN10 • 223g • 3D Face ID Biometrics</p>
+<div class="inline-flex items-center gap-1.5 px-2 py-1 bg-surface-container-high rounded-lg">
+<span class="font-label-xs text-label-xs uppercase font-bold text-secondary-container">GSMScore:</span>
+<span class="font-mono text-headline-md text-headline-md font-extrabold text-tertiary leading-none">9.4</span>
+<span class="text-[10px] text-outline font-mono">/ 10 (PWM CHAMP)</span>
+</div>
+</div>
+</div>
+<div class="bg-surface-container rounded-lg p-space-sm space-y-1.5 font-body-sm text-body-sm mb-space-md">
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">memory</span> SoC:
+                </span>
+<span class="font-mono font-semibold text-on-surface">Snapdragon 8 Elite (3nm TSMC)</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">aspect_ratio</span> Panel:
+                </span>
+<span class="font-mono text-on-surface">6.8" Quad-curved LTPO, 1-120Hz, 5000 nits Peak</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">photo_camera</span> Optics:
+                </span>
+<span class="font-mono text-on-surface">50MP Variable f/1.4-2.0 + 200MP Periscope OIS</span>
+</div>
+<div class="flex items-center justify-between text-on-surface">
+<span class="flex items-center gap-1.5 text-outline font-label-xs text-label-xs uppercase">
+<span class="material-symbols-outlined text-[14px] text-secondary-container">battery_charging_full</span> Cell / Watt:
+                </span>
+<span class="font-mono text-tertiary font-bold">5,850 mAh Qinghai Lake • 100W Wired</span>
+</div>
+</div>
+<div class="flex items-center justify-between gap-space-xs pt-space-xs">
+<button class="px-space-sm py-1.5 bg-surface-container hover:bg-surface-container-high text-secondary-container font-label-sm text-label-sm font-semibold rounded-lg flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+                Compare
+              </button>
+<div class="flex items-center gap-space-xs">
+<a class="px-space-sm py-1.5 text-on-surface-variant hover:text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[15px]">science</span>
+                  Lab Curve
+                </a>
+<a class="px-space-md py-1.5 bg-primary-container text-on-primary-container font-label-sm text-label-sm font-semibold rounded-lg hover:brightness-110 transition-all" href="#">
+                  Full Specs
+                </a>
+</div>
+</div>
+</article>
+</div>
+<!-- Pagination & Data Telemetry Fast Jump Footer -->
+<div class="bg-surface-container-low rounded-xl p-space-md shadow-xl flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm font-label-sm text-label-sm text-on-surface-variant">
+<span>Showing <strong class="text-on-surface font-mono">1–8</strong> of <strong class="text-on-surface font-mono">48</strong> filtered devices</span>
+<span class="text-outline">•</span>
+<div class="flex items-center gap-1">
+<span>Per page:</span>
+<select class="bg-surface-container text-on-surface font-mono text-[12px] rounded px-1.5 py-0.5 focus:outline-none">
+<option selected="">8</option>
+<option>16</option>
+<option>32</option>
+<option>64</option>
+</select>
+</div>
+</div>
+<!-- Page numeric navigation -->
+<div class="flex items-center gap-1">
+<button class="p-1.5 bg-surface-container hover:bg-surface-container-high text-outline hover:text-on-surface rounded-DEFAULT transition-colors disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="w-8 h-8 bg-secondary-container text-on-secondary font-mono font-bold text-label-sm rounded-DEFAULT flex items-center justify-center">
+              1
+            </button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-label-sm rounded-DEFAULT flex items-center justify-center transition-colors">
+              2
+            </button>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-label-sm rounded-DEFAULT flex items-center justify-center transition-colors">
+              3
+            </button>
+<span class="text-outline px-1">...</span>
+<button class="w-8 h-8 bg-surface-container hover:bg-surface-container-high text-on-surface font-mono text-label-sm rounded-DEFAULT flex items-center justify-center transition-colors">
+              6
+            </button>
+<button class="p-1.5 bg-surface-container hover:bg-surface-container-high text-on-surface rounded-DEFAULT transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+<!-- Fast Jump input -->
+<div class="hidden xl:flex items-center gap-1.5 font-label-xs text-label-xs text-outline">
+<span>Jump to:</span>
+<input class="w-12 h-7 bg-surface-container text-center font-mono text-on-surface rounded-DEFAULT focus:outline-none focus:ring-1 focus:ring-secondary-container" max="6" min="1" type="number" value="1"/>
+<button class="px-2 py-1 bg-surface-container-high hover:bg-surface-container-highest text-on-surface rounded-DEFAULT uppercase">Go</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+</div></main><footer class="w-full bg-surface-container-lowest py-space-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="max-w-[1440px] mx-auto px-margin"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl mb-space-xl"><div class="lg:col-span-2 space-y-space-md"><div class="flex items-center gap-space-xs"><span class="font-headline-md text-headline-md font-bold tracking-tight text-on-surface">GSM<span class="text-secondary-container">HUB</span></span><span class="px-space-xs py-[2px] bg-secondary-container/15 text-secondary-container font-label-xs text-label-xs uppercase tracking-wider rounded-DEFAULT">LAB</span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">High-density telemetry, synthetic battery endurance curves, and spectrometer-calibrated display analysis for enterprise analysts and power users.</p><div class="flex flex-wrap items-center gap-space-xs text-on-surface-variant font-label-xs text-label-xs"><span class="px-space-xs py-[2px] bg-surface-container rounded-DEFAULT text-tertiary font-mono">ISO/IEC 17025 Calibrated</span><span class="px-space-xs py-[2px] bg-surface-container rounded-DEFAULT text-outline font-mono">ISO 9001:2015</span></div></div><div class="space-y-space-sm"><h4 class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-semibold">Hardware Registry</h4><ul class="space-y-space-xs font-body-sm text-body-sm"><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">SoC Database</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Camera Sensor Directory</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">OLED Subpixel Layouts</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Battery Discharge Curves</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Bands &amp; Modems Global</li></ul></div><div class="space-y-space-sm"><h4 class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-semibold">Lab Protocols</h4><ul class="space-y-space-xs font-body-sm text-body-sm"><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Lux &amp; Delta-E Measurement</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Thermal Throttling Loops</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Audio Distortion / THD</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Haptic Acceleration (G-Force)</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Spectrometer Methodology</li></ul></div><div class="space-y-space-sm"><h4 class="font-label-sm text-label-sm uppercase tracking-wider text-secondary-container font-semibold">Engineering &amp; Legal</h4><ul class="space-y-space-xs font-body-sm text-body-sm"><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">REST &amp; GraphQL Telemetry API</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Raw CSV Exports</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Privacy &amp; Cookie Policy</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Telemetry Opt-Out</li><li class="text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer">Editorial Code of Ethics</li></ul></div></div><div class="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-sm font-label-xs text-label-xs text-outline"><p>© 2025 GSMHub Benchmark Labs. Calibrated and synchronized worldwide.</p><p class="font-mono">SYSTEM STATUS: OPTIMAL (48ms TO KY1-DATACENTER)</p></div></div></footer></body></html>

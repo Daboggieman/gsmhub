@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><title>GSMHub — Device Specs &amp; Technical Benchmark Database</title><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={"darkMode":"class","theme":{"extend":{"colors":{"surface-tint":"#b3c5ff","outline-variant":"#424656","surface-container-high":"#262a33","on-surface":"#dfe2ee","on-error":"#690005","secondary":"#a5e7ff","tertiary-container":"#008259","tertiary-fixed-dim":"#4edea3","error-container":"#93000a","surface-container-low":"#181c24","on-surface-variant":"#c2c6d8","on-primary-fixed-variant":"#003fa4","on-tertiary-container":"#e1ffec","on-tertiary-fixed":"#002113","on-secondary-fixed":"#001f28","primary":"#b3c5ff","primary-container":"#0066ff","primary-fixed":"#dae1ff","error":"#ffb4ab","inverse-primary":"#0054d6","on-secondary":"#003543","on-tertiary":"#003824","tertiary":"#4edea3","inverse-on-surface":"#2c3039","surface-dim":"#0f131c","secondary-container":"#00d2ff","on-secondary-container":"#00566a","on-primary-fixed":"#001849","background":"#0f131c","surface-container-lowest":"#0a0e16","outline":"#8c90a1","secondary-fixed-dim":"#47d6ff","on-secondary-fixed-variant":"#004e60","surface-bright":"#353942","on-error-container":"#ffdad6","surface-container":"#1c2028","surface-variant":"#31353e","on-primary":"#002b75","surface-container-highest":"#31353e","on-primary-container":"#f8f7ff","primary-fixed-dim":"#b3c5ff","on-background":"#dfe2ee","surface":"#0f131c","on-tertiary-fixed-variant":"#005236","inverse-surface":"#dfe2ee","tertiary-fixed":"#6ffbbe","secondary-fixed":"#b6ebff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xl":"1.5rem","space-lg":"1rem","space-xs":"0.25rem","gutter":"1rem","space-sm":"0.5rem","margin":"1rem","space-md":"0.75rem"},"fontFamily":{"body-md":["Inter"],"headline-lg":["Inter"],"headline-md":["Inter"],"label-md":["Inter"],"headline-xl":["Inter"],"body-lg":["Inter"],"body-sm":["Inter"],"label-xs":["Inter"],"headline-xl-mobile":["Inter"],"label-sm":["Inter"]},"fontSize":{"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"label-xs":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"700"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}]}}}};</script></head><body class="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col"><header class="fixed top-0 left-0 w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.35)]"><div class="h-14 max-w-[1440px] mx-auto px-space-lg flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg shrink-0"><a class="flex items-center gap-space-xs group" data-path="smartphones" href="#"><div class="w-7 h-7 rounded bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[18px]">developer_board</span></div><span class="font-headline-md text-headline-md tracking-tight text-on-surface font-bold">GSM<span class="text-secondary-container">Hub</span></span></a><div class="hidden xl:flex items-center gap-space-xs px-space-sm py-0.5 rounded-full bg-surface-container-high"><span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span><span class="font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">15,482 Devices</span><span class="text-outline text-label-xs">•</span><span class="font-label-xs text-label-xs text-tertiary">48ms Sync</span></div></div><div class="flex-1 max-w-xl mx-auto hidden lg:block"><div class="relative flex items-center w-full"><span class="material-symbols-outlined absolute left-3 text-outline text-[18px]">search</span><input class="w-full h-9 pl-9 pr-14 bg-surface-container rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all" placeholder="Search 15,000+ phones, SoCs, sensors, benchmarks..." type="text"/><kbd class="absolute right-2.5 px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-xs text-label-xs uppercase">⌘K</kbd></div></div><nav class="hidden md:flex items-center gap-space-xs shrink-0" data-active-classes="bg-surface-container-highest text-on-surface rounded-lg"><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="smartphones" href="#">Smartphones</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="compare-matrix" href="#">Compare Matrix</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="lab-reviews" href="#">Lab Reviews</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="news-wire" href="#">News Wire</a><a class="px-space-md py-1.5 font-label-md text-label-md text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="brands-a-z" href="#">Brands A-Z</a></nav><div class="flex items-center gap-space-sm shrink-0"><button class="hidden sm:flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px]">bookmark</span><span class="font-label-sm text-label-sm">Saved</span><span class="px-1.5 py-0.2 rounded-full bg-surface-container-highest text-on-surface font-label-xs text-label-xs">3</span></button><button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[16px] text-secondary-container">compare_arrows</span><span class="hidden sm:inline font-label-sm text-label-sm">Compare</span><span class="px-1.5 py-0.2 rounded-full bg-primary-container text-on-primary-container font-label-xs text-label-xs font-bold">2</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 cursor-pointer"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-14 flex-1 bg-surface"><div class="flex flex-col w-full">
+<!-- Subtle ambient technical grid illumination -->
+<div class="relative w-full overflow-hidden bg-surface-container-lowest">
+<div class="absolute inset-0 bg-[radial-gradient(ellipse_60%_40%_at_50%_-10%,rgba(0,102,255,0.12),transparent_70%)] pointer-events-none"></div>
+<!-- Header & Quick Telemetry Section -->
+<div class="max-w-[1440px] mx-auto px-space-lg py-space-xl relative">
+<!-- Breadcrumb navigation -->
+<nav class="flex items-center gap-space-xs mb-space-md font-label-sm text-label-sm text-outline">
+<a class="hover:text-primary transition-colors flex items-center gap-1" href="#">
+<span class="material-symbols-outlined text-[14px]">home</span>
+<span>Home</span>
+</a>
+<span class="text-outline-variant">/</span>
+<a class="hover:text-primary transition-colors" href="#">Hardware Registry</a>
+<span class="text-outline-variant">/</span>
+<span class="text-on-surface font-semibold text-secondary-container">OEM Brand Directory</span>
+</nav>
+<!-- Headline & Subtitle -->
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg mb-space-xl">
+<div class="max-w-3xl space-y-space-xs">
+<div class="inline-flex items-center gap-2 px-space-sm py-0.5 rounded-full bg-surface-container-high text-secondary-container font-label-xs text-label-xs uppercase tracking-widest font-bold">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container animate-ping"></span>
+            Hardware Taxonomy v2.4 Active
+          </div>
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight font-extrabold">
+            Global OEM Hardware Registry &amp; Brands Directory
+          </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl leading-relaxed">
+            Index of 142 certified global handset manufacturers, niche rugged specialists, and emerging hardware startups indexed across 15,482 device specification sheets with calibrated lab records.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm shrink-0">
+<button class="px-space-md py-2 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md flex items-center gap-2 transition-colors shadow-sm" type="button">
+<span class="material-symbols-outlined text-[16px] text-primary">download</span>
+<span>Export Registry (CSV)</span>
+</button>
+<a class="px-space-md py-2 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md flex items-center gap-2 hover:opacity-90 transition-opacity font-semibold shadow-md" href="#request-oem">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Submit New OEM</span>
+</a>
+</div>
+</div>
+<!-- Global Quick Stats Telemetry Ribbon -->
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-sm">
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase font-bold tracking-wider">Total OEMs</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">domain</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">142</div>
+<div class="font-label-xs text-label-xs text-tertiary flex items-center gap-1 mt-1 font-semibold">
+<span class="material-symbols-outlined text-[12px]">check_circle</span>
+<span>Active Brands Verified</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase font-bold tracking-wider">Device Dossiers</span>
+<span class="material-symbols-outlined text-[18px] text-primary">smartphone</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">15,482</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="text-secondary-container font-mono">100%</span>
+<span>Full Architecture Specs</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase font-bold tracking-wider">Market Share Tier-1</span>
+<span class="material-symbols-outlined text-[18px] text-tertiary">pie_chart</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-on-surface font-bold tracking-tight">74.2%</div>
+<div class="font-label-xs text-label-xs text-on-surface-variant flex items-center gap-1 mt-1">
+<span class="text-tertiary font-mono">Top 8</span>
+<span>Concentrated Volume</span>
+</div>
+</div>
+<div class="bg-surface-container-low p-space-md rounded-lg shadow-sm flex flex-col justify-between">
+<div class="flex items-center justify-between text-outline mb-1">
+<span class="font-label-xs text-label-xs uppercase font-bold tracking-wider">2025 Release Index</span>
+<span class="material-symbols-outlined text-[18px] text-secondary-container">pace</span>
+</div>
+<div class="font-headline-lg text-headline-lg text-secondary-container font-bold tracking-tight">68</div>
+<div class="font-label-xs text-label-xs text-tertiary flex items-center gap-1 mt-1 font-semibold">
+<span class="material-symbols-outlined text-[12px]">trending_up</span>
+<span>+14 Tracked This Month</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Content Layout -->
+<div class="w-full max-w-[1440px] mx-auto px-space-lg py-space-xl space-y-space-xl">
+<!-- Top Grid: Featured Tier-1 Brands Showcase -->
+<section class="space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">stars</span>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold">Featured Tier-1 Hardware Powerhouses</h2>
+<span class="px-2 py-0.5 rounded bg-surface-container-high text-primary font-label-xs text-label-xs font-bold uppercase">Primary Tier</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Calibrated Spectroradiometer &amp; Benchmarked Labs</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md">
+<!-- Samsung Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-secondary-container">
+                  S
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-secondary-container transition-colors font-bold">Samsung</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Suwon, South Korea</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-xs text-label-xs font-bold uppercase tracking-wider">Platinum Tier-1</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">1,384 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">Galaxy S25 Ultra</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">84 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">Galaxy S / Z Fold / A</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Apple Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-primary">
+                  A
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors font-bold">Apple</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Cupertino, USA</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-xs text-label-xs font-bold uppercase tracking-wider">Platinum Tier-1</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">168 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">iPhone 16 Pro Max</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">62 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">iPhone Pro / Standard</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Xiaomi Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-secondary-fixed-dim">
+                  Mi
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-secondary-container transition-colors font-bold">Xiaomi</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Beijing, China</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-xs text-label-xs font-bold uppercase tracking-wider">Tier-1 OEM</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">842 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">Xiaomi 15 Pro</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">48 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">Xiaomi Ultra / Redmi</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Google Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-tertiary">
+                  G
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-tertiary transition-colors font-bold">Google</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Mountain View, USA</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-xs text-label-xs font-bold uppercase tracking-wider">Tier-1 OEM</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">44 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">Pixel 9 Pro XL</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">26 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">Pixel Pro / Fold / A</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- OnePlus Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-error">
+                  1+
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-secondary-container transition-colors font-bold">OnePlus</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Shenzhen, China</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-xs text-label-xs font-bold uppercase tracking-wider">Tier-1 OEM</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">112 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">OnePlus 13</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">32 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">Numbered Flagship / Nord</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Asus Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-secondary-container">
+                  AS
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-secondary-container transition-colors font-bold">Asus</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Taipei, Taiwan</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-tertiary-container/30 text-tertiary font-label-xs text-label-xs font-bold uppercase tracking-wider">Gaming Leader</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">214 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">ROG Phone 9 Pro</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">22 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">ROG Phone / Zenfone</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Vivo Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-secondary">
+                  V
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-secondary transition-colors font-bold">Vivo</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Dongguan, China</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-primary-container/20 text-primary font-label-xs text-label-xs font-bold uppercase tracking-wider">Optics Pioneer</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">542 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">Vivo X100 Ultra</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">34 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">X-Series Zeiss / iQOO</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+<!-- Honor Card -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex flex-col justify-between hover:bg-surface-container transition-colors shadow-sm group">
+<div>
+<div class="flex items-start justify-between mb-space-sm">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center font-bold text-on-surface font-headline-md text-primary-fixed">
+                  H
+                </div>
+<div>
+<h3 class="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors font-bold">Honor</h3>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">Shenzhen, China</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-surface-container-highest text-secondary font-label-xs text-label-xs font-bold uppercase tracking-wider">Tier-1 OEM</span>
+</div>
+<div class="space-y-space-xs my-space-md py-space-xs bg-surface-container/60 rounded p-space-sm">
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Archived Catalog</span>
+<span class="font-mono text-on-surface font-semibold">320 devices</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Latest Hero Model</span>
+<span class="text-secondary-container font-semibold truncate ml-2">Magic 7 Pro</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Active Lab Units</span>
+<span class="text-tertiary font-mono font-semibold">18 Dossiers</span>
+</div>
+<div class="flex items-center justify-between text-body-sm">
+<span class="text-on-surface-variant">Core Platforms</span>
+<span class="text-on-surface truncate ml-2">Magic Series / Number</span>
+</div>
+</div>
+</div>
+<a class="mt-space-xs inline-flex items-center justify-between w-full py-1.5 px-space-sm rounded bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container text-on-surface-variant font-label-sm text-label-sm transition-all group/btn" href="#">
+<span>Explore Catalog &amp; Lab Dossiers</span>
+<span class="material-symbols-outlined text-[14px] group-hover/btn:translate-x-1 transition-transform">arrow_forward</span>
+</a>
+</div>
+</div>
+</section>
+<!-- Sticky Alpha-Numeric Navigation & Control Ribbon -->
+<div class="sticky top-14 z-40 bg-surface/95 backdrop-blur-xl py-space-sm rounded-lg shadow-md -mx-2 px-2">
+<div class="flex flex-col xl:flex-row items-center justify-between gap-space-md">
+<!-- A-Z Letter Rail -->
+<div class="flex items-center overflow-x-auto w-full xl:w-auto py-1 gap-1 text-label-sm font-label-sm no-scrollbar">
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-high text-on-surface hover:bg-secondary-container hover:text-on-secondary-container transition-colors shrink-0 font-bold" href="#letter-num">#</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-a">A</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-b">B</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-c">C</a>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">D</span>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">E</span>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">F</span>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-g">G</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-h">H</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-i">I</a>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">J</span>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">K</span>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-l">L</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-m">M</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-n">N</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-o">O</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-p">P</a>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">Q</span>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-r">R</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-s">S</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-t">T</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-u">U</a>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-v">V</a>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">W</span>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-x">X</a>
+<span class="w-7 h-7 flex items-center justify-center rounded bg-surface-container-low text-outline opacity-40 shrink-0">Y</span>
+<a class="w-7 h-7 flex items-center justify-center rounded bg-surface-container hover:bg-secondary-container hover:text-on-secondary-container text-on-surface transition-colors shrink-0" href="#letter-z">Z</a>
+</div>
+<!-- Filter Pills & Search Input -->
+<div class="flex flex-wrap md:flex-nowrap items-center gap-space-sm w-full xl:w-auto">
+<!-- Filter Modes -->
+<div class="flex items-center gap-1 bg-surface-container-low p-1 rounded-lg shrink-0">
+<button class="px-2.5 py-1 rounded bg-secondary-container text-on-secondary-container font-label-xs text-label-xs font-bold uppercase transition-all" type="button">All</button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs uppercase transition-all" type="button">Active Line</button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs uppercase transition-all" type="button">Legacy / Discontinued</button>
+<button class="px-2.5 py-1 rounded hover:bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs uppercase transition-all" type="button">Rugged Spec</button>
+</div>
+<!-- Live Inline Search -->
+<div class="relative flex-1 md:w-80">
+<span class="material-symbols-outlined absolute left-2.5 top-2 text-outline text-[18px]">search</span>
+<input class="w-full h-8 pl-9 pr-12 bg-surface-container rounded-lg font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container transition-all" id="brandFilterInput" placeholder="Search OEM brand name (e.g. Samsung, Nothing, Fairphone)..." type="text"/>
+<span class="absolute right-2 top-2 text-outline font-label-xs text-label-xs font-mono" id="brandCountIndicator">142 OEMs</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Layout Split: A-Z Brand Matrix (Main) & Technical Insights Sidebar -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- Main Column: Categorized A-Z Matrix -->
+<div class="lg:col-span-8 xl:col-span-9 space-y-space-lg" id="brandsMatrixContainer">
+<!-- Group A -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-a">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-primary-container text-on-primary-container font-headline-md text-headline-md font-bold flex items-center justify-center">A</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical A</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">8 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Acer</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">112 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Alcatel</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">408 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Allview</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">154 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Amazon</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">24 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-primary">Apple</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary" title="Tier-1 Platinum OEM"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-primary-container/20 text-primary font-mono font-bold">168 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Archos</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">142 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Asus</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container" title="Gaming Leader"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">214 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">AT&amp;T</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline group-hover:text-on-surface font-mono">46 specs</span>
+</a>
+</div>
+</div>
+<!-- Group B -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-b">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">B</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical B</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">4 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">BlackBerry</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-label-xs text-[9px] uppercase">Legacy</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">94 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Blackview</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Rugged</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">118 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">BLU</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">342 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">BQ</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">56 specs</span>
+</a>
+</div>
+</div>
+<!-- Group C -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-c">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">C</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical C</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Cat</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Rugged Spec</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">38 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Celkon</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">124 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Coolpad</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">186 specs</span>
+</a>
+</div>
+</div>
+<!-- Group G -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-g">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">G</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical G</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Gigabyte</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">48 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-primary">Google</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-primary-container/20 text-primary font-mono font-bold">44 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Gionee</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">192 specs</span>
+</a>
+</div>
+</div>
+<!-- Group H -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-h">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">H</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical H</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Honor</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">320 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">HTC</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">286 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Huawei</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">488 specs</span>
+</a>
+</div>
+</div>
+<!-- Group I -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-i">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">I</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical I</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Infinix</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">182 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Intex</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">164 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">iQOO</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Gaming</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">96 specs</span>
+</a>
+</div>
+</div>
+<!-- Group L -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-l">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">L</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical L</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">4 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Lava</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">148 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">LeEco</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">28 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Lenovo</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">246 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">LG</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-label-xs text-[9px] uppercase">Legacy Archive</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">672 specs</span>
+</a>
+</div>
+</div>
+<!-- Group M -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-m">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">M</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical M</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">4 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Meizu</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">116 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Micromax</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">284 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Microsoft</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">36 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Motorola</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">678 specs</span>
+</a>
+</div>
+</div>
+<!-- Group N -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-n">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">N</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical N</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Nokia</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-label-xs text-[9px] uppercase">HMD/Legacy</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">892 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Nothing</span>
+<span class="px-1.5 py-0.2 rounded bg-secondary-container/20 text-secondary-container font-label-xs text-[9px] uppercase">Disrupter</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">8 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Nubia</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">112 specs</span>
+</a>
+</div>
+</div>
+<!-- Group O -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-o">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">O</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical O</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">OnePlus</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">112 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Oppo</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">598 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Oukitel</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Rugged</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">84 specs</span>
+</a>
+</div>
+</div>
+<!-- Group P -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-p">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">P</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical P</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">4 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Panasonic</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">122 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Pantech</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">78 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Philips</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">218 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Poco</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">88 specs</span>
+</a>
+</div>
+</div>
+<!-- Group R -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-r">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">R</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical R</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">2 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Realme</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">248 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Razer</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest text-outline font-label-xs text-[9px] uppercase">Legacy</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">4 specs</span>
+</a>
+</div>
+</div>
+<!-- Group S -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-s">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-primary-container text-on-primary-container font-headline-md text-headline-md font-bold flex items-center justify-center">S</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical S</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">5 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Samsung</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">1,384 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Sharp</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">184 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Sonim</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Ultra-Rugged</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">22 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Sony</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">290 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Symphony</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">138 specs</span>
+</a>
+</div>
+</div>
+<!-- Group T -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-t">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">T</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical T</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">3 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">TCL</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">96 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Tecno</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">198 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Toshiba</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">44 specs</span>
+</a>
+</div>
+</div>
+<!-- Group U -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-u">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">U</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical U</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">2 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Ulefone</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/20 text-tertiary font-label-xs text-[9px] uppercase">Rugged</span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">106 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Umidigi</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">76 specs</span>
+</a>
+</div>
+</div>
+<!-- Group V -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-v">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">V</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical V</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">2 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Vivo</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">542 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">Vodafone</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">168 specs</span>
+</a>
+</div>
+</div>
+<!-- Group X -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-x">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">X</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical X</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">2 Brands Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<div class="flex items-center gap-1.5">
+<span class="font-body-md text-body-md text-on-surface font-semibold group-hover:text-secondary-container">Xiaomi</span>
+<span class="w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
+</div>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-secondary-container/20 text-secondary-container font-mono font-bold">842 specs</span>
+</a>
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">XOLO</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">82 specs</span>
+</a>
+</div>
+</div>
+<!-- Group Z -->
+<div class="bg-surface-container-low p-space-md rounded-lg space-y-space-sm" id="letter-z">
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="w-8 h-8 rounded bg-surface-container-high text-on-surface font-headline-md text-headline-md font-bold flex items-center justify-center">Z</span>
+<span class="font-headline-md text-headline-md text-on-surface font-semibold">Alphabetical Z</span>
+</div>
+<span class="font-label-xs text-label-xs text-outline uppercase font-mono">1 Brand Registered</span>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-space-sm">
+<a class="p-space-sm rounded bg-surface-container hover:bg-surface-container-high transition-colors flex items-center justify-between group" href="#">
+<span class="font-body-md text-body-md text-on-surface font-medium group-hover:text-secondary-container">ZTE</span>
+<span class="font-label-xs text-label-xs px-2 py-0.5 rounded bg-surface-container-highest text-outline font-mono">312 specs</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Right Column: Registry Insights, Archival Methodology & Submit OEM Widget -->
+<div class="lg:col-span-4 xl:col-span-3 space-y-space-lg">
+<!-- Hardware Archival Policy Info Box -->
+<div class="bg-surface-container-low p-space-lg rounded-lg space-y-space-md shadow-sm">
+<div class="flex items-center gap-space-sm text-secondary-container">
+<span class="material-symbols-outlined text-[20px]">policy</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold">Registry Policy</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            GSMHub Hardware Registry maintains dual-state taxonomy for all manufacturer footprints:
+          </p>
+<div class="space-y-space-xs font-body-sm text-body-sm">
+<div class="p-space-sm rounded bg-surface-container">
+<div class="font-semibold text-secondary-container font-label-sm text-label-sm uppercase tracking-wide">Active Line Trackers</div>
+<p class="text-on-surface-variant text-body-sm mt-0.5">Continuous telemetry, firmware updates, thermal delta logs, and OTA revision benchmarks.</p>
+</div>
+<div class="p-space-sm rounded bg-surface-container">
+<div class="font-semibold text-outline font-label-sm text-label-sm uppercase tracking-wide">Legacy Archival Index</div>
+<p class="text-on-surface-variant text-body-sm mt-0.5">Permanent freeze records (LG, BlackBerry, Razer) preserved with historical silicon specs for reverse engineers.</p>
+</div>
+</div>
+</div>
+<!-- Telemetry Coverage Chart Mini-widget -->
+<div class="bg-surface-container-low p-space-lg rounded-lg space-y-space-md shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-outline uppercase font-bold tracking-wider">Catalog Geographic Origin</span>
+<span class="font-mono text-tertiary font-label-xs text-label-xs font-bold">142 TOTAL</span>
+</div>
+<!-- Inline Bar Visualization -->
+<div class="space-y-space-xs font-label-xs text-label-xs">
+<div>
+<div class="flex justify-between text-on-surface-variant mb-1">
+<span>Asia-Pacific (APAC)</span>
+<span class="font-mono text-on-surface font-bold">58%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-primary" style="width: 58%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-on-surface-variant mb-1">
+<span>North America</span>
+<span class="font-mono text-on-surface font-bold">22%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-secondary-container" style="width: 22%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-on-surface-variant mb-1">
+<span>Europe &amp; UK</span>
+<span class="font-mono text-on-surface font-bold">16%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-tertiary" style="width: 16%"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between text-on-surface-variant mb-1">
+<span>Rest of World / Emerging</span>
+<span class="font-mono text-on-surface font-bold">4%</span>
+</div>
+<div class="w-full h-1.5 rounded-full bg-surface-container overflow-hidden">
+<div class="h-full bg-outline" style="width: 4%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Request OEM Addition Form Shortcut -->
+<div class="bg-surface-container-low p-space-lg rounded-lg space-y-space-md shadow-sm relative overflow-hidden" id="request-oem">
+<div class="flex items-center gap-space-sm text-primary">
+<span class="material-symbols-outlined text-[20px]">hardware</span>
+<h3 class="font-headline-md text-headline-md text-on-surface font-bold">Request OEM Addition</h3>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+            Missing an industrial rugged vendor, boutique open-hardware startup, or localized regional brand? Submit telemetry details for lab intake.
+          </p>
+<form class="space-y-space-sm" onsubmit="event.preventDefault(); alert('OEM telemetry request submitted to GSMHub review board.');">
+<div>
+<label class="block font-label-xs text-label-xs uppercase text-outline font-bold mb-1">Brand / Manufacturer Name</label>
+<input class="w-full h-8 px-2.5 bg-surface-container rounded font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container" placeholder="e.g. Purism, Volla, Punkt" required="" type="text"/>
+</div>
+<div>
+<label class="block font-label-xs text-label-xs uppercase text-outline font-bold mb-1">Primary Silicon / Market Category</label>
+<select class="w-full h-8 px-2.5 bg-surface-container rounded font-body-sm text-body-sm text-on-surface focus:outline-none focus:ring-1 focus:ring-secondary-container">
+<option>Rugged &amp; Tactical Handsets</option>
+<option>Privacy / Open-Source Linux Phones</option>
+<option>Industrial Handheld Computers (Android)</option>
+<option>Minimalist / Feature Phones</option>
+<option>General Handset Manufacturer</option>
+</select>
+</div>
+<div>
+<label class="block font-label-xs text-label-xs uppercase text-outline font-bold mb-1">Reference Documentation URL</label>
+<input class="w-full h-8 px-2.5 bg-surface-container rounded font-body-sm text-body-sm text-on-surface placeholder:text-outline focus:outline-none focus:ring-1 focus:ring-secondary-container" placeholder="https://brand.com/devices" type="url"/>
+</div>
+<button class="w-full py-2 px-space-md rounded bg-primary-container text-on-primary-container font-label-md text-label-md font-bold hover:opacity-90 transition-opacity flex items-center justify-center gap-2" type="submit">
+<span class="material-symbols-outlined text-[16px]">send</span>
+<span>Submit to Hardware Board</span>
+</button>
+</form>
+<div class="font-label-xs text-label-xs text-outline flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px] text-tertiary">verified_user</span>
+<span>Reviewed within 48 lab operating hours.</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Inline Filter Logic Micro-Interaction -->
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchInput = document.getElementById('brandFilterInput');
+      const countIndicator = document.getElementById('brandCountIndicator');
+      const matrixContainer = document.getElementById('brandsMatrixContainer');
+
+      if (!searchInput || !matrixContainer) return;
+
+      const brandLinks = matrixContainer.querySelectorAll('a[href="#"]');
+      const totalBrands = brandLinks.length;
+
+      searchInput.addEventListener('input', (e) => {
+        const query = e.target.value.toLowerCase().trim();
+        let visibleCount = 0;
+
+        brandLinks.forEach((link) => {
+          const brandText = link.textContent.toLowerCase();
+          if (brandText.includes(query)) {
+            link.classList.remove('hidden');
+            visibleCount++;
+          } else {
+            link.classList.add('hidden');
+          }
+        });
+
+        // Hide letter containers that have no visible children
+        const letterGroups = matrixContainer.querySelectorAll('[id^="letter-"]');
+        letterGroups.forEach((group) => {
+          const visibleLinks = group.querySelectorAll('a[href="#"]:not(.hidden)');
+          if (visibleLinks.length === 0) {
+            group.classList.add('hidden');
+          } else {
+            group.classList.remove('hidden');
+          }
+        });
+
+        if (countIndicator) {
+          countIndicator.textContent = query ? `${visibleCount} of ${totalBrands}` : `${totalBrands} OEMs`;
+        }
+      });
+    });
+  </script>
+</div></main><footer class="w-full bg-surface-container-lowest mt-auto shadow-[0_-1px_12px_rgba(0,0,0,0.5)]"><div class="max-w-[1440px] mx-auto px-space-lg py-space-xl"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-xl pb-space-xl"><div class="lg:col-span-2 space-y-space-md"><div class="flex items-center gap-space-xs"><div class="w-6 h-6 rounded bg-primary-container flex items-center justify-center"><span class="material-symbols-outlined text-on-primary-container text-[16px]">developer_board</span></div><span class="font-headline-md text-headline-md tracking-tight text-on-surface font-bold">GSM<span class="text-secondary-container">Hub</span></span></div><p class="font-body-sm text-body-sm text-on-surface-variant max-w-sm">High-fidelity technical device specifications, automated architectural teardowns, and ISO 17025 calibrated benchmark telemetry for mobile and silicon platforms.</p><div class="flex items-center gap-space-sm"><span class="px-2 py-0.5 rounded bg-surface-container text-tertiary font-label-xs text-label-xs font-bold uppercase">ISO 9001 Lab Certified</span><span class="px-2 py-0.5 rounded bg-surface-container text-on-surface-variant font-label-xs text-label-xs font-bold uppercase">Spectroradiometer Validated</span></div></div><div class="space-y-space-sm"><p class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-bold">Hardware Registry</p><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-secondary-container transition-colors" data-path="smartphones" href="#">Flagship Silicon</a></li><li><a class="hover:text-secondary-container transition-colors" data-path="compare-matrix" href="#">Matrix Comparison</a></li><li><a class="hover:text-secondary-container transition-colors" data-path="brands-a-z" href="#">OEM Manufacturers</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Sensors &amp; Cameras</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Display Colorimetry</a></li></ul></div><div class="space-y-space-sm"><p class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-bold">Lab Protocols</p><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-secondary-container transition-colors" data-path="lab-reviews" href="#">Lux &amp; Nits Testing</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Thermal Sustained Run</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Geekbench / AnTuTu</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Battery Endurance Index</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">RF &amp; Carrier Bands</a></li></ul></div><div class="space-y-space-sm"><p class="font-label-sm text-label-sm text-on-surface uppercase tracking-wider font-bold">Engineering &amp; Data</p><ul class="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant"><li><a class="hover:text-secondary-container transition-colors" href="#">GraphQL Telemetry API</a></li><li><a class="hover:text-secondary-container transition-colors" data-path="news-wire" href="#">RSS News Wire</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Raw CSV Benchmark Sets</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Editorial Disclosure</a></li><li><a class="hover:text-secondary-container transition-colors" href="#">Silicon Errata Board</a></li></ul></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex items-center gap-space-md"><span class="font-label-xs text-label-xs text-outline uppercase">GSMHub Engine v4.19</span><span>© 2025 GSMHub Systems Inc. Calibrated lab measurements verified.</span></div><div class="flex items-center gap-space-lg"><a class="hover:text-on-surface transition-colors font-label-sm text-label-sm" href="#">Privacy &amp; Telemetry</a><a class="hover:text-on-surface transition-colors font-label-sm text-label-sm" href="#">API Terms</a><a class="hover:text-on-surface transition-colors font-label-sm text-label-sm" href="#">Lab Methodology</a></div></div></div></footer></body></html>

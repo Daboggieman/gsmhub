@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={theme:{extend:{"colors":{"primary-fixed":"#dae1ff","on-secondary-fixed":"#001d31","on-tertiary":"#ffffff","surface-container":"#eaedff","tertiary-fixed-dim":"#4edea3","surface":"#faf8ff","tertiary":"#006645","on-surface-variant":"#424656","background":"#faf8ff","tertiary-container":"#008259","on-secondary-fixed-variant":"#004b73","surface-container-lowest":"#ffffff","surface-container-high":"#e2e7ff","secondary":"#006398","error":"#ba1a1a","outline-variant":"#c2c6d8","tertiary-fixed":"#6ffbbe","surface-tint":"#0054d6","primary":"#0050cb","surface-variant":"#dae2fd","secondary-fixed":"#cce5ff","on-tertiary-container":"#e1ffec","on-primary-container":"#f8f7ff","secondary-fixed-dim":"#93ccff","inverse-on-surface":"#eef0ff","on-tertiary-fixed":"#002113","on-error":"#ffffff","surface-bright":"#faf8ff","on-primary-fixed-variant":"#003fa4","error-container":"#ffdad6","surface-container-low":"#f2f3ff","primary-container":"#0066ff","on-tertiary-fixed-variant":"#005236","on-error-container":"#93000a","on-primary":"#ffffff","on-primary-fixed":"#001849","inverse-surface":"#283044","on-surface":"#131b2e","primary-fixed-dim":"#b3c5ff","surface-dim":"#d2d9f4","inverse-primary":"#b3c5ff","surface-container-highest":"#dae2fd","secondary-container":"#5bb8fe","on-secondary":"#ffffff","on-background":"#131b2e","outline":"#727687","on-secondary-container":"#00476e"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xl":"1.5rem","space-sm":"0.5rem","gutter-mobile":"0.75rem","space-lg":"1rem","space-md":"0.75rem","gutter":"1rem","space-xs":"0.25rem","margin-mobile":"1rem","margin":"1.5rem"},"fontFamily":{"headline-lg-mobile":["Inter"],"body-lg":["Inter"],"body-sm":["Inter"],"label-sm":["Inter"],"body-md":["Inter"],"headline-md":["Inter"],"headline-xl-mobile":["Inter"],"headline-xl":["Inter"],"label-md":["Inter"],"headline-sm":["Inter"],"label-mono":["Inter"],"headline-lg":["Inter"]},"fontSize":{"headline-lg-mobile":["22px",{"lineHeight":"28px","letterSpacing":"-0.015em","fontWeight":"600"}],"body-lg":["15px",{"lineHeight":"22px","fontWeight":"400"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.04em","fontWeight":"600"}],"body-md":["13px",{"lineHeight":"18px","fontWeight":"400"}],"headline-md":["20px",{"lineHeight":"26px","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-xl-mobile":["28px",{"lineHeight":"34px","letterSpacing":"-0.025em","fontWeight":"700"}],"headline-xl":["36px",{"lineHeight":"44px","letterSpacing":"-0.03em","fontWeight":"700"}],"label-md":["12px",{"lineHeight":"16px","letterSpacing":"0.02em","fontWeight":"600"}],"headline-sm":["16px",{"lineHeight":"22px","letterSpacing":"-0.01em","fontWeight":"600"}],"label-mono":["11px",{"lineHeight":"14px","letterSpacing":"0.01em","fontWeight":"500"}],"headline-lg":["28px",{"lineHeight":"36px","letterSpacing":"-0.02em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface-container-low font-body-md text-body-md text-on-surface antialiased"><aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-lowest shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-50 flex flex-col justify-between"><div class="flex flex-col flex-1"><div class="h-16 px-space-lg flex items-center justify-between"><div class="flex items-center gap-space-xs text-primary font-headline-sm text-headline-sm tracking-tight"><span class="material-symbols-outlined text-primary text-[22px]">memory</span><span>GSM<span class="text-on-surface">OPS</span></span></div><span class="bg-primary text-on-primary font-label-mono text-label-mono px-space-xs py-0.5 rounded">ROOT</span></div><div class="px-space-lg py-space-sm"><div class="font-label-mono text-label-mono text-outline uppercase tracking-wider">Admin Operations</div></div><nav class="flex-1 px-space-sm space-y-1" data-active-classes="bg-primary-container text-on-primary font-label-md rounded px-space-md py-2"><a aria-current="page" class="flex items-center gap-space-sm transition-colors bg-primary-container text-on-primary font-label-md rounded px-space-md py-2" data-path="admin-catalog-control" href="#"><span class="material-symbols-outlined text-[18px]">input</span><span>Catalog Ingestion</span></a><a class="flex items-center gap-space-sm px-space-md py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded font-label-md text-label-md transition-colors" data-path="admin-specs-editor" href="#"><span class="material-symbols-outlined text-[18px]">edit_square</span><span>Hardware Specs Editor</span></a><a class="flex items-center gap-space-sm px-space-md py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded font-label-md text-label-md transition-colors" data-path="lab-benchmark-calibration" href="#"><span class="material-symbols-outlined text-[18px]">tune</span><span>Lab Benchmarks & Calibration</span></a><a class="flex items-center gap-space-sm px-space-md py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded font-label-md text-label-md transition-colors" data-path="telemetry-rigs" href="#"><span class="material-symbols-outlined text-[18px]">sensors</span><span>Telemetry Rigs</span></a><a class="flex items-center gap-space-sm px-space-md py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded font-label-md text-label-md transition-colors" data-path="api-credentials" href="#"><span class="material-symbols-outlined text-[18px]">key</span><span>API Credentials</span></a><a class="flex items-center gap-space-sm px-space-md py-2 text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface rounded font-label-md text-label-md transition-colors" data-path="audit-logs" href="#"><span class="material-symbols-outlined text-[18px]">history</span><span>Audit Logs</span></a></nav></div><div class="p-space-md m-space-sm bg-surface-container rounded space-y-space-xs"><div class="flex items-center justify-between"><span class="font-label-mono text-label-mono text-outline">CHAMBER RIG #04</span><span class="w-2 h-2 rounded-full bg-tertiary"></span></div><div class="font-label-mono text-label-mono text-on-surface">STREAM: 4.8 GB/s</div><div class="w-full bg-surface-container-high rounded h-1 overflow-hidden"><div class="bg-tertiary h-full w-4/5"></div></div></div></aside><div class="pl-64 flex flex-col min-h-screen"><header class="fixed top-0 left-64 right-0 h-16 bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40 flex items-center justify-between px-margin"><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs bg-surface-container px-space-sm py-1 rounded"><span class="material-symbols-outlined text-outline text-[16px]">terminal</span><span class="font-label-mono text-label-mono text-on-surface">ENV: PRODUCTION-METROLOGY</span></div><div class="hidden lg:flex items-center gap-space-xs"><span class="bg-surface-container-high text-on-surface-variant font-label-mono text-label-mono px-space-xs py-0.5 rounded">SCHEMA v8.2</span><span class="bg-surface-container-high text-tertiary font-label-mono text-label-mono px-space-xs py-0.5 rounded">PIPELINE READY</span></div></div><div class="flex items-center gap-space-md"><div class="relative hidden sm:block"><input class="w-56 h-8 pl-space-sm pr-space-sm bg-surface-container-low font-body-sm text-body-sm text-on-surface rounded placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest" placeholder="Filter logs or specs..." type="text"/></div><button class="flex items-center justify-center w-8 h-8 rounded bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">sync</span></button><button class="flex items-center justify-center w-8 h-8 rounded bg-surface-container-low hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[18px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></header><main class="relative pt-16 bg-surface-container-low w-full flex-1"><div class="flex flex-col w-full p-margin gap-space-lg">
+<!-- Section 1: Admin Control Header -->
+<div class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md bg-surface-container-lowest p-space-lg rounded-xl shadow-sm">
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center gap-space-sm">
+<span class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Hardware Catalog Ingestion & Registry Control</span>
+<span class="inline-flex items-center gap-1.5 px-space-xs py-0.5 rounded bg-surface-container font-label-mono text-label-mono text-primary font-medium">
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+          NODE #01-EAST
+        </span>
+</div>
+<div class="flex items-center gap-space-md text-on-surface-variant font-label-mono text-label-mono">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[16px]">sensors</span>
+<span>Sync Active: <strong class="text-on-surface">FCC & TENAA 14 filings/hr</strong></span>
+</div>
+<span class="text-outline">•</span>
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary text-[16px]">schedule</span>
+<span>Next Cycle: <strong>03m:18s</strong></span>
+</div>
+<span class="text-outline">•</span>
+<span class="text-tertiary font-semibold">REGULATORY GATEWAYS HEALTHY</span>
+</div>
+</div>
+<!-- Quick Action Tooling Buttons -->
+<div class="flex items-center flex-wrap gap-space-xs">
+<button class="inline-flex items-center gap-1.5 h-8 px-space-md rounded bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-outline">sync</span>
+<span>Audit Re-index</span>
+</button>
+<button class="inline-flex items-center gap-1.5 h-8 px-space-md rounded bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px] text-secondary">file_upload</span>
+<span>Batch Import CSV/JSON-LD</span>
+</button>
+<button class="inline-flex items-center gap-1.5 h-8 px-space-md rounded bg-primary-container hover:bg-primary text-on-primary font-label-md text-label-md shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">add_circle</span>
+<span>Ingest New Specimen</span>
+</button>
+</div>
+</div>
+<!-- Section 2: Pipeline Telemetry Metrics -->
+<div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-space-md">
+<!-- Stat 1 -->
+<div class="flex flex-col p-space-md bg-surface-container-lowest rounded-xl shadow-sm gap-space-xs relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Total Registered Specimens</span>
+<span class="material-symbols-outlined text-primary text-[20px]">dataset</span>
+</div>
+<div class="flex items-baseline gap-space-xs pt-space-xs">
+<span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">15,482</span>
+<span class="font-label-mono text-label-mono text-tertiary font-semibold">+18 pending</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-mono text-label-mono">
+<span>Validation queue: 0.11%</span>
+<span class="text-tertiary">99.89% Healthy</span>
+</div>
+<div class="w-full bg-surface-container-high rounded h-1 mt-1 overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+<!-- Stat 2 -->
+<div class="flex flex-col p-space-md bg-surface-container-lowest rounded-xl shadow-sm gap-space-xs relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Active Crawlers & Scrapers</span>
+<span class="material-symbols-outlined text-tertiary text-[20px]">hub</span>
+</div>
+<div class="flex items-baseline gap-space-xs pt-space-xs">
+<span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">12</span>
+<span class="font-label-mono text-label-mono text-on-surface-variant">Daemons Operational</span>
+</div>
+<div class="flex items-center gap-1.5 pt-space-xs font-label-mono text-label-mono text-on-surface-variant truncate">
+<span class="px-1 bg-surface-container rounded text-on-surface">FCC</span>
+<span class="px-1 bg-surface-container rounded text-on-surface">TENAA</span>
+<span class="px-1 bg-surface-container rounded text-on-surface">Geekbench</span>
+<span class="px-1 bg-surface-container rounded text-on-surface">GCF</span>
+</div>
+<div class="w-full bg-surface-container-high rounded h-1 mt-1 overflow-hidden">
+<div class="bg-tertiary h-full w-[100%]"></div>
+</div>
+</div>
+<!-- Stat 3 -->
+<div class="flex flex-col p-space-md bg-surface-container-lowest rounded-xl shadow-sm gap-space-xs relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Unresolved Spec Errata</span>
+<span class="material-symbols-outlined text-error text-[20px]">rule_folder</span>
+</div>
+<div class="flex items-baseline gap-space-xs pt-space-xs">
+<span class="font-headline-xl text-headline-xl text-error tabular-nums">7</span>
+<span class="font-label-mono text-label-mono text-error font-medium">Conflicts Flagged</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-mono text-label-mono">
+<span>Delta: Battery & Clock</span>
+<span class="text-error font-semibold">Priority Review</span>
+</div>
+<div class="w-full bg-surface-container-high rounded h-1 mt-1 overflow-hidden">
+<div class="bg-error h-full w-[35%]"></div>
+</div>
+</div>
+<!-- Stat 4 -->
+<div class="flex flex-col p-space-md bg-surface-container-lowest rounded-xl shadow-sm gap-space-xs relative overflow-hidden">
+<div class="flex items-center justify-between text-on-surface-variant">
+<span class="font-label-mono text-label-mono uppercase tracking-wider">Ingestion Pipe Latency</span>
+<span class="material-symbols-outlined text-secondary text-[20px]">speed</span>
+</div>
+<div class="flex items-baseline gap-space-xs pt-space-xs">
+<span class="font-headline-xl text-headline-xl text-on-surface tabular-nums">42<span class="font-headline-sm text-headline-sm text-outline">ms</span></span>
+<span class="font-label-mono text-label-mono text-tertiary">NIST Traceable</span>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant font-label-mono text-label-mono">
+<span>p99 Target: < 90ms</span>
+<span class="text-primary font-medium">Jitter ±1.4ms</span>
+</div>
+<div class="w-full bg-surface-container-high rounded h-1 mt-1 overflow-hidden">
+<div class="bg-secondary-container h-full w-[47%]"></div>
+</div>
+</div>
+</div>
+<!-- Section 3 & Section 5: Main Content Grid (Pipeline Table + Conflict Resolver + Crawler Telemetry) -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Left 8 Cols: Ingestion Queue & Staging Pipeline Table -->
+<div class="xl:col-span-8 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden flex flex-col">
+<!-- Table Toolbar -->
+<div class="flex flex-wrap items-center justify-between p-space-md bg-surface-container-lowest gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[20px]">reorder</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Staging Ingestion Queue</span>
+<span class="font-label-mono text-label-mono bg-surface-container text-on-surface-variant px-space-xs py-0.5 rounded">4 PENDING PARSES</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="relative">
+<input class="h-7 px-space-sm bg-surface-container-low text-body-sm font-body-sm rounded text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container" placeholder="Filter specimen ID or OEM..." type="text"/>
+</div>
+<button class="h-7 px-space-sm rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono">STATUS: ALL</button>
+<button class="h-7 px-space-sm rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono">SORT: CONFIDENCE</button>
+</div>
+</div>
+<!-- Dense Engineering Data Table -->
+<div class="w-full overflow-x-auto">
+<table class="w-full text-left font-body-sm text-body-sm">
+<thead class="bg-surface-container text-on-surface-variant font-label-mono text-label-mono uppercase tracking-wider">
+<tr>
+<th class="py-space-sm px-space-md">Specimen & Reg. Identifier</th>
+<th class="py-space-sm px-space-sm">Brand</th>
+<th class="py-space-sm px-space-sm">Source Gateway</th>
+<th class="py-space-sm px-space-sm">Staged Fields</th>
+<th class="py-space-sm px-space-sm">Confidence</th>
+<th class="py-space-sm px-space-sm">State</th>
+<th class="py-space-sm px-space-md text-right">Directives</th>
+</tr>
+</thead>
+<tbody class="divide-none">
+<!-- Row 1 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Xiaomi 15 Ultra</span>
+<span class="font-label-mono text-label-mono text-outline">TENAA #25010PN30C • 5G NR</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-medium text-on-surface">Xiaomi Inc.</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-mono text-label-mono bg-surface-container text-on-surface px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+                    MIIT/TENAA Feed
+                  </span>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono text-on-surface-variant">
+<div class="flex items-center gap-1 flex-wrap">
+<span class="bg-surface-container-high px-1 rounded text-on-surface">SoC: SD8 Elite</span>
+<span class="bg-surface-container-high px-1 rounded text-on-surface">Bat: 6000mAh</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono">
+<div class="flex items-center gap-1 text-tertiary font-bold">
+<span>99.4%</span>
+<span class="material-symbols-outlined text-[14px]">verified</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-block px-2 py-0.5 rounded font-label-mono text-label-mono bg-tertiary-container text-on-tertiary">AUTO-MERGED</span>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Diff</button>
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Specs</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 (Selected Conflict Row) -->
+<tr class="bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<div class="flex items-center gap-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Vivo V2415A</span>
+<span class="bg-error-container text-on-error-container text-[10px] px-1 rounded font-label-mono">VARIANCE DETECTED</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline">FCC ID: 2AUCY-V2415A • GCF#9284</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-medium text-on-surface">Vivo Mobile</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-mono text-label-mono bg-surface-container text-on-surface px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+                    FCC Grant OET
+                  </span>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono text-on-surface-variant">
+<div class="flex items-center gap-1 flex-wrap">
+<span class="bg-surface-container-high px-1 rounded text-on-surface">SoC: Dimensity 9400</span>
+<span class="bg-error-container text-on-error-container px-1 rounded font-semibold">Bat: 5800 vs 6200</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono">
+<div class="flex items-center gap-1 text-on-surface-variant font-bold">
+<span>91.2%</span>
+<span class="material-symbols-outlined text-outline text-[14px]">warning</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-block px-2 py-0.5 rounded font-label-mono text-label-mono bg-secondary-fixed text-on-secondary-fixed">PENDING REVIEW</span>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="h-6 px-2 rounded bg-primary text-on-primary font-label-mono text-label-mono hover:bg-primary-container" type="button">Resolve</button>
+<button class="h-6 px-2 rounded bg-surface-container-high text-error font-label-mono text-label-mono hover:bg-error-container" type="button">Reject</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">iPhone 17 Prototype Leak</span>
+<span class="font-label-mono text-label-mono text-outline">Geekbench Cluster #D94AP • D93AP</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-medium text-on-surface">Apple Inc.</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-mono text-label-mono bg-surface-container text-on-surface px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+                    Geekbench 6 Crawler
+                  </span>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono text-on-surface-variant">
+<div class="flex items-center gap-1 flex-wrap">
+<span class="bg-surface-container-high px-1 rounded text-on-surface">Apple A19 Pro (6C)</span>
+<span class="bg-surface-container-high px-1 rounded text-on-surface">12GB LPDDR5X</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono">
+<div class="flex items-center gap-1 text-on-surface-variant font-bold">
+<span>84.5%</span>
+<span class="material-symbols-outlined text-outline text-[14px]">info</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-block px-2 py-0.5 rounded font-label-mono text-label-mono bg-surface-container text-on-surface">CALIBRATING</span>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Edit</button>
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Hold</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="bg-surface-container-lowest hover:bg-surface-container-low transition-colors">
+<td class="py-space-sm px-space-md">
+<div class="flex flex-col">
+<span class="font-headline-sm text-headline-sm text-on-surface">Snapdragon 8 Gen 5 Testbed</span>
+<span class="font-label-mono text-label-mono text-outline">QRD Reference Board • SM8850</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-medium text-on-surface">Qualcomm Ref</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-flex items-center gap-1 font-label-mono text-label-mono bg-surface-container text-on-surface px-space-xs py-0.5 rounded">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+                    Bluetooth SIG / GCF
+                  </span>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono text-on-surface-variant">
+<div class="flex items-center gap-1 flex-wrap">
+<span class="bg-surface-container-high px-1 rounded text-on-surface">Oryon Gen 3 • 2+6</span>
+<span class="bg-surface-container-high px-1 rounded text-on-surface">BT 6.0 PHY</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm font-label-mono text-label-mono">
+<div class="flex items-center gap-1 text-tertiary font-bold">
+<span>98.8%</span>
+<span class="material-symbols-outlined text-[14px]">verified</span>
+</div>
+</td>
+<td class="py-space-sm px-space-sm">
+<span class="inline-block px-2 py-0.5 rounded font-label-mono text-label-mono bg-tertiary-container text-on-tertiary">CALIBRATED</span>
+</td>
+<td class="py-space-sm px-space-md text-right">
+<div class="inline-flex items-center gap-1">
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Publish</button>
+<button class="h-6 px-2 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono" type="button">Diff</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination Metadata -->
+<div class="flex flex-wrap items-center justify-between p-space-sm bg-surface-container text-on-surface-variant font-label-mono text-label-mono">
+<div class="flex items-center gap-space-sm">
+<span>Showing 4 of 18 staged hardware artifacts</span>
+<span class="text-outline">|</span>
+<span>Batch ID: #Q-202502-0994</span>
+</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface">Prev</button>
+<span class="px-2 py-0.5 rounded bg-primary text-on-primary">1</span>
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface">2</button>
+<button class="px-2 py-0.5 rounded bg-surface-container-lowest text-on-surface">Next</button>
+</div>
+</div>
+</div>
+<!-- Live Regulatory Gateway Health Stream Monitor -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[18px]">satellite_alt</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">Continuous Regulatory Crawlers & Ingestion Workers</span>
+</div>
+<span class="font-label-mono text-label-mono text-outline">AGGREGATE ERROR RATE: 0.01%</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 gap-space-sm pt-space-xs">
+<!-- Worker 1 -->
+<div class="p-space-sm bg-surface-container-low rounded flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-bold text-on-surface">FCC OET LABS</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface tabular-nums">18ms <span class="font-label-mono text-label-mono text-outline">lat</span></div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono text-[10px]">
+<span>Polled: 42s ago</span>
+<span class="text-tertiary">100% OK</span>
+</div>
+</div>
+<!-- Worker 2 -->
+<div class="p-space-sm bg-surface-container-low rounded flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-bold text-on-surface">TENAA / MIIT</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface tabular-nums">74ms <span class="font-label-mono text-label-mono text-outline">lat</span></div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono text-[10px]">
+<span>Polled: 12s ago</span>
+<span class="text-tertiary">100% OK</span>
+</div>
+</div>
+<!-- Worker 3 -->
+<div class="p-space-sm bg-surface-container-low rounded flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-bold text-on-surface">GEEKBENCH REG</span>
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface tabular-nums">31ms <span class="font-label-mono text-label-mono text-outline">lat</span></div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono text-[10px]">
+<span>Polled: 1m ago</span>
+<span class="text-secondary">Rate-Limited 2%</span>
+</div>
+</div>
+<!-- Worker 4 -->
+<div class="p-space-sm bg-surface-container-low rounded flex flex-col gap-1">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-bold text-on-surface">BLUETOOTH SIG</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="font-headline-sm text-headline-sm text-on-surface tabular-nums">49ms <span class="font-label-mono text-label-mono text-outline">lat</span></div>
+<div class="flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono text-[10px]">
+<span>Polled: 2m ago</span>
+<span class="text-tertiary">100% OK</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right 4 Cols: Quick Conflict Resolver (Inline Metrology Variance Card) -->
+<div class="xl:col-span-4 flex flex-col gap-space-md">
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-md">
+<!-- Header -->
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-error text-[20px]">compare</span>
+<div>
+<span class="font-headline-sm text-headline-sm text-on-surface block leading-tight">Conflict Resolution</span>
+<span class="font-label-mono text-label-mono text-outline">Target: Vivo V2415A (#2AUCY-V2415A)</span>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-label-mono text-label-mono">DIFF RATIO 6.4%</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          Automated ingestion flagged a discrepancy between the authoritative FCC Grant RF battery certification and the OEM PR kit specs.
+        </p>
+<!-- Side-by-Side Spec Variance Sheet -->
+<div class="flex flex-col gap-space-xs bg-surface-container-low p-space-sm rounded-lg">
+<!-- Parameter 1: Battery Capacity (Conflict) -->
+<div class="flex flex-col bg-surface-container-lowest p-space-sm rounded gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-semibold text-on-surface">BATTERY RATED CAPACITY</span>
+<span class="material-symbols-outlined text-error text-[16px]">priority_high</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm pt-1">
+<div class="p-2 bg-surface-container-high rounded flex flex-col">
+<span class="font-label-mono text-label-mono text-outline uppercase text-[10px]">FCC Lab Test (Part 15C)</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">5,840 mAh</span>
+<span class="font-label-mono text-label-mono text-tertiary text-[10px]">Rated cell minimum</span>
+</div>
+<div class="p-2 bg-error-container rounded flex flex-col text-on-error-container">
+<span class="font-label-mono text-label-mono uppercase text-[10px] text-error font-semibold">OEM Press Release</span>
+<span class="font-headline-sm text-headline-sm font-bold">6,200 mAh</span>
+<span class="font-label-mono text-label-mono text-[10px]">Typical / Dual-cell est.</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1">
+<span class="font-label-mono text-label-mono text-on-surface-variant text-[11px]">Recommended: Store both (Rated + Typical)</span>
+<button class="font-label-mono text-label-mono text-primary font-semibold hover:underline">Apply Standard Form</button>
+</div>
+</div>
+<!-- Parameter 2: SAR Head Level -->
+<div class="flex flex-col bg-surface-container-lowest p-space-sm rounded gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-semibold text-on-surface">SAR RATING (1g HEAD)</span>
+<span class="material-symbols-outlined text-tertiary text-[16px]">check_circle</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm pt-1">
+<div class="p-2 bg-surface-container-high rounded flex flex-col">
+<span class="font-label-mono text-label-mono text-outline uppercase text-[10px]">FCC Metrology Report</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">0.89 W/kg</span>
+</div>
+<div class="p-2 bg-surface-container-high rounded flex flex-col">
+<span class="font-label-mono text-label-mono text-outline uppercase text-[10px]">Manufacturer Declaration</span>
+<span class="font-headline-sm text-headline-sm text-on-surface">0.88 W/kg</span>
+</div>
+</div>
+<div class="text-[10px] font-label-mono text-tertiary">Margin within ±0.02 W/kg test tolerance. Verified.</div>
+</div>
+<!-- Parameter 3: Fast Charging Spec -->
+<div class="flex flex-col bg-surface-container-lowest p-space-sm rounded gap-1 shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-mono text-label-mono font-semibold text-on-surface">CHARGING INPUT PROFILES</span>
+<span class="material-symbols-outlined text-outline text-[16px]">rule</span>
+</div>
+<div class="grid grid-cols-2 gap-2 text-body-sm font-body-sm pt-1">
+<div class="p-2 bg-surface-container-high rounded flex flex-col">
+<span class="font-label-mono text-label-mono text-outline uppercase text-[10px]">FCC Adapter File</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">11V @ 8.2A (90W Max)</span>
+</div>
+<div class="p-2 bg-surface-container-high rounded flex flex-col">
+<span class="font-label-mono text-label-mono text-outline uppercase text-[10px]">OEM Marketing Sheet</span>
+<span class="font-body-md text-body-md font-medium text-on-surface">120W FlashCharge</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Resolution Directives -->
+<div class="flex flex-col gap-space-xs pt-space-xs">
+<div class="flex items-center gap-2">
+<button class="flex-1 h-9 rounded bg-primary text-on-primary font-label-md text-label-md hover:bg-primary-container flex items-center justify-center gap-1 shadow-sm transition-colors" type="button">
+<span class="material-symbols-outlined text-[16px]">done_all</span>
+<span>Accept Regulatory Truth (FCC)</span>
+</button>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="flex-1 h-8 rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono transition-colors" type="button">
+              Accept Marketing Claims
+            </button>
+<button class="h-8 px-space-md rounded bg-surface-container hover:bg-surface-container-high text-on-surface font-label-mono text-label-mono transition-colors" type="button">
+              Open Full Lab Diff
+            </button>
+</div>
+</div>
+</div>
+<!-- Quick Registry Calibrator Widget -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-headline-sm text-headline-sm text-on-surface">Schema Auto-Correction Filter</span>
+<span class="material-symbols-outlined text-outline text-[18px]">tune</span>
+</div>
+<div class="space-y-space-xs font-body-sm text-body-sm">
+<label class="flex items-center justify-between p-2 rounded bg-surface-container-low cursor-pointer hover:bg-surface-container">
+<span class="text-on-surface font-medium">Auto-convert Battery Rated -> Typical (+6%)</span>
+<input checked="" class="w-4 h-4 text-primary rounded" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-2 rounded bg-surface-container-low cursor-pointer hover:bg-surface-container">
+<span class="text-on-surface font-medium">Standardize SoC Model Nomenclature</span>
+<input checked="" class="w-4 h-4 text-primary rounded" type="checkbox"/>
+</label>
+<label class="flex items-center justify-between p-2 rounded bg-surface-container-low cursor-pointer hover:bg-surface-container">
+<span class="text-on-surface font-medium">Enforce GCF LTE/5G Band Matrix Format</span>
+<input class="w-4 h-4 text-primary rounded" type="checkbox"/>
+</label>
+</div>
+<div class="pt-space-xs flex items-center justify-between text-on-surface-variant font-label-mono text-label-mono">
+<span>Active Policy: STRICT-METROLOGY</span>
+<span class="text-primary font-semibold hover:underline cursor-pointer">Edit Ruleset</span>
+</div>
+</div>
+</div>
+</div>
+</div></main></div></body></html>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#0f131c;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-tertiary-fixed":"#002113","on-primary-container":"#f8f7ff","inverse-primary":"#0054d6","surface-container-lowest":"#0a0e16","surface-tint":"#b3c5ff","on-surface":"#dfe2ee","background":"#0f131c","surface-variant":"#31353e","primary-fixed-dim":"#b3c5ff","secondary-fixed-dim":"#47d6ff","secondary-container":"#00d2ff","on-tertiary-container":"#e1ffec","inverse-on-surface":"#2c3039","on-secondary-fixed":"#001f28","surface-dim":"#0f131c","surface-container-high":"#262a33","on-primary":"#002b75","on-surface-variant":"#c2c6d8","on-primary-fixed-variant":"#003fa4","on-primary-fixed":"#001849","on-secondary-container":"#00566a","tertiary-fixed":"#6ffbbe","on-background":"#dfe2ee","primary-fixed":"#dae1ff","on-error-container":"#ffdad6","on-secondary":"#003543","tertiary":"#4edea3","primary-container":"#0066ff","inverse-surface":"#dfe2ee","on-tertiary":"#003824","surface":"#0f131c","surface-container-highest":"#31353e","secondary-fixed":"#b6ebff","outline":"#8c90a1","error":"#ffb4ab","surface-bright":"#353942","surface-container":"#1c2028","on-error":"#690005","surface-container-low":"#181c24","tertiary-container":"#008259","error-container":"#93000a","secondary":"#a5e7ff","outline-variant":"#424656","tertiary-fixed-dim":"#4edea3","on-tertiary-fixed-variant":"#005236","on-secondary-fixed-variant":"#004e60","primary":"#b3c5ff"},"borderRadius":{"DEFAULT":"0.125rem","lg":"0.25rem","xl":"0.5rem","full":"0.75rem"},"spacing":{"space-xs":"0.25rem","space-md":"0.75rem","gutter":"1rem","margin":"1rem","space-lg":"1rem","space-sm":"0.5rem","space-xl":"1.5rem"},"fontFamily":{"headline-md":["Inter"],"body-sm":["Inter"],"headline-xl-mobile":["Inter"],"body-lg":["Inter"],"label-md":["Inter"],"label-sm":["Inter"],"label-xs":["Inter"],"headline-xl":["Inter"],"body-md":["Inter"],"headline-lg":["Inter"]},"fontSize":{"headline-md":["18px",{"lineHeight":"24px","letterSpacing":"-0.005em","fontWeight":"600"}],"body-sm":["12px",{"lineHeight":"16px","fontWeight":"400"}],"headline-xl-mobile":["24px",{"lineHeight":"32px","letterSpacing":"-0.015em","fontWeight":"700"}],"body-lg":["16px",{"lineHeight":"24px","fontWeight":"400"}],"label-md":["13px",{"lineHeight":"18px","fontWeight":"500"}],"label-sm":["11px",{"lineHeight":"14px","letterSpacing":"0.03em","fontWeight":"600"}],"label-xs":["10px",{"lineHeight":"12px","letterSpacing":"0.06em","fontWeight":"700"}],"headline-xl":["32px",{"lineHeight":"40px","letterSpacing":"-0.02em","fontWeight":"700"}],"body-md":["14px",{"lineHeight":"20px","fontWeight":"400"}],"headline-lg":["22px",{"lineHeight":"28px","letterSpacing":"-0.01em","fontWeight":"600"}]}}}};</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface flex flex-col min-h-screen selection:bg-secondary-container selection:text-on-secondary-container"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.4)]"><div class="h-14 px-gutter flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary-container text-[22px]">memory</span><span class="font-headline-md text-headline-md tracking-tight text-on-surface uppercase">GSM<span class="text-secondary-container">HUB</span></span></div><span class="px-space-xs py-[2px] bg-surface-container-high rounded-DEFAULT font-label-xs text-label-xs text-secondary tracking-widest uppercase">ADMIN</span></div><div class="flex items-center gap-space-xs"><button aria-label="Search specs" class="w-11 h-11 flex items-center justify-center rounded-DEFAULT text-on-surface-variant hover:text-on-surface hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[20px]">search</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-14 pb-20 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Content Container -->
+<div class="px-gutter py-space-md flex flex-col gap-space-lg">
+<!-- Header Context & Breadcrumbs -->
+<section class="flex flex-col gap-space-xs">
+<nav aria-label="Breadcrumb" class="flex items-center gap-space-xs text-on-surface-variant font-label-xs text-label-xs tracking-wider uppercase">
+<span>Home</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span>Support</span>
+<span class="material-symbols-outlined text-[12px] text-outline">chevron_right</span>
+<span class="text-secondary-container">Contact &amp; Editorial</span>
+</nav>
+<div class="flex items-center gap-space-sm pt-space-xs">
+<span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-surface-container-high text-secondary-container">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</span>
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary">Editorial Desk // Lab Direct</span>
+</div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile text-on-surface tracking-tight mt-space-xs">
+        Contact GSMHub Lab &amp; Editorial Team
+      </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+        Have a spec correction, missing benchmark datasheet, business inquiry, or hardware tip? Let us know. Our technical analysts review every submission.
+      </p>
+</section>
+<!-- Direct Technical Channel Quick Tiles -->
+<section class="flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs uppercase tracking-widest text-outline">Routing Channels</span>
+<span class="inline-flex items-center gap-[4px] font-label-xs text-label-xs text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span> All queues active
+        </span>
+</div>
+<div class="grid grid-cols-1 gap-space-sm">
+<!-- Channel 1 -->
+<button class="w-full text-left p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex items-start gap-space-md shadow-sm" id="channel-spec" onclick="selectChannel('spec')" type="button">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[20px]">build_circle</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Hardware Spec Correction</span>
+<span class="px-space-xs py-[2px] bg-secondary-container/15 text-secondary-container rounded font-label-xs text-label-xs font-bold uppercase">&lt; 24h ETA</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-[2px] line-clamp-2">
+              Fast response for SoC revisions, teardown updates, datasheet typos, and FCC filings.
+            </p>
+</div>
+</button>
+<!-- Channel 2 -->
+<button class="w-full text-left p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex items-start gap-space-md shadow-sm" id="channel-press" onclick="selectChannel('press')" type="button">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[20px]">newspaper</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Editorial &amp; Press Inquiries</span>
+<span class="px-space-xs py-[2px] bg-surface-container-highest text-on-surface-variant rounded font-label-xs text-label-xs uppercase">Press Desk</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-[2px] line-clamp-2">
+              Lab test units, hardware loaners, embargos, review sample scheduling, and executive interviews.
+            </p>
+</div>
+</button>
+<!-- Channel 3 -->
+<button class="w-full text-left p-space-md rounded-lg bg-surface-container hover:bg-surface-container-high transition-colors flex items-start gap-space-md shadow-sm" id="channel-api" onclick="selectChannel('api')" type="button">
+<div class="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-tertiary">
+<span class="material-symbols-outlined text-[20px]">dataset</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<div class="flex items-center justify-between">
+<span class="font-label-md text-label-md text-on-surface font-semibold">API &amp; Enterprise Licensing</span>
+<span class="px-space-xs py-[2px] bg-tertiary/15 text-tertiary rounded font-label-xs text-label-xs uppercase">B2B Core</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-[2px] line-clamp-2">
+              Programmatic REST &amp; GraphQL access to our 15,000+ device benchmark raw database.
+            </p>
+</div>
+</button>
+</div>
+</section>
+<!-- Lab Dispatch / Verification Banner -->
+<div class="bg-surface-container-low rounded-lg p-space-md flex items-center gap-space-md">
+<div class="w-10 h-10 rounded-full bg-secondary-container/10 flex items-center justify-center shrink-0 text-secondary-container">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+</div>
+<div class="flex flex-col min-w-0 flex-1">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold uppercase tracking-wider">Fast-Track Spec Verification</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Disputed metrics cross-checked against lab test benches and OEM register dumps.</span>
+</div>
+</div>
+<!-- Contact Form Section -->
+<section class="flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-secondary-container text-[18px]">send</span>
+<span class="font-headline-md text-headline-md text-on-surface">Dispatch Message</span>
+</div>
+<span class="font-label-xs text-label-xs uppercase text-outline tracking-wider">Encrypted SSL</span>
+</div>
+<form class="flex flex-col gap-space-md" id="editorialForm" onsubmit="event.preventDefault(); handleSubmit();">
+<!-- Field 1: Name -->
+<div class="flex flex-col gap-[6px]">
+<label class="flex items-center justify-between font-label-sm text-label-sm text-on-surface" for="fullName">
+<span>Your Full Name</span>
+<span class="text-secondary-container text-label-xs font-label-xs">REQUIRED</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-outline text-[18px] absolute left-3 pointer-events-none">person</span>
+<input class="w-full bg-surface-container text-on-surface pl-10 pr-3 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="fullName" name="fullName" placeholder="e.g. Elena Rostova" required="" type="text" value="Alex Vance"/>
+</div>
+</div>
+<!-- Field 2: Work or Personal Email -->
+<div class="flex flex-col gap-[6px]">
+<label class="flex items-center justify-between font-label-sm text-label-sm text-on-surface" for="email">
+<span>Work or Personal Email</span>
+<span class="text-secondary-container text-label-xs font-label-xs">VERIFICATION CODE TARGET</span>
+</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-outline text-[18px] absolute left-3 pointer-events-none">mail</span>
+<input class="w-full bg-surface-container text-on-surface pl-10 pr-3 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="email" name="email" placeholder="name@domain.com" required="" type="email" value="alex.vance@techlab.io"/>
+</div>
+</div>
+<!-- Field 3: Inquiry Category -->
+<div class="flex flex-col gap-[6px]">
+<label class="font-label-sm text-label-sm text-on-surface" for="category">
+            Inquiry Category / Department
+          </label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-outline text-[18px] absolute left-3 pointer-events-none">category</span>
+<select class="w-full bg-surface-container text-on-surface pl-10 pr-10 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors appearance-none cursor-pointer" id="category" name="category">
+<option selected="" value="spec-correction">Spec Correction / Verification Request</option>
+<option value="missing-device">Missing Device Submission</option>
+<option value="benchmark-dispute">Benchmark Dispute</option>
+<option value="advertising">Advertising &amp; Partnerships</option>
+<option value="general-feedback">General Feedback</option>
+</select>
+<span class="material-symbols-outlined text-outline text-[20px] absolute right-3 pointer-events-none">arrow_drop_down</span>
+</div>
+</div>
+<!-- Field 4: Target Device Model (Optional) -->
+<div class="flex flex-col gap-[6px]">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface" for="targetDevice">Target Device Model</label>
+<span class="font-label-xs text-label-xs text-outline uppercase">Optional</span>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-outline text-[18px] absolute left-3 pointer-events-none">smartphone</span>
+<input class="w-full bg-surface-container text-on-surface pl-10 pr-3 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="targetDevice" name="targetDevice" placeholder="e.g. Xiaomi 14 Ultra / A18 Pro" type="text" value="Samsung Galaxy S25 Ultra"/>
+</div>
+<span class="font-body-sm text-body-sm text-outline">Include SKU or regional chip variants (e.g., Exynos vs Snapdragon) if applicable.</span>
+</div>
+<!-- Field 5: Subject line -->
+<div class="flex flex-col gap-[6px]">
+<label class="font-label-sm text-label-sm text-on-surface" for="subject">Subject Line</label>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined text-outline text-[18px] absolute left-3 pointer-events-none">title</span>
+<input class="w-full bg-surface-container text-on-surface pl-10 pr-3 py-2.5 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors" id="subject" name="subject" required="" type="text" value="AnTuTu v10 benchmark mismatch for Exynos SKU"/>
+</div>
+</div>
+<!-- Field 6: Message / Detailed Correction -->
+<div class="flex flex-col gap-[6px]">
+<div class="flex items-center justify-between">
+<label class="font-label-sm text-label-sm text-on-surface" for="message">Message / Detailed Correction</label>
+<span class="font-label-xs text-label-xs text-outline tabular-nums" id="charCount">286 / 2000</span>
+</div>
+<textarea class="w-full bg-surface-container text-on-surface p-3 rounded-lg font-body-md text-body-md focus:outline-none focus:bg-surface-container-high transition-colors resize-none leading-relaxed" id="message" maxlength="2000" name="message" oninput="document.getElementById('charCount').textContent = this.value.length + ' / 2000'" required="" rows="5">In the European SKU listing for the model, the sustained GPU thermal throttle test displays 78% stability, but our hardware teardown lab registered a 62% result under ambient 25°C 3DMark Solar Bay 20-min loop. Please cross-reference with official firmware build S928BXXU1AXB5.</textarea>
+<div class="p-space-sm bg-surface-container-low rounded-lg flex items-start gap-space-xs text-outline">
+<span class="material-symbols-outlined text-[16px] text-secondary-container mt-[1px] shrink-0">info</span>
+<span class="font-body-sm text-body-sm">
+              Please provide links to OEM whitepapers, FCC ID, CPU-Z telemetry, or Geekbench run URLs if disputing bench metrics.
+            </span>
+</div>
+</div>
+<!-- Field 7: Attachment Upload Box -->
+<div class="flex flex-col gap-[6px]">
+<label class="font-label-sm text-label-sm text-on-surface flex items-center justify-between">
+<span>Proof of Correction / Datasheet</span>
+<span class="font-label-xs text-label-xs text-outline uppercase">Max 10MB</span>
+</label>
+<div class="w-full bg-surface-container hover:bg-surface-container-high rounded-lg p-space-lg flex flex-col items-center justify-center gap-space-xs cursor-pointer transition-colors text-center relative overflow-hidden" id="dropArea" onclick="document.getElementById('fileUpload').click()">
+<input class="hidden" id="fileUpload" onchange="handleFileChange(this)" type="file"/>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-secondary-container">
+<span class="material-symbols-outlined text-[20px]" id="uploadIcon">cloud_upload</span>
+</div>
+<div class="flex flex-col items-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold" id="uploadTitle">Attach Datasheet or Screenshot</span>
+<span class="font-body-sm text-body-sm text-outline" id="uploadSub">PDF, PNG, JPG, or HWINFO log</span>
+</div>
+<div class="hidden items-center gap-space-xs px-space-sm py-1 bg-secondary-container/20 text-secondary-container rounded font-label-xs text-label-xs mt-space-xs" id="fileSelectedBadge">
+<span class="material-symbols-outlined text-[14px]">attachment</span>
+<span class="truncate max-w-[200px]" id="fileNameDisplay">benchmark_run_02.png</span>
+</div>
+</div>
+</div>
+<!-- Form Security / Verification Badge -->
+<div class="bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-tertiary text-[20px]">format_image_left</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface">Bot Protection Active</span>
+<span class="font-label-xs text-label-xs text-outline">Cloudflare Turnstile Verified</span>
+</div>
+</div>
+<span class="font-label-xs text-label-xs text-tertiary font-bold tracking-wider px-space-xs py-[2px] bg-tertiary/10 rounded">
+            PASS
+          </span>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full py-3 px-space-lg rounded-lg bg-secondary-container hover:bg-secondary text-on-secondary-container font-label-md text-label-md font-bold tracking-wide uppercase flex items-center justify-center gap-space-sm shadow-md transition-all active:scale-[0.99]" id="submitBtn" type="submit">
+<span class="material-symbols-outlined text-[18px]">send</span>
+<span>Submit Message to Editorial Team</span>
+</button>
+<!-- Feedback alert (hidden initially) -->
+<div class="hidden p-space-md rounded-lg bg-surface-container-high text-on-surface flex items-center gap-space-sm" id="submissionAlert">
+<span class="material-symbols-outlined text-tertiary text-[22px]">check_circle</span>
+<div class="flex flex-col min-w-0">
+<span class="font-label-md text-label-md font-semibold text-tertiary">Ticket #GSM-8841 Dispatched</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Our senior hardware validator has received your payload.</span>
+</div>
+</div>
+</form>
+</section>
+<!-- Lab Locations & Operating Hours Grid -->
+<section class="flex flex-col gap-space-sm pt-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs uppercase tracking-widest text-outline">Physical Testing Facilities</span>
+<span class="font-label-xs text-label-xs text-outline tabular-nums">24 / 7 TELEMETRY</span>
+</div>
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Lab 1 -->
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs uppercase tracking-wider text-secondary-container font-semibold">APAC Hub</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Taipei Testing Lab</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Neihu Tech District<br/>
+            SoC RF &amp; Thermal Bench
+          </p>
+<span class="font-label-xs text-label-xs text-outline pt-space-xs">08:00 – 20:00 CST</span>
+</div>
+<!-- Lab 2 -->
+<div class="bg-surface-container rounded-lg p-space-md flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<span class="font-label-xs text-label-xs uppercase tracking-wider text-primary font-semibold">EMEA Hub</span>
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+</div>
+<div class="font-label-md text-label-md text-on-surface font-semibold">Zurich Lab &amp; Archive</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Technopark Zurich<br/>
+            Optics &amp; Display Calibration
+          </p>
+<span class="font-label-xs text-label-xs text-outline pt-space-xs">09:00 – 18:00 CET</span>
+</div>
+</div>
+<!-- Turnaround Guarantee Card -->
+<div class="bg-surface-container-high rounded-lg p-space-md flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-secondary-container text-[20px]">bolt</span>
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Standard Turnaround SLA</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Under 24 hours for verified OEM spec corrections</span>
+</div>
+</div>
+<span class="px-space-sm py-1 bg-surface-container text-secondary font-label-xs text-label-xs rounded font-bold uppercase shrink-0">
+          99.2% ON TIME
+        </span>
+</div>
+</section>
+<!-- Interactive Lab Micro-Map / Teardown Station Glance -->
+<section class="flex flex-col gap-space-xs pt-space-xs pb-space-lg">
+<span class="font-label-xs text-label-xs uppercase tracking-widest text-outline">Lab Telemetry Monitor</span>
+<div class="bg-surface-container-lowest rounded-lg p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between text-on-surface-variant font-label-xs text-label-xs">
+<span class="flex items-center gap-[6px]">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+            ACTIVE BENCH: RIG-04 SOLAR BAY
+          </span>
+<span class="font-label-xs text-label-xs tabular-nums text-secondary">24.2°C AMBIENT</span>
+</div>
+<!-- Progress bar simulating lab load -->
+<div class="w-full bg-surface-container h-2 rounded-full overflow-hidden flex">
+<div class="bg-secondary-container h-full w-[45%]" title="Spec Validation"></div>
+<div class="bg-primary h-full w-[30%]" title="Teardown Analysis"></div>
+<div class="bg-tertiary h-full w-[15%]" title="Display Calibration"></div>
+</div>
+<div class="flex items-center justify-between text-outline font-label-xs text-label-xs pt-1">
+<span>Queued: 14 submissions</span>
+<span class="text-on-surface">Queue latency: ~3.2 hrs</span>
+</div>
+</div>
+</section>
+</div>
+</div>
+<script>
+  function selectChannel(type) {
+    const categorySelect = document.getElementById('category');
+    const subjectInput = document.getElementById('subject');
+    
+    // Highlight active card
+    const cards = ['channel-spec', 'channel-press', 'channel-api'];
+    cards.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.remove('bg-surface-container-high', 'bg-surface-bright');
+    });
+
+    if (type === 'spec') {
+      categorySelect.value = 'spec-correction';
+      subjectInput.value = 'Correction: [Device Model] Spec datasheet mismatch';
+      document.getElementById('channel-spec').classList.add('bg-surface-container-high');
+    } else if (type === 'press') {
+      categorySelect.value = 'advertising';
+      subjectInput.value = 'Press/Review Inquiry: Evaluation hardware dispatch';
+      document.getElementById('channel-press').classList.add('bg-surface-container-high');
+    } else if (type === 'api') {
+      categorySelect.value = 'advertising';
+      subjectInput.value = 'B2B Licensing: Enterprise Spec JSON API Access';
+      document.getElementById('channel-api').classList.add('bg-surface-container-high');
+    }
+  }
+
+  function handleFileChange(input) {
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const badge = document.getElementById('fileSelectedBadge');
+      const name = document.getElementById('fileNameDisplay');
+      name.textContent = file.name;
+      badge.classList.remove('hidden');
+      badge.classList.add('inline-flex');
+      document.getElementById('uploadTitle').textContent = 'File attached';
+      document.getElementById('uploadSub').textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+      document.getElementById('uploadIcon').textContent = 'task';
+    }
+  }
+
+  function handleSubmit() {
+    const submitBtn = document.getElementById('submitBtn');
+    const alertBox = document.getElementById('submissionAlert');
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = `
+      <span class="material-symbols-outlined text-[18px] animate-spin">refresh</span>
+      <span>Encrypting & Sending...</span>
+    `;
+
+    setTimeout(() => {
+      submitBtn.classList.add('hidden');
+      alertBox.classList.remove('hidden');
+    }, 700);
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface-container-lowest/90 backdrop-blur-xl shadow-[0_-4px_16px_rgba(0,0,0,0.5)]" data-active-classes="text-secondary-container"><div class="flex justify-around items-center h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="dashboard" href="#"><span class="material-symbols-outlined text-[22px]">home</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Home</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="compare" href="#"><span class="material-symbols-outlined text-[22px]">compare_arrows</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Compare</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="filter" href="#"><span class="material-symbols-outlined text-[22px]">tune</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Filter</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="favorites" href="#"><span class="material-symbols-outlined text-[22px]">bookmark</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Saved</span></a><a class="flex flex-col items-center justify-center gap-[2px] min-w-[56px] h-11 text-on-surface-variant hover:text-on-surface transition-colors" data-path="admin-control" href="#"><span class="material-symbols-outlined text-[22px]">admin_panel_settings</span><span class="font-label-xs text-label-xs uppercase tracking-wider">Admin</span></a></div></nav></body></html>
