@@ -1,12 +1,19 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./client-layout";
 import PWARegistration from "@/components/pwa/PWARegistration";
 
-// Font Awesome Configuration
+// Font Awesome Configuration (legacy icons — removed once all components are rebuilt)
 import { config } from '@fortawesome/fontawesome-svg-core';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 config.autoAddCss = false;
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -27,8 +34,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#2563eb",
+  themeColor: "#0f131c",
 };
+
+// Runs before first paint: restores saved theme (default = dark)
+const themeInitScript = `try{var t=localStorage.getItem('gsmhub-theme');if(t==='light'){document.documentElement.classList.replace('dark','light')}}catch(e){}`;
 
 export default function RootLayout({
   children,
@@ -36,10 +46,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className="antialiased flex flex-col min-h-screen"
-      >
+    <html lang="en" className={`${inter.variable} dark`} suppressHydrationWarning>
+      <body className="bg-background text-on-surface font-body-md antialiased flex flex-col min-h-screen">
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block"
+        />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         {process.env.NEXT_PUBLIC_ADSENSE_ID && (
           <script
             async

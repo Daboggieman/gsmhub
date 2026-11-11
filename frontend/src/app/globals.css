@@ -1,26 +1,198 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Dark-mode variant driven by <html class="dark"> (designs: darkMode 'class') */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+ * Precision Spec design system — ported from media/ui (Stitch exports).
+ * Dark theme is the default palette; html.light swaps the same custom
+ * properties at runtime, so every bg-*/text-*/border-* token utility
+ * flips theme with no component changes.
+ */
+@theme static {
+  /* ---- Colors: dark (default) palette ---- */
+  --color-surface: #0f131c;
+  --color-surface-dim: #0f131c;
+  --color-surface-bright: #353942;
+  --color-surface-container-lowest: #0a0e16;
+  --color-surface-container-low: #181c24;
+  --color-surface-container: #1c2028;
+  --color-surface-container-high: #262a33;
+  --color-surface-container-highest: #31353e;
+  --color-surface-variant: #31353e;
+  --color-on-surface: #dfe2ee;
+  --color-on-surface-variant: #c2c6d8;
+  --color-inverse-surface: #dfe2ee;
+  --color-inverse-on-surface: #2c3039;
+  --color-inverse-primary: #0054d6;
+  --color-surface-tint: #b3c5ff;
+  --color-outline: #8c90a1;
+  --color-outline-variant: #424656;
+  --color-primary: #b3c5ff;
+  --color-on-primary: #002b75;
+  --color-primary-container: #0066ff;
+  --color-on-primary-container: #f8f7ff;
+  --color-primary-fixed: #dae1ff;
+  --color-primary-fixed-dim: #b3c5ff;
+  --color-on-primary-fixed: #001849;
+  --color-on-primary-fixed-variant: #003fa4;
+  --color-secondary: #a5e7ff;
+  --color-on-secondary: #003543;
+  --color-secondary-container: #00d2ff;
+  --color-on-secondary-container: #00566a;
+  --color-secondary-fixed: #b6ebff;
+  --color-secondary-fixed-dim: #47d6ff;
+  --color-on-secondary-fixed: #001f28;
+  --color-on-secondary-fixed-variant: #004e60;
+  --color-tertiary: #4edea3;
+  --color-on-tertiary: #003824;
+  --color-tertiary-container: #008259;
+  --color-on-tertiary-container: #e1ffec;
+  --color-tertiary-fixed: #6ffbbe;
+  --color-tertiary-fixed-dim: #4edea3;
+  --color-on-tertiary-fixed: #002113;
+  --color-on-tertiary-fixed-variant: #005236;
+  --color-error: #ffb4ab;
+  --color-on-error: #690005;
+  --color-error-container: #93000a;
+  --color-on-error-container: #ffdad6;
+  --color-background: #0f131c;
+  --color-on-background: #dfe2ee;
+
+  /* ---- Typography: Inter everywhere (design type scale) ---- */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-xl: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-xl-mobile: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-headline-md: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body-lg: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body-md: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-body-sm: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-label-md: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-label-sm: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-label-xs: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --text-headline-xl: 32px;
+  --text-headline-xl--line-height: 40px;
+  --text-headline-xl--font-weight: 700;
+  --text-headline-xl--letter-spacing: -0.02em;
+  --text-headline-xl-mobile: 24px;
+  --text-headline-xl-mobile--line-height: 32px;
+  --text-headline-xl-mobile--font-weight: 700;
+  --text-headline-xl-mobile--letter-spacing: -0.015em;
+  --text-headline-lg: 22px;
+  --text-headline-lg--line-height: 28px;
+  --text-headline-lg--font-weight: 600;
+  --text-headline-lg--letter-spacing: -0.01em;
+  --text-headline-md: 18px;
+  --text-headline-md--line-height: 24px;
+  --text-headline-md--font-weight: 600;
+  --text-headline-md--letter-spacing: -0.005em;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 16px;
+  --text-label-md: 13px;
+  --text-label-md--line-height: 18px;
+  --text-label-md--font-weight: 500;
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--font-weight: 600;
+  --text-label-sm--letter-spacing: 0.03em;
+  --text-label-xs: 10px;
+  --text-label-xs--line-height: 12px;
+  --text-label-xs--font-weight: 700;
+  --text-label-xs--letter-spacing: 0.06em;
+
+  /* ---- Radius: design overrides (crisp precision look) ---- */
+  --radius-DEFAULT: 0.125rem;
+  --radius-lg: 0.25rem;
+  --radius-xl: 0.5rem;
+  --radius-full: 0.75rem;
+
+  /* ---- Spacing tokens from the design ---- */
+  --spacing-gutter: 1rem;
+  --spacing-margin: 1rem;
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 0.75rem;
+  --spacing-space-lg: 1rem;
+  --spacing-space-xl: 1.5rem;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ---- Light palette: html.light overrides (same token names) ---- */
+html.light {
+  --color-surface: #faf8ff;
+  --color-surface-dim: #d2d9f4;
+  --color-surface-bright: #faf8ff;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f2f3ff;
+  --color-surface-container: #eaedff;
+  --color-surface-container-high: #e2e7ff;
+  --color-surface-container-highest: #dae2fd;
+  --color-surface-variant: #dae2fd;
+  --color-on-surface: #131b2e;
+  --color-on-surface-variant: #424656;
+  --color-inverse-surface: #283044;
+  --color-inverse-on-surface: #eef0ff;
+  --color-inverse-primary: #b3c5ff;
+  --color-surface-tint: #0054d6;
+  --color-outline: #727687;
+  --color-outline-variant: #c2c6d8;
+  --color-primary: #0050cb;
+  --color-on-primary: #ffffff;
+  --color-primary-container: #0066ff;
+  --color-on-primary-container: #f8f7ff;
+  --color-primary-fixed: #dae1ff;
+  --color-primary-fixed-dim: #b3c5ff;
+  --color-on-primary-fixed: #001849;
+  --color-on-primary-fixed-variant: #003fa4;
+  --color-secondary: #006398;
+  --color-on-secondary: #ffffff;
+  --color-secondary-container: #5bb8fe;
+  --color-on-secondary-container: #00476e;
+  --color-secondary-fixed: #cce5ff;
+  --color-secondary-fixed-dim: #93ccff;
+  --color-on-secondary-fixed: #001d31;
+  --color-on-secondary-fixed-variant: #004b73;
+  --color-tertiary: #006645;
+  --color-on-tertiary: #ffffff;
+  --color-tertiary-container: #008259;
+  --color-on-tertiary-container: #e1ffec;
+  --color-tertiary-fixed: #6ffbbe;
+  --color-tertiary-fixed-dim: #4edea3;
+  --color-on-tertiary-fixed: #002113;
+  --color-on-tertiary-fixed-variant: #005236;
+  --color-error: #ba1a1a;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-on-error-container: #93000a;
+  --color-background: #faf8ff;
+  --color-on-background: #131b2e;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
   }
+  body {
+    overscroll-behavior: none;
+    background: var(--color-background);
+    color: var(--color-on-surface);
+    font-family: var(--font-sans);
+  }
+  main > :first-child { margin-top: 0 !important; }
+  main > :last-child { margin-bottom: 0 !important; }
+  ::-webkit-scrollbar { display: none; }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Utility kept for existing scrollable rows (invisible scrollbar) */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
