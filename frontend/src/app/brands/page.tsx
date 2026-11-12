@@ -37,35 +37,34 @@ export default async function BrandsPage() {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <Breadcrumbs items={breadcrumbItems} />
+    <main className="flex-grow max-w-[1440px] mx-auto w-full px-space-md lg:px-space-lg py-space-lg">
+      <Breadcrumbs items={breadcrumbItems} />
 
-        <div className="mb-12 text-center">
-          <h1 className="text-4xl font-extrabold text-gray-900 mb-4">Browse by Brand</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find devices from your favorite manufacturers. We cover everything from major global brands to independent sub-brands.
-          </p>
+      <div className="mb-space-xl text-center">
+        <h1 className="font-headline-xl text-headline-xl font-bold text-on-surface mb-space-sm">Browse by Brand</h1>
+        <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+          Find devices from your favorite manufacturers. We cover everything from major global brands to independent sub-brands.
+        </p>
+      </div>
+
+      {allBrands.length > 0 ? (
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-space-md">
+          {allBrands.map((brand) => (
+            <Link
+              key={brand}
+              href={`/brands/${encodeURIComponent(brand)}`}
+              className="bg-surface-container-low rounded-xl px-space-md py-space-md shadow-md md:shadow-none hover:bg-surface-container-high transition-colors flex items-center justify-center text-center min-h-20 group"
+            >
+              <span className="font-label-md font-bold text-on-surface-variant group-hover:text-secondary transition-colors">{brand}</span>
+            </Link>
+          ))}
         </div>
-
-        {allBrands.length > 0 ? (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            {allBrands.map((brand) => (
-              <Link 
-                key={brand} 
-                href={`/brands/${encodeURIComponent(brand)}`}
-                className="bg-white rounded-xl p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 flex items-center justify-center text-center h-20 hover:border-blue-200 group"
-              >
-                <span className="font-bold text-gray-700 group-hover:text-blue-600 text-sm md:text-base">{brand}</span>
-              </Link>
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-20 bg-white rounded-xl border border-gray-100">
-            <h2 className="text-2xl font-semibold text-gray-700">No brands found</h2>
-          </div>
-        )}
-      </main>
-    </div>
+      ) : (
+        <div className="text-center py-20 bg-surface-container-low rounded-xl">
+          <span className="material-symbols-outlined text-[48px] text-outline-variant mb-space-md" aria-hidden="true">apps</span>
+          <h2 className="font-headline-md text-headline-md font-bold text-on-surface-variant">No brands found</h2>
+        </div>
+      )}
+    </main>
   );
 }

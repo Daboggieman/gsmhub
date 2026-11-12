@@ -9,15 +9,15 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">
+    <div className="max-w-3xl mx-auto px-space-md lg:px-space-lg py-space-xl">
+      <h1 className="mb-space-xs font-headline-xl text-headline-xl font-bold tracking-tight text-on-surface">
         About GSMHub
       </h1>
-      <p className="mb-10 text-xs font-bold tracking-widest text-gray-500 uppercase">
+      <p className="mb-space-xl font-label-sm text-label-sm font-bold tracking-widest text-outline uppercase">
         Specifications, prices, and comparisons — without the noise
       </p>
 
-      <div className="space-y-6 text-sm leading-relaxed text-gray-600">
+      <div className="space-y-space-lg font-body-md leading-relaxed text-on-surface-variant">
         <p>
           GSMHub is an independent device specifications platform. We
           aggregate detailed technical data for smartphones and other devices,
@@ -30,7 +30,7 @@ export default function AboutPage() {
           camera, and what it actually costs in your market today.
         </p>
 
-        <h2 className="pt-4 text-lg font-black text-gray-900">How We Work</h2>
+        <h2 className="pt-space-md font-headline-lg text-headline-lg font-bold text-on-surface">How We Work</h2>
         <p>
           Specification data is aggregated from public sources and structured
           into a consistent, searchable database. Price entries are collected
@@ -38,7 +38,7 @@ export default function AboutPage() {
           current offer highlighted on each device page.
         </p>
 
-        <h2 className="pt-4 text-lg font-black text-gray-900">
+        <h2 className="pt-space-md font-headline-lg text-headline-lg font-bold text-on-surface">
           How We Are Funded
         </h2>
         <p>
@@ -49,25 +49,25 @@ export default function AboutPage() {
           compare — the data is the data.
         </p>
 
-        <h2 className="pt-4 text-lg font-black text-gray-900">Get In Touch</h2>
+        <h2 className="pt-space-md font-headline-lg text-headline-lg font-bold text-on-surface">Get In Touch</h2>
         <p>
           Found a data error, want to suggest a feature, or interested in
           partnering? Email{' '}
           <a
             href="mailto:contact@gsmhub.com"
-            className="font-bold text-blue-600 hover:underline"
+            className="font-bold text-secondary hover:text-secondary-container hover:underline"
           >
             contact@gsmhub.com
           </a>{' '}
-          or visit our <Link href="/contact" className="font-bold text-blue-600 hover:underline">contact page</Link>.
+          or visit our <Link href="/contact" className="font-bold text-secondary hover:text-secondary-container hover:underline">contact page</Link>.
         </p>
         <p>
           Read our{' '}
-          <Link href="/privacy" className="font-bold text-blue-600 hover:underline">
+          <Link href="/privacy" className="font-bold text-secondary hover:text-secondary-container hover:underline">
             Privacy Policy
           </Link>{' '}
           and{' '}
-          <Link href="/terms" className="font-bold text-blue-600 hover:underline">
+          <Link href="/terms" className="font-bold text-secondary hover:text-secondary-container hover:underline">
             Terms of Use
           </Link>
           .

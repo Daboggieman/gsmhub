@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEnvelope, faClock } from '@fortawesome/free-solid-svg-icons';
 
 export const metadata: Metadata = {
   title: 'Contact Us',
@@ -10,7 +8,7 @@ export const metadata: Metadata = {
 
 const CHANNELS = [
   {
-    icon: faEnvelope,
+    icon: 'mail',
     title: 'Email',
     detail: 'contact@gsmhub.com',
     href: 'mailto:contact@gsmhub.com',
@@ -26,49 +24,49 @@ const TOPICS = [
 
 export default function ContactPage() {
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">
+    <div className="max-w-3xl mx-auto px-space-md lg:px-space-lg py-space-xl">
+      <h1 className="mb-space-xs font-headline-xl text-headline-xl font-bold tracking-tight text-on-surface">
         Contact Us
       </h1>
-      <p className="mb-10 text-xs font-bold tracking-widest text-gray-500 uppercase">
+      <p className="mb-space-xl font-label-sm text-label-sm font-bold tracking-widest text-outline uppercase">
         We read every message
       </p>
 
-      <div className="space-y-6">
+      <div className="space-y-space-lg">
         {CHANNELS.map((channel) => (
           <div
             key={channel.title}
-            className="flex items-start gap-4 rounded-2xl border border-gray-100 bg-white p-6 shadow-sm"
+            className="flex items-start gap-space-md rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none"
           >
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
-              <FontAwesomeIcon icon={channel.icon} />
+            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary-container text-on-primary-container">
+              <span className="material-symbols-outlined text-[24px]" aria-hidden="true">{channel.icon}</span>
             </div>
             <div>
-              <h2 className="font-black text-gray-900">{channel.title}</h2>
+              <h2 className="font-headline-md text-headline-md font-bold text-on-surface">{channel.title}</h2>
               <a
                 href={channel.href}
-                className="text-sm font-bold text-blue-600 hover:underline"
+                className="font-label-md font-bold text-secondary hover:text-secondary-container hover:underline"
               >
                 {channel.detail}
               </a>
-              <p className="mt-1 text-xs font-medium text-gray-500">
+              <p className="mt-1 font-label-sm text-label-sm text-on-surface-variant">
                 {channel.note}
               </p>
             </div>
           </div>
         ))}
 
-        <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
-          <h2 className="mb-4 flex items-center gap-2 text-sm font-black tracking-widest text-gray-900 uppercase">
-            <FontAwesomeIcon icon={faClock} className="text-blue-500" />
+        <div className="rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none">
+          <h2 className="mb-space-md flex items-center gap-space-sm font-label-sm text-label-sm font-bold tracking-widest text-on-surface uppercase">
+            <span className="material-symbols-outlined text-[18px] text-secondary-container" aria-hidden="true">schedule</span>
             What to include
           </h2>
-          <ul className="list-inside list-disc space-y-2 text-sm leading-relaxed text-gray-600">
+          <ul className="list-inside list-disc space-y-2 font-body-md leading-relaxed text-on-surface-variant">
             {TOPICS.map((topic, i) => (
               <li key={i}>{topic}</li>
             ))}
           </ul>
-          <p className="mt-4 text-xs font-bold text-gray-400">
+          <p className="mt-space-md font-label-sm text-label-sm font-bold text-outline">
             We typically reply within a few business days.
           </p>
         </div>
