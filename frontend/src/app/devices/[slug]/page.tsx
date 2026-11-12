@@ -11,24 +11,6 @@ import PriceComparison from '@/components/prices/PriceComparison';
 import AdUnit from '@/components/ads/AdUnit';
 import SocialShare from '@/components/devices/SocialShare';
 import SimilarDevices from '@/components/devices/SimilarDevices';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faShoppingCart,
-  faHistory,
-  faCheckCircle,
-  faExpand,
-  faCamera,
-  faMicrochip,
-  faBatteryFull,
-  faMemory,
-  faWeightHanging,
-  faCog,
-  faNetworkWired,
-  faNewspaper,
-  faCommentDots,
-  faImages,
-  faBalanceScale
-} from '@fortawesome/free-solid-svg-icons';
 import FavoriteButton from '@/components/users/FavoriteButton';
 
 async function getDeviceData(slug: string): Promise<{ device: Device; priceHistory: PriceHistory[] } | null> {
@@ -102,52 +84,67 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
   ].map(item => ({ ...item, name: item.label })); // Adapt to BreadcrumbItem type
 
   const subNavItems = [
-    { label: 'Review', icon: faNewspaper, href: '#review' },
-    { label: 'Prices', icon: faShoppingCart, href: '#prices' },
-    { label: 'Pictures', icon: faImages, href: '#gallery' },
-    { label: 'Compare', icon: faBalanceScale, href: '/compare' },
-    { label: 'Opinions', icon: faCommentDots, href: '#opinions' },
+    { label: 'Review', icon: 'article', href: '#review' },
+    { label: 'Prices', icon: 'sell', href: '#prices' },
+    { label: 'Pictures', icon: 'photo_library', href: '#gallery' },
+    { label: 'Compare', icon: 'compare_arrows', href: '/compare' },
+    { label: 'Opinions', icon: 'forum', href: '#opinions' },
+  ];
+
+  const quickStats = [
+    { label: 'Weight', icon: 'monitor_weight', value: device.weight || 'N/A' },
+    { label: 'OS', icon: 'settings', value: device.os || 'N/A' },
+    { label: 'Interest', icon: 'visibility', value: `${device.views.toLocaleString()} hits` },
+    ...(device.sarEU ? [{ label: 'SAR EU', icon: 'verified', value: device.sarEU, accent: true }] : []),
+  ];
+
+  const highlights = [
+    { label: 'Display', icon: 'aspect_ratio', value: device.displaySize },
+    { label: 'Camera', icon: 'photo_camera', value: device.mainCamera },
+    { label: 'RAM', icon: 'memory', value: device.ram },
+    { label: 'Chipset', icon: 'developer_board', value: device.chipset, clamp: true },
+    { label: 'Battery', icon: 'battery_full', value: device.battery },
   ];
 
   const currentUrl = typeof window !== 'undefined' ? window.location.href : `https://gsmhub.com/devices/${device.slug}`;
 
   return (
-    <div className="bg-gray-100 min-h-screen pb-12">
+    <div className="pb-space-xl">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <div className="container mx-auto px-4 py-8">
+      <div className="max-w-[1440px] mx-auto px-space-md lg:px-space-lg py-space-lg">
         <Breadcrumbs items={breadcrumbItems} />
 
         {/* Versions Header */}
         {device.versions && (
-          <div className="mt-4 p-3 bg-white rounded-lg border border-gray-200 text-[10px] md:text-xs text-gray-600 uppercase tracking-tight">
-            <span className="font-black text-gray-800 mr-2 border-r border-gray-200 pr-2">Versions</span>
+          <div className="mt-space-md px-space-md py-2 bg-surface-container-low rounded shadow-md md:shadow-none font-label-xs text-label-xs text-on-surface-variant uppercase tracking-wider">
+            <span className="font-bold text-on-surface border-r border-outline-variant pr-space-sm mr-space-sm">Versions</span>
             {device.versions}
           </div>
         )}
 
-        {/* GSMArena Style Sub-Nav */}
-        <div className="mt-6 flex overflow-x-auto no-scrollbar bg-white rounded-xl shadow-sm border border-gray-200 p-1">
+        {/* Sub-Nav */}
+        <div className="mt-space-md flex overflow-x-auto no-scrollbar bg-surface-container-low rounded-xl shadow-md md:shadow-none p-1.5 gap-1">
           {subNavItems.map((item, i) => (
             <a
               key={i}
               href={item.href}
-              className="flex-shrink-0 px-6 py-3 flex items-center text-sm font-bold text-gray-700 hover:text-blue-700 hover:bg-blue-50 rounded-lg transition-all"
+              className="shrink-0 px-space-lg py-2.5 flex items-center gap-space-xs rounded-lg font-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors"
             >
-              <FontAwesomeIcon icon={item.icon} className="mr-2 opacity-70" />
+              <span className="material-symbols-outlined text-[18px] opacity-80" aria-hidden="true">{item.icon}</span>
               {item.label}
             </a>
           ))}
-          <div className="ml-auto px-4 flex items-center">
+          <div className="ml-auto px-space-sm flex items-center">
             <FavoriteButton deviceId={device._id?.toString()} />
           </div>
         </div>
 
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mt-space-lg grid grid-cols-1 lg:grid-cols-3 gap-space-lg">
           {/* Left Column: Gallery & Sidebar Stats */}
-          <div className="lg:col-span-1 space-y-6">
+          <div className="lg:col-span-1 space-y-space-lg">
             <div id="gallery">
               <DeviceGallery
                 imageUrls={device.images && device.images.length > 0 ? device.images : [device.imageUrl].filter(Boolean) as string[]}
@@ -156,97 +153,58 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
             </div>
 
             {/* Quick Stats Sidebar */}
-            <div className="bg-white rounded-xl shadow-sm border border-gray-100 divide-y divide-gray-100 overflow-hidden">
-              <div className="bg-gray-50 p-4 border-b border-gray-100">
-                <h3 className="font-bold text-gray-700 uppercase text-xs tracking-widest flex items-center">
-                  <FontAwesomeIcon icon={faCog} className="mr-2 text-blue-600" />
+            <div className="bg-surface-container-low rounded-xl shadow-md md:shadow-none divide-y divide-outline-variant/50 overflow-hidden">
+              <div className="px-space-md py-space-md border-b border-outline-variant">
+                <h3 className="font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-widest flex items-center gap-space-sm">
+                  <span className="material-symbols-outlined text-[18px] text-secondary-container" aria-hidden="true">tune</span>
                   Quick Stats
                 </h3>
               </div>
-              <div className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="flex items-center text-gray-600">
-                  <FontAwesomeIcon icon={faWeightHanging} className="mr-3 w-5" />
-                  <span className="text-sm font-semibold">Weight</span>
-                </div>
-                <span className="text-sm font-bold text-gray-800">{device.weight || 'N/A'}</span>
-              </div>
-              <div className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="flex items-center text-gray-600">
-                  <FontAwesomeIcon icon={faCog} className="mr-3 w-5" />
-                  <span className="text-sm font-semibold">OS</span>
-                </div>
-                <span className="text-sm font-bold text-gray-800">{device.os || 'N/A'}</span>
-              </div>
-              <div className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                <div className="flex items-center text-gray-600">
-                  <FontAwesomeIcon icon={faHistory} className="mr-3 w-5" />
-                  <span className="text-sm font-semibold">Interest</span>
-                </div>
-                <span className="text-sm font-bold text-gray-800">{device.views.toLocaleString()} hits</span>
-              </div>
-              {device.sarEU && (
-                <div className="p-4 flex items-center justify-between hover:bg-gray-50 transition-colors">
-                  <div className="flex items-center text-gray-600">
-                    <FontAwesomeIcon icon={faCheckCircle} className="mr-3 w-5 text-blue-500" />
-                    <span className="text-sm font-semibold">SAR EU</span>
+              {quickStats.map((stat) => (
+                <div key={stat.label} className="px-space-md py-space-md flex items-center justify-between hover:bg-surface-container transition-colors">
+                  <div className="flex items-center gap-space-md text-on-surface-variant">
+                    <span className={`material-symbols-outlined text-[18px] ${stat.accent ? 'text-tertiary' : 'text-outline'}`} aria-hidden="true">{stat.icon}</span>
+                    <span className="font-label-md">{stat.label}</span>
                   </div>
-                  <span className="text-sm font-bold text-gray-800">{device.sarEU}</span>
+                  <span className="font-label-md font-bold text-on-surface tabular-nums">{stat.value}</span>
                 </div>
-              )}
+              ))}
             </div>
             <AdUnit slot="device-details-sidebar" className="rounded-xl overflow-hidden" />
           </div>
 
           {/* Right Column: Main Info */}
-          <div className="lg:col-span-2 space-y-8">
-            <div className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-gray-100">
+          <div className="lg:col-span-2 space-y-space-lg">
+            <div className="bg-surface-container-low p-space-md md:p-space-lg rounded-xl shadow-md md:shadow-none">
               {/* Header Info */}
-              <div className="flex flex-wrap justify-between items-start gap-4 mb-8">
+              <div className="flex flex-wrap justify-between items-start gap-space-md mb-space-lg">
                 <div>
-                  <h1 className="text-4xl md:text-5xl font-black text-gray-900 leading-tight tracking-tight">{device.name}</h1>
-                  <p className="text-xl text-gray-600 mt-2 font-medium">{device.brand} • {device.releaseDate || 'Upcoming'}</p>
+                  <h1 className="text-3xl md:text-4xl font-bold tracking-tight leading-tight text-on-surface">{device.name}</h1>
+                  <p className="font-body-lg text-body-lg text-on-surface-variant mt-space-sm">{device.brand} • {device.releaseDate || 'Upcoming'}</p>
                   {device.colors && (
-                    <div className="mt-4 flex items-center gap-2">
-                      <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Available Colors</span>
-                      <span className="text-sm font-bold text-gray-700 bg-gray-50 px-3 py-1 rounded-full">{device.colors}</span>
+                    <div className="mt-space-md flex items-center gap-space-sm">
+                      <span className="font-label-xs text-label-xs font-bold text-outline uppercase tracking-widest">Available Colors</span>
+                      <span className="font-label-sm font-bold text-on-surface bg-surface-container px-space-md py-1 rounded">{device.colors}</span>
                     </div>
                   )}
                 </div>
                 {device.latestPrice && (
-                  <div className="bg-green-600 px-8 py-4 rounded-2xl shadow-lg shadow-green-100 text-white">
-                    <span className="text-[10px] font-black uppercase tracking-widest block mb-1 opacity-90">Best Global Price</span>
-                    <span className="text-4xl font-black">${device.latestPrice.toFixed(2)}</span>
+                  <div className="bg-surface-container-highest px-space-lg py-space-md rounded-xl text-right">
+                    <span className="font-label-xs text-label-xs font-bold text-outline uppercase tracking-widest block mb-0.5">Best Global Price</span>
+                    <span className="font-headline-lg text-headline-lg font-bold text-tertiary tabular-nums">${device.latestPrice.toFixed(2)}</span>
                   </div>
                 )}
               </div>
 
               {/* Highlights Bar */}
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-0 border border-gray-100 rounded-2xl overflow-hidden mb-6 shadow-sm">
-                <div className="p-5 flex flex-col items-center justify-center text-center border-r border-b md:border-b-0 border-gray-50 hover:bg-blue-50 transition-colors">
-                  <FontAwesomeIcon icon={faExpand} className="text-blue-600 mb-3 text-2xl" />
-                  <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">Display</span>
-                  <span className="text-sm font-black text-gray-900">{device.displaySize || '—'}</span>
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center text-center border-r border-b md:border-b-0 border-gray-50 hover:bg-blue-50 transition-colors">
-                  <FontAwesomeIcon icon={faCamera} className="text-blue-600 mb-3 text-2xl" />
-                  <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">Camera</span>
-                  <span className="text-sm font-black text-gray-900">{device.mainCamera || '—'}</span>
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center text-center border-r border-gray-50 hover:bg-blue-50 transition-colors">
-                  <FontAwesomeIcon icon={faMemory} className="text-blue-600 mb-3 text-2xl" />
-                  <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">RAM</span>
-                  <span className="text-sm font-black text-gray-900">{device.ram || '—'}</span>
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center text-center border-r border-gray-50 hover:bg-blue-50 transition-colors">
-                  <FontAwesomeIcon icon={faMicrochip} className="text-blue-600 mb-3 text-2xl" />
-                  <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">Chipset</span>
-                  <span className="text-sm font-black text-gray-900 line-clamp-1">{device.chipset || '—'}</span>
-                </div>
-                <div className="p-5 flex flex-col items-center justify-center text-center hover:bg-blue-50 transition-colors">
-                  <FontAwesomeIcon icon={faBatteryFull} className="text-blue-600 mb-3 text-2xl" />
-                  <span className="text-[10px] uppercase font-black text-gray-500 tracking-wider mb-1">Battery</span>
-                  <span className="text-sm font-black text-gray-900">{device.battery || '—'}</span>
-                </div>
+              <div className="grid grid-cols-2 md:grid-cols-5 rounded-xl overflow-hidden border border-outline-variant divide-x divide-y md:divide-y-0 divide-outline-variant mb-space-lg">
+                {highlights.map((hl) => (
+                  <div key={hl.label} className="p-space-md flex flex-col items-center justify-center text-center hover:bg-surface-container transition-colors">
+                    <span className="material-symbols-outlined text-[22px] text-secondary-container mb-space-sm" aria-hidden="true">{hl.icon}</span>
+                    <span className="font-label-xs text-label-xs uppercase font-bold text-outline tracking-wider mb-0.5">{hl.label}</span>
+                    <span className={`font-label-md font-bold text-on-surface tabular-nums ${hl.clamp ? 'line-clamp-1' : ''}`}>{hl.value || '—'}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Social Share Component */}
@@ -254,16 +212,16 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
 
               {/* Affiliate Buttons (Priority) */}
               {device.affiliateLinks && device.affiliateLinks.length > 0 && (
-                <div className="flex flex-wrap gap-4 mb-10">
+                <div className="flex flex-wrap gap-space-md mb-space-xl">
                   {device.affiliateLinks.map((link, i: number) => (
                     <a
                       key={i}
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex-1 min-w-[150px] bg-orange-500 hover:bg-orange-600 text-white font-black py-4 px-6 rounded-xl flex items-center justify-center transition-all shadow-md hover:shadow-lg shadow-orange-100"
+                      className="flex-1 min-w-[150px] bg-primary-container hover:bg-inverse-primary text-on-primary-container font-label-md font-bold py-space-md px-space-lg rounded-lg flex items-center justify-center gap-space-sm transition-all active:scale-[0.98] shadow-md"
                     >
-                      <FontAwesomeIcon icon={faShoppingCart} className="mr-3" />
+                      <span className="material-symbols-outlined text-[20px]" aria-hidden="true">shopping_cart</span>
                       Buy on {link.platform} {link.price ? `($${link.price})` : ''}
                     </a>
                   ))}
@@ -272,71 +230,69 @@ export default async function DevicePage({ params: promiseParams }: { params: Pr
 
               {/* Review Teaser */}
               {device.reviewTeaser && (
-                <div id="review" className="mb-10 p-6 bg-blue-900 rounded-2xl text-white relative overflow-hidden group">
-                  <FontAwesomeIcon icon={faNewspaper} className="absolute -bottom-4 -right-4 text-8xl opacity-10 group-hover:scale-110 transition-transform" />
-                  <h3 className="text-xl font-black mb-3 flex items-center">
-                    <FontAwesomeIcon icon={faNewspaper} className="mr-3 text-blue-300" />
+                <div id="review" className="mb-space-xl p-space-lg bg-surface-container rounded-xl border border-outline-variant relative overflow-hidden group">
+                  <span className="material-symbols-outlined text-[96px] absolute -bottom-4 -right-4 text-outline-variant opacity-10 group-hover:scale-110 transition-transform" aria-hidden="true">article</span>
+                  <h3 className="font-headline-md text-headline-md font-bold text-on-surface mb-space-md flex items-center gap-space-sm">
+                    <span className="material-symbols-outlined text-[20px] text-secondary-container" aria-hidden="true">article</span>
                     Review Teaser
                   </h3>
-                  <p className="text-blue-50 leading-relaxed italic relative z-10 font-medium">{device.reviewTeaser}</p>
-                  <button className="mt-4 text-sm font-black uppercase tracking-widest text-blue-300 hover:text-white transition-colors">Read Full Review ›</button>
+                  <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed italic relative z-10">{device.reviewTeaser}</p>
+                  <button className="mt-space-md font-label-sm text-label-sm font-bold uppercase tracking-wider text-secondary hover:text-secondary-container transition-colors">Read Full Review</button>
                 </div>
               )}
 
               {/* Buying Options */}
-              <div id="prices" className="mb-10">
+              <div id="prices" className="mb-space-xl">
                 <PriceComparison prices={priceHistory} deviceName={device.name} />
               </div>
 
-              <AdUnit slot="device-details-mid" className="rounded-2xl overflow-hidden" />
+              <AdUnit slot="device-details-mid" className="rounded-xl overflow-hidden" />
 
               {/* Network Technology */}
               {device.networkTechnology && (
-                <div className="mb-10 p-5 bg-gray-50 rounded-2xl border border-gray-100 flex items-center">
-                  <div className="bg-white w-12 h-12 rounded-xl flex items-center justify-center mr-4 border border-gray-100 text-blue-600">
-                    <FontAwesomeIcon icon={faNetworkWired} />
+                <div className="mb-space-xl p-space-md bg-surface-container rounded-xl flex items-center gap-space-md">
+                  <div className="w-10 h-10 rounded-lg bg-surface-container-highest flex items-center justify-center shrink-0 text-secondary-container">
+                    <span className="material-symbols-outlined text-[20px]" aria-hidden="true">lan</span>
                   </div>
                   <div>
-                    <span className="text-[10px] font-black text-gray-500 uppercase tracking-widest block">Network Technology</span>
-                    <span className="font-black text-gray-800">{device.networkTechnology}</span>
+                    <span className="font-label-xs text-label-xs font-bold text-outline uppercase tracking-widest block">Network Technology</span>
+                    <span className="font-label-md font-bold text-on-surface">{device.networkTechnology}</span>
                   </div>
                 </div>
               )}
             </div>
 
             {/* Detailed Specs Table */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-              <SpecsTable device={device} />
-            </div>
+            <SpecsTable device={device} />
 
             {/* User Opinions Section */}
             {device.opinions && device.opinions.length > 0 && (
-              <div id="opinions" className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-                <div className="flex justify-between items-center mb-8">
-                  <h3 className="text-2xl font-black text-gray-800 flex items-center">
-                    <FontAwesomeIcon icon={faCommentDots} className="mr-3 text-indigo-600" />
+              <div id="opinions" className="bg-surface-container-low p-space-md md:p-space-lg rounded-xl shadow-md md:shadow-none">
+                <div className="flex justify-between items-center mb-space-lg">
+                  <h3 className="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-space-sm">
+                    <span className="material-symbols-outlined text-[20px] text-secondary-container" aria-hidden="true">forum</span>
                     User Opinions
                   </h3>
-                  <button className="text-sm font-black text-blue-700 hover:underline uppercase tracking-widest">Post Opinion ›</button>
+                  <button className="font-label-sm text-label-sm font-bold text-secondary uppercase tracking-wider hover:underline">Post Opinion</button>
                 </div>
-                <div className="space-y-6">
+                <div className="space-y-space-md">
                   {device.opinions.map((opinion, i) => (
-                    <div key={i} className="flex gap-4 p-6 bg-gray-50 rounded-2xl border border-gray-100">
-                      <div className="w-12 h-12 rounded-full bg-indigo-600 flex items-center justify-center text-white font-black text-xl flex-shrink-0">
+                    <div key={i} className="flex gap-space-md p-space-md bg-surface-container rounded-xl border border-outline-variant/50">
+                      <div className="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-label-md font-bold shrink-0">
                         {opinion.avatarInitials || opinion.user.charAt(0)}
                       </div>
-                      <div>
-                        <div className="flex items-center gap-3 mb-2">
-                          <span className="font-black text-gray-800">{opinion.user}</span>
-                          <span className="text-[10px] font-bold text-gray-500 uppercase">{opinion.date}</span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-space-sm mb-1">
+                          <span className="font-label-md font-bold text-on-surface">{opinion.user}</span>
+                          <span className="font-label-xs text-label-xs font-bold text-outline uppercase">{opinion.date}</span>
                         </div>
-                        <p className="text-gray-700 leading-relaxed font-medium">{opinion.text}</p>
-                        <button className="mt-3 text-xs font-black text-blue-600 uppercase tracking-tighter hover:text-blue-800">Reply</button>
+                        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">{opinion.text}</p>
+                        <button className="mt-space-sm font-label-xs text-label-xs font-bold text-secondary uppercase tracking-wider hover:text-secondary-container transition-colors">Reply</button>
                       </div>
                     </div>
                   ))}
                 </div>
-                <button className="w-full mt-8 py-4 border-2 border-dashed border-gray-200 rounded-2xl text-gray-600 font-black hover:bg-gray-50 transition-colors">
+                <button className="w-full mt-space-lg py-3 border border-dashed border-outline-variant rounded-lg font-label-md text-on-surface-variant hover:bg-surface-container hover:text-on-surface transition-colors">
                   Read all opinions ({device.opinions.length})
                 </button>
               </div>

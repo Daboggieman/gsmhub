@@ -52,61 +52,61 @@ const ComparePageContent = () => {
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50/50">
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <Breadcrumbs items={breadcrumbItems} />
+    <main className="flex-grow max-w-[1440px] mx-auto w-full px-space-md lg:px-space-lg py-space-lg">
+      <Breadcrumbs items={breadcrumbItems} />
 
-        <div className="mb-12">
-          <CompareBox initialDevices={devices} urlSlugCount={urlSlugCount} />
+      <div className="mb-space-xl">
+        <CompareBox initialDevices={devices} urlSlugCount={urlSlugCount} />
+      </div>
+
+      {error && (
+        <div className="mb-space-lg rounded-xl border border-error-container bg-error-container/15 p-space-md text-center">
+          <p className="font-label-md font-bold text-error mb-space-md">{error}</p>
+          <button
+            onClick={() => router.push('/compare')}
+            className="font-label-xs font-bold uppercase tracking-widest text-error hover:underline"
+          >
+            Clear comparison
+          </button>
         </div>
+      )}
 
-        {error && (
-          <div className="mb-8 rounded-3xl border border-red-200 bg-red-50 p-6 text-center">
-            <p className="font-black text-red-600 mb-3">{error}</p>
-            <button
-              onClick={() => router.push('/compare')}
-              className="text-xs font-black uppercase tracking-widest text-red-500 hover:underline"
-            >
-              Clear comparison
-            </button>
-          </div>
-        )}
+      <AdUnit slot="compare-top" format="horizontal" className="mb-space-lg" />
 
-        <AdUnit slot="compare-top" format="horizontal" className="mb-8" />
-
-        {loading ? (
-          <div className="flex flex-col justify-center items-center py-32 bg-white rounded-3xl shadow-sm border border-gray-100">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-            <p className="text-gray-500 font-bold uppercase tracking-widest text-xs">Analyzing differences...</p>
+      {loading ? (
+        <div className="flex flex-col justify-center items-center py-24 bg-surface-container-low rounded-xl shadow-md md:shadow-none">
+          <span className="material-symbols-outlined text-[48px] text-secondary animate-spin mb-space-md" aria-hidden="true">progress_activity</span>
+          <p className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-on-surface-variant">Analyzing differences...</p>
+        </div>
+      ) : comparisonData ? (
+        <div className="mt-space-lg">
+          <h1 className="font-headline-lg text-headline-lg font-bold mb-space-lg text-on-surface tracking-tight">
+            Comparison: <span className="text-secondary-container">{devices.map((d) => d.name).join(' vs ')}</span>
+          </h1>
+          <ComparisonTable comparisonData={comparisonData} />
+        </div>
+      ) : (
+        <div className="text-center py-20 bg-surface-container-low rounded-xl border border-dashed border-outline-variant">
+          <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-space-lg">
+            <span className="material-symbols-outlined text-[40px] text-outline-variant" aria-hidden="true">compare_arrows</span>
           </div>
-        ) : comparisonData ? (
-          <div className="mt-8">
-            <h1 className="text-3xl font-black mb-8 text-gray-900 tracking-tight">
-              Comparison: <span className="text-blue-600">{devices.map((d) => d.name).join(' vs ')}</span>
-            </h1>
-            <ComparisonTable comparisonData={comparisonData} />
-          </div>
-        ) : (
-          <div className="text-center py-24 bg-white rounded-3xl border-2 border-dashed border-gray-200">
-            <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg className="w-10 h-10 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-              </svg>
-            </div>
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">No devices selected for comparison</h2>
-            <p className="text-gray-500 max-w-md mx-auto">
-              Add at least 2 devices to see a detailed side-by-side comparison with difference highlighting.
-            </p>
-          </div>
-        )}
-      </main>
-    </div>
+          <h2 className="font-headline-lg text-headline-lg font-bold text-on-surface mb-2">No devices selected for comparison</h2>
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto">
+            Add at least 2 devices to see a detailed side-by-side comparison with difference highlighting.
+          </p>
+        </div>
+      )}
+    </main>
   );
 };
 
 const ComparePage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <div className="flex-grow flex items-center justify-center py-20">
+        <span className="material-symbols-outlined text-[48px] text-secondary animate-spin" aria-hidden="true">progress_activity</span>
+      </div>
+    }>
       <ComparePageContent />
     </Suspense>
   );

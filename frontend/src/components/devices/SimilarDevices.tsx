@@ -32,11 +32,11 @@ const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
 
     if (loading) {
         return (
-            <div className="mt-12">
-                <h3 className="text-2xl font-bold text-gray-900 mb-6">Similar Devices</h3>
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="mt-space-lg">
+                <h3 className="font-headline-md text-headline-md font-bold text-on-surface mb-space-md">Similar Devices</h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-space-md">
                     {[...Array(5)].map((_, i) => (
-                        <div key={i} className="animate-pulse bg-gray-200 h-64 rounded-xl"></div>
+                        <div key={i} className="animate-pulse bg-surface-container-high h-64 rounded-xl" aria-hidden="true"></div>
                     ))}
                 </div>
             </div>
@@ -46,8 +46,8 @@ const SimilarDevices: React.FC<SimilarDevicesProps> = ({ deviceId }) => {
     if (devices.length === 0) return null;
 
     return (
-        <div className="mt-12">
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b pb-2">Similar Devices</h3>
+        <div className="mt-space-lg">
+            <h3 className="font-headline-md text-headline-md font-bold text-on-surface mb-space-md pb-space-sm border-b border-outline-variant">Similar Devices</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                 {devices.map((device) => (
                     <DeviceCard key={device._id?.toString() || (device as { id?: string }).id} device={device} />

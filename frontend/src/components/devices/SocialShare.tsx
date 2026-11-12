@@ -41,8 +41,8 @@ const SocialShare: React.FC<SocialShareProps> = ({ url, title }) => {
 
   return (
     <div className="flex flex-wrap items-center gap-3 my-6">
-      <span className="text-sm font-semibold text-gray-700 mr-2">Share:</span>
-      <div className="flex items-center gap-2">
+      <span className="font-label-md text-label-md text-on-surface-variant mr-space-sm">Share:</span>
+      <div className="flex items-center gap-space-sm">
         {shareLinks.map((link) => (
           <a
             key={link.name}
@@ -58,7 +58,7 @@ const SocialShare: React.FC<SocialShareProps> = ({ url, title }) => {
         {typeof navigator !== 'undefined' && 'share' in navigator && (
           <button
             onClick={handleNativeShare}
-            className="bg-gray-800 text-white p-2 rounded-full hover:opacity-90 transition-opacity flex items-center justify-center w-9 h-9"
+            className="bg-surface-container-highest text-on-surface p-2 rounded-full hover:brightness-110 transition-all flex items-center justify-center w-9 h-9"
             title="Other share options"
           >
             <FaShareAlt />

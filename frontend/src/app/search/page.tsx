@@ -118,60 +118,62 @@ const SearchPageContent = () => {
   const searchParamsObj = Object.fromEntries(searchParams.entries());
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-50">
-      <main className="flex-grow container mx-auto px-4 py-8">
-        <Breadcrumbs items={breadcrumbItems} />
+    <main className="flex-grow max-w-[1440px] mx-auto w-full px-space-md lg:px-space-lg py-space-lg">
+      <Breadcrumbs items={breadcrumbItems} />
 
-        <div className="flex flex-col lg:flex-row gap-8 mt-6">
-          {/* Sidebar Filters */}
-          <aside className="w-full lg:w-1/4 space-y-6">
-            <AdvancedFilter
-              filters={{
-                brand, category: categoryParam,
-                minPrice, maxPrice,
-                minRam, maxRam,
-                minStorage, maxStorage,
-                minBattery, maxBattery,
-                minDisplay, maxDisplay
-              }}
-              categories={categories}
-              availableBrands={brands}
-              onUpdate={updateFilters}
-              onClear={clearFilters}
-            />
-          </aside>
+      <div className="flex flex-col lg:flex-row gap-space-lg mt-space-md">
+        {/* Sidebar Filters */}
+        <aside className="w-full lg:w-72 shrink-0 space-y-space-lg">
+          <AdvancedFilter
+            filters={{
+              brand, category: categoryParam,
+              minPrice, maxPrice,
+              minRam, maxRam,
+              minStorage, maxStorage,
+              minBattery, maxBattery,
+              minDisplay, maxDisplay
+            }}
+            categories={categories}
+            availableBrands={brands}
+            onUpdate={updateFilters}
+            onClear={clearFilters}
+          />
+        </aside>
 
-          {/* Results Area */}
-          <div className="w-full lg:w-3/4">
-            <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-200 mb-6 flex justify-between items-center">
-              <div>
-                <h1 className="text-xl font-bold text-gray-900">
-                  {query ? `Results for "${query}"` : brand || 'All Devices'}
-                </h1>
-                <p className="text-sm text-gray-500 mt-1">{total} devices found</p>
-              </div>
+        {/* Results Area */}
+        <div className="w-full lg:flex-1 min-w-0">
+          <div className="bg-surface-container-low px-space-md py-space-md rounded-xl shadow-md md:shadow-none mb-space-lg flex justify-between items-center">
+            <div>
+              <h1 className="font-headline-md text-headline-md font-bold text-on-surface">
+                {query ? `Results for "${query}"` : brand || 'All Devices'}
+              </h1>
+              <p className="font-label-sm text-label-sm text-outline mt-0.5 tabular-nums">{total.toLocaleString()} devices found</p>
             </div>
-
-            <SearchResults results={results} query={query} loading={loading} />
-
-            {!loading && total > 0 && (
-              <Pagination
-                currentPage={page}
-                totalPages={totalPages}
-                baseUrl="/search"
-                searchParams={searchParamsObj}
-              />
-            )}
           </div>
+
+          <SearchResults results={results} query={query} loading={loading} />
+
+          {!loading && total > 0 && (
+            <Pagination
+              currentPage={page}
+              totalPages={totalPages}
+              baseUrl="/search"
+              searchParams={searchParamsObj}
+            />
+          )}
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
   );
 };
 
 const SearchPage = () => {
   return (
-    <Suspense fallback={<div>Loading...</div>}>
+    <Suspense fallback={
+      <div className="flex-grow flex items-center justify-center py-20">
+        <span className="material-symbols-outlined text-[48px] text-secondary animate-spin" aria-hidden="true">progress_activity</span>
+      </div>
+    }>
       <SearchPageContent />
     </Suspense>
   );
