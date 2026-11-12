@@ -5,8 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { AdminUser } from '@/lib/api'
 import { apiClient } from '@/lib/api'
 import { useAuth } from '@/lib/auth-context'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTimes, faSpinner, faUserShield, faUser } from '@fortawesome/free-solid-svg-icons'
 import Pagination from '@/components/ui/Pagination'
 
 const PAGE_LIMIT = 10
@@ -135,21 +133,21 @@ function AdminUsersPageContent() {
   const rangeEnd = Math.min(page * PAGE_LIMIT, total)
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <div className="space-y-space-lg">
+      <div className="flex flex-wrap items-center justify-between gap-space-md">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-gray-900">
+          <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
             User Management
           </h1>
-          <p className="mt-1 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+          <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Add admins and manage account access
           </p>
         </div>
         <button
           onClick={() => setIsFormOpen((o) => !o)}
-          className="flex items-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-xs font-black tracking-widest text-white uppercase shadow-lg shadow-blue-100 transition-all hover:bg-blue-700"
+          className="flex items-center gap-2 rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary"
         >
-          <FontAwesomeIcon icon={isFormOpen ? faTimes : faPlus} />
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{isFormOpen ? 'close' : 'add'}</span>
           {isFormOpen ? 'Cancel' : 'Add User'}
         </button>
       </div>
@@ -157,36 +155,36 @@ function AdminUsersPageContent() {
       {isFormOpen && (
         <form
           onSubmit={handleCreate}
-          className="mb-8 grid grid-cols-1 gap-4 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm md:grid-cols-5"
+          className="grid grid-cols-1 gap-space-md rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none md:grid-cols-5"
         >
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Name
             </label>
             <input
               type="text"
               required
               placeholder="Jane Doe"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={newUser.name}
               onChange={(e) => setNewUser((p) => ({ ...p, name: e.target.value }))}
             />
           </div>
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Email
             </label>
             <input
               type="email"
               required
               placeholder="jane@example.com"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={newUser.email}
               onChange={(e) => setNewUser((p) => ({ ...p, email: e.target.value }))}
             />
           </div>
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Password
             </label>
             <input
@@ -194,17 +192,17 @@ function AdminUsersPageContent() {
               required
               minLength={6}
               placeholder="Min. 6 characters"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={newUser.password}
               onChange={(e) => setNewUser((p) => ({ ...p, password: e.target.value }))}
             />
           </div>
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Role
             </label>
             <select
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={newUser.role}
               onChange={(e) => setNewUser((p) => ({ ...p, role: e.target.value }))}
             >
@@ -216,34 +214,30 @@ function AdminUsersPageContent() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full rounded-xl bg-gray-900 px-6 py-3 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-gray-800 disabled:opacity-50"
+              className="w-full rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary disabled:opacity-50"
             >
-              {isSubmitting ? (
-                <FontAwesomeIcon icon={faSpinner} spin />
-              ) : (
-                'Create User'
-              )}
+              {isSubmitting ? 'Saving…' : 'Create User'}
             </button>
           </div>
           {formError && (
-            <p className="text-xs font-bold text-red-500 md:col-span-5">{formError}</p>
+            <p className="font-body-sm font-bold text-error md:col-span-5">{formError}</p>
           )}
         </form>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-        <div className="border-b border-gray-50 bg-gray-50/30 p-6">
-          <form onSubmit={handleSearch} className="flex max-w-lg gap-2">
+      <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
+        <div className="border-b border-outline-variant bg-surface-container p-space-lg">
+          <form onSubmit={handleSearch} className="flex max-w-lg gap-space-sm">
             <input
               type="text"
               placeholder="Search by name or email..."
-              className="flex-1 rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
             <button
               type="submit"
-              className="rounded-xl bg-gray-900 px-6 py-3 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-gray-800"
+              className="rounded-lg bg-surface-container-highest px-space-lg py-2.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-surface transition-colors hover:brightness-110"
             >
               Filter
             </button>
@@ -253,30 +247,30 @@ function AdminUsersPageContent() {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-gray-100 bg-white">
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+              <tr className="border-b border-outline-variant bg-surface-container">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   User
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Role
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Status
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Joined
                 </th>
-                <th className="px-6 py-5 text-right text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-outline-variant/40">
               {isLoading ? (
                 <tr>
                   <td
                     colSpan={5}
-                    className="animate-pulse px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="animate-pulse px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     Loading Users...
                   </td>
@@ -285,7 +279,7 @@ function AdminUsersPageContent() {
                 <tr>
                   <td
                     colSpan={5}
-                    className="px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     No users found
                   </td>
@@ -296,71 +290,70 @@ function AdminUsersPageContent() {
                   return (
                     <tr
                       key={u.id}
-                      className="transition-colors hover:bg-blue-50/30"
+                      className="transition-colors hover:bg-surface-container"
                     >
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-100 text-sm font-black text-indigo-600">
+                      <td className="px-space-lg py-space-md">
+                        <div className="flex items-center gap-space-md">
+                          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container font-label-md font-bold text-on-primary-container">
                             {u.name?.charAt(0).toUpperCase() || '?'}
                           </div>
                           <div>
-                            <p className="font-black text-gray-900">
+                            <p className="font-label-md font-bold text-on-surface">
                               {u.name}{' '}
                               {isSelf && (
-                                <span className="ml-1 text-[10px] font-black tracking-widest text-gray-400 uppercase">
+                                <span className="ml-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                                   (you)
                                 </span>
                               )}
                             </p>
-                            <p className="text-xs font-bold text-gray-500">
+                            <p className="font-body-sm font-bold text-on-surface-variant">
                               {u.email}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-space-lg py-space-md">
                         <span
-                          className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10px] font-black tracking-wider uppercase ${
+                          className={`inline-flex items-center gap-1.5 rounded px-2 py-1 font-label-xs text-label-xs font-bold uppercase tracking-wider ${
                             u.role === 'admin'
-                              ? 'bg-indigo-100 text-indigo-600'
-                              : 'bg-gray-100 text-gray-600'
+                              ? 'bg-secondary-container/15 text-secondary-container'
+                              : 'bg-surface-container-highest text-on-surface-variant'
                           }`}
                         >
-                          <FontAwesomeIcon
-                            icon={u.role === 'admin' ? faUserShield : faUser}
-                            className="text-[9px]"
-                          />
+                          <span className="material-symbols-outlined text-[12px]" aria-hidden="true">
+                            {u.role === 'admin' ? 'shield_person' : 'person'}
+                          </span>
                           {u.role}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
+                      <td className="px-space-lg py-space-md">
                         <div
                           className={`flex items-center gap-2 ${
-                            u.isActive ? 'text-green-600' : 'text-gray-400'
+                            u.isActive ? 'text-tertiary' : 'text-outline'
                           }`}
                         >
                           <div
                             className={`h-1.5 w-1.5 rounded-full ${
-                              u.isActive ? 'bg-green-500' : 'bg-gray-300'
+                              u.isActive ? 'bg-tertiary' : 'bg-outline'
                             }`}
                           ></div>
-                          <span className="text-[10px] font-black tracking-widest uppercase">
+                          <span className="font-label-xs text-label-xs font-bold uppercase tracking-widest">
                             {u.isActive ? 'Active' : 'Inactive'}
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-sm font-bold text-gray-500">
+                      <td className="px-space-lg py-space-md font-body-sm font-bold text-on-surface-variant tabular-nums">
                         {u.createdAt
                           ? new Date(u.createdAt).toLocaleDateString()
                           : '—'}
                       </td>
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-space-lg py-space-md text-right">
                         <div className="flex justify-end gap-2">
                           <select
                             value={u.role}
                             disabled={isSelf || busyId === u.id}
                             onChange={(e) => u.id && handleRoleChange(u.id, e.target.value)}
-                            className="rounded-xl border border-gray-200 bg-white px-3 py-2 text-[10px] font-black text-gray-700 uppercase outline-none transition-all hover:border-indigo-600 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="rounded-lg border border-outline-variant bg-surface-container px-2 py-2 font-label-xs text-label-xs font-bold uppercase text-on-surface outline-none transition-colors focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-40"
                             title={isSelf ? 'You cannot change your own role' : 'Change role'}
                           >
                             <option value="admin">Admin</option>
@@ -369,25 +362,23 @@ function AdminUsersPageContent() {
                           <button
                             onClick={() => handleToggleActive(u)}
                             disabled={isSelf || busyId === u.id}
-                            className={`rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black uppercase transition-all disabled:cursor-not-allowed disabled:opacity-40 ${
+                            className={`rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold uppercase transition-colors disabled:cursor-not-allowed disabled:opacity-40 ${
                               u.isActive
-                                ? 'text-orange-600 hover:bg-orange-50'
-                                : 'text-green-600 hover:bg-green-50'
+                                ? 'text-on-surface-variant hover:bg-surface-container-high'
+                                : 'text-tertiary hover:bg-tertiary-container/15'
                             }`}
                             title={isSelf ? 'You cannot deactivate your own account' : undefined}
                           >
-                            {busyId === u.id ? (
-                              <FontAwesomeIcon icon={faSpinner} spin />
-                            ) : u.isActive ? (
-                              'Deactivate'
-                            ) : (
-                              'Activate'
-                            )}
+                            {busyId === u.id
+                              ? '…'
+                              : u.isActive
+                                ? 'Deactivate'
+                                : 'Activate'}
                           </button>
                           <button
                             onClick={() => u.id && handleDelete(u.id)}
                             disabled={isSelf || busyId === u.id}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-red-600 uppercase transition-all hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-error uppercase transition-colors hover:bg-error-container/15 disabled:cursor-not-allowed disabled:opacity-40"
                             title={isSelf ? 'You cannot delete your own account' : undefined}
                           >
                             Delete
@@ -403,8 +394,8 @@ function AdminUsersPageContent() {
         </div>
 
         {/* Pagination footer */}
-        <div className="border-t border-gray-100 bg-gray-50/50 p-6">
-          <div className="mb-4 text-center text-[10px] font-black tracking-widest text-gray-500 uppercase">
+        <div className="border-t border-outline-variant bg-surface-container p-space-lg">
+          <div className="mb-space-sm text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline tabular-nums">
             Showing {rangeStart.toLocaleString()}&ndash;
             {rangeEnd.toLocaleString()} of {total.toLocaleString()} users
           </div>

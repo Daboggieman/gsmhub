@@ -3,8 +3,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { apiClient } from '@/lib/api';
 import { SearchResult } from '@shared/types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faMobileAlt, faTimes, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { useRouter } from 'next/navigation';
 
 export default function AdminGlobalSearch() {
@@ -61,48 +59,49 @@ export default function AdminGlobalSearch() {
           placeholder="Jump to device..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="w-full bg-gray-100 border-none rounded-2xl py-2 pl-10 pr-10 text-sm font-bold text-gray-900 focus:ring-2 focus:ring-indigo-500 focus:bg-white transition-all"
+          className="w-full rounded-lg border border-outline-variant bg-surface-container py-2 pl-10 pr-10 font-label-md text-on-surface placeholder-outline transition-colors focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
         />
-        <FontAwesomeIcon icon={faSearch} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs" />
+        <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline" aria-hidden="true">search</span>
         {query && (
           <button
             onClick={() => setQuery('')}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-on-surface"
+            aria-label="Clear search"
           >
-            <FontAwesomeIcon icon={faTimes} className="text-xs" />
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
           </button>
         )}
       </div>
 
       {isOpen && (
-        <div className="absolute z-[100] w-full mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-          <div className="p-2 border-b border-gray-50 bg-gray-50/50">
-            <span className="text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">Quick Results</span>
+        <div className="absolute z-[100] mt-2 w-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-2xl">
+          <div className="border-b border-outline-variant/50 bg-surface-container-low/50 p-2">
+            <span className="px-2 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Quick Results</span>
           </div>
-          <div className="max-h-80 overflow-y-auto no-scrollbar">
+          <div className="no-scrollbar max-h-80 overflow-y-auto">
             {results.length > 0 ? results.map((result) => (
               <button
                 key={result._id}
                 onClick={() => handleResultClick(result)}
-                className="w-full flex items-center gap-3 p-3 hover:bg-indigo-50 transition-colors text-left group border-b border-gray-50 last:border-0"
+                className="group flex w-full items-center gap-space-md border-b border-outline-variant/30 p-space-md text-left transition-colors last:border-0 hover:bg-surface-container"
               >
-                <div className="w-10 h-10 bg-gray-100 rounded-lg flex-shrink-0 p-1">
+                <div className="h-10 w-10 shrink-0 rounded-lg bg-surface-container p-1">
                   {result.imageUrl ? (
-                    <img src={result.imageUrl} alt="" className="w-full h-full object-contain" />
+                    <img src={result.imageUrl} alt="" className="h-full w-full object-contain" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-gray-300">
-                      <FontAwesomeIcon icon={faMobileAlt} className="text-xs" />
+                    <div className="flex h-full w-full items-center justify-center text-outline">
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">smartphone</span>
                     </div>
                   )}
                 </div>
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-black text-gray-900 truncate">{result.name}</p>
-                  <p className="text-[10px] font-bold text-gray-500 uppercase tracking-tight">{result.brand} • {result.category}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-label-md font-bold text-on-surface">{result.name}</p>
+                  <p className="font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">{result.brand} • {result.category}</p>
                 </div>
-                <FontAwesomeIcon icon={faArrowRight} className="text-xs text-indigo-200 group-hover:text-indigo-500 transition-colors" />
+                <span className="material-symbols-outlined text-[18px] text-outline transition-colors group-hover:text-secondary" aria-hidden="true">arrow_forward</span>
               </button>
             )) : (
-              <div className="p-8 text-center text-gray-400 font-bold text-sm">
+              <div className="p-space-xl text-center font-label-sm font-bold text-outline">
                 No matching devices found
               </div>
             )}

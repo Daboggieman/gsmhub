@@ -5,15 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { apiClient } from '@/lib/api'
 import { Device } from '@shared/types'
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faPlus,
-  faUpload,
-  faCheckCircle,
-  faTimesCircle,
-  faSpinner,
-  faSync,
-} from '@fortawesome/free-solid-svg-icons'
 import Pagination from '@/components/ui/Pagination'
 
 const PAGE_LIMIT = 10
@@ -160,11 +151,11 @@ function AdminDevicesPageContent() {
   const rangeEnd = Math.min(page * PAGE_LIMIT, total)
 
   return (
-    <div className="p-4 md:p-8">
+    <div className="space-y-space-lg">
       {/* Sync Settings */}
-      <div className="mb-8 flex flex-wrap items-center gap-6 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+      <div className="flex flex-wrap items-center gap-space-lg rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none">
         <div>
-          <h4 className="mb-3 text-[10px] font-black tracking-widest text-gray-400 uppercase">
+          <h4 className="mb-space-sm font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Conflict Policy
           </h4>
           <button
@@ -174,56 +165,47 @@ function AdminDevicesPageContent() {
                 forceUpdate: !prev.forceUpdate,
               }))
             }
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-[10px] font-black uppercase transition-all ${
+            className={`flex items-center gap-2 rounded-lg px-space-md py-2 font-label-xs text-label-xs font-bold uppercase transition-colors ${
               syncOptions.forceUpdate
-                ? 'bg-orange-500 text-white shadow-md shadow-orange-100'
-                : 'bg-gray-100 text-gray-400'
+                ? 'bg-secondary-container text-on-secondary-container'
+                : 'bg-surface-container text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            <div
-              className={`h-3 w-3 rounded-full border-2 ${
-                syncOptions.forceUpdate
-                  ? 'border-orange-400 bg-white'
-                  : 'border-gray-300'
-              }`}
-            ></div>
+            <span
+              className={`material-symbols-outlined text-[16px] ${syncOptions.forceUpdate ? '' : 'text-outline'}`}
+              aria-hidden="true"
+            >
+              {syncOptions.forceUpdate ? 'toggle_on' : 'toggle_off'}
+            </span>
             {syncOptions.forceUpdate ? 'Force Overwrite' : 'Fill Gaps Only'}
           </button>
         </div>
       </div>
 
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-space-md">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-gray-900">
+          <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
             Device Inventory
           </h1>
-          <p className="mt-1 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+          <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Manage your catalog of smartphones and tablets
           </p>
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-space-sm">
           <button
             onClick={handleSyncByBrand}
             disabled={isSyncingAll}
-            className="flex items-center gap-2 rounded-2xl border-2 border-gray-200 bg-white px-6 py-3 text-xs font-black tracking-widest text-gray-700 uppercase shadow-sm transition-all hover:border-indigo-600 hover:text-indigo-600 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-outline-variant px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-surface transition-colors hover:bg-surface-container disabled:opacity-50"
           >
-            {isSyncingAll ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
-            ) : (
-              <FontAwesomeIcon icon={faSync} />
-            )}
+            <span className={`material-symbols-outlined text-[18px] ${isSyncingAll ? 'progress_activity animate-spin' : ''}`} aria-hidden="true">{isSyncingAll ? '' : 'sync'}</span>
             Sync Brand
           </button>
           <button
             onClick={() => fileInputRef.current?.click()}
             disabled={isImporting}
-            className="flex items-center gap-2 rounded-2xl border-2 border-gray-200 bg-white px-6 py-3 text-xs font-black tracking-widest text-gray-700 uppercase shadow-sm transition-all hover:border-blue-600 hover:text-blue-600 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-lg border border-outline-variant px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-surface transition-colors hover:bg-surface-container disabled:opacity-50"
           >
-            {isImporting ? (
-              <FontAwesomeIcon icon={faSpinner} spin />
-            ) : (
-              <FontAwesomeIcon icon={faUpload} />
-            )}
+            <span className={`material-symbols-outlined text-[18px] ${isImporting ? 'progress_activity animate-spin' : ''}`} aria-hidden="true">{isImporting ? '' : 'upload'}</span>
             Bulk Import
           </button>
           <input
@@ -235,9 +217,9 @@ function AdminDevicesPageContent() {
           />
           <Link
             href="/admin/devices/new"
-            className="flex items-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-xs font-black tracking-widest text-white uppercase shadow-lg shadow-blue-100 transition-all hover:bg-blue-700"
+            className="flex items-center gap-2 rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary"
           >
-            <FontAwesomeIcon icon={faPlus} />
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
             Add Device
           </Link>
         </div>
@@ -245,23 +227,22 @@ function AdminDevicesPageContent() {
 
       {importStatus && (
         <div
-          className={`mb-8 rounded-3xl border p-6 ${importStatus.failed > 0 ? 'border-orange-200 bg-orange-50 text-orange-800' : 'border-green-200 bg-green-50 text-green-800'}`}
+          className={`rounded-xl border p-space-lg ${importStatus.failed > 0 ? 'border-error-container/40 bg-error-container/15 text-error' : 'border-tertiary-container/40 bg-tertiary-container/15 text-tertiary'}`}
         >
-          <div className="mb-2 flex items-center gap-3">
-            <FontAwesomeIcon
-              icon={importStatus.failed > 0 ? faTimesCircle : faCheckCircle}
-              className="text-xl"
-            />
-            <span className="text-sm font-black tracking-widest uppercase">
+          <div className="mb-2 flex items-center gap-space-md">
+            <span className="material-symbols-outlined text-[20px]" aria-hidden="true">
+              {importStatus.failed > 0 ? 'error' : 'check_circle'}
+            </span>
+            <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest">
               Import Results
             </span>
           </div>
-          <p className="font-bold">
+          <p className="font-label-md font-bold tabular-nums">
             Successfully imported: {importStatus.success} | Failed:{' '}
             {importStatus.failed}
           </p>
           {importStatus.errors.length > 0 && (
-            <ul className="mt-3 list-inside list-disc space-y-1 text-xs font-medium opacity-80">
+            <ul className="mt-space-md list-inside list-disc space-y-1 font-body-sm opacity-80">
               {importStatus.errors.slice(0, 5).map((err, i) => (
                 <li key={i}>{err}</li>
               ))}
@@ -272,35 +253,35 @@ function AdminDevicesPageContent() {
           )}
           <button
             onClick={() => setImportStatus(null)}
-            className="mt-4 text-[10px] font-black uppercase underline"
+            className="mt-space-md font-label-xs text-label-xs font-bold uppercase underline"
           >
             Dismiss
           </button>
         </div>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-        <div className="flex items-center justify-between border-b border-gray-50 bg-gray-50/30 p-6">
-          <form onSubmit={handleSearch} className="flex max-w-lg flex-1 gap-2">
+      <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
+        <div className="flex items-center justify-between gap-space-lg border-b border-outline-variant bg-surface-container p-space-lg">
+          <form onSubmit={handleSearch} className="flex max-w-lg flex-1 gap-space-sm">
             <input
               type="text"
               placeholder="Search by brand, model or name..."
-              className="flex-1 rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
             <button
               type="submit"
-              className="rounded-xl bg-gray-900 px-6 py-3 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-gray-800"
+              className="rounded-lg bg-surface-container-highest px-space-lg py-2.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-surface transition-colors hover:brightness-110"
             >
               Filter
             </button>
           </form>
           <div className="hidden text-right md:block">
-            <span className="text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <span className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Total Catalog
             </span>
-            <p className="text-2xl font-black text-gray-900">
+            <p className="font-headline-md font-bold text-on-surface tabular-nums">
               {total.toLocaleString()}
             </p>
           </div>
@@ -309,30 +290,30 @@ function AdminDevicesPageContent() {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-gray-100 bg-white">
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+              <tr className="border-b border-outline-variant bg-surface-container">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Device
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Category
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Metrics
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Status
                 </th>
-                <th className="px-6 py-5 text-right text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-outline-variant/40">
               {isLoading ? (
                 <tr>
                   <td
                     colSpan={5}
-                    className="animate-pulse px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="animate-pulse px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     Loading Inventory...
                   </td>
@@ -341,7 +322,7 @@ function AdminDevicesPageContent() {
                 <tr>
                   <td
                     colSpan={5}
-                    className="px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     No devices found
                   </td>
@@ -352,11 +333,11 @@ function AdminDevicesPageContent() {
                   return (
                     <tr
                       key={deviceId || index}
-                      className="group transition-colors hover:bg-blue-50/30"
+                      className="group transition-colors hover:bg-surface-container"
                     >
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-gray-100 bg-gray-50 p-2">
+                      <td className="px-space-lg py-space-md">
+                        <div className="flex items-center gap-space-md">
+                          <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-outline-variant/50 bg-surface-container p-2">
                             <img
                               src={device.imageUrl || '/placeholder-device.png'}
                               alt=""
@@ -364,61 +345,57 @@ function AdminDevicesPageContent() {
                             />
                           </div>
                           <div>
-                            <p className="font-black text-gray-900">
+                            <p className="font-label-md font-bold text-on-surface">
                               {device.name}
                             </p>
-                            <p className="text-xs font-bold text-gray-500 uppercase">
+                            <p className="font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
                               {device.brand}
                             </p>
                           </div>
                         </div>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="rounded-full bg-gray-100 px-3 py-1 text-[10px] font-black tracking-wider text-gray-600 uppercase">
+                      <td className="px-space-lg py-space-md">
+                        <span className="rounded bg-surface-container-highest px-2 py-1 font-label-xs text-label-xs font-bold uppercase tracking-wider text-on-surface-variant">
                           {device.category &&
                           typeof device.category === 'object'
                             ? (device.category as { name: string }).name
                             : 'General'}
                         </span>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-black text-gray-800">
+                      <td className="px-space-lg py-space-md">
+                        <p className="font-label-md font-bold text-on-surface tabular-nums">
                           {device.views?.toLocaleString()}{' '}
-                          <span className="text-[10px] text-gray-400 uppercase">
+                          <span className="font-label-xs text-label-xs uppercase text-outline">
                             Hits
                           </span>
                         </p>
                       </td>
-                      <td className="px-6 py-4">
-                        <div className="flex items-center gap-2 text-green-600">
-                          <div className="h-1.5 w-1.5 rounded-full bg-green-500"></div>
-                          <span className="text-[10px] font-black tracking-widest uppercase">
+                      <td className="px-space-lg py-space-md">
+                        <div className="flex items-center gap-2 text-tertiary">
+                          <div className="h-1.5 w-1.5 rounded-full bg-tertiary"></div>
+                          <span className="font-label-xs text-label-xs font-bold uppercase tracking-widest">
                             Active
                           </span>
                         </div>
                       </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex justify-end gap-2 opacity-0 transition-all group-hover:opacity-100">
+                      <td className="px-space-lg py-space-md text-right">
+                        <div className="flex justify-end gap-2 opacity-0 transition-opacity group-hover:opacity-100">
                           <button
                             onClick={() => handleSync(device)}
                             disabled={syncingId === deviceId}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-indigo-600 uppercase transition-all hover:bg-indigo-50 disabled:opacity-50"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-secondary uppercase transition-colors hover:bg-surface-container-high disabled:opacity-50"
                           >
-                            {syncingId === deviceId ? (
-                              <FontAwesomeIcon icon={faSpinner} spin />
-                            ) : (
-                              'Sync'
-                            )}
+                            {syncingId === deviceId ? '…' : 'Sync'}
                           </button>
                           <Link
                             href={`/admin/devices/edit/${deviceId}`}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-gray-700 uppercase transition-all hover:border-blue-600 hover:text-blue-600"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-on-surface uppercase transition-colors hover:bg-surface-container-high"
                           >
                             Edit
                           </Link>
                           <button
                             onClick={() => handleDelete(deviceId!)}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-red-600 uppercase transition-all hover:bg-red-50"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-error uppercase transition-colors hover:bg-error-container/15"
                           >
                             Delete
                           </button>
@@ -433,8 +410,8 @@ function AdminDevicesPageContent() {
         </div>
 
         {/* Pagination footer */}
-        <div className="border-t border-gray-100 bg-gray-50/50 p-6">
-          <div className="mb-4 text-center text-[10px] font-black tracking-widest text-gray-500 uppercase">
+        <div className="border-t border-outline-variant bg-surface-container p-space-lg">
+          <div className="mb-space-sm text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline tabular-nums">
             Showing {rangeStart.toLocaleString()}&ndash;
             {rangeEnd.toLocaleString()} of {total.toLocaleString()} devices
           </div>

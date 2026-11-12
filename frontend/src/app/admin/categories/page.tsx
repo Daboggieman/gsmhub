@@ -53,58 +53,89 @@ export default function AdminCategoriesPage() {
   };
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h3 className="text-xl font-semibold">Manage Categories</h3>
+    <div className="space-y-space-lg">
+      <div className="flex flex-wrap items-center justify-between gap-space-md">
+        <h3 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Manage Categories
+        </h3>
         <Link
           href="/admin/categories/new"
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition"
+          className="flex items-center gap-2 rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary"
         >
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
           Add New Category
         </Link>
       </div>
 
-      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
+      <form onSubmit={handleSearch} className="flex gap-space-sm">
         <input
           type="text"
           placeholder="Search categories..."
-          className="flex-1 border border-gray-300 rounded-xl px-4 py-2 focus:ring-2 focus:ring-indigo-500 outline-none text-gray-900"
+          className="flex-1 rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <button type="submit" className="bg-gray-800 text-white px-6 py-2 rounded-xl font-bold hover:bg-gray-700 transition-colors">
+        <button
+          type="submit"
+          className="rounded-lg bg-surface-container-highest px-space-lg py-2.5 font-label-sm font-bold text-on-surface transition-colors hover:brightness-110"
+        >
           Search
         </button>
       </form>
 
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
-          <thead>
-            <tr className="bg-gray-50 border-b border-gray-200">
-              <th className="px-6 py-3 text-sm font-semibold text-gray-600">Name</th>
-              <th className="px-6 py-3 text-sm font-semibold text-gray-600">Slug</th>
-              <th className="px-6 py-3 text-sm font-semibold text-gray-600">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr key="loading-row"><td colSpan={3} className="px-6 py-4 text-center">Loading...</td></tr>
-            ) : categories.length === 0 ? (
-              <tr key="empty-row"><td colSpan={3} className="px-6 py-4 text-center">No categories found.</td></tr>
-            ) : (
-              categories.map((category) => (
-                <tr key={category.id || (category as { _id?: string })._id} className="border-b border-gray-100 hover:bg-gray-50">
-                  <td className="px-6 py-4 font-medium text-gray-900">{category.name}</td>
-                  <td className="px-6 py-4 text-gray-600">{category.slug}</td>
-                  <td className="px-6 py-4 space-x-3">
-                    <Link href={`/admin/categories/edit/${category.id}`} className="text-indigo-600 hover:text-indigo-900">Edit</Link>
-                    <button onClick={() => handleDelete(category.id!)} className="text-red-600 hover:text-red-900">Delete</button>
+      <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
+        <div className="overflow-x-auto">
+          <table className="w-full border-collapse text-left">
+            <thead>
+              <tr className="border-b border-outline-variant bg-surface-container">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Name</th>
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Slug</th>
+                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-outline-variant/40">
+              {isLoading ? (
+                <tr key="loading-row">
+                  <td colSpan={3} className="animate-pulse px-space-lg py-space-lg text-center font-label-md text-outline">
+                    Loading...
                   </td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : categories.length === 0 ? (
+                <tr key="empty-row">
+                  <td colSpan={3} className="px-space-lg py-space-lg text-center font-label-md text-outline">
+                    No categories found.
+                  </td>
+                </tr>
+              ) : (
+                categories.map((category) => (
+                  <tr
+                    key={category.id || (category as { _id?: string })._id}
+                    className="transition-colors hover:bg-surface-container"
+                  >
+                    <td className="px-space-lg py-space-md font-label-md font-bold text-on-surface">{category.name}</td>
+                    <td className="px-space-lg py-space-md font-body-sm text-on-surface-variant">{category.slug}</td>
+                    <td className="px-space-lg py-space-md text-right">
+                      <div className="flex justify-end gap-space-md">
+                        <Link
+                          href={`/admin/categories/edit/${category.id}`}
+                          className="font-label-sm font-bold text-secondary hover:text-secondary-container"
+                        >
+                          Edit
+                        </Link>
+                        <button
+                          onClick={() => handleDelete(category.id!)}
+                          className="font-label-sm font-bold text-error hover:underline"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );

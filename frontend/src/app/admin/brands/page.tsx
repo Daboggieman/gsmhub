@@ -4,14 +4,6 @@ import { useEffect, useState } from 'react'
 import { AdminBrand } from '@/lib/api'
 import { apiClient } from '@/lib/api'
 import Link from 'next/link'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faPlus,
-  faEdit,
-  faTrash,
-  faImage,
-  faSync,
-} from '@fortawesome/free-solid-svg-icons'
 
 export default function AdminBrandsPage() {
   const [brands, setBrands] = useState<AdminBrand[]>([])
@@ -80,11 +72,11 @@ export default function AdminBrandsPage() {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-space-lg">
       {/* Sync Settings */}
-      <div className="mb-8 flex flex-wrap items-center gap-6 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm">
+      <div className="flex flex-wrap items-center gap-space-lg rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none">
         <div>
-          <h4 className="mb-3 text-[10px] font-black tracking-widest text-gray-400 uppercase">
+          <h4 className="mb-space-sm font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Conflict Policy
           </h4>
           <button
@@ -94,100 +86,98 @@ export default function AdminBrandsPage() {
                 forceUpdate: !prev.forceUpdate,
               }))
             }
-            className={`flex items-center gap-2 rounded-xl px-4 py-2 text-[10px] font-black uppercase transition-all ${
+            className={`flex items-center gap-2 rounded-lg px-space-md py-2 font-label-xs text-label-xs font-bold uppercase transition-colors ${
               syncOptions.forceUpdate
-                ? 'bg-orange-500 text-white shadow-md shadow-orange-100'
-                : 'bg-gray-100 text-gray-400'
+                ? 'bg-secondary-container text-on-secondary-container'
+                : 'bg-surface-container text-on-surface-variant hover:text-on-surface'
             }`}
           >
-            <div
-              className={`h-3 w-3 rounded-full border-2 ${
-                syncOptions.forceUpdate
-                  ? 'border-orange-400 bg-white'
-                  : 'border-gray-300'
-              }`}
-            ></div>
+            <span
+              className={`material-symbols-outlined text-[16px] ${syncOptions.forceUpdate ? '' : 'text-outline'}`}
+              aria-hidden="true"
+            >
+              {syncOptions.forceUpdate ? 'toggle_on' : 'toggle_off'}
+            </span>
             {syncOptions.forceUpdate ? 'Force Overwrite' : 'Fill Gaps Only'}
           </button>
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-space-md">
         <div>
-          <h3 className="text-3xl font-black text-gray-900">
+          <h3 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
             Brand Management
           </h3>
-          <p className="mt-1 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+          <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Manage manufacturers and logos
           </p>
         </div>
-        <Link
-          href="/admin/brands/new"
-          className="flex items-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-xs font-black tracking-widest text-white uppercase shadow-lg shadow-blue-100 transition-all hover:bg-blue-700"
-        >
-          <FontAwesomeIcon icon={faPlus} />
-          Add Brand
-        </Link>
-        <button
-          onClick={() => handleSync()}
-          disabled={isSyncing === 'all'}
-          className="flex items-center gap-2 rounded-2xl bg-gray-800 px-6 py-3 text-xs font-black tracking-widest text-white uppercase shadow-lg transition-all hover:bg-gray-900 disabled:opacity-50"
-        >
-          <FontAwesomeIcon
-            icon={faSync}
-            className={isSyncing === 'all' ? 'fa-spin' : ''}
-          />
-          Sync All
-        </button>
+        <div className="flex flex-wrap gap-space-sm">
+          <Link
+            href="/admin/brands/new"
+            className="flex items-center gap-2 rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary"
+          >
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
+            Add Brand
+          </Link>
+          <button
+            onClick={() => handleSync()}
+            disabled={isSyncing === 'all'}
+            className="flex items-center gap-2 rounded-lg bg-surface-container-highest px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-surface transition-colors hover:brightness-110 disabled:opacity-50"
+          >
+            <span className={`material-symbols-outlined text-[18px] ${isSyncing === 'all' ? 'progress_activity animate-spin' : ''}`} aria-hidden="true">{isSyncing === 'all' ? '' : 'sync'}</span>
+            Sync All
+          </button>
+        </div>
       </div>
 
-      <form onSubmit={handleSearch} className="mb-6 flex gap-2">
+      <form onSubmit={handleSearch} className="flex gap-space-sm">
         <input
           type="text"
           placeholder="Search brands..."
-          className="flex-1 rounded-2xl border border-gray-300 px-4 py-2 text-gray-900 outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
         <button
           type="submit"
-          className="rounded-2xl bg-gray-800 px-6 py-2 font-bold text-white transition-colors hover:bg-gray-700"
+          className="rounded-lg bg-surface-container-highest px-space-lg py-2.5 font-label-sm font-bold text-on-surface transition-colors hover:brightness-110"
         >
           Search
         </button>
       </form>
 
-      <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-xl">
+      <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-gray-100 bg-gray-50/50">
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+              <tr className="border-b border-outline-variant bg-surface-container">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Logo
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Name
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Slug
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Devices
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Status
                 </th>
-                <th className="px-8 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-outline-variant/40">
               {isLoading ? (
                 <tr key="loading-row">
                   <td
                     colSpan={6}
-                    className="px-8 py-10 text-center font-bold text-gray-400"
+                    className="px-space-lg py-space-lg text-center font-label-md font-bold text-outline"
                   >
                     Loading manufacturers...
                   </td>
@@ -196,7 +186,7 @@ export default function AdminBrandsPage() {
                 <tr key="empty-row">
                   <td
                     colSpan={6}
-                    className="px-8 py-10 text-center font-bold tracking-widest text-gray-400 uppercase"
+                    className="px-space-lg py-space-lg text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     No brands registered
                   </td>
@@ -205,10 +195,10 @@ export default function AdminBrandsPage() {
                 brands.map((brand, index) => (
                   <tr
                     key={brand.id || brand._id || brand.slug || index}
-                    className="group transition-colors hover:bg-blue-50/30"
+                    className="group transition-colors hover:bg-surface-container"
                   >
-                    <td className="px-8 py-4">
-                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-xl border border-gray-50 bg-gray-100 p-2">
+                    <td className="px-space-lg py-space-md">
+                      <div className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-lg border border-outline-variant/50 bg-surface-container p-2">
                         {brand.logoUrl ? (
                           <img
                             src={brand.logoUrl}
@@ -216,58 +206,55 @@ export default function AdminBrandsPage() {
                             className="max-h-full max-w-full object-contain"
                           />
                         ) : (
-                          <FontAwesomeIcon
-                            icon={faImage}
-                            className="text-gray-300"
-                          />
+                          <span className="material-symbols-outlined text-[20px] text-outline" aria-hidden="true">image</span>
                         )}
                       </div>
                     </td>
-                    <td className="px-8 py-4 font-black text-gray-900">
+                    <td className="px-space-lg py-space-md font-label-md font-bold text-on-surface">
                       {brand.name}
                     </td>
-                    <td className="px-8 py-4 font-mono text-xs text-gray-500">
+                    <td className="px-space-lg py-space-md font-body-sm text-on-surface-variant">
                       {brand.slug}
                     </td>
-                    <td className="px-8 py-4">
-                      <span className="rounded-full bg-blue-50 px-3 py-1 text-xs font-black text-blue-700">
+                    <td className="px-space-lg py-space-md">
+                      <span className="rounded bg-secondary-container/15 px-2 py-1 font-label-sm font-bold text-secondary-container tabular-nums">
                         {brand.deviceCount} Devices
                       </span>
                     </td>
-                    <td className="px-8 py-4">
+                    <td className="px-space-lg py-space-md">
                       <span
-                        className={`rounded-full px-3 py-1 text-[10px] font-black tracking-widest uppercase ${brand.isFeatured ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}
+                        className={`rounded px-2 py-1 font-label-xs text-label-xs font-bold uppercase tracking-widest ${brand.isFeatured ? 'bg-tertiary-container/15 text-tertiary' : 'bg-surface-container-highest text-on-surface-variant'}`}
                       >
                         {brand.isFeatured ? 'Featured' : 'Standard'}
                       </span>
                     </td>
-                    <td className="px-8 py-4 text-right">
-                      <div className="flex justify-end gap-3 opacity-0 transition-opacity group-hover:opacity-100">
+                    <td className="px-space-lg py-space-md text-right">
+                      <div className="flex justify-end gap-space-md opacity-0 transition-opacity group-hover:opacity-100">
                         <Link
                           href={`/admin/brands/${brand.id}`}
-                          className="text-blue-500 transition-colors hover:text-blue-700"
+                          className="text-secondary transition-colors hover:text-secondary-container"
                           title="Edit Brand"
                         >
-                          <FontAwesomeIcon icon={faEdit} />
+                          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">edit</span>
                         </Link>
                         <button
                           onClick={() => handleSync(brand.name)}
                           disabled={!!isSyncing}
-                          className="text-amber-500 transition-colors hover:text-amber-700"
+                          className="text-on-surface-variant transition-colors hover:text-on-surface disabled:opacity-50"
                           title="Sync Devices"
                         >
-                          <FontAwesomeIcon
-                            icon={faSync}
-                            className={
-                              isSyncing === brand.name ? 'fa-spin' : ''
-                            }
-                          />
+                          <span
+                            className={`material-symbols-outlined text-[20px] ${isSyncing === brand.name ? 'progress_activity animate-spin' : ''}`}
+                            aria-hidden="true"
+                          >
+                            {isSyncing === brand.name ? '' : 'sync'}
+                          </span>
                         </button>
                         <button
                           onClick={() => brand.id && handleDelete(brand.id)}
-                          className="text-red-400 transition-colors hover:text-red-600"
+                          className="text-error transition-colors hover:text-error-container"
                         >
-                          <FontAwesomeIcon icon={faTrash} />
+                          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">delete</span>
                         </button>
                       </div>
                     </td>

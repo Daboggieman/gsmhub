@@ -5,15 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { apiClient, AuditLogEntry } from '@/lib/api';
 import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-    faHistory,
-    faInfoCircle,
-    faUser,
-    faSyncAlt,
-    faChevronDown,
-    faChevronUp
-} from '@fortawesome/free-solid-svg-icons';
 
 const LIMIT = 20;
 
@@ -100,10 +91,10 @@ function AuditLogsPageContent() {
     const totalPages = Math.ceil(total / LIMIT);
 
     const getActionColor = (action: string) => {
-        if (action.includes('POST')) return 'text-green-600 bg-green-50';
-        if (action.includes('PATCH')) return 'text-blue-600 bg-blue-50';
-        if (action.includes('DELETE')) return 'text-red-600 bg-red-50';
-        return 'text-gray-600 bg-gray-50';
+        if (action.includes('POST')) return 'bg-tertiary-container/15 text-tertiary';
+        if (action.includes('PATCH')) return 'bg-secondary-container/15 text-secondary-container';
+        if (action.includes('DELETE')) return 'bg-error-container/15 text-error';
+        return 'bg-surface-container-highest text-on-surface-variant';
     };
 
     // Audit-log user references can be a populated object or a bare id string.
@@ -113,43 +104,44 @@ function AuditLogsPageContent() {
         typeof u === 'object' && u ? u.email : undefined;
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto">
             <Breadcrumbs items={breadcrumbItems} />
 
-            <div className="flex flex-wrap justify-between items-center mb-8 mt-4 gap-4">
+            <div className="mb-space-lg mt-space-md flex flex-wrap items-center justify-between gap-space-md">
                 <div>
-                    <h1 className="text-3xl font-black text-gray-900 flex items-center gap-3">
-                        <FontAwesomeIcon icon={faHistory} className="text-blue-500" />
+                    <h1 className="flex items-center gap-space-sm font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+                        <span className="material-symbols-outlined text-[24px] text-secondary" aria-hidden="true">history</span>
                         Audit Logs
                     </h1>
-                    <p className="text-gray-500 font-medium mt-1">Track administrative actions and system modifications.</p>
+                    <p className="mt-1 font-body-md text-on-surface-variant">Track administrative actions and system modifications.</p>
                 </div>
-                <div className="flex items-center gap-4">
-                    <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-xl border border-gray-100 shadow-sm">
-                        <div className={`w-2 h-2 rounded-full ${isAutoRefresh ? 'bg-green-500 animate-pulse' : 'bg-gray-300'}`}></div>
-                        <span className="text-[10px] font-black uppercase tracking-widest text-gray-400">Live Updates</span>
-                        <button 
+                <div className="flex items-center gap-space-md">
+                    <div className="flex items-center gap-2 rounded-lg border border-outline-variant bg-surface-container-low px-space-md py-2 shadow-md md:shadow-none">
+                        <div className={`h-2 w-2 rounded-full ${isAutoRefresh ? 'animate-pulse bg-tertiary' : 'bg-outline'}`}></div>
+                        <span className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Live Updates</span>
+                        <button
                             onClick={() => setIsAutoRefresh(!isAutoRefresh)}
-                            className={`ml-2 text-[10px] font-black uppercase tracking-widest ${isAutoRefresh ? 'text-blue-600' : 'text-gray-400'}`}
+                            className={`ml-2 font-label-xs text-label-xs font-bold uppercase tracking-widest ${isAutoRefresh ? 'text-secondary' : 'text-outline hover:text-on-surface'}`}
                         >
                             {isAutoRefresh ? 'Disable' : 'Enable'}
                         </button>
                     </div>
                     <button
                         onClick={() => setRefreshTick((t) => t + 1)}
-                        className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-100"
+                        className="rounded-lg bg-surface-container-highest p-2.5 text-on-surface transition-colors hover:brightness-110"
+                        aria-label="Refresh logs"
                     >
-                        <FontAwesomeIcon icon={faSyncAlt} className={loading ? 'animate-spin' : ''} />
+                        <span className={`material-symbols-outlined text-[20px] ${loading ? 'progress_activity animate-spin' : ''}`} aria-hidden="true">{loading ? '' : 'refresh'}</span>
                     </button>
                 </div>
             </div>
 
             {/* Filters */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8 bg-white p-6 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="mb-space-lg grid grid-cols-1 gap-space-md rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none md:grid-cols-4">
                 <div>
-                    <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Action Type</label>
+                    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Action Type</label>
                     <select
-                        className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900"
+                        className="w-full rounded-lg border border-outline-variant bg-surface-container p-2.5 font-label-md text-on-surface outline-none focus:border-transparent focus:ring-1 focus:ring-primary"
                         value={filters.action}
                         onChange={(e) => updateFilter('action', e.target.value)}
                     >
@@ -163,9 +155,9 @@ function AuditLogsPageContent() {
                     </select>
                 </div>
                 <div>
-                    <label className="block text-xs font-black uppercase tracking-widest text-gray-400 mb-2">Resource Type</label>
+                    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Resource Type</label>
                     <select
-                        className="w-full p-3 bg-gray-50 border border-gray-100 rounded-xl text-sm font-bold outline-none focus:ring-2 focus:ring-blue-500 transition-all text-gray-900"
+                        className="w-full rounded-lg border border-outline-variant bg-surface-container p-2.5 font-label-md text-on-surface outline-none focus:border-transparent focus:ring-1 focus:ring-primary"
                         value={filters.targetType}
                         onChange={(e) => updateFilter('targetType', e.target.value)}
                     >
@@ -176,83 +168,85 @@ function AuditLogsPageContent() {
                         <option value="prices">Prices</option>
                     </select>
                 </div>
-                <div className="md:col-span-2 flex items-end">
+                <div className="flex items-end md:col-span-2">
                     <button
                         onClick={() => router.push('/admin/audit-logs')}
-                        className="p-3 text-red-500 font-black text-xs uppercase tracking-widest hover:underline"
+                        className="p-2.5 font-label-sm text-label-sm font-bold uppercase tracking-widest text-error hover:underline"
                     >
                         Reset Filters
                     </button>
                 </div>
             </div>
 
-            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
                 <div className="overflow-x-auto">
-                    <table className="w-full text-left border-collapse">
+                    <table className="w-full border-collapse text-left">
                         <thead>
-                            <tr className="bg-gray-50/50">
-                                <th className="p-6 border-b border-gray-100 text-xs font-black uppercase tracking-widest text-gray-400">Time</th>
-                                <th className="p-6 border-b border-gray-100 text-xs font-black uppercase tracking-widest text-gray-400">Admin</th>
-                                <th className="p-6 border-b border-gray-100 text-xs font-black uppercase tracking-widest text-gray-400">Action</th>
-                                <th className="p-6 border-b border-gray-100 text-xs font-black uppercase tracking-widest text-gray-400">Target</th>
-                                <th className="p-6 border-b border-gray-100 text-xs font-black uppercase tracking-widest text-gray-400 text-right">Details</th>
+                            <tr className="border-b border-outline-variant bg-surface-container">
+                                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Time</th>
+                                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Admin</th>
+                                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Action</th>
+                                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Target</th>
+                                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Details</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-50">
+                        <tbody className="divide-y divide-outline-variant/40">
                             {loading && logs.length === 0 ? (
                                 <tr key="loading-row">
-                                    <td colSpan={5} className="p-12 text-center">
-                                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto"></div>
+                                    <td colSpan={5} className="px-space-lg py-space-xl text-center">
+                                        <span className="material-symbols-outlined progress_activity animate-spin mx-auto block text-[32px] text-secondary" aria-hidden="true"></span>
                                     </td>
                                 </tr>
                             ) : logs.length === 0 ? (
                                 <tr key="empty-row">
-                                    <td colSpan={5} className="p-12 text-center text-gray-500 font-bold">No logs found matching your filters.</td>
+                                    <td colSpan={5} className="px-space-lg py-space-xl text-center font-label-md font-bold text-outline">No logs found matching your filters.</td>
                                 </tr>
                             ) : logs.map((log) => (
                                 <React.Fragment key={log._id}>
-                                    <tr className="hover:bg-gray-50/50 transition-colors group cursor-pointer" onClick={() => setExpandedId(expandedId === log._id ? null : log._id ?? null)}>
-                                        <td className="p-6 text-sm font-medium text-gray-500">
+                                    <tr className="group cursor-pointer transition-colors hover:bg-surface-container" onClick={() => setExpandedId(expandedId === log._id ? null : log._id ?? null)}>
+                                        <td className="px-space-lg py-space-md font-body-sm text-on-surface-variant tabular-nums">
                                             <div className="flex flex-col">
                                                 <span>{new Date(log.createdAt).toLocaleDateString()}</span>
-                                                <span className="text-[10px] uppercase font-black text-gray-400">{new Date(log.createdAt).toLocaleTimeString()}</span>
+                                                <span className="font-label-xs text-label-xs font-bold uppercase text-outline">{new Date(log.createdAt).toLocaleTimeString()}</span>
                                             </div>
                                         </td>
-                                        <td className="p-6">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 text-xs font-black">
-                                                    {logUserName(log.user)?.charAt(0) || <FontAwesomeIcon icon={faUser} />}
+                                        <td className="px-space-lg py-space-md">
+                                            <div className="flex items-center gap-space-md">
+                                                <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-container font-label-xs text-label-xs font-bold text-on-primary-container">
+                                                    {logUserName(log.user)?.charAt(0) || <span className="material-symbols-outlined text-[14px]" aria-hidden="true">person</span>}
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="text-sm font-bold text-gray-900">{logUserName(log.user) || 'Unknown'}</span>
-                                                    <span className="text-[10px] font-medium text-gray-400">{logUserEmail(log.user)}</span>
+                                                    <span className="font-label-md font-bold text-on-surface">{logUserName(log.user) || 'Unknown'}</span>
+                                                    <span className="font-label-xs text-outline">{logUserEmail(log.user)}</span>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="p-6">
-                                            <span className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider ${getActionColor(log.action)}`}>
+                                        <td className="px-space-lg py-space-md">
+                                            <span className={`rounded px-2 py-1 font-label-xs text-label-xs font-bold uppercase tracking-wider ${getActionColor(log.action)}`}>
                                                 {log.action.replace('_', ' ')}
                                             </span>
                                         </td>
-                                        <td className="p-6">
+                                        <td className="px-space-lg py-space-md">
                                             <div className="flex items-center gap-2">
-                                                <span className="px-2 py-0.5 bg-gray-100 rounded text-[9px] font-black uppercase text-gray-500">{log.targetType}</span>
-                                                <span className="text-sm font-bold text-gray-700 truncate max-w-[150px]">{log.targetId}</span>
+                                                <span className="rounded bg-surface-container-highest px-2 py-0.5 font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">{log.targetType}</span>
+                                                <span className="max-w-[150px] truncate font-body-sm font-bold text-on-surface-variant">{log.targetId}</span>
                                             </div>
                                         </td>
-                                        <td className="p-6 text-right">
-                                            <FontAwesomeIcon icon={expandedId === log._id ? faChevronUp : faChevronDown} className="text-gray-300 group-hover:text-blue-500 transition-colors" />
+                                        <td className="px-space-lg py-space-md text-right">
+                                            <span className="material-symbols-outlined text-[20px] text-outline transition-colors group-hover:text-secondary" aria-hidden="true">
+                                                {expandedId === log._id ? 'expand_less' : 'expand_more'}
+                                            </span>
                                         </td>
                                     </tr>
                                     {expandedId === log._id && (
-                                        <tr className="bg-gray-50/50">
-                                            <td colSpan={5} className="p-6">
-                                                <div className="bg-white p-6 rounded-2xl border border-gray-100 shadow-inner overflow-x-auto">
-                                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-gray-400 mb-4 flex items-center gap-2">
-                                                        <FontAwesomeIcon icon={faInfoCircle} className="text-blue-500" />
+                                        <tr className="bg-surface-container">
+                                            <td colSpan={5} className="p-space-lg">
+                                                <div className="overflow-x-auto rounded-lg border border-outline-variant/50 bg-surface-container-lowest p-space-lg">
+                                                    <h4 className="mb-space-md flex items-center gap-2 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
+                                                        <span className="material-symbols-outlined text-[16px] text-secondary" aria-hidden="true">info</span>
                                                         Change Details (Payload)
                                                     </h4>
-                                                    <pre className="text-xs font-mono text-gray-800 bg-gray-50 p-4 rounded-xl border border-gray-100 overflow-x-auto">
+                                                    <pre className="overflow-x-auto rounded-lg border border-outline-variant/50 bg-surface-container p-space-md font-body-sm text-on-surface">
                                                         {JSON.stringify(log.details || {}, null, 2)}
                                                     </pre>
                                                 </div>
@@ -266,7 +260,7 @@ function AuditLogsPageContent() {
                 </div>
 
                 {totalPages > 1 && (
-                    <div className="p-6 border-t border-gray-50 flex justify-center">
+                    <div className="flex justify-center border-t border-outline-variant bg-surface-container p-space-lg">
                         <Pagination
                             currentPage={page}
                             totalPages={totalPages}
