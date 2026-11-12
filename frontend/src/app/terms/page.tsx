@@ -53,23 +53,23 @@ const SECTIONS: { title: string; body: string[] }[] = [
 
 export default function TermsPage() {
   return (
-    <div className="container mx-auto max-w-3xl px-4 py-12">
-      <h1 className="mb-2 text-3xl font-black tracking-tight text-gray-900">
+    <div className="max-w-3xl mx-auto px-space-md lg:px-space-lg py-space-xl">
+      <h1 className="mb-space-xs font-headline-xl text-headline-xl font-bold tracking-tight text-on-surface">
         Terms of Use
       </h1>
-      <p className="mb-10 text-xs font-bold tracking-widest text-gray-500 uppercase">
+      <p className="mb-space-xl font-label-sm text-label-sm font-bold tracking-widest text-outline uppercase">
         Last updated: October 2026
       </p>
 
-      <div className="space-y-8">
+      <div className="space-y-space-xl">
         {SECTIONS.map((section) => (
           <section key={section.title}>
-            <h2 className="mb-3 text-lg font-black text-gray-900">
+            <h2 className="mb-space-md font-headline-lg text-headline-lg font-bold text-on-surface">
               {section.title}
             </h2>
-            <div className="space-y-3">
+            <div className="space-y-space-md">
               {section.body.map((paragraph, i) => (
-                <p key={i} className="text-sm leading-relaxed text-gray-600">
+                <p key={i} className="font-body-md leading-relaxed text-on-surface-variant">
                   {paragraph}
                 </p>
               ))}
@@ -78,12 +78,12 @@ export default function TermsPage() {
         ))}
 
         <section>
-          <h2 className="mb-3 text-lg font-black text-gray-900">Contact</h2>
-          <p className="text-sm leading-relaxed text-gray-600">
+          <h2 className="mb-space-md font-headline-lg text-headline-lg font-bold text-on-surface">Contact</h2>
+          <p className="font-body-md leading-relaxed text-on-surface-variant">
             Questions about these terms? Reach us at{' '}
             <a
               href="mailto:contact@gsmhub.com"
-              className="font-bold text-blue-600 hover:underline"
+              className="font-bold text-secondary hover:text-secondary-container hover:underline"
             >
               contact@gsmhub.com
             </a>

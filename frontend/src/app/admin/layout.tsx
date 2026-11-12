@@ -6,6 +6,16 @@ import { useEffect } from 'react'
 import Link from 'next/link'
 import AdminGlobalSearch from '@/components/admin/AdminGlobalSearch'
 
+const NAV_ITEMS = [
+  { href: '/admin/dashboard', label: 'Dashboard', icon: 'dashboard', exact: true },
+  { href: '/admin/devices', label: 'Devices', icon: 'smartphone', exact: false },
+  { href: '/admin/prices', label: 'Prices', icon: 'sell', exact: false },
+  { href: '/admin/categories', label: 'Categories', icon: 'category', exact: false },
+  { href: '/admin/brands', label: 'Brands', icon: 'apps', exact: false },
+  { href: '/admin/audit-logs', label: 'Audit Logs', icon: 'history', exact: false },
+  { href: '/admin/users', label: 'Users', icon: 'group', exact: false },
+]
+
 export default function AdminLayout({
   children,
 }: {
@@ -27,8 +37,8 @@ export default function AdminLayout({
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <div className="h-12 w-12 animate-spin rounded-full border-b-2 border-indigo-600"></div>
+      <div className="flex h-screen items-center justify-center bg-background">
+        <span className="material-symbols-outlined progress_activity animate-spin text-[48px] text-secondary" aria-hidden="true"></span>
       </div>
     )
   }
@@ -38,116 +48,66 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="flex min-h-screen bg-gray-100">
+    <div className="flex min-h-screen bg-background">
       {/* Sidebar - Fixed Position */}
-      <aside className="fixed top-0 left-0 z-50 h-screen w-64 overflow-y-auto bg-indigo-800 text-white shadow-xl">
-        <div className="border-b border-indigo-700 p-6">
-          <h1 className="text-2xl font-black tracking-tighter">
-            GSMHub<span className="text-indigo-400">.</span>
+      <aside className="fixed top-0 left-0 z-50 h-screen w-64 overflow-y-auto border-r border-outline-variant bg-surface-container">
+        <div className="border-b border-outline-variant p-space-lg">
+          <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+            GSMHub<span className="text-secondary-container">.</span>
           </h1>
-          <p className="mt-1 text-[10px] tracking-widest text-indigo-300 uppercase">
+          <p className="mt-1 font-label-xs text-label-xs font-bold tracking-widest text-outline uppercase">
             Admin Panel
           </p>
         </div>
-        <nav className="mt-6 px-4 pb-20">
-          <Link
-            href="/admin/dashboard"
-            className={`lock mb-2 flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname === '/admin/dashboard'
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Dashboard
-          </Link>
-          <Link
-            href="/admin/devices"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/devices')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Devices
-          </Link>
-          <Link
-            href="/admin/prices"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/prices')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Prices
-          </Link>
-          <Link
-            href="/admin/categories"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/categories')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Categories
-          </Link>
-          <Link
-            href="/admin/brands"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/brands')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Brands
-          </Link>
-          <Link
-            href="/admin/audit-logs"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/audit-logs')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Audit Logs
-          </Link>
-          <Link
-            href="/admin/users"
-            className={`mb-2 block flex items-center gap-3 rounded-xl px-4 py-3 font-bold transition-all ${
-              pathname.includes('/admin/users')
-                ? 'bg-white text-indigo-900 shadow-lg'
-                : 'text-indigo-100 hover:bg-indigo-700 hover:text-white'
-            }`}
-          >
-            Users
-          </Link>
+        <nav className="mt-space-lg px-space-md pb-20">
+          {NAV_ITEMS.map((item) => {
+            const active = item.exact
+              ? pathname === item.href
+              : pathname.includes(item.href)
+            return (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`mb-1 flex items-center gap-space-md rounded-lg px-space-md py-2.5 font-label-md transition-colors ${
+                  active
+                    ? 'bg-surface-container-highest font-bold text-on-surface'
+                    : 'text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[20px]" aria-hidden="true">{item.icon}</span>
+                {item.label}
+              </Link>
+            )
+          })}
           <button
             onClick={logout}
-            className="mt-8 block w-full rounded-xl bg-indigo-900/50 px-4 py-3 text-left font-bold text-indigo-200 transition-all hover:bg-red-600 hover:text-white"
+            className="mt-space-lg flex w-full items-center gap-space-md rounded-lg px-space-md py-2.5 text-left font-label-md font-bold text-error transition-colors hover:bg-error-container/15"
           >
+            <span className="material-symbols-outlined text-[20px]" aria-hidden="true">logout</span>
             Logout
           </button>
         </nav>
       </aside>
 
       {/* Main Content - Offset */}
-      <main className="ml-64 max-w-[calc(100vw-16rem)] flex-1 p-8">
-        <header className="mb-8 flex items-center justify-between gap-8">
-          <div className="flex flex-1 items-center gap-8">
-            <h2 className="shrink-0 text-3xl font-black tracking-tight text-gray-900">
+      <main className="ml-64 max-w-[calc(100vw-16rem)] flex-1 p-space-lg">
+        <header className="mb-space-lg flex items-center justify-between gap-space-lg">
+          <div className="flex flex-1 items-center gap-space-lg">
+            <h2 className="shrink-0 font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
               {pathname.split('/').pop()?.toUpperCase()}
             </h2>
             <AdminGlobalSearch />
           </div>
-          <div className="flex items-center space-x-4">
-            <span className="font-bold text-gray-700">
+          <div className="flex items-center gap-space-md">
+            <span className="font-label-md font-bold text-on-surface-variant">
               Welcome, {user.name || user.email}
             </span>
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-indigo-100 font-bold text-indigo-800 shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-container font-label-md font-bold text-on-primary-container">
               {(user.name || user.email || 'A').charAt(0).toUpperCase()}
             </div>
           </div>
         </header>
-        <div className="rounded-lg bg-white p-6 shadow-sm">{children}</div>
+        {children}
       </main>
     </div>
   )

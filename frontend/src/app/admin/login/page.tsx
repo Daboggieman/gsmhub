@@ -43,42 +43,51 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-      <div className="w-full max-w-md space-y-8 rounded-lg bg-white p-10 shadow-md">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+    <div className="flex min-h-screen items-center justify-center bg-background px-space-md py-space-xl">
+      <div className="w-full max-w-md rounded-xl bg-surface-container-low p-space-xl shadow-md md:shadow-none">
+        <div className="mb-space-lg flex flex-col items-center text-center">
+          <div className="mb-space-md flex h-14 w-14 items-center justify-center rounded-xl bg-primary-container text-on-primary-container">
+            <span className="material-symbols-outlined text-[28px]" aria-hidden="true">admin_panel_settings</span>
+          </div>
+          <h2 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
             GSMHub Admin Login
           </h2>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-space-lg" onSubmit={handleSubmit}>
           {error && (
-            <div className="rounded-md bg-red-50 p-4 text-sm text-red-700">
+            <div className="rounded-lg border border-error-container bg-error-container/15 p-space-md font-body-sm text-error">
               {error}
             </div>
           )}
-          <div className="-space-y-px rounded-md shadow-sm">
+          <div className="space-y-space-md">
             <div>
+              <label htmlFor="email-address" className="mb-1 block font-label-sm text-label-sm font-bold text-on-surface-variant">
+                Email address
+              </label>
               <input
                 id="email-address"
                 name="email"
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full rounded-t-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 text-gray-900"
-                placeholder="Email address"
+                className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-3 font-body-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
+                placeholder="you@example.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
+              <label htmlFor="password" className="mb-1 block font-label-sm text-label-sm font-bold text-on-surface-variant">
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
                 required
-                className="relative block w-full rounded-b-md border-0 py-1.5 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 px-3 text-gray-900"
-                placeholder="Password"
+                className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-3 font-body-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
@@ -89,7 +98,7 @@ export default function AdminLoginPage() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50"
+              className="flex w-full justify-center rounded-lg bg-primary-container px-space-md py-3 font-label-md font-bold text-on-primary-container transition-colors hover:bg-inverse-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50"
             >
               {isSubmitting ? 'Signing in...' : 'Sign in'}
             </button>
