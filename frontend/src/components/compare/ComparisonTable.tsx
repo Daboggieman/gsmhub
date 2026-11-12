@@ -3,14 +3,6 @@
 import React, { useState } from 'react';
 import DeviceImage from '../devices/DeviceImage';
 import { Device } from '@shared/types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faChevronDown,
-  faChevronUp,
-  faCircleCheck,
-  faScaleBalanced,
-  faCircleInfo
-} from '@fortawesome/free-solid-svg-icons';
 import Badge from '../ui/Badge';
 
 interface ComparisonTableProps {
@@ -39,9 +31,11 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
 
   if (!comparison || comparison.length === 0) {
     return (
-      <div className="p-8 text-center bg-white rounded-3xl border border-gray-100 shadow-sm">
-        <p className="font-black text-gray-400">No comparison data available.</p>
-        <p className="text-xs text-gray-500 mt-1">Select at least two devices to compare their specifications.</p>
+      <div className="p-8 text-center bg-surface-container-low rounded-xl shadow-md md:shadow-none">
+        <p className="font-body-md text-body-md font-bold text-on-surface">No comparison data available.</p>
+        <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
+          Select at least two devices to compare their specifications.
+        </p>
       </div>
     );
   }
@@ -81,69 +75,77 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap items-center gap-4 bg-white p-4 rounded-2xl border border-gray-100 shadow-sm">
-        <label className="flex items-center gap-2 cursor-pointer group">
+      <div className="flex flex-wrap items-center gap-space-lg bg-surface-container-low p-space-md rounded-xl">
+        <label className="flex items-center gap-space-xs cursor-pointer group">
           <input
             type="checkbox"
             checked={highlightDiffs}
             onChange={(e) => setHighlightDiffs(e.target.checked)}
-            className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300"
+            className="w-3.5 h-3.5 rounded bg-surface-container-highest accent-secondary-container"
           />
-          <span className="text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors">Highlight Differences</span>
+          <span className="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
+            Highlight Differences
+          </span>
         </label>
 
-        <label className="flex items-center gap-2 cursor-pointer group">
+        <label className="flex items-center gap-space-xs cursor-pointer group">
           <input
             type="checkbox"
             checked={showOnlyDiffs}
             onChange={(e) => setShowOnlyDiffs(e.target.checked)}
-            className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500 border-gray-300"
+            className="w-3.5 h-3.5 rounded bg-surface-container-highest accent-secondary-container"
           />
-          <span className="text-sm font-bold text-gray-700 group-hover:text-blue-600 transition-colors">Hide Similarities</span>
+          <span className="font-body-sm text-body-sm text-on-surface-variant group-hover:text-on-surface transition-colors">
+            Hide Similarities
+          </span>
         </label>
       </div>
 
-      <div className="bg-white rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+      <div className="bg-surface-container-low rounded-xl shadow-md md:shadow-none overflow-hidden">
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-gray-50/50">
-                <th className="p-8 text-left border-b border-gray-100 min-w-[200px] bg-white sticky left-0 z-10 shadow-[5px_0_10px_-5px_rgba(0,0,0,0.05)]">
-                  <div className="flex items-center gap-3 text-blue-600">
-                    <FontAwesomeIcon icon={faScaleBalanced} />
-                    <span className="font-black uppercase tracking-widest text-xs">Specifications</span>
+              <tr className="bg-surface-container">
+                <th className="p-space-md text-left border-b border-outline-variant bg-surface-container-low sticky left-0 z-10 min-w-[104px] md:min-w-[200px]">
+                  <div className="flex items-center gap-space-xs text-secondary-container">
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">compare_arrows</span>
+                    <span className="font-label-xs text-label-xs uppercase tracking-wider">Specifications</span>
                   </div>
                 </th>
                 {devices.map((device, idx) => (
-                  <th key={device.slug} className="p-8 text-center border-b border-gray-100 min-w-[280px]">
+                  <th key={device.slug} className="p-space-md text-center border-b border-outline-variant min-w-[240px] md:min-w-[280px]">
                     <div className="flex flex-col items-center">
-                      <div className="relative w-28 h-40 mb-4 bg-white rounded-2xl p-4 shadow-sm group hover:shadow-md transition-all border border-gray-50">
+                      <div className="relative w-28 h-40 mb-space-sm bg-surface-container rounded-lg p-2">
                         {device.imageUrl ? (
                           <DeviceImage
                             src={device.imageUrl}
                             alt={device.name || 'Device image'}
                             style={{ objectFit: 'contain' }}
-                            className="p-2 transition-transform group-hover:scale-110"
+                            className="p-2 transition-transform group-hover:scale-105"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-300 bg-gray-50 rounded-xl">
-                            <FontAwesomeIcon icon={faCircleInfo} size="2x" />
+                          <div className="w-full h-full flex items-center justify-center text-outline-variant bg-surface-container-lowest/60 rounded">
+                            <span className="material-symbols-outlined text-[32px]" aria-hidden="true">image</span>
                           </div>
                         )}
                       </div>
-                      <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">Device {idx + 1}</Badge>
+                      <Badge variant={idx === 0 ? 'primary' : 'secondary'} size="xs" className="mb-2">
+                        Device {idx + 1}
+                      </Badge>
                       <span
-                        className="text-xl font-black text-gray-900 leading-tight mb-1 line-clamp-2"
+                        className="font-headline-md text-headline-md text-on-surface leading-tight mb-1 line-clamp-2"
                         title={device.name || device.model}
                       >
                         {device.model}
                       </span>
-                      <span className="text-sm font-bold text-gray-400 uppercase tracking-widest">{device.brand}</span>
+                      <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider">
+                        {device.brand}
+                      </span>
 
                       {typeof device.latestPrice === 'number' && (
-                        <div className="mt-4 flex flex-col items-center gap-1">
-                          <span className="font-black text-green-600 text-lg">
-                            ${device.latestPrice.toFixed(2)}
+                        <div className="mt-space-md flex flex-col items-center gap-1">
+                          <span className="font-label-md text-label-md text-tertiary font-bold tabular-nums">
+                            ${device.latestPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                           </span>
                           {bestPrice !== null && device.latestPrice === bestPrice && (
                             <Badge variant="success" size="xs">Best Price</Badge>
@@ -159,24 +161,33 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
               {categories.map(category => (
                 <React.Fragment key={category}>
                   <tr
-                    className="bg-gray-100/80 cursor-pointer hover:bg-gray-200/80 transition-colors"
+                    className="bg-surface-container cursor-pointer hover:bg-surface-container-high transition-colors"
                     onClick={() => toggleCategory(category)}
                   >
                     <td
                       colSpan={devices.length + 1}
-                      className="p-4 font-black text-gray-800 uppercase tracking-widest text-xs flex items-center gap-3"
+                      className="p-space-md font-label-sm text-label-sm uppercase tracking-wider text-on-surface"
                     >
-                      <FontAwesomeIcon icon={expandedCategories[category] ? faChevronUp : faChevronDown} className="opacity-30" />
-                      {category}
-                      <span className="text-[10px] font-bold text-gray-400 normal-case ml-2">({categorizedComparison[category].length} specs)</span>
+                      <div className="flex items-center gap-space-xs">
+                        <span className="material-symbols-outlined text-[16px] text-on-surface-variant" aria-hidden="true">
+                          {expandedCategories[category] ? 'expand_less' : 'expand_more'}
+                        </span>
+                        {category}
+                        <span className="font-label-xs text-label-xs font-bold text-outline normal-case ml-space-xs">
+                          ({categorizedComparison[category].length} specs)
+                        </span>
+                      </div>
                     </td>
                   </tr>
                   {expandedCategories[category] && categorizedComparison[category].map((row, rowIdx) => (
-                    <tr key={`${category}-${row.item}`} className={`group hover:bg-blue-50/30 transition-colors ${rowIdx % 2 === 0 ? 'bg-white' : 'bg-gray-50/30'}`}>
-                      <td className="p-5 border-b border-gray-100 text-xs font-black text-gray-400 uppercase tracking-widest bg-white sticky left-0 z-10 shadow-[5px_0_10px_-5px_rgba(0,0,0,0.05)] group-hover:text-blue-600 transition-colors relative">
+                    <tr
+                      key={`${category}-${row.item}`}
+                      className={`group transition-colors ${rowIdx % 2 === 0 ? 'bg-surface-container-low' : 'bg-surface-container-lowest/40'} hover:bg-surface-container/60`}
+                    >
+                      <td className="p-space-md border-b border-outline-variant/50 font-label-xs text-label-xs text-outline uppercase tracking-wider bg-surface-container-low sticky left-0 z-10 group-hover:text-on-surface transition-colors relative">
                         {row.item}
                         {highlightDiffs && hasDifference(row) && (
-                          <div className="w-1 h-full bg-blue-500 absolute left-0 top-0"></div>
+                          <div className="w-1 h-full bg-secondary-container absolute left-0 top-0" aria-hidden="true" />
                         )}
                       </td>
                       {row.values.map((val: string, idx: number) => {
@@ -186,25 +197,27 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
                         return (
                           <td
                             key={idx}
-                            className={`p-5 border-b border-gray-100 text-sm leading-relaxed text-center 
-                            ${isWinner ? 'bg-green-50/50' : ''} 
-                            ${isLoser ? 'bg-red-50/20' : ''}
-                            ${highlightDiffs && hasDifference(row) && !isWinner && !isLoser ? 'bg-blue-50/10' : ''}
+                            className={`p-space-md border-b border-outline-variant/50 font-body-md text-body-md leading-relaxed text-center
+                            ${isWinner ? 'bg-tertiary-container/15' : ''}
+                            ${isLoser ? 'bg-error-container/10' : ''}
+                            ${highlightDiffs && hasDifference(row) && !isWinner && !isLoser ? 'bg-secondary-container/5' : ''}
                           `}
                           >
-                            <div className="flex flex-col items-center gap-2">
-                              <span className={`${isWinner ? 'font-bold text-green-700' : 'text-gray-700'}`}>
+                            <div className="flex flex-col items-center gap-1.5">
+                              <span className={`${isWinner ? 'font-bold text-tertiary' : 'text-on-surface'}`}>
                                 {val}
                               </span>
 
                               {isWinner && row.difference && (
-                                <Badge variant="success" size="xs" className="animate-in zoom-in-50 duration-300">
+                                <Badge variant="success" size="xs">
                                   {row.difference} Better
                                 </Badge>
                               )}
 
                               {isWinner && (
-                                <FontAwesomeIcon icon={faCircleCheck} className="text-green-500 text-xs" />
+                                <span className="material-symbols-outlined text-[16px] text-tertiary" aria-hidden="true">
+                                  check_circle
+                                </span>
                               )}
                             </div>
                           </td>
@@ -218,8 +231,8 @@ const ComparisonTable: React.FC<ComparisonTableProps> = ({ comparisonData }) => 
           </table>
         </div>
 
-        <div className="p-8 bg-gray-50/50 border-t border-gray-100 text-center">
-          <p className="text-xs text-gray-400 font-medium">
+        <div className="p-space-lg bg-surface-container border-t border-outline-variant text-center">
+          <p className="font-label-xs text-label-xs text-outline">
             * Highlighting indicates the superior specification based on common industry standards.
           </p>
         </div>

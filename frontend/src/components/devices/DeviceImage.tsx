@@ -2,8 +2,6 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMobileScreen } from '@fortawesome/free-solid-svg-icons';
 
 interface DeviceImageProps {
   src: string;
@@ -34,9 +32,11 @@ const DeviceImage: React.FC<DeviceImageProps> = ({
 
   if (failed) {
     return (
-      <div className="flex flex-col items-center text-gray-400">
-        <FontAwesomeIcon icon={faMobileScreen} className="text-4xl mb-2 opacity-20" />
-        <span className="text-xs font-medium">{fallbackLabel}</span>
+      <div className="flex flex-col items-center text-on-surface-variant">
+        <span className="material-symbols-outlined text-[40px] mb-1 opacity-40" aria-hidden="true">
+          mobile_off
+        </span>
+        <span className="font-body-sm text-body-sm">{fallbackLabel}</span>
       </div>
     );
   }

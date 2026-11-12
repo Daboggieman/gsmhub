@@ -3,8 +3,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import DeviceImage from '../devices/DeviceImage';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faTimes, faSpinner, faHistory } from '@fortawesome/free-solid-svg-icons';
 import { apiClient } from '../../lib/api';
 import { SearchResult } from '@shared/types';
 
@@ -118,9 +116,9 @@ const SearchBar: React.FC = () => {
     const parts = text.split(new RegExp(`(${escaped})`, 'gi'));
     return (
       <span>
-        {parts.map((part, i) => 
+        {parts.map((part, i) =>
           part.toLowerCase() === highlight.toLowerCase() ? (
-            <mark key={i} className="bg-yellow-200 text-black px-0.5 rounded">
+            <mark key={i} className="bg-tertiary-container text-on-tertiary-container px-0.5 rounded">
               {part}
             </mark>
           ) : (
@@ -139,24 +137,31 @@ const SearchBar: React.FC = () => {
           value={query}
           onFocus={() => setShowDropdown(true)}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for phones, tablets..."
-          className="w-full bg-white/10 text-white placeholder-white/60 pl-12 pr-12 py-3 rounded-xl border border-white/20 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white focus:text-gray-900 focus:placeholder-gray-400 transition-all shadow-inner"
+          placeholder="Search phones, specs..."
+          aria-label="Search devices"
+          className="w-full h-9 bg-surface-container text-on-surface placeholder-outline pl-9 pr-8 rounded-lg border border-transparent focus:outline-none focus:bg-surface-container-high focus:ring-1 focus:ring-primary focus:border-transparent transition-colors text-body-sm"
         />
-        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/50 group-focus-within:text-blue-500 transition-colors">
-          <FontAwesomeIcon icon={faSearch} />
-        </div>
-        
-        <div className="absolute right-4 top-1/2 -translate-y-1/2 flex items-center gap-2">
+        <span
+          className="material-symbols-outlined absolute left-2.5 top-1/2 -translate-y-1/2 text-[18px] text-on-surface-variant group-focus-within:text-secondary transition-colors pointer-events-none"
+          aria-hidden="true"
+        >
+          search
+        </span>
+
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
           {isLoading && (
-            <FontAwesomeIcon icon={faSpinner} className="animate-spin text-white/50 group-focus-within:text-blue-500" />
+            <span className="material-symbols-outlined text-[16px] text-on-surface-variant animate-spin" aria-hidden="true">
+              progress_activity
+            </span>
           )}
           {query && (
             <button
               type="button"
               onClick={() => setQuery('')}
-              className="p-1 hover:bg-white/10 rounded-full text-white/50 hover:text-white group-focus-within:text-gray-400 group-focus-within:hover:text-gray-600 transition-colors"
+              aria-label="Clear search"
+              className="p-0.5 text-on-surface-variant hover:text-on-surface transition-colors"
             >
-              <FontAwesomeIcon icon={faTimes} />
+              <span className="material-symbols-outlined text-[16px]" aria-hidden="true">close</span>
             </button>
           )}
         </div>
@@ -164,30 +169,37 @@ const SearchBar: React.FC = () => {
 
       {/* Dropdown Container */}
       {showDropdown && (
-        <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden z-[200] animate-in fade-in slide-in-from-top-2 duration-200">
-          
+        <div className="absolute top-full left-0 right-0 mt-2 bg-surface-container-lowest rounded-xl shadow-2xl border border-outline-variant overflow-hidden z-[200]">
           {/* History Section (When query is empty) */}
           {query.trim().length === 0 && history.length > 0 && (
             <div className="p-2">
               <div className="flex items-center justify-between px-3 py-2">
-                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider">Recent Searches</h3>
-                <button onClick={clearHistory} className="text-[10px] font-bold text-red-400 hover:text-red-600 uppercase transition-colors">Clear All</button>
+                <h3 className="font-label-xs text-label-xs text-outline uppercase tracking-wider">Recent Searches</h3>
+                <button
+                  onClick={clearHistory}
+                  className="font-label-xs text-label-xs text-error hover:text-on-error-container uppercase transition-colors"
+                >
+                  Clear All
+                </button>
               </div>
               {history.map((term, i) => (
                 <div
                   key={i}
                   onClick={() => handleHistoryItemClick(term)}
-                  className="w-full flex items-center justify-between p-3 hover:bg-gray-50 rounded-xl transition-colors cursor-pointer group"
+                  className="w-full flex items-center justify-between p-2.5 hover:bg-surface-container rounded-lg transition-colors cursor-pointer group"
                 >
-                  <div className="flex items-center gap-3">
-                    <FontAwesomeIcon icon={faHistory} className="text-gray-300 group-hover:text-blue-500 text-xs" />
-                    <span className="text-sm font-bold text-gray-700 capitalize">{term}</span>
+                  <div className="flex items-center gap-3 min-w-0">
+                    <span className="material-symbols-outlined text-[16px] text-on-surface-variant group-hover:text-secondary transition-colors" aria-hidden="true">
+                      history
+                    </span>
+                    <span className="font-body-sm text-body-sm text-on-surface capitalize truncate">{term}</span>
                   </div>
-                  <button 
+                  <button
                     onClick={(e) => removeFromHistory(e, term)}
-                    className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all opacity-0 group-hover:opacity-100"
+                    aria-label={`Remove ${term} from history`}
+                    className="p-1.5 text-on-surface-variant hover:text-error hover:bg-error-container/20 rounded-lg transition-all opacity-0 group-hover:opacity-100 focus:opacity-100"
                   >
-                    <FontAwesomeIcon icon={faTimes} size="xs" />
+                    <span className="material-symbols-outlined text-[14px]" aria-hidden="true">close</span>
                   </button>
                 </div>
               ))}
@@ -198,14 +210,16 @@ const SearchBar: React.FC = () => {
           {query.trim().length >= 2 && results.length > 0 && (
             <>
               <div className="p-2">
-                <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider px-3 py-2">Suggested Devices</h3>
+                <h3 className="font-label-xs text-label-xs text-outline uppercase tracking-wider px-3 py-2">
+                  Suggested Devices
+                </h3>
                 {results.map((result) => (
                   <button
                     key={result._id}
                     onClick={() => handleResultClick(result.slug, result.name)}
-                    className="w-full flex items-center gap-4 p-3 hover:bg-blue-50 rounded-xl transition-colors group text-left"
+                    className="w-full flex items-center gap-3 p-2.5 hover:bg-surface-container rounded-lg transition-colors group text-left"
                   >
-                    <div className="w-12 h-12 relative flex-shrink-0 bg-gray-50 rounded-lg overflow-hidden border border-gray-100 group-hover:border-blue-200 transition-colors">
+                    <div className="w-10 h-10 relative flex-shrink-0 bg-surface-container rounded-lg overflow-hidden">
                       {result.imageUrl ? (
                         <DeviceImage
                           src={result.imageUrl}
@@ -214,18 +228,18 @@ const SearchBar: React.FC = () => {
                           fallbackLabel=""
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-gray-300">
-                          <FontAwesomeIcon icon={faSearch} size="sm" />
+                        <div className="w-full h-full flex items-center justify-center text-on-surface-variant">
+                          <span className="material-symbols-outlined text-[16px]" aria-hidden="true">search</span>
                         </div>
                       )}
                     </div>
                     <div className="flex-grow min-w-0">
-                      <div className="font-bold text-gray-900 group-hover:text-blue-700 transition-colors truncate">
+                      <div className="font-body-md text-body-md text-on-surface truncate">
                         <span className="sr-only">{result.name}</span>
                         <span aria-hidden="true">{highlightMatch(result.name, query)}</span>
                       </div>
-                      <div className="text-xs text-gray-500 flex items-center gap-2">
-                        <span className="bg-gray-100 px-1.5 py-0.5 rounded text-[10px] uppercase font-bold text-gray-500 group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                      <div className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+                        <span className="bg-surface-container px-1.5 py-0.5 rounded font-label-xs text-label-xs uppercase text-on-surface-variant">
                           {result.brand}
                         </span>
                         {result.category && (
@@ -236,11 +250,11 @@ const SearchBar: React.FC = () => {
                   </button>
                 ))}
               </div>
-              <div 
+              <div
                 onClick={handleSearch}
-                className="bg-gray-50 p-3 text-center border-t border-gray-100 hover:bg-blue-50 cursor-pointer transition-colors"
+                className="bg-surface-container p-3 text-center border-t border-outline-variant hover:bg-surface-container-high cursor-pointer transition-colors"
               >
-                <span className="text-sm font-bold text-blue-600">
+                <span className="font-body-sm text-body-sm text-secondary">
                   View all results for &quot;{query}&quot;
                 </span>
               </div>
@@ -250,11 +264,13 @@ const SearchBar: React.FC = () => {
           {/* No results */}
           {query.length >= 2 && results.length === 0 && !isLoading && (
             <div className="p-8 text-center">
-              <div className="text-gray-400 mb-2 text-2xl">
-                <FontAwesomeIcon icon={faSearch} />
-              </div>
-              <p className="text-gray-500 font-medium">No devices found for &quot;{query}&quot;</p>
-              <p className="text-xs text-gray-400 mt-1">Try a different search term</p>
+              <span className="material-symbols-outlined text-[24px] text-on-surface-variant mb-2 block" aria-hidden="true">
+                search_off
+              </span>
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                No devices found for &quot;{query}&quot;
+              </p>
+              <p className="font-body-sm text-body-sm text-outline mt-1">Try a different search term</p>
             </div>
           )}
         </div>

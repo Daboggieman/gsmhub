@@ -1,109 +1,116 @@
 import React from 'react';
 import Link from 'next/link';
 import { Device } from '@shared/types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import DeviceImage from './DeviceImage';
-import {
-  faDisplay,
-  faMemory,
-  faHardDrive,
-  faMicrochip,
-  faMobileScreen,
-  faTag
-} from '@fortawesome/free-solid-svg-icons';
 
 interface DeviceCardProps {
   device: Device;
 }
 
 const DeviceCard: React.FC<DeviceCardProps> = ({ device }) => {
+  const specRows: { icon: string; label: string; value?: string }[] = [
+    { icon: 'memory', label: 'Chipset', value: device.chipset },
+    { icon: 'smartphone', label: 'Display', value: device.displaySize },
+    {
+      icon: 'sd_card',
+      label: 'Memory',
+      value:
+        device.ram && device.storage
+          ? `${device.ram} • ${device.storage}`
+          : device.ram || device.storage,
+    },
+  ];
+
   return (
-    <Link href={`/devices/${device.slug}`} className="block group">
-      <div className="bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden h-full flex flex-col border border-gray-100 group-hover:-translate-y-1">
-        {/* Image Container */}
-        <div className="relative w-full h-56 bg-gray-50 flex items-center justify-center overflow-hidden">
+    <Link
+      href={`/devices/${device.slug}`}
+      className="bg-surface-container-low rounded-lg p-space-sm md:p-space-md flex flex-col justify-between hover:bg-surface-container transition-all group shadow-md md:shadow-none"
+    >
+      <div>
+        {/* Top Row: Brand Pill */}
+        <div className="flex items-center justify-between mb-space-xs">
+          <span className="px-1.5 py-0.5 rounded bg-surface-container-high text-on-surface-variant font-label-xs text-label-xs uppercase font-bold truncate">
+            {device.brand}
+          </span>
+        </div>
+
+        {/* Product Image Frame */}
+        <div className="w-full h-36 bg-surface-container rounded flex items-center justify-center p-2 relative overflow-hidden mb-space-sm">
           {device.imageUrl ? (
             <DeviceImage
               src={device.imageUrl}
               alt={device.name || `${device.brand} ${device.model}`}
-              style={{ objectFit: 'contain' }}
-              className="p-6 transition-transform duration-500 group-hover:scale-110"
+              className="h-full w-auto object-contain filter drop-shadow-[0_10px_15px_rgba(0,0,0,0.8)] transition-transform group-hover:scale-105"
             />
           ) : (
-            <div className="flex flex-col items-center text-gray-400">
-              <FontAwesomeIcon icon={faMobileScreen} className="text-4xl mb-2 opacity-20" />
-              <span className="text-xs font-medium">No Image</span>
-            </div>
-          )}
-          
-          {/* Brand Badge */}
-          <div className="absolute top-3 left-3">
-            <span className="bg-white/90 backdrop-blur-sm px-2 py-1 rounded-md text-[10px] font-bold text-blue-600 shadow-sm uppercase tracking-wider border border-blue-50">
-              {device.brand}
+            <span
+              className="material-symbols-outlined text-[40px] text-outline-variant"
+              aria-hidden="true"
+            >
+              mobile_off
             </span>
-          </div>
+          )}
+          {device.displaySize && (
+            <span className="absolute bottom-1 right-2 font-label-xs text-label-xs text-outline bg-surface-container-lowest/80 px-1 py-0.5 rounded">
+              {device.displaySize}
+            </span>
+          )}
         </div>
 
-        {/* Content */}
-        <div className="p-5 flex-grow flex flex-col">
-          <h3 className="text-lg font-bold text-gray-900 mb-1 group-hover:text-blue-600 transition-colors line-clamp-1">
-            {device.model}
+        {/* Title & Brand */}
+        <div className="mb-space-xs">
+          <span className="font-label-xs text-label-xs text-outline uppercase tracking-wider">
+            {device.brand}
+          </span>
+          <h3 className="font-label-md text-label-md font-bold text-on-surface line-clamp-2">
+            {device.model || device.name}
           </h3>
-          <p className="text-xs text-gray-400 mb-4 font-medium uppercase tracking-tight truncate">
-            {device.name}
-          </p>
-          
-          <div className="space-y-2.5 mb-6 flex-grow">
-            {device.displaySize && (
-              <div className="flex items-center text-xs text-gray-600 gap-3">
-                <div className="w-5 flex justify-center text-blue-500/70">
-                  <FontAwesomeIcon icon={faDisplay} />
-                </div>
-                <span className="truncate">{device.displaySize}</span>
-              </div>
-            )}
-            {device.ram && (
-              <div className="flex items-center text-xs text-gray-600 gap-3">
-                <div className="w-5 flex justify-center text-blue-500/70">
-                  <FontAwesomeIcon icon={faMemory} />
-                </div>
-                <span className="truncate">{device.ram} RAM</span>
-              </div>
-            )}
-            {device.storage && (
-              <div className="flex items-center text-xs text-gray-600 gap-3">
-                <div className="w-5 flex justify-center text-blue-500/70">
-                  <FontAwesomeIcon icon={faHardDrive} />
-                </div>
-                <span className="truncate">{device.storage}</span>
-              </div>
-            )}
-            {device.chipset && (
-              <div className="flex items-center text-xs text-gray-600 gap-3">
-                <div className="w-5 flex justify-center text-blue-500/70">
-                  <FontAwesomeIcon icon={faMicrochip} />
-                </div>
-                <span className="truncate">{device.chipset}</span>
-              </div>
-            )}
-          </div>
-
-          <div className="pt-4 border-t border-gray-50 flex items-center justify-between">
-            <div className="flex items-center text-blue-600 font-bold">
-              {device.latestPrice ? (
-                <span className="text-xl tracking-tighter">
-                  ${device.latestPrice.toFixed(0)}
-                  <span className="text-xs font-medium ml-0.5 opacity-70">.{(device.latestPrice % 1).toFixed(2).split('.')[1]}</span>
-                </span>
-              ) : (
-                <span className="text-gray-400 text-sm font-semibold">Check Price</span>
-              )}
-            </div>
-            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 group-hover:bg-blue-600 group-hover:text-white transition-colors">
-              <FontAwesomeIcon icon={faTag} className="text-xs" />
-            </div>
-          </div>
         </div>
+
+        {/* Spec Matrix (Compact rows) */}
+        {specRows.some((r) => r.value) && (
+          <div className="space-y-1 mb-space-sm bg-surface-container-lowest/60 p-2 rounded font-body-sm text-body-sm">
+            {specRows
+              .filter((r) => r.value)
+              .map((row) => (
+                <div key={row.label} className="flex items-center justify-between text-[11px]">
+                  <span className="flex items-center gap-1 text-outline">
+                    <span className="material-symbols-outlined text-secondary text-[13px]" aria-hidden="true">
+                      {row.icon}
+                    </span>
+                    {row.label}
+                  </span>
+                  <span className="text-on-surface font-medium truncate max-w-[130px] tabular-nums">
+                    {row.value}
+                  </span>
+                </div>
+              ))}
+          </div>
+        )}
+      </div>
+
+      {/* Price & Bottom Action */}
+      <div className="pt-space-xs flex items-center justify-between">
+        <div>
+          <span className="block font-label-xs text-label-xs text-outline uppercase">
+            {device.latestPrice ? 'Est. Price' : 'Availability'}
+          </span>
+          {device.latestPrice ? (
+            <span className="font-headline-md text-headline-md text-secondary font-bold tabular-nums">
+              ${device.latestPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })}
+            </span>
+          ) : (
+            <span className="font-body-sm text-body-sm text-on-surface-variant font-medium">
+              Check Price
+            </span>
+          )}
+        </div>
+        <span
+          className="material-symbols-outlined text-[18px] text-on-surface-variant group-hover:text-secondary transition-colors"
+          aria-hidden="true"
+        >
+          arrow_forward
+        </span>
       </div>
     </Link>
   );

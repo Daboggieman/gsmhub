@@ -4,8 +4,6 @@ import React from 'react';
 import { Device } from '@shared/types';
 import DeviceCard from '../devices/DeviceCard';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface SearchResultsProps {
   results: Device[];
@@ -18,37 +16,39 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, query, loading }
 
   if (loading) {
     return (
-      <div className="flex flex-col justify-center items-center py-20 bg-white rounded-xl border border-gray-100 shadow-sm">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500 mb-4"></div>
-        <p className="text-gray-500 font-medium">Searching for devices...</p>
+      <div className="flex flex-col justify-center items-center py-20 bg-surface-container-low rounded-xl shadow-md md:shadow-none">
+        <span className="material-symbols-outlined text-[48px] text-secondary animate-spin mb-4" aria-hidden="true">
+          progress_activity
+        </span>
+        <p className="font-body-md text-body-md text-on-surface-variant">Searching for devices...</p>
       </div>
     );
   }
 
   if (results.length === 0) {
     return (
-      <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+      <div className="bg-surface-container-low rounded-xl shadow-md md:shadow-none overflow-hidden">
         <div className="p-12 text-center">
-          <div className="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-6">
-            <FontAwesomeIcon icon={faSearch} className="text-gray-300 text-3xl" />
+          <div className="w-20 h-20 bg-surface-container rounded-full flex items-center justify-center mx-auto mb-6">
+            <span className="material-symbols-outlined text-[40px] text-outline-variant" aria-hidden="true">search_off</span>
           </div>
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+          <h2 className="font-headline-lg text-headline-lg font-bold text-on-surface mb-2">
             {query ? `No results found for "${query}"` : 'Start searching'}
           </h2>
-          <p className="text-gray-500 max-w-md mx-auto mb-8">
-            {query 
+          <p className="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto mb-8">
+            {query
               ? "We couldn't find any devices matching your search. Try different keywords or browse our categories."
               : "Use the search bar above to find your favorite smartphones, tablets, and more."}
           </p>
-          
+
           <div className="space-y-4">
-            <h3 className="text-sm font-bold text-gray-400 uppercase tracking-wider">Popular Searches</h3>
+            <h3 className="font-label-sm text-label-sm font-bold text-outline uppercase tracking-wider">Popular Searches</h3>
             <div className="flex flex-wrap justify-center gap-2">
               {POPULAR_SEARCHES.map(s => (
-                <Link 
-                  key={s} 
+                <Link
+                  key={s}
                   href={`/search?q=${encodeURIComponent(s)}`}
-                  className="px-4 py-2 bg-gray-100 hover:bg-blue-50 hover:text-blue-600 text-gray-600 rounded-full text-sm font-medium transition-colors"
+                  className="px-space-md py-2 bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-secondary rounded font-body-sm text-body-sm font-medium transition-colors"
                 >
                   {s}
                 </Link>
@@ -56,12 +56,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ results, query, loading }
             </div>
           </div>
         </div>
-        
-        <div className="bg-blue-50 p-6 border-t border-blue-100 flex items-start gap-4">
-          <FontAwesomeIcon icon={faInfoCircle} className="text-blue-400 mt-1" />
-          <div className="text-sm text-blue-800">
-            <p className="font-bold mb-1">Search Tips:</p>
-            <ul className="list-disc list-inside space-y-1 opacity-80">
+
+        <div className="bg-surface-container p-space-lg border-t border-outline-variant flex items-start gap-space-md">
+          <span className="material-symbols-outlined text-[20px] text-secondary mt-0.5 shrink-0" aria-hidden="true">info</span>
+          <div className="font-body-sm text-body-sm text-on-surface-variant">
+            <p className="font-bold text-on-surface mb-1">Search Tips:</p>
+            <ul className="list-disc list-inside space-y-1">
               <li>Check your spelling</li>
               <li>Try more general keywords (e.g., &quot;iPhone&quot; instead of &quot;iPhone 15 Pro Max&quot;)</li>
               <li>Filter by brand or category on the left sidebar</li>

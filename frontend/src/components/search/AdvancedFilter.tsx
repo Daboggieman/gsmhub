@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFilter, faTimes, faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '@shared/types';
 
 interface FilterProps {
@@ -27,15 +25,18 @@ interface FilterProps {
 const FilterSection = ({ title, children, isOpenDefault = false }: { title: string, children: React.ReactNode, isOpenDefault?: boolean }) => {
     const [isOpen, setIsOpen] = useState(isOpenDefault);
     return (
-        <div className="border-b border-gray-100 last:border-0 py-4">
+        <div className="border-b border-outline-variant/50 last:border-0 py-space-md">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex justify-between items-center w-full text-left font-bold text-gray-700 text-sm uppercase tracking-wider mb-2"
+                aria-expanded={isOpen}
+                className="flex justify-between items-center w-full text-left font-label-sm text-label-sm font-bold text-on-surface uppercase tracking-wider"
             >
                 {title}
-                <FontAwesomeIcon icon={isOpen ? faChevronUp : faChevronDown} className="text-gray-400 text-xs" />
+                <span className="material-symbols-outlined text-[18px] text-on-surface-variant" aria-hidden="true">
+                    {isOpen ? 'expand_less' : 'expand_more'}
+                </span>
             </button>
-            {isOpen && <div className="mt-2 space-y-2 animate-fadeIn">{children}</div>}
+            {isOpen && <div className="mt-space-sm space-y-1">{children}</div>}
         </div>
     );
 };
@@ -60,7 +61,7 @@ const RangeInput = ({
     };
 
     return (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center gap-space-sm">
             <div className="relative flex-1">
                 <input
                     type="number"
@@ -68,11 +69,11 @@ const RangeInput = ({
                     value={minVal}
                     onChange={(e) => setMinVal(e.target.value)}
                     onBlur={handleBlur}
-                    className="w-full p-2 bg-gray-50 border border-gray-200 rounded-md text-sm outline-none focus:border-blue-500 transition-colors"
+                    className="w-full p-2 pr-7 bg-surface-container border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface placeholder-outline outline-none focus:ring-1 focus:ring-primary focus:border-transparent transition-colors tabular-nums"
                 />
-                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400">{unit}</span>
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 font-label-xs text-label-xs text-outline">{unit}</span>
             </div>
-            <span className="text-gray-400">-</span>
+            <span className="font-body-sm text-outline" aria-hidden="true">–</span>
             <div className="relative flex-1">
                 <input
                     type="number"
@@ -80,9 +81,9 @@ const RangeInput = ({
                     value={maxVal}
                     onChange={(e) => setMaxVal(e.target.value)}
                     onBlur={handleBlur}
-                    className="w-full p-2 bg-gray-50 border border-gray-200 rounded-md text-sm outline-none focus:border-blue-500 transition-colors"
+                    className="w-full p-2 pr-7 bg-surface-container border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface placeholder-outline outline-none focus:ring-1 focus:ring-primary focus:border-transparent transition-colors tabular-nums"
                 />
-                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-gray-400">{unit}</span>
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 font-label-xs text-label-xs text-outline">{unit}</span>
             </div>
         </div>
     );
@@ -92,25 +93,27 @@ export default function AdvancedFilter({ filters, categories, availableBrands, o
     const hasActiveFilters = Object.values(filters).some(v => v !== undefined && v !== '');
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
-            <div className="flex justify-between items-center mb-6">
-                <h2 className="text-lg font-bold text-gray-800 flex items-center">
-                    <FontAwesomeIcon icon={faFilter} className="mr-2 text-blue-500" />
+        <div className="bg-surface-container-low p-space-md md:p-space-lg rounded-xl shadow-md md:shadow-none">
+            <div className="flex justify-between items-center mb-space-md">
+                <h2 className="font-headline-md text-headline-md font-bold text-on-surface flex items-center gap-space-sm">
+                    <span className="w-8 h-8 rounded-lg bg-primary-container flex items-center justify-center shrink-0">
+                        <span className="material-symbols-outlined text-[18px] text-on-primary-container" aria-hidden="true">filter_list</span>
+                    </span>
                     Filters
                 </h2>
                 {hasActiveFilters && (
                     <button
                         onClick={onClear}
-                        className="text-xs text-red-500 font-bold hover:underline flex items-center"
+                        className="font-label-sm text-label-sm text-error font-bold hover:underline flex items-center gap-1 active:scale-[0.98]"
                     >
-                        <FontAwesomeIcon icon={faTimes} className="mr-1" /> Clear
+                        <span className="material-symbols-outlined text-[14px]" aria-hidden="true">close</span> Clear
                     </button>
                 )}
             </div>
 
-            <div className="divide-y divide-gray-100">
+            <div className="divide-y divide-outline-variant/50">
                 <FilterSection title="Brand" isOpenDefault={true}>
-                    <div className="max-h-48 overflow-y-auto pr-2 space-y-1 custom-scrollbar">
+                    <div className="max-h-48 overflow-y-auto pr-space-sm space-y-1">
                         {availableBrands.map(b => (
                             <label key={b} className="flex items-center group cursor-pointer py-1">
                                 <input
@@ -118,9 +121,9 @@ export default function AdvancedFilter({ filters, categories, availableBrands, o
                                     name="brand"
                                     checked={filters.brand === b}
                                     onChange={() => onUpdate({ brand: b })}
-                                    className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                                    className="w-3.5 h-3.5 rounded bg-surface-container-highest accent-secondary-container shrink-0"
                                 />
-                                <span className="ml-3 text-sm text-gray-600 group-hover:text-blue-600 transition-colors truncate">
+                                <span className="ml-space-md font-body-sm text-body-sm text-on-surface-variant group-hover:text-secondary transition-colors truncate">
                                     {b}
                                 </span>
                             </label>
@@ -132,7 +135,7 @@ export default function AdvancedFilter({ filters, categories, availableBrands, o
                     <select
                         value={filters.category || ''}
                         onChange={(e) => onUpdate({ category: e.target.value })}
-                        className="w-full p-2 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-700 outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full p-2 bg-surface-container border border-outline-variant rounded-lg font-body-sm text-body-sm text-on-surface outline-none focus:ring-1 focus:ring-primary focus:border-transparent transition-colors"
                     >
                         <option value="">All Categories</option>
                         {categories.map(cat => (

@@ -1,8 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '@/lib/auth-context';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
@@ -50,7 +48,7 @@ export default function FavoriteButton({ deviceId, initialIsFavorited = false }:
             setIsFavorited(response.isFavorited);
 
             // Optional: Refresh auth context/user to update local favorites list
-            // await refreshUser(); 
+            // await refreshUser();
         } catch (error) {
             console.error('Failed to toggle favorite:', error);
         } finally {
@@ -58,21 +56,27 @@ export default function FavoriteButton({ deviceId, initialIsFavorited = false }:
         }
     };
 
-    if (authLoading) return <div className="animate-pulse w-8 h-8 bg-gray-200 rounded-full"></div>;
+    if (authLoading) {
+        return <div className="animate-pulse w-8 h-8 bg-surface-container rounded-full" aria-hidden="true" />;
+    }
 
     return (
         <button
             onClick={handleToggle}
             disabled={isLoading}
-            className={`ml-auto px-6 py-3 rounded-lg transition-all font-bold text-sm flex items-center ${isFavorited
-                ? 'text-white bg-red-600 hover:bg-red-700 shadow-md transform hover:-translate-y-0.5'
-                : 'text-red-600 hover:bg-red-50 border border-red-100'
+            aria-pressed={isFavorited}
+            className={`px-space-lg py-2.5 rounded-lg font-label-md font-bold flex items-center gap-space-xs transition-colors active:scale-[0.98] disabled:opacity-60 ${isFavorited
+                ? 'bg-error-container text-on-error-container hover:brightness-110'
+                : 'border border-outline-variant text-error hover:bg-error-container/15'
                 }`}
         >
-            <FontAwesomeIcon
-                icon={isFavorited ? faHeartSolid : faHeartSolid}
-                className={`mr-2 ${isLoading ? 'animate-pulse' : ''} ${!isFavorited ? 'opacity-50' : ''}`}
-            />
+            <span
+                className={`material-symbols-outlined text-[20px] ${isLoading ? 'animate-pulse' : ''}`}
+                style={isFavorited ? { fontVariationSettings: "'FILL' 1" } : undefined}
+                aria-hidden="true"
+            >
+                favorite
+            </span>
             {isFavorited ? 'Fan' : 'Become a fan'}
         </button>
     );

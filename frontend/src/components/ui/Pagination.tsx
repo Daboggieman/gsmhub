@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 interface PaginationProps {
   currentPage: number;
@@ -50,6 +48,9 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
   const clamped = Math.min(Math.max(currentPage, 1), totalPages);
   const pages = buildPageList(clamped, totalPages);
 
+  const navBtn =
+    'w-10 h-10 flex items-center justify-center rounded-lg font-label-md transition-colors';
+
   return (
     <nav className="flex justify-center items-center space-x-2 mt-12" aria-label="Pagination">
       {/* Previous Button */}
@@ -57,13 +58,16 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
         <Link
           href={createPageUrl(clamped - 1)}
           aria-label="Previous page"
-          className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+          className={`${navBtn} border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-on-surface`}
         >
-          <FontAwesomeIcon icon={faChevronLeft} />
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">chevron_left</span>
         </Link>
       ) : (
-        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed" aria-hidden="true">
-          <FontAwesomeIcon icon={faChevronLeft} />
+        <span
+          className={`${navBtn} border border-outline-variant/50 text-outline cursor-not-allowed`}
+          aria-hidden="true"
+        >
+          <span className="material-symbols-outlined text-[20px]">chevron_left</span>
         </span>
       )}
 
@@ -74,7 +78,7 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
             return (
               <span
                 key={entry}
-                className="w-10 h-10 flex items-center justify-center text-gray-400 select-none"
+                className="w-10 h-10 flex items-center justify-center text-outline select-none"
                 aria-hidden="true"
               >
                 …
@@ -88,10 +92,10 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
               href={createPageUrl(entry)}
               aria-current={isActive ? 'page' : undefined}
               aria-label={`Page ${entry}`}
-              className={`w-10 h-10 flex items-center justify-center rounded-lg font-medium transition-colors ${
+              className={`w-10 h-10 flex items-center justify-center rounded-lg font-label-md tabular-nums transition-colors ${
                 isActive
-                  ? 'bg-blue-600 text-white shadow-md shadow-blue-200'
-                  : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600'
+                  ? 'bg-primary-container text-on-primary-container font-bold'
+                  : 'bg-surface-container border border-outline-variant text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
               }`}
             >
               {entry}
@@ -105,13 +109,16 @@ const Pagination: React.FC<PaginationProps> = ({ currentPage, totalPages, baseUr
         <Link
           href={createPageUrl(clamped + 1)}
           aria-label="Next page"
-          className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-200 text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+          className={`${navBtn} border border-outline-variant text-on-surface-variant hover:bg-surface-container hover:text-on-surface`}
         >
-          <FontAwesomeIcon icon={faChevronRight} />
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">chevron_right</span>
         </Link>
       ) : (
-        <span className="w-10 h-10 flex items-center justify-center rounded-lg border border-gray-100 text-gray-300 cursor-not-allowed" aria-hidden="true">
-          <FontAwesomeIcon icon={faChevronRight} />
+        <span
+          className={`${navBtn} border border-outline-variant/50 text-outline cursor-not-allowed`}
+          aria-hidden="true"
+        >
+          <span className="material-symbols-outlined text-[20px]">chevron_right</span>
         </span>
       )}
     </nav>

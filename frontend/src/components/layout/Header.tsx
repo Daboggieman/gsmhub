@@ -1,146 +1,209 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import SearchBar from '../search/SearchBar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faTimes, faScaleBalanced, faMobileScreenButton, faLayerGroup } from '@fortawesome/free-solid-svg-icons';
+import ThemeToggle from './ThemeToggle';
+
+interface NavItem {
+  href: string;
+  label: string;
+  icon: string;
+}
+
+const NAV_ITEMS: NavItem[] = [
+  { href: '/devices', label: 'Devices', icon: 'smartphone' },
+  { href: '/categories', label: 'Categories', icon: 'category' },
+  { href: '/brands', label: 'Brands', icon: 'apps' },
+  { href: '/compare', label: 'Compare', icon: 'compare_arrows' },
+];
+
+const DRAWER_GROUPS: { title: string; items: NavItem[] }[] = [
+  {
+    title: 'Database',
+    items: [
+      { href: '/', label: 'Home', icon: 'home' },
+      { href: '/devices', label: 'Devices', icon: 'smartphone' },
+      { href: '/categories', label: 'Categories', icon: 'category' },
+      { href: '/brands', label: 'Brands', icon: 'apps' },
+      { href: '/compare', label: 'Compare', icon: 'compare_arrows' },
+      { href: '/favorites', label: 'Saved', icon: 'bookmark' },
+      { href: '/search', label: 'Search', icon: 'search' },
+    ],
+  },
+  {
+    title: 'Company',
+    items: [
+      { href: '/about', label: 'About', icon: 'info' },
+      { href: '/contact', label: 'Contact', icon: 'mail' },
+      { href: '/admin', label: 'Admin', icon: 'admin_panel_settings' },
+    ],
+  },
+];
+
+const Logo: React.FC<{ tileClass?: string }> = ({ tileClass = 'w-7 h-7' }) => (
+  <span className={`${tileClass} rounded bg-primary-container flex items-center justify-center shrink-0`}>
+    <span className="material-symbols-outlined text-on-primary-container text-[18px]" aria-hidden="true">
+      developer_board
+    </span>
+  </span>
+);
 
 const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+  // Close the drawer whenever the route changes
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
+  // Lock body scroll while the drawer is open
+  useEffect(() => {
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  const isActive = (href: string) =>
+    href === '/' ? pathname === '/' : pathname.startsWith(href);
 
   return (
-    <header className="bg-[#1a237e] text-white shadow-lg sticky top-0 z-[100]">
-      {/* Top Bar - Optional for extra info/links */}
-      <div className="bg-[#0d1440] py-1 px-4 hidden sm:block">
-        <div className="container mx-auto flex justify-end text-[11px] font-medium tracking-wide space-x-6 opacity-70">
-          <Link href="/news" className="hover:text-blue-300 transition-colors">NEWS</Link>
-          <Link href="/reviews" className="hover:text-blue-300 transition-colors">REVIEWS</Link>
-          <Link href="/contact" className="hover:text-blue-300 transition-colors">CONTACT</Link>
-          <Link href="/login" className="hover:text-blue-300 transition-colors">LOGIN</Link>
-        </div>
-      </div>
+    <>
+      <header className="sticky top-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.35)]">
+        <div className="h-14 max-w-[1440px] mx-auto px-space-md lg:px-space-lg flex items-center justify-between gap-space-sm lg:gap-space-md">
+          {/* Mobile menu button */}
+          <button
+            type="button"
+            onClick={() => setIsMobileMenuOpen(true)}
+            aria-label="Open menu"
+            className="md:hidden w-11 h-11 -ml-space-sm flex items-center justify-center text-on-surface-variant hover:text-secondary transition-colors shrink-0 focus:outline-none"
+          >
+            <span className="material-symbols-outlined text-[24px]" aria-hidden="true">menu</span>
+          </button>
 
-      <div className="container mx-auto px-4 py-3">
-        <div className="flex justify-between items-center gap-4 lg:gap-8">
           {/* Logo */}
-          <Link href="/" className="flex-shrink-0">
-            <Image
-              src="/images/logo.svg"
-              alt="GSMHub Logo"
-              width={140}
-              height={40}
-              className="h-10 w-auto"
-              priority
-            />
+          <Link href="/" className="flex items-center gap-space-sm shrink-0" aria-label="GSMHub home">
+            <Logo />
+            <span className="font-headline-md text-headline-md tracking-tight text-on-surface">
+              GSM<span className="text-secondary-container">Hub</span>
+            </span>
           </Link>
 
-          {/* Desktop Search */}
-          <div className="hidden md:block flex-grow max-w-2xl">
+          {/* Desktop search */}
+          <div className="hidden lg:block flex-1 max-w-xl">
             <SearchBar />
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
-            <Link
-              href="/devices"
-              className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
-            >
-              <FontAwesomeIcon icon={faMobileScreenButton} className="text-blue-300" />
-              <span>Phones</span>
-            </Link>
-            <Link
-              href="/categories"
-              className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
-            >
-              <FontAwesomeIcon icon={faLayerGroup} className="text-blue-300" />
-              <span>Categories</span>
-            </Link>
-            <Link
-              href="/brands"
-              className="px-4 py-2 rounded-lg hover:bg-white/10 transition-all flex items-center gap-2 font-medium"
-            >
-              <FontAwesomeIcon icon={faMobileScreenButton} className="text-blue-300" />
-              <span>Brands</span>
-            </Link>
-            <Link
-              href="/compare"
-              className="px-4 py-2 rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-200 border border-blue-500/30 transition-all flex items-center gap-2 font-medium"
-            >
-              <FontAwesomeIcon icon={faScaleBalanced} />
-              <span>Compare</span>
-            </Link>
+          {/* Mobile search shortcut */}
+          <Link
+            href="/search"
+            className="md:hidden flex-1 flex items-center gap-space-xs h-10 px-space-sm bg-surface-container-highest/60 rounded text-on-surface-variant hover:text-on-surface transition-colors min-w-0"
+          >
+            <span className="material-symbols-outlined text-[18px] text-secondary" aria-hidden="true">search</span>
+            <span className="font-body-sm text-body-sm truncate text-outline">Search phones, specs...</span>
+          </Link>
+
+          {/* Desktop nav pills */}
+          <nav className="hidden md:flex items-center gap-space-xs shrink-0" aria-label="Primary">
+            {NAV_ITEMS.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`h-9 px-space-md flex items-center gap-space-xs rounded-lg font-label-md text-label-md transition-colors ${
+                  isActive(item.href)
+                    ? 'bg-surface-container-highest text-on-surface'
+                    : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{item.icon}</span>
+                {item.label}
+              </Link>
+            ))}
           </nav>
 
-          {/* Mobile Menu Button */}
+          {/* Actions */}
+          <div className="flex items-center gap-space-xs shrink-0">
+            <ThemeToggle />
+            <Link
+              href="/favorites"
+              className={`hidden sm:flex h-9 px-space-md items-center gap-space-xs rounded-lg font-label-md text-label-md transition-colors ${
+                isActive('/favorites')
+                  ? 'bg-surface-container-highest text-on-surface'
+                  : 'bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface'
+              }`}
+            >
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">bookmark</span>
+              Saved
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Drawer backdrop */}
+      <div
+        onClick={() => setIsMobileMenuOpen(false)}
+        aria-hidden="true"
+        className={`md:hidden fixed inset-0 z-50 bg-black/70 backdrop-blur-sm transition-opacity duration-300 ${
+          isMobileMenuOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      />
+
+      {/* Mobile drawer */}
+      <aside
+        aria-hidden={!isMobileMenuOpen}
+        className={`md:hidden fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] bg-surface-container-low flex flex-col transition-transform duration-300 ease-in-out shadow-[0_20px_40px_-8px_rgba(0,0,0,0.8)] ${
+          isMobileMenuOpen ? 'translate-x-0 visible' : '-translate-x-full invisible'
+        }`}
+      >
+        <div className="px-space-lg py-space-md flex items-center justify-between bg-surface-container">
+          <div className="flex items-center gap-space-sm">
+            <Logo tileClass="w-6 h-6" />
+            <span className="font-headline-md text-headline-md text-on-surface font-bold">GSMHub</span>
+          </div>
           <button
-            onClick={toggleMobileMenu}
-            className="lg:hidden p-2 rounded-lg hover:bg-white/10 transition-colors text-2xl"
-            aria-label="Toggle Menu"
+            type="button"
+            onClick={() => setIsMobileMenuOpen(false)}
+            aria-label="Close menu"
+            className="w-11 h-11 flex items-center justify-center text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none"
           >
-            <FontAwesomeIcon icon={isMobileMenuOpen ? faTimes : faBars} />
+            <span className="material-symbols-outlined text-[22px]" aria-hidden="true">close</span>
           </button>
         </div>
 
-        {/* Mobile Search - Visible only on mobile */}
-        <div className="md:hidden mt-3">
-          <SearchBar />
-        </div>
-      </div>
-
-      {/* Mobile Menu Content */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[#0d1440] border-t border-white/10 animate-in slide-in-from-top duration-300">
-          <nav className="container mx-auto p-4 flex flex-col space-y-2">
-            <Link
-              href="/devices"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
-              onClick={toggleMobileMenu}
-            >
-              <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-300">
-                <FontAwesomeIcon icon={faMobileScreenButton} />
+        <nav className="flex-1 overflow-y-auto px-space-md py-space-sm space-y-space-xs" aria-label="Mobile">
+          {DRAWER_GROUPS.map((group, gi) => (
+            <React.Fragment key={group.title}>
+              {gi > 0 && <div className="h-px bg-outline-variant my-space-sm" aria-hidden="true" />}
+              <div className="px-space-sm py-space-xs font-label-xs text-label-xs text-outline uppercase tracking-wider">
+                {group.title}
               </div>
-              <span className="font-bold">Phones & Devices</span>
-            </Link>
-            <Link
-              href="/categories"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
-              onClick={toggleMobileMenu}
-            >
-              <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-300">
-                <FontAwesomeIcon icon={faLayerGroup} />
-              </div>
-              <span className="font-bold">Browse Categories</span>
-            </Link>
-            <Link
-              href="/brands"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors"
-              onClick={toggleMobileMenu}
-            >
-              <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-300">
-                <FontAwesomeIcon icon={faMobileScreenButton} />
-              </div>
-              <span className="font-bold">Browse Brands</span>
-            </Link>
-            <Link
-              href="/compare"
-              className="flex items-center gap-4 p-4 rounded-xl hover:bg-white/5 transition-colors text-blue-300"
-              onClick={toggleMobileMenu}
-            >
-              <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                <FontAwesomeIcon icon={faScaleBalanced} />
-              </div>
-              <span className="font-bold">Compare Devices</span>
-            </Link>
-          </nav>
-        </div>
-      )}
-    </header>
+              {group.items.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`flex items-center gap-space-md px-space-md py-space-sm rounded transition-colors ${
+                    isActive(item.href)
+                      ? 'bg-surface-container text-on-surface'
+                      : 'text-on-surface-variant hover:bg-surface-container hover:text-on-surface'
+                  }`}
+                >
+                  <span
+                    className={`material-symbols-outlined text-[20px] ${isActive(item.href) ? 'text-secondary' : ''}`}
+                    aria-hidden="true"
+                  >
+                    {item.icon}
+                  </span>
+                  <span className="font-label-md text-label-md">{item.label}</span>
+                </Link>
+              ))}
+            </React.Fragment>
+          ))}
+        </nav>
+      </aside>
+    </>
   );
 };
 

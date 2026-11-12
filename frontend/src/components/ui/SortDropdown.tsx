@@ -2,8 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter, useSearchParams, usePathname } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSort, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 const sortOptions = [
   { label: 'Newest First', value: 'latest' },
@@ -46,28 +44,28 @@ const SortDropdown: React.FC = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2.5 bg-white border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all focus:outline-none focus:ring-2 focus:ring-blue-100"
+        className="h-9 px-space-md flex items-center gap-space-xs bg-surface-container hover:bg-surface-container-high rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors focus:outline-none focus:ring-1 focus:ring-primary"
       >
-        <FontAwesomeIcon icon={faSort} className="text-gray-400" />
+        <span className="material-symbols-outlined text-[18px]" aria-hidden="true">sort</span>
         <span>{currentLabel}</span>
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 z-50 animate-in fade-in zoom-in-95 duration-100">
-          <div className="p-1.5">
+        <div className="absolute right-0 mt-2 w-56 bg-surface-container-lowest rounded-xl shadow-2xl border border-outline-variant z-50 p-1.5">
+          <div className="p-0.5">
             {sortOptions.map((option) => (
               <button
                 key={option.value}
                 onClick={() => handleSortChange(option.value)}
-                className={`w-full flex items-center justify-between px-3 py-2.5 text-sm rounded-lg transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 font-body-md text-body-md rounded-lg transition-colors ${
                   currentSort === option.value
-                    ? 'bg-blue-50 text-blue-700 font-semibold'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-primary-container/15 text-primary font-semibold'
+                    : 'text-on-surface hover:bg-surface-container'
                 }`}
               >
                 {option.label}
                 {currentSort === option.value && (
-                  <FontAwesomeIcon icon={faCheck} className="text-blue-500 text-xs" />
+                  <span className="material-symbols-outlined text-[16px] text-primary" aria-hidden="true">check</span>
                 )}
               </button>
             ))}

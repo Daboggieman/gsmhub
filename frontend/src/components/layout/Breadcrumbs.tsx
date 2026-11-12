@@ -24,10 +24,10 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   }
 
   return (
-    <nav className="text-sm text-gray-500 mb-4">
-      <ol className="list-none p-0 inline-flex flex-wrap">
+    <nav className="font-label-sm text-label-sm text-on-surface-variant mb-4">
+      <ol className="list-none p-0 inline-flex flex-wrap items-center">
         <li className="flex items-center">
-          <Link href="/" className="text-blue-600 hover:underline">
+          <Link href="/" className="text-secondary hover:text-secondary-container hover:underline transition-colors">
             Home
           </Link>
         </li>
@@ -37,11 +37,11 @@ const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
 
           return (
             <li key={item.href} className="flex items-center">
-              <span className="mx-2">/</span>
+              <span className="mx-2 text-outline" aria-hidden="true">/</span>
               {isLast || isActive ? (
-                <span className="text-gray-700 font-medium">{item.name ?? item.label}</span>
+                <span className="text-on-surface font-medium">{item.name ?? item.label}</span>
               ) : (
-                <Link href={item.href} className="text-blue-600 hover:underline">
+                <Link href={item.href} className="text-secondary hover:text-secondary-container hover:underline transition-colors">
                   {item.name ?? item.label}
                 </Link>
               )}

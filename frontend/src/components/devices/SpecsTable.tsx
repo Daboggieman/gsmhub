@@ -2,14 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import { Device } from '@shared/types';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCopy,
-  faCheck,
-  faChevronDown,
-  faChevronUp,
-  faListCheck
-} from '@fortawesome/free-solid-svg-icons';
 
 interface SpecsTableProps {
   device: Device;
@@ -41,8 +33,10 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
 
   if (!device || !device.specs) {
     return (
-      <div className="bg-white shadow-sm rounded-2xl p-8 text-center border border-gray-100">
-        <p className="text-gray-500 font-medium">No specifications available for this device.</p>
+      <div className="bg-surface-container-low shadow-md md:shadow-none rounded-xl p-8 text-center">
+        <p className="font-body-md text-body-md text-on-surface-variant">
+          No specifications available for this device.
+        </p>
       </div>
     );
   }
@@ -110,58 +104,74 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
   };
 
   return (
-    <div className="bg-white shadow-sm rounded-2xl overflow-hidden border border-gray-100">
-      <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center text-white">
-            <FontAwesomeIcon icon={faListCheck} />
+    <div className="bg-surface-container-low shadow-md md:shadow-none rounded-xl overflow-hidden">
+      <div className="p-space-lg border-b border-outline-variant flex justify-between items-center">
+        <div className="flex items-center gap-space-md">
+          <div className="w-9 h-9 rounded bg-primary-container flex items-center justify-center">
+            <span className="material-symbols-outlined text-[20px] text-on-primary-container" aria-hidden="true">
+              checklist
+            </span>
           </div>
-          <h2 className="text-xl font-black text-gray-900 uppercase tracking-tight">Full Specifications</h2>
+          <h2 className="font-headline-md text-headline-md text-on-surface font-bold">Full Specifications</h2>
         </div>
         <button
           onClick={handleCopyToClipboard}
-          className="flex items-center gap-2 bg-white hover:bg-gray-50 text-gray-700 font-bold py-2 px-4 rounded-xl border border-gray-200 transition-all shadow-sm active:scale-95 group"
+          className="h-9 px-space-md flex items-center gap-space-xs bg-surface-container hover:bg-surface-container-high rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors active:scale-[0.98]"
         >
-          <FontAwesomeIcon icon={copyFeedback === 'Copied!' ? faCheck : faCopy} className={copyFeedback === 'Copied!' ? 'text-green-500' : 'text-blue-500 group-hover:scale-110 transition-transform'} />
-          <span className="text-xs uppercase tracking-wider">{copyFeedback || 'Copy Specs'}</span>
+          <span
+            className={`material-symbols-outlined text-[18px] ${copyFeedback === 'Copied!' ? 'text-tertiary' : ''}`}
+            aria-hidden="true"
+          >
+            {copyFeedback === 'Copied!' ? 'check' : 'content_copy'}
+          </span>
+          <span className={copyFeedback === 'Copied!' ? 'text-tertiary' : ''}>
+            {copyFeedback || 'Copy Specs'}
+          </span>
         </button>
       </div>
 
       <div className="p-2">
-        <div className="px-4 pb-3">
+        <div className="px-2 pb-3">
           <input
             type="search"
             placeholder="Search specs"
             aria-label="Search specs"
             value={searchQuery}
             onChange={(event) => setSearchQuery(event.target.value)}
-            className="w-full rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-700 outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+            className="w-full h-8 rounded-lg border border-outline-variant bg-surface-container px-3 font-body-md text-body-md text-on-surface placeholder-outline outline-none focus:ring-1 focus:ring-primary focus:border-transparent transition-colors"
           />
         </div>
         {Object.keys(filteredSpecs).length > 0 ? (
           Object.keys(filteredSpecs).map((categoryName) => (
             <div key={categoryName} className="mb-2 last:mb-0">
               <button
-                className={`w-full flex justify-between items-center p-4 rounded-xl transition-all ${expandedCategories[categoryName]
-                  ? 'bg-blue-50/50 text-blue-700'
-                  : 'bg-white hover:bg-gray-50 text-gray-700'
-                  }`}
+                className={`sticky top-14 z-10 w-full flex justify-between items-center p-space-md rounded-lg transition-colors ${
+                  expandedCategories[categoryName]
+                    ? 'bg-surface-container text-on-surface'
+                    : 'bg-surface-container-low hover:bg-surface-container text-on-surface'
+                }`}
                 onClick={() => toggleCategory(categoryName)}
+                aria-expanded={expandedCategories[categoryName]}
               >
-                <span className="text-sm font-black uppercase tracking-widest">{categoryName}</span>
-                <FontAwesomeIcon icon={expandedCategories[categoryName] ? faChevronUp : faChevronDown} className="text-xs opacity-50" />
+                <span className="font-label-sm text-label-sm uppercase tracking-wider">{categoryName}</span>
+                <span
+                  className="material-symbols-outlined text-[18px] text-on-surface-variant"
+                  aria-hidden="true"
+                >
+                  {expandedCategories[categoryName] ? 'expand_less' : 'expand_more'}
+                </span>
               </button>
 
               {expandedCategories[categoryName] && (
-                <div className="px-4 py-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                <div className="px-space-md py-2">
                   <table className="w-full">
-                    <tbody className="divide-y divide-gray-50">
+                    <tbody className="divide-y divide-outline-variant/50">
                       {Object.keys(filteredSpecs[categoryName]).map((specName) => (
                         <tr key={specName} className="group">
-                          <td className="py-3 pr-4 text-xs font-bold text-gray-400 uppercase tracking-wider w-1/3 align-top group-hover:text-blue-500 transition-colors">
+                          <td className="py-2.5 pr-4 font-label-xs text-label-xs text-outline uppercase tracking-wider w-24 md:w-[28%] align-top group-hover:text-secondary transition-colors">
                             {specName}
                           </td>
-                          <td className="py-3 text-sm text-gray-700 w-2/3 leading-relaxed">
+                          <td className="py-2.5 font-body-md text-body-md text-on-surface leading-relaxed tabular-nums">
                             {filteredSpecs[categoryName][specName]}
                           </td>
                         </tr>
@@ -173,7 +183,7 @@ const SpecsTable: React.FC<SpecsTableProps> = ({ device }) => {
             </div>
           ))
         ) : (
-          <div className="p-8 text-center text-gray-500">
+          <div className="p-8 text-center font-body-md text-body-md text-on-surface-variant">
             {normalizedQuery ? 'No matching specifications found.' : 'No detailed specifications available.'}
           </div>
         )}
