@@ -5,8 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { apiClient } from '@/lib/api'
 import { Device } from '@shared/types'
 import { formatPrice } from '@/lib/utils'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faTimes, faSpinner, faTag } from '@fortawesome/free-solid-svg-icons'
 import Pagination from '@/components/ui/Pagination'
 
 const PAGE_LIMIT = 10
@@ -242,21 +240,21 @@ function AdminPricesPageContent() {
   const rangeEnd = Math.min(page * PAGE_LIMIT, total)
 
   return (
-    <div className="p-4 md:p-8">
-      <div className="mb-8 flex flex-wrap items-center justify-between gap-4">
+    <div className="space-y-space-lg">
+      <div className="flex flex-wrap items-center justify-between gap-space-md">
         <div>
-          <h1 className="text-3xl font-black tracking-tight text-gray-900">
+          <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
             Price Management
           </h1>
-          <p className="mt-1 text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+          <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
             Manually update device prices across retailers and markets
           </p>
         </div>
         <button
           onClick={handleToggleForm}
-          className="flex items-center gap-2 rounded-2xl bg-blue-600 px-6 py-3 text-xs font-black tracking-widest text-white uppercase shadow-lg shadow-blue-100 transition-all hover:bg-blue-700"
+          className="flex items-center gap-2 rounded-lg bg-primary-container px-space-md py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary"
         >
-          <FontAwesomeIcon icon={isFormOpen ? faTimes : faPlus} />
+          <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{isFormOpen ? 'close' : 'add'}</span>
           {isFormOpen ? 'Cancel' : 'Add Price'}
         </button>
       </div>
@@ -264,31 +262,31 @@ function AdminPricesPageContent() {
       {isFormOpen && (
         <form
           onSubmit={handleSubmit}
-          className="mb-8 grid grid-cols-1 gap-4 rounded-3xl border border-gray-100 bg-white p-6 shadow-sm md:grid-cols-3"
+          className="grid grid-cols-1 gap-space-md rounded-xl bg-surface-container-low p-space-lg shadow-md md:shadow-none md:grid-cols-3"
         >
           {editingId ? (
             <div>
-              <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+              <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                 Device
               </label>
-              <div className="flex items-center gap-2 rounded-xl bg-gray-50 px-4 py-3">
-                <FontAwesomeIcon icon={faTag} className="text-gray-400" />
-                <span className="text-sm font-black text-gray-700">
+              <div className="flex items-center gap-2 rounded-lg bg-surface-container px-4 py-2.5">
+                <span className="material-symbols-outlined text-[18px] text-outline" aria-hidden="true">sell</span>
+                <span className="font-label-md font-bold text-on-surface">
                   {editingDeviceLabel}
                 </span>
               </div>
-              <p className="mt-1 text-[10px] font-bold text-gray-400">
+              <p className="mt-1 font-label-xs text-label-xs text-outline">
                 A price entry cannot be reassigned to another device
               </p>
             </div>
           ) : (
             <div className="relative">
-              <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+              <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                 Device
               </label>
               {selectedDevice ? (
-                <div className="flex items-center justify-between gap-2 rounded-xl border-2 border-blue-200 bg-blue-50 px-4 py-3">
-                  <span className="text-sm font-black text-gray-900">
+                <div className="flex items-center justify-between gap-2 rounded-lg border border-secondary-container/40 bg-secondary-container/15 px-4 py-2.5">
+                  <span className="font-label-md font-bold text-on-surface">
                     {selectedDevice.name}
                   </span>
                   <button
@@ -298,10 +296,10 @@ function AdminPricesPageContent() {
                       setDeviceQuery('')
                       setDeviceResults([])
                     }}
-                    className="text-gray-400 transition-colors hover:text-red-500"
+                    className="text-outline transition-colors hover:text-error"
                     aria-label="Clear selected device"
                   >
-                    <FontAwesomeIcon icon={faTimes} />
+                    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">close</span>
                   </button>
                 </div>
               ) : (
@@ -310,15 +308,15 @@ function AdminPricesPageContent() {
                     type="text"
                     required
                     placeholder="Search devices by name or brand..."
-                    className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                     value={deviceQuery}
                     onChange={(e) => setDeviceQuery(e.target.value)}
                   />
                   {(isSearchingDevices || deviceResults.length > 0) && (
-                    <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg">
+                    <div className="absolute z-10 mt-1 w-full overflow-hidden rounded-xl border border-outline-variant bg-surface-container-lowest shadow-2xl">
                       {isSearchingDevices ? (
-                        <div className="flex items-center gap-2 px-4 py-3 text-xs font-bold text-gray-400">
-                          <FontAwesomeIcon icon={faSpinner} spin />
+                        <div className="flex items-center gap-2 px-4 py-2.5 font-label-sm font-bold text-outline">
+                          <span className="material-symbols-outlined progress_activity animate-spin text-[16px] text-secondary" aria-hidden="true"></span>
                           Searching...
                         </div>
                       ) : (
@@ -336,12 +334,12 @@ function AdminPricesPageContent() {
                                 setDeviceQuery('')
                                 setDeviceResults([])
                               }}
-                              className="block w-full px-4 py-3 text-left transition-colors hover:bg-blue-50"
+                              className="block w-full px-4 py-2.5 text-left transition-colors hover:bg-surface-container"
                             >
-                              <p className="text-sm font-black text-gray-900">
+                              <p className="font-label-md font-bold text-on-surface">
                                 {d.name}
                               </p>
-                              <p className="text-[10px] font-bold tracking-widest text-gray-500 uppercase">
+                              <p className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-on-surface-variant">
                                 {d.brand}
                               </p>
                             </button>
@@ -356,7 +354,7 @@ function AdminPricesPageContent() {
           )}
 
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Price
             </label>
             <input
@@ -365,14 +363,14 @@ function AdminPricesPageContent() {
               min="0"
               required
               placeholder="699.99"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={form.price}
               onChange={(e) => setForm((p) => ({ ...p, price: e.target.value }))}
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Currency
             </label>
             <input
@@ -380,7 +378,7 @@ function AdminPricesPageContent() {
               required
               list="currency-suggestions"
               placeholder="USD"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold uppercase text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md font-bold uppercase text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={form.currency}
               onChange={(e) => setForm((p) => ({ ...p, currency: e.target.value }))}
             />
@@ -392,7 +390,7 @@ function AdminPricesPageContent() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Country
             </label>
             <input
@@ -400,7 +398,7 @@ function AdminPricesPageContent() {
               required
               list="country-suggestions"
               placeholder="USA"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={form.country}
               onChange={(e) => setForm((p) => ({ ...p, country: e.target.value }))}
             />
@@ -412,26 +410,26 @@ function AdminPricesPageContent() {
           </div>
 
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Retailer
             </label>
             <input
               type="text"
               placeholder="Amazon (optional)"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={form.retailer}
               onChange={(e) => setForm((p) => ({ ...p, retailer: e.target.value }))}
             />
           </div>
 
           <div>
-            <label className="mb-2 block text-[10px] font-black tracking-widest text-gray-400 uppercase">
+            <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
               Affiliate URL
             </label>
             <input
               type="url"
               placeholder="https://... (optional)"
-              className="w-full rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="w-full rounded-lg border border-outline-variant bg-surface-container px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={form.affiliateUrl}
               onChange={(e) =>
                 setForm((p) => ({ ...p, affiliateUrl: e.target.value }))
@@ -439,49 +437,43 @@ function AdminPricesPageContent() {
             />
           </div>
 
-          <div className="flex items-end md:col-span-3">
+          <div className="flex items-end gap-space-md md:col-span-3">
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-xl bg-gray-900 px-6 py-3 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-gray-800 disabled:opacity-50"
+              className="rounded-lg bg-primary-container px-space-lg py-2.5 font-label-sm text-label-sm font-bold text-on-primary-container transition-colors hover:bg-inverse-primary disabled:opacity-50"
             >
-              {isSubmitting ? (
-                <FontAwesomeIcon icon={faSpinner} spin />
-              ) : editingId ? (
-                'Save Changes'
-              ) : (
-                'Add Price Entry'
-              )}
+              {isSubmitting ? 'Saving…' : editingId ? 'Save Changes' : 'Add Price Entry'}
             </button>
             {editingId && (
               <button
                 type="button"
                 onClick={resetForm}
-                className="ml-3 rounded-xl border-2 border-gray-200 px-6 py-3 text-[10px] font-black tracking-widest text-gray-600 uppercase transition-colors hover:border-gray-400"
+                className="rounded-lg border border-outline-variant px-space-lg py-2.5 font-label-sm text-label-sm font-bold text-on-surface-variant uppercase transition-colors hover:bg-surface-container"
               >
                 Cancel Edit
               </button>
             )}
           </div>
           {formError && (
-            <p className="text-xs font-bold text-red-500 md:col-span-3">{formError}</p>
+            <p className="font-body-sm font-bold text-error md:col-span-3">{formError}</p>
           )}
         </form>
       )}
 
-      <div className="overflow-hidden rounded-3xl border border-gray-100 bg-white shadow-sm">
-        <div className="border-b border-gray-50 bg-gray-50/30 p-6">
-          <form onSubmit={handleSearch} className="flex max-w-lg gap-2">
+      <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
+        <div className="border-b border-outline-variant bg-surface-container p-space-lg">
+          <form onSubmit={handleSearch} className="flex max-w-lg gap-space-sm">
             <input
               type="text"
               placeholder="Search by device, country or retailer..."
-              className="flex-1 rounded-xl border-2 border-gray-100 bg-white px-4 py-3 text-sm font-bold text-gray-900 outline-none focus:border-blue-500"
+              className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest px-4 py-2.5 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               value={searchInput}
               onChange={(e) => setSearchInput(e.target.value)}
             />
             <button
               type="submit"
-              className="rounded-xl bg-gray-900 px-6 py-3 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-gray-800"
+              className="rounded-lg bg-surface-container-highest px-space-lg py-2.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-on-surface transition-colors hover:brightness-110"
             >
               Filter
             </button>
@@ -491,33 +483,33 @@ function AdminPricesPageContent() {
         <div className="overflow-x-auto">
           <table className="w-full border-collapse text-left">
             <thead>
-              <tr className="border-b border-gray-100 bg-white">
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+              <tr className="border-b border-outline-variant bg-surface-container">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Device
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Price
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Country
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Retailer
                 </th>
-                <th className="px-6 py-5 text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Date
                 </th>
-                <th className="px-6 py-5 text-right text-[10px] font-black tracking-[0.2em] text-gray-400 uppercase">
+                <th className="px-space-lg py-space-md text-right font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Actions
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-outline-variant/40">
               {isLoading ? (
                 <tr>
                   <td
                     colSpan={6}
-                    className="animate-pulse px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="animate-pulse px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     Loading Prices...
                   </td>
@@ -526,7 +518,7 @@ function AdminPricesPageContent() {
                 <tr>
                   <td
                     colSpan={6}
-                    className="px-6 py-12 text-center text-xs font-bold tracking-widest text-gray-400 uppercase"
+                    className="px-space-lg py-space-xl text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline"
                   >
                     No price entries found
                   </td>
@@ -537,51 +529,47 @@ function AdminPricesPageContent() {
                   return (
                     <tr
                       key={priceId || index}
-                      className="group transition-colors hover:bg-blue-50/30"
+                      className="group transition-colors hover:bg-surface-container"
                     >
-                      <td className="px-6 py-4">
-                        <p className="font-black text-gray-900">
+                      <td className="px-space-lg py-space-md">
+                        <p className="font-label-md font-bold text-on-surface">
                           {p.device?.name || 'Unknown device'}
                         </p>
-                        <p className="text-xs font-bold text-gray-500 uppercase">
+                        <p className="font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
                           {p.device?.brand || ''}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
-                        <p className="text-sm font-black text-gray-800">
+                      <td className="px-space-lg py-space-md">
+                        <p className="font-label-md font-bold text-tertiary tabular-nums">
                           {formatPriceCell(p.price, p.currency)}
                         </p>
                       </td>
-                      <td className="px-6 py-4">
-                        <span className="rounded-full bg-gray-100 px-3 py-1 text-[10px] font-black tracking-wider text-gray-600 uppercase">
+                      <td className="px-space-lg py-space-md">
+                        <span className="rounded bg-surface-container-highest px-2 py-1 font-label-xs text-label-xs font-bold uppercase tracking-wider text-on-surface-variant">
                           {p.country}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-sm font-bold text-gray-600">
+                      <td className="px-space-lg py-space-md font-label-md font-bold text-on-surface-variant">
                         {p.retailer || '—'}
                       </td>
-                      <td className="px-6 py-4 text-sm font-bold text-gray-500">
+                      <td className="px-space-lg py-space-md font-body-sm font-bold text-on-surface-variant tabular-nums">
                         {p.date ? new Date(p.date).toLocaleDateString() : '—'}
                       </td>
-                      <td className="px-6 py-4 text-right">
+                      <td className="px-space-lg py-space-md text-right">
                         <div className="flex justify-end gap-2">
                           <button
                             onClick={() => handleEdit(p)}
                             disabled={busyId === priceId}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-gray-700 uppercase transition-all hover:border-blue-600 hover:text-blue-600 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-on-surface uppercase transition-colors hover:bg-surface-container-high disabled:cursor-not-allowed disabled:opacity-40"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => priceId && handleDelete(priceId)}
                             disabled={busyId === priceId || !priceId}
-                            className="rounded-xl border border-gray-200 bg-white px-4 py-2 text-[10px] font-black text-red-600 uppercase transition-all hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-40"
+                            className="rounded-lg bg-surface-container px-3 py-2 font-label-xs text-label-xs font-bold text-error uppercase transition-colors hover:bg-error-container/15 disabled:cursor-not-allowed disabled:opacity-40"
                           >
-                            {busyId === priceId ? (
-                              <FontAwesomeIcon icon={faSpinner} spin />
-                            ) : (
-                              'Delete'
-                            )}
+                            {busyId === priceId ? '…' : 'Delete'}
                           </button>
                         </div>
                       </td>
@@ -594,8 +582,8 @@ function AdminPricesPageContent() {
         </div>
 
         {/* Pagination footer */}
-        <div className="border-t border-gray-100 bg-gray-50/50 p-6">
-          <div className="mb-4 text-center text-[10px] font-black tracking-widest text-gray-500 uppercase">
+        <div className="border-t border-outline-variant bg-surface-container p-space-lg">
+          <div className="mb-space-sm text-center font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline tabular-nums">
             Showing {rangeStart.toLocaleString()}&ndash;
             {rangeEnd.toLocaleString()} of {total.toLocaleString()} price
             entries

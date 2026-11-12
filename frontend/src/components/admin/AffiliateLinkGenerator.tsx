@@ -5,8 +5,6 @@ import {
   AFFILIATE_PLATFORMS,
   getAffiliatePlatform,
 } from '@/lib/affiliate'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faWandMagicSparkles, faCopy, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 const AFFILIATE_IDS_STORAGE_KEY = 'gsmhub-affiliate-ids'
 
@@ -77,20 +75,20 @@ export default function AffiliateLinkGenerator({
   }
 
   return (
-    <div className="space-y-3 rounded-2xl border-2 border-dashed border-indigo-200 bg-indigo-50/50 p-4">
-      <p className="flex items-center gap-2 text-[10px] font-black tracking-widest text-indigo-600 uppercase">
-        <FontAwesomeIcon icon={faWandMagicSparkles} />
+    <div className="space-y-space-md rounded-xl border border-dashed border-secondary-container/40 bg-secondary-container/10 p-space-lg">
+      <p className="flex items-center gap-2 font-label-xs text-label-xs font-bold uppercase tracking-widest text-secondary">
+        <span className="material-symbols-outlined text-[16px]" aria-hidden="true">auto_fix_high</span>
         Affiliate Link Generator
       </p>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 gap-space-md">
         <div>
-          <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+          <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
             Platform
           </label>
           <select
             value={platformId}
             onChange={(e) => setPlatformId(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white p-2 text-sm font-bold text-gray-900"
+            className="w-full rounded-lg border border-outline-variant bg-surface-container p-2 font-label-md font-bold text-on-surface"
           >
             {AFFILIATE_PLATFORMS.map((p) => (
               <option key={p.id} value={p.id}>
@@ -100,7 +98,7 @@ export default function AffiliateLinkGenerator({
           </select>
         </div>
         <div>
-          <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+          <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
             Search Query
           </label>
           <input
@@ -108,13 +106,13 @@ export default function AffiliateLinkGenerator({
             placeholder="Galaxy S24 Ultra"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white p-2 text-sm font-bold text-gray-900"
+            className="w-full rounded-lg border border-outline-variant bg-surface-container p-2 font-label-md font-bold text-on-surface placeholder-outline"
           />
         </div>
       </div>
       {platform && platform.idPlaceholder !== 'No affiliate ID needed' && (
         <div>
-          <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+          <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
             Affiliate ID
           </label>
           <input
@@ -122,28 +120,28 @@ export default function AffiliateLinkGenerator({
             placeholder={platform.idPlaceholder}
             value={affiliateId}
             onChange={(e) => setAffiliateId(e.target.value)}
-            className="w-full rounded-lg border border-gray-300 bg-white p-2 text-sm font-bold text-gray-900"
+            className="w-full rounded-lg border border-outline-variant bg-surface-container p-2 font-label-md font-bold text-on-surface placeholder-outline"
           />
         </div>
       )}
       <div>
-        <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+        <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-on-surface-variant">
           Generated URL
         </label>
-        <div className="flex gap-2">
+        <div className="flex gap-space-sm">
           <input
             type="text"
             readOnly
             value={generatedUrl}
-            className="w-full rounded-lg border border-gray-200 bg-gray-50 p-2 font-mono text-xs text-gray-600"
+            className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm text-on-surface-variant"
           />
           <button
             type="button"
             onClick={handleCopy}
             title="Copy URL"
-            className="shrink-0 rounded-lg border border-gray-300 bg-white px-3 text-gray-500 transition-colors hover:text-indigo-600"
+            className="shrink-0 rounded-lg border border-outline-variant bg-surface-container px-3 text-on-surface-variant transition-colors hover:text-secondary"
           >
-            <FontAwesomeIcon icon={copied ? faCheck : faCopy} />
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">{copied ? 'check' : 'content_copy'}</span>
           </button>
         </div>
       </div>
@@ -151,7 +149,7 @@ export default function AffiliateLinkGenerator({
         type="button"
         onClick={handleApply}
         disabled={!generatedUrl}
-        className="w-full rounded-lg bg-indigo-600 py-2 text-[10px] font-black tracking-widest text-white uppercase transition-colors hover:bg-indigo-700 disabled:opacity-50"
+        className="w-full rounded-lg bg-primary-container py-2 font-label-xs text-label-xs font-bold uppercase tracking-widest text-on-primary-container transition-colors hover:bg-inverse-primary disabled:opacity-50"
       >
         Use This Link
       </button>

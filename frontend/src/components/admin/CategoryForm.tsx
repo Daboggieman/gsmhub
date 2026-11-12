@@ -5,12 +5,6 @@ import { Category } from '@shared/types';
 import { generateSlug } from '@shared/utils/slug';
 import { apiClient } from '@/lib/api';
 import { useRouter } from 'next/navigation';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { 
-  faTag, 
-  faTimesCircle,
-  faIcons
-} from '@fortawesome/free-solid-svg-icons';
 
 interface CategoryFormProps {
   initialData?: Category;
@@ -44,7 +38,7 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
       }
       return next;
     });
-    
+
     if (name === 'slug') {
       setIsAutoSlug(false);
     }
@@ -79,31 +73,31 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 max-w-2xl">
-      <div className="bg-gray-50/50 p-6 border-b border-gray-100 flex items-center gap-3">
-        <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center">
-          <FontAwesomeIcon icon={faTag} />
+    <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none max-w-2xl">
+      <div className="flex items-center gap-space-md border-b border-outline-variant bg-surface-container p-space-lg">
+        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-container text-on-primary-container">
+          <span className="material-symbols-outlined text-[20px]" aria-hidden="true">sell</span>
         </div>
         <div>
-          <h3 className="text-lg font-black text-gray-900 uppercase tracking-tight">
+          <h3 className="font-headline-md font-bold uppercase tracking-tight text-on-surface">
             {isEdit ? 'Edit Category' : 'Create New Category'}
           </h3>
-          <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">Organize your devices efficiently</p>
+          <p className="mt-0.5 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Organize your devices efficiently</p>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="p-8 space-y-8">
+      <form onSubmit={handleSubmit} className="space-y-space-xl p-space-xl">
         {error && (
-          <div className="flex items-center gap-3 bg-red-50 p-4 text-red-700 rounded-xl border border-red-100">
-            <FontAwesomeIcon icon={faTimesCircle} />
-            <span className="font-bold">{error}</span>
+          <div className="flex items-center gap-space-md rounded-lg border border-error-container/40 bg-error-container/15 p-space-md font-label-md font-bold text-error">
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">error</span>
+            {error}
           </div>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <div className="space-y-6">
+        <div className="grid grid-cols-1 gap-space-lg md:grid-cols-2">
+          <div className="space-y-space-lg">
             <div>
-              <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Category Name</label>
+              <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Category Name</label>
               <input
                 type="text"
                 name="name"
@@ -111,77 +105,75 @@ export default function CategoryForm({ initialData, isEdit = false }: CategoryFo
                 value={formData.name || ''}
                 onChange={handleChange}
                 placeholder="e.g. Smartphones"
-                className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-bold border p-3 text-gray-900"
+                className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
             <div>
-              <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Slug (URL)</label>
+              <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Slug (URL)</label>
               <input
                 type="text"
                 name="slug"
                 required
                 value={formData.slug || ''}
                 onChange={handleChange}
-                className="w-full rounded-xl bg-gray-50 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-mono text-sm border p-3 text-gray-700"
+                className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-3 font-body-sm text-on-surface-variant focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
               />
             </div>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-space-lg">
             <div>
-              <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Icon Name / URL</label>
+              <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Icon Name / URL</label>
               <div className="relative">
                 <input
                   type="text"
                   name="icon"
                   value={formData.icon || ''}
                   onChange={handleChange}
-                  placeholder="e.g. mobile-alt"
-                  className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-bold border p-3 pl-10 text-gray-900"
+                  placeholder="e.g. smartphone"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 pl-10 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
-                <FontAwesomeIcon icon={faIcons} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
+                <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline" aria-hidden="true">interests</span>
               </div>
             </div>
-            <div className="flex items-center gap-2 pt-4">
+            <div className="flex items-center gap-2 pt-2">
               <input
                 type="checkbox"
                 name="isActive"
                 id="isActive"
                 checked={formData.isActive}
                 onChange={handleChange}
-                className="w-5 h-5 text-blue-600 rounded-lg border-gray-300 focus:ring-blue-500"
+                className="h-5 w-5 rounded bg-surface-container-highest accent-secondary-container"
               />
-              <label htmlFor="isActive" className="text-sm font-black text-gray-700 uppercase tracking-widest">Active Status</label>
+              <label htmlFor="isActive" className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-on-surface-variant">Active Status</label>
             </div>
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-black text-gray-500 uppercase tracking-widest mb-2">Description</label>
+          <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">Description</label>
           <textarea
             name="description"
             rows={4}
             value={formData.description || ''}
             onChange={handleChange}
             placeholder="What kind of devices belong here?"
-            className="w-full rounded-xl border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 font-medium border p-3 text-gray-700"
+            className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-body-md text-on-surface-variant placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
           />
         </div>
 
-        <div className="flex justify-end gap-4 pt-8 border-t border-gray-100">
+        <div className="flex justify-end gap-space-md border-t border-outline-variant pt-space-lg">
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-8 py-4 rounded-2xl text-sm font-black text-gray-500 uppercase tracking-widest hover:bg-gray-100 transition-all"
+            className="rounded-lg px-space-lg py-3 font-label-sm text-label-sm font-bold uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`px-12 py-4 rounded-2xl shadow-xl font-black text-white uppercase tracking-widest transition-all transform hover:-translate-y-1 ${
-              isSubmitting ? 'bg-gray-400 scale-95 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 active:scale-95 shadow-blue-200'
-            }`}
+            className={`rounded-lg px-space-xl py-3 font-label-sm text-label-sm font-bold uppercase tracking-widest transition-colors ${isSubmitting ? 'bg-surface-container-highest text-outline' : 'bg-primary-container text-on-primary-container hover:bg-inverse-primary'}`}
           >
             {isSubmitting ? 'Saving...' : isEdit ? 'Update Category' : 'Create Category'}
           </button>
