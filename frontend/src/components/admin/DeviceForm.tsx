@@ -5,22 +5,6 @@ import { Device, Category, DeviceType, PriceHistory } from '@shared/types'
 import { generateSlug } from '@shared/utils/slug'
 import { apiClient } from '@/lib/api'
 import { useRouter } from 'next/navigation'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import type { IconDefinition } from '@fortawesome/fontawesome-svg-core'
-import {
-  faInfoCircle,
-  faMicrochip,
-  faCamera,
-  faImages,
-  faPlus,
-  faTrash,
-  faEye,
-  faTimesCircle,
-  faGlobe,
-  faShoppingCart,
-  faHistory,
-  faWandMagicSparkles,
-} from '@fortawesome/free-solid-svg-icons'
 import AffiliateLinkGenerator from '@/components/admin/AffiliateLinkGenerator'
 
 interface DeviceFormProps {
@@ -49,23 +33,22 @@ const TabButton = ({
 }: {
   id: Tab
   label: string
-  icon: IconDefinition
+  icon: string
   activeTab: Tab
   onSelect: (id: Tab) => void
 }) => (
   <button
     type="button"
     onClick={() => onSelect(id)}
-    className={`flex items-center gap-2 border-b-2 px-6 py-4 font-bold whitespace-nowrap transition-all ${
+    className={`flex items-center gap-2 whitespace-nowrap border-b-2 px-space-lg py-4 font-label-sm text-label-sm font-bold uppercase tracking-widest transition-colors ${
       activeTab === id
-        ? 'border-blue-600 bg-blue-50/50 text-blue-600'
-        : 'border-transparent text-gray-600 hover:bg-gray-50 hover:text-gray-800'
+        ? 'border-secondary bg-secondary-container/10 text-secondary'
+        : 'border-transparent text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface'
     }`}
   >
-    <FontAwesomeIcon
-      icon={icon}
-      className={activeTab === id ? 'text-blue-600' : 'text-gray-500'}
-    />
+    <span className="material-symbols-outlined text-[18px]" aria-hidden="true">
+      {icon}
+    </span>
     {label}
   </button>
 )
@@ -96,7 +79,7 @@ const SuggestibleInput = ({
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
 }) => (
   <div>
-    <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
       {label}
     </label>
     <input
@@ -106,7 +89,7 @@ const SuggestibleInput = ({
       value={value || ''}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+      className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
     />
     <SuggestionList id={`${name}-list`} items={items} />
   </div>
@@ -362,47 +345,47 @@ export default function DeviceForm({
   }
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-xl">
-      <div className="no-scrollbar flex overflow-x-auto border-b border-gray-100 bg-gray-50/50">
-        <TabButton id="general" label="General Info" icon={faInfoCircle} activeTab={activeTab} onSelect={setActiveTab} />
-        <TabButton id="specs_key" label="Key Specs" icon={faMicrochip} activeTab={activeTab} onSelect={setActiveTab} />
-        <TabButton id="specs_all" label="Detailed Specs" icon={faCamera} activeTab={activeTab} onSelect={setActiveTab} />
-        <TabButton id="media" label="Media & Review" icon={faImages} activeTab={activeTab} onSelect={setActiveTab} />
+    <div className="overflow-hidden rounded-xl bg-surface-container-low shadow-md md:shadow-none">
+      <div className="no-scrollbar flex overflow-x-auto border-b border-outline-variant bg-surface-container">
+        <TabButton id="general" label="General Info" icon="info" activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="specs_key" label="Key Specs" icon="memory" activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="specs_all" label="Detailed Specs" icon="list_alt" activeTab={activeTab} onSelect={setActiveTab} />
+        <TabButton id="media" label="Media & Review" icon="photo_library" activeTab={activeTab} onSelect={setActiveTab} />
         <TabButton
           id="seo_affiliates"
           label="SEO & Affiliates"
-          icon={faGlobe}
+          icon="public"
           activeTab={activeTab}
           onSelect={setActiveTab}
         />
         {isEdit && (
-          <TabButton id="pricing" label="Retail Prices" icon={faShoppingCart} activeTab={activeTab} onSelect={setActiveTab} />
+          <TabButton id="pricing" label="Retail Prices" icon="shopping_cart" activeTab={activeTab} onSelect={setActiveTab} />
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="p-8">
+      <form onSubmit={handleSubmit} className="p-space-xl">
         {error && (
-          <div className="animate-shake mb-8 flex items-center gap-3 rounded-xl border border-red-100 bg-red-50 p-4 text-red-700">
-            <FontAwesomeIcon icon={faTimesCircle} />
-            <span className="font-bold">{error}</span>
+          <div className="mb-space-xl flex items-center gap-space-md rounded-lg border border-error-container/40 bg-error-container/15 p-space-md font-label-md font-bold text-error">
+            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">error</span>
+            <span>{error}</span>
           </div>
         )}
 
         {/* Tab 6: Retail Prices (Manual Overrides) */}
         {isEdit && (
           <div
-            className={activeTab === 'pricing' ? 'block space-y-10' : 'hidden'}
+            className={activeTab === 'pricing' ? 'block space-y-space-xl' : 'hidden'}
           >
-            <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+            <div className="grid grid-cols-1 gap-space-xl md:grid-cols-3">
               {/* Add New Price Form */}
-              <div className="space-y-6 rounded-3xl border border-blue-100 bg-blue-50/50 p-6 md:col-span-1">
-                <h3 className="mb-4 flex items-center gap-2 text-lg font-black text-blue-900">
-                  <FontAwesomeIcon icon={faPlus} className="text-blue-600" />
+              <div className="space-y-space-lg rounded-xl border border-tertiary-container/40 bg-tertiary-container/10 p-space-lg md:col-span-1">
+                <h3 className="mb-space-md flex items-center gap-2 font-headline-md text-headline-md font-bold text-tertiary">
+                  <span className="material-symbols-outlined text-[20px]" aria-hidden="true">add</span>
                   Add Local Price
                 </h3>
-                <div className="space-y-4">
+                <div className="space-y-space-lg">
                   <div>
-                    <label className="mb-1 block text-xs font-black tracking-widest text-blue-500 uppercase">
+                    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                       Price
                     </label>
                     <input
@@ -414,12 +397,12 @@ export default function DeviceForm({
                           price: parseFloat(e.target.value),
                         })
                       }
-                      className="w-full rounded-xl border p-2 font-bold"
+                      className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2 font-label-md font-bold text-on-surface tabular-nums focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-space-md">
                     <div>
-                      <label className="mb-1 block text-xs font-black tracking-widest text-blue-500 uppercase">
+                      <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                         Currency
                       </label>
                       <input
@@ -428,11 +411,11 @@ export default function DeviceForm({
                         onChange={(e) =>
                           setNewPrice({ ...newPrice, currency: e.target.value })
                         }
-                        className="w-full rounded-xl border p-2 font-bold uppercase"
+                        className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2 font-label-md font-bold uppercase text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                       />
                     </div>
                     <div>
-                      <label className="mb-1 block text-xs font-black tracking-widest text-blue-500 uppercase">
+                      <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                         Country
                       </label>
                       <input
@@ -441,12 +424,12 @@ export default function DeviceForm({
                         onChange={(e) =>
                           setNewPrice({ ...newPrice, country: e.target.value })
                         }
-                        className="w-full rounded-xl border p-2 font-bold"
+                        className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                       />
                     </div>
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-black tracking-widest text-blue-500 uppercase">
+                    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                       Retailer
                     </label>
                     <input
@@ -456,11 +439,11 @@ export default function DeviceForm({
                         setNewPrice({ ...newPrice, retailer: e.target.value })
                       }
                       placeholder="e.g. Slot, Jumia"
-                      className="w-full rounded-xl border p-2 font-bold"
+                      className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <div>
-                    <label className="mb-1 block text-xs font-black tracking-widest text-blue-500 uppercase">
+                    <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                       Store URL
                     </label>
                     <input
@@ -469,13 +452,13 @@ export default function DeviceForm({
                       onChange={(e) =>
                         setNewPrice({ ...newPrice, affiliateUrl: e.target.value })
                       }
-                      className="w-full rounded-xl border p-2 font-bold"
+                      className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest px-3 py-2 font-body-sm text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={handleAddPrice}
-                    className="w-full rounded-xl bg-blue-600 py-3 text-xs font-black tracking-widest text-white uppercase transition-all hover:bg-blue-700"
+                    className="w-full rounded-lg bg-tertiary-container py-3 font-label-xs text-label-xs font-bold uppercase tracking-widest text-on-tertiary-container transition-all hover:brightness-110"
                   >
                     Add Price Entry
                   </button>
@@ -483,43 +466,43 @@ export default function DeviceForm({
               </div>
 
               {/* Price List */}
-              <div className="space-y-4 md:col-span-2">
-                <h3 className="mb-4 flex items-center gap-2 text-lg font-black text-gray-900">
-                  <FontAwesomeIcon icon={faHistory} className="text-gray-400" />
+              <div className="space-y-space-md md:col-span-2">
+                <h3 className="mb-space-md flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                  <span className="material-symbols-outlined text-[20px] text-outline" aria-hidden="true">history</span>
                   Price Records
                 </h3>
                 {isPriceLoading ? (
-                  <div className="animate-pulse py-12 text-center font-bold tracking-widest text-gray-400 uppercase">
+                  <div className="animate-pulse py-12 text-center font-label-md font-bold uppercase tracking-widest text-outline">
                     Loading Price Data...
                   </div>
                 ) : prices.length === 0 ? (
-                  <div className="rounded-3xl border-2 border-dashed border-gray-200 bg-gray-50 py-12 text-center">
-                    <p className="font-bold tracking-widest text-gray-400 uppercase">
+                  <div className="rounded-xl border-2 border-dashed border-outline-variant bg-surface-container py-12 text-center">
+                    <p className="font-label-md font-bold uppercase tracking-widest text-outline">
                       No manual prices recorded
                     </p>
                   </div>
                 ) : (
-                  <div className="no-scrollbar max-h-[500px] space-y-3 overflow-y-auto pr-2">
+                  <div className="no-scrollbar max-h-[500px] space-y-space-md overflow-y-auto pr-2">
                     {prices.map((p: PriceHistory) => (
                       <div
                         key={p._id || p.id}
-                        className="flex items-center justify-between rounded-2xl border border-gray-100 bg-white p-4 shadow-sm transition-all hover:border-blue-200"
+                        className="flex items-center justify-between rounded-xl border border-outline-variant bg-surface-container-lowest p-4 transition-colors hover:border-secondary-container/40"
                       >
-                        <div className="flex items-center gap-4">
-                          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 font-black text-blue-600">
+                        <div className="flex items-center gap-space-lg">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-surface-container-highest font-label-md font-bold text-secondary tabular-nums">
                             {p.currency === 'USD' ? '$' : p.currency}
                           </div>
                           <div>
-                            <p className="font-black text-gray-900">
+                            <p className="font-headline-md text-headline-md font-bold text-on-surface tabular-nums">
                               {p.price.toLocaleString()} {p.currency}
                             </p>
-                            <p className="text-[10px] font-bold tracking-widest text-gray-400 uppercase">
+                            <p className="mt-0.5 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                               {p.retailer || 'Unknown Retailer'} • {p.country}
                             </p>
                           </div>
                         </div>
-                        <div className="flex items-center gap-3">
-                          <span className="text-[10px] font-bold text-gray-300 uppercase">
+                        <div className="flex items-center gap-space-md">
+                          <span className="font-label-xs text-label-xs font-bold uppercase text-outline tabular-nums">
                             {(() => {
                               const shown =
                                 p.date ||
@@ -535,16 +518,17 @@ export default function DeviceForm({
                               const priceId = p._id || p.id
                               if (priceId) handleDeletePrice(priceId)
                             }}
-                            className="p-2 text-red-400 hover:text-red-600"
+                            className="rounded-lg p-2 text-error transition-colors hover:bg-error-container/15"
+                            aria-label="Delete price entry"
                           >
-                            <FontAwesomeIcon icon={faTrash} />
+                            <span className="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span>
                           </button>
                         </div>
                       </div>
                     ))}
                   </div>
                 )}
-                <p className="mt-4 text-[10px] font-bold text-gray-400 italic">
+                <p className="mt-space-lg font-label-xs text-label-xs font-bold text-outline italic">
                   * These prices appear in the &quot;Prices&quot; section of the public
                   device page and contribute to price history charts.
                 </p>
@@ -554,11 +538,11 @@ export default function DeviceForm({
         )}
 
         {/* Tab 1: General Info */}
-        <div className={activeTab === 'general' ? 'block space-y-8' : 'hidden'}>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-            <div className="space-y-6">
+        <div className={activeTab === 'general' ? 'block space-y-space-xl' : 'hidden'}>
+          <div className="grid grid-cols-1 gap-space-xl md:grid-cols-2">
+            <div className="space-y-space-lg">
               <div>
-                <label htmlFor="device-name" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label htmlFor="device-name" className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Display Name
                 </label>
                 <input
@@ -569,12 +553,12 @@ export default function DeviceForm({
                   value={formData.name || ''}
                   onChange={handleChange}
                   placeholder="e.g. Samsung Galaxy S24 Ultra"
-                  className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-2 gap-space-md">
                 <div>
-                  <label htmlFor="device-brand" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-brand" className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                     Brand
                   </label>
                   <select
@@ -583,7 +567,7 @@ export default function DeviceForm({
                     required
                     value={formData.brand || ''}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <option value="">Select Brand...</option>
                     {brands.sort().map((b) => (
@@ -596,12 +580,12 @@ export default function DeviceForm({
                         <option value={formData.brand}>{formData.brand}</option>
                       )}
                   </select>
-                  <p className="mt-1 text-[10px] font-bold text-gray-400 italic">
+                  <p className="mt-1 font-label-xs text-label-xs font-bold text-outline italic">
                     * Pick from existing or use Sync for new brands
                   </p>
                 </div>
                 <div>
-                  <label htmlFor="device-model" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-model" className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                     Model
                   </label>
                   <input
@@ -611,12 +595,12 @@ export default function DeviceForm({
                     required
                     value={formData.model || ''}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
               </div>
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Slug (URL)
                 </label>
                 <input
@@ -625,15 +609,15 @@ export default function DeviceForm({
                   required
                   value={formData.slug || ''}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-gray-300 bg-gray-50 p-3 font-mono text-sm text-gray-800 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-3 font-body-sm text-on-surface-variant focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-space-lg">
+              <div className="grid grid-cols-2 gap-space-md">
                 <div>
-                  <label htmlFor="device-category" className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label htmlFor="device-category" className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                     Category
                   </label>
                   <select
@@ -646,7 +630,7 @@ export default function DeviceForm({
                         : ''
                     }
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     <option value="">Select Category...</option>
                     {categories.map((c) => (
@@ -660,7 +644,7 @@ export default function DeviceForm({
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                  <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                     Device Type
                   </label>
                   <select
@@ -668,7 +652,7 @@ export default function DeviceForm({
                     required
                     value={formData.type}
                     onChange={handleChange}
-                    className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   >
                     {Object.values(DeviceType).map((t) => (
                       <option key={t} value={t}>
@@ -679,7 +663,7 @@ export default function DeviceForm({
                 </div>
               </div>
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Short Description
                 </label>
                 <textarea
@@ -687,7 +671,7 @@ export default function DeviceForm({
                   rows={4}
                   value={formData.description || ''}
                   onChange={handleChange}
-                  className="w-full rounded-xl border border-gray-300 bg-white p-3 font-medium text-gray-800 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-body-md text-on-surface-variant focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
               <div className="flex items-center gap-2">
@@ -697,11 +681,11 @@ export default function DeviceForm({
                   id="isActive"
                   checked={formData.isActive}
                   onChange={handleChange}
-                  className="h-5 w-5 rounded-lg border-gray-300 text-blue-600 focus:ring-blue-500"
+                  className="h-5 w-5 rounded bg-surface-container-highest accent-secondary-container"
                 />
                 <label
                   htmlFor="isActive"
-                  className="cursor-pointer text-sm font-black tracking-widest text-gray-800 uppercase"
+                  className="cursor-pointer font-label-sm text-label-sm font-bold uppercase tracking-widest text-on-surface-variant"
                 >
                   Active & Visible
                 </label>
@@ -712,12 +696,12 @@ export default function DeviceForm({
 
         {/* Tab 2: Key Specs */}
         <div
-          className={activeTab === 'specs_key' ? 'block space-y-8' : 'hidden'}
+          className={activeTab === 'specs_key' ? 'block space-y-space-xl' : 'hidden'}
         >
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-            <div className="space-y-6">
-              <h3 className="flex items-center gap-2 text-lg font-black text-gray-900">
-                <div className="h-8 w-2 rounded-full bg-blue-500"></div>
+          <div className="grid grid-cols-1 gap-space-xl md:grid-cols-3">
+            <div className="space-y-space-lg">
+              <h3 className="flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                <div className="h-8 w-2 rounded bg-primary-container"></div>
                 Platform & OS
               </h3>
               <SuggestibleInput
@@ -736,7 +720,7 @@ export default function DeviceForm({
                 onChange={handleChange}
               />
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Release Date
                 </label>
                 <input
@@ -745,14 +729,14 @@ export default function DeviceForm({
                   value={formData.releaseDate || ''}
                   onChange={handleChange}
                   placeholder="e.g. 2024, January"
-                  className="w-full rounded-xl border bg-white p-3 font-bold text-gray-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
             </div>
 
-            <div className="space-y-6">
-              <h3 className="flex items-center gap-2 text-lg font-black text-gray-900">
-                <div className="h-8 w-2 rounded-full bg-green-500"></div>
+            <div className="space-y-space-lg">
+              <h3 className="flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                <div className="h-8 w-2 rounded bg-tertiary-container"></div>
                 Display & Body
               </h3>
               <SuggestibleInput
@@ -764,7 +748,7 @@ export default function DeviceForm({
                 onChange={handleChange}
               />
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Weight
                 </label>
                 <input
@@ -772,7 +756,7 @@ export default function DeviceForm({
                   name="weight"
                   value={formData.weight || ''}
                   onChange={handleChange}
-                  className="w-full rounded-xl border bg-white p-3 font-bold text-gray-900"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
               <SuggestibleInput
@@ -784,16 +768,16 @@ export default function DeviceForm({
               />
             </div>
 
-            <div className="space-y-6">
-              <h3 className="flex items-center gap-2 text-lg font-black text-gray-900">
-                <div className="h-8 w-2 rounded-full bg-purple-500"></div>
+            <div className="space-y-space-lg">
+              <h3 className="flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                <div className="h-8 w-2 rounded bg-secondary-container"></div>
                 Storage & Features
               </h3>
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-600 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   RAM / Storage
                 </label>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-2 gap-space-md">
                   <input
                     type="text"
                     name="ram"
@@ -801,7 +785,7 @@ export default function DeviceForm({
                     onChange={handleChange}
                     list="ram-list"
                     placeholder="RAM"
-                    className="w-full rounded-xl border bg-white p-3 font-bold text-gray-900"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                   <input
                     type="text"
@@ -810,7 +794,7 @@ export default function DeviceForm({
                     onChange={handleChange}
                     list="storage-list"
                     placeholder="Storage"
-                    className="w-full rounded-xl border bg-white p-3 font-bold text-gray-900"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                   />
                 </div>
                 <SuggestionList id="ram-list" items={suggestions.ram} />
@@ -833,8 +817,8 @@ export default function DeviceForm({
               />
             </div>
           </div>
-          <div className="border-t border-gray-100 pt-6">
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="border-t border-outline-variant pt-space-lg">
+            <div className="grid grid-cols-1 gap-space-xl md:grid-cols-3">
               <SuggestibleInput
                 label="Network Technology"
                 name="networkTechnology"
@@ -862,27 +846,27 @@ export default function DeviceForm({
 
         {/* Tab 3: Detailed Specs */}
         <div className={activeTab === 'specs_all' ? 'block' : 'hidden'}>
-          <div className="mb-6 flex items-center justify-between">
-            <h3 className="text-xl font-black text-gray-900">
+          <div className="mb-space-lg flex items-center justify-between">
+            <h3 className="font-headline-lg text-headline-lg font-bold text-on-surface">
               Technical Specifications
             </h3>
             <button
               type="button"
               onClick={addSpec}
-              className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 font-bold text-white shadow-lg shadow-blue-100 transition-all hover:bg-blue-700"
+              className="flex items-center gap-space-sm rounded-lg bg-primary-container px-4 py-2.5 font-label-sm text-label-sm font-bold uppercase tracking-widest text-on-primary-container transition-colors hover:bg-inverse-primary"
             >
-              <FontAwesomeIcon icon={faPlus} />
+              <span className="material-symbols-outlined text-[18px]" aria-hidden="true">add</span>
               Add Specification
             </button>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-space-md">
             {formData.specs?.map((spec, index) => (
               <div
                 key={index}
-                className="group flex items-start gap-4 rounded-2xl border border-gray-100 bg-gray-50 p-4"
+                className="group flex items-start gap-space-lg rounded-xl border border-outline-variant bg-surface-container p-4"
               >
                 <div className="flex-1">
-                  <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+                  <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-outline">
                     Section
                   </label>
                   <input
@@ -891,11 +875,11 @@ export default function DeviceForm({
                     onChange={(e) =>
                       handleSpecChange(index, 'category', e.target.value)
                     }
-                    className="w-full rounded-lg border border-gray-300 p-2 text-sm font-bold text-gray-900"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm font-bold text-on-surface placeholder-outline"
                   />
                 </div>
                 <div className="flex-1">
-                  <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+                  <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-outline">
                     Property
                   </label>
                   <input
@@ -904,11 +888,11 @@ export default function DeviceForm({
                     onChange={(e) =>
                       handleSpecChange(index, 'key', e.target.value)
                     }
-                    className="w-full rounded-lg border border-gray-300 p-2 text-sm font-bold text-gray-900"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm font-bold text-on-surface placeholder-outline"
                   />
                 </div>
                 <div className="flex-[2]">
-                  <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+                  <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-outline">
                     Value
                   </label>
                   <input
@@ -917,25 +901,23 @@ export default function DeviceForm({
                     onChange={(e) =>
                       handleSpecChange(index, 'value', e.target.value)
                     }
-                    className="w-full rounded-lg border border-gray-300 p-2 text-sm font-bold text-gray-900"
+                    className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm font-bold text-on-surface placeholder-outline"
                   />
                 </div>
                 <button
                   type="button"
                   onClick={() => removeSpec(index)}
-                  className="mt-6 p-2 text-red-400 opacity-0 transition-all group-hover:opacity-100 hover:text-red-600"
+                  className="mt-6 rounded-lg p-2 text-error opacity-0 transition-opacity group-hover:opacity-100 hover:bg-error-container/15"
+                  aria-label="Remove specification"
                 >
-                  <FontAwesomeIcon icon={faTrash} />
+                  <span className="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span>
                 </button>
               </div>
             ))}
             {(!formData.specs || formData.specs.length === 0) && (
-              <div className="rounded-3xl border-2 border-dashed border-gray-200 bg-gray-50 py-12 text-center">
-                <FontAwesomeIcon
-                  icon={faMicrochip}
-                  className="mb-4 text-4xl text-gray-200"
-                />
-                <p className="font-bold tracking-widest text-gray-400 uppercase">
+              <div className="rounded-xl border-2 border-dashed border-outline-variant bg-surface-container py-12 text-center">
+                <span className="material-symbols-outlined mb-space-md block text-[32px] text-outline" aria-hidden="true">memory</span>
+                <p className="font-label-md font-bold uppercase tracking-widest text-outline">
                   No specifications added yet
                 </p>
               </div>
@@ -944,11 +926,11 @@ export default function DeviceForm({
         </div>
 
         {/* Tab 4: Media & Review */}
-        <div className={activeTab === 'media' ? 'block space-y-10' : 'hidden'}>
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
-            <div className="space-y-6">
+        <div className={activeTab === 'media' ? 'block space-y-space-xl' : 'hidden'}>
+          <div className="grid grid-cols-1 gap-space-xl md:grid-cols-2">
+            <div className="space-y-space-lg">
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-500 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Primary Image URL
                 </label>
                 <input
@@ -957,40 +939,34 @@ export default function DeviceForm({
                   value={formData.imageUrl || ''}
                   onChange={handleChange}
                   placeholder="https://..."
-                  className="w-full rounded-xl border border-gray-300 p-3 font-medium text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-label-md text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
               {formData.imageUrl && (
-                <div className="group relative mx-auto flex aspect-square max-w-sm items-center justify-center overflow-hidden rounded-3xl border border-gray-200 bg-gray-50 p-8">
+                <div className="mx-auto flex aspect-square max-w-sm items-center justify-center overflow-hidden rounded-xl border border-outline-variant bg-surface-container p-space-lg">
                   <img
                     src={formData.imageUrl}
                     alt="Preview"
                     className="max-h-full max-w-full object-contain drop-shadow-2xl"
                   />
-                  <div className="absolute inset-0 flex items-center justify-center bg-blue-900/40 opacity-0 transition-all group-hover:opacity-100">
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      className="text-3xl text-white"
-                    />
-                  </div>
                 </div>
               )}
             </div>
 
-            <div className="space-y-6">
+            <div className="space-y-space-lg">
               <div className="flex items-center justify-between">
-                <label className="block text-xs font-black tracking-widest text-gray-500 uppercase">
+                <label className="block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Gallery Images
                 </label>
                 <button
                   type="button"
                   onClick={addImage}
-                  className="text-xs font-black text-blue-600 uppercase hover:underline"
+                  className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-secondary hover:underline"
                 >
                   + Add Image
                 </button>
               </div>
-              <div className="no-scrollbar max-h-[400px] space-y-4 overflow-y-auto pr-2">
+              <div className="no-scrollbar max-h-[400px] space-y-space-md overflow-y-auto pr-2">
                 {formData.images?.map((url, index) => (
                   <div key={index} className="flex items-center gap-2">
                     <input
@@ -999,20 +975,21 @@ export default function DeviceForm({
                         handleImageArrayChange(index, e.target.value)
                       }
                       placeholder="Image URL"
-                      className="flex-1 rounded-xl border border-gray-300 p-2 text-sm text-gray-700"
+                      className="flex-1 rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm text-on-surface placeholder-outline"
                     />
                     <button
                       type="button"
                       onClick={() => removeImage(index)}
-                      className="text-red-400 hover:text-red-600"
+                      className="rounded-lg p-2 text-error transition-colors hover:bg-error-container/15"
+                      aria-label="Remove image"
                     >
-                      <FontAwesomeIcon icon={faTrash} />
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span>
                     </button>
                   </div>
                 ))}
               </div>
-              <div className="border-t border-gray-100 pt-6">
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-500 uppercase">
+              <div className="border-t border-outline-variant pt-space-lg">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Review Teaser (Visible on Page)
                 </label>
                 <textarea
@@ -1021,7 +998,7 @@ export default function DeviceForm({
                   value={formData.reviewTeaser || ''}
                   onChange={handleChange}
                   placeholder="The Samsung Galaxy S24 Ultra is a monster of a phone..."
-                  className="w-full rounded-xl border border-gray-300 p-3 font-medium text-gray-700 italic shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container p-3 font-body-md text-on-surface-variant italic placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
             </div>
@@ -1031,18 +1008,18 @@ export default function DeviceForm({
         {/* Tab 5: SEO & Affiliates */}
         <div
           className={
-            activeTab === 'seo_affiliates' ? 'block space-y-10' : 'hidden'
+            activeTab === 'seo_affiliates' ? 'block space-y-space-xl' : 'hidden'
           }
         >
-          <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-space-xl md:grid-cols-2">
             {/* SEO Section */}
-            <div className="space-y-6 rounded-3xl border border-gray-100 bg-gray-50 p-6">
-              <h3 className="mb-4 flex items-center gap-2 text-lg font-black text-gray-900">
-                <FontAwesomeIcon icon={faGlobe} className="text-blue-600" />
+            <div className="space-y-space-lg rounded-xl border border-outline-variant bg-surface-container p-space-lg">
+              <h3 className="mb-space-md flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                <span className="material-symbols-outlined text-[20px] text-secondary" aria-hidden="true">public</span>
                 SEO Metadata
               </h3>
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-500 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Meta Title
                 </label>
                 <input
@@ -1051,11 +1028,11 @@ export default function DeviceForm({
                   value={formData.seoTitle || ''}
                   onChange={handleChange}
                   placeholder="Custom SEO Title"
-                  className="w-full rounded-xl border border-gray-300 bg-white p-3 font-bold text-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-3 font-label-md font-bold text-on-surface placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
               <div>
-                <label className="mb-2 block text-xs font-black tracking-widest text-gray-500 uppercase">
+                <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                   Meta Description
                 </label>
                 <textarea
@@ -1064,45 +1041,43 @@ export default function DeviceForm({
                   value={formData.seoDescription || ''}
                   onChange={handleChange}
                   placeholder="Custom Meta Description"
-                  className="w-full rounded-xl border border-gray-300 bg-white p-3 font-medium text-gray-800 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                  className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-3 font-body-md text-on-surface-variant placeholder-outline focus:border-transparent focus:outline-none focus:ring-1 focus:ring-primary"
                 />
               </div>
             </div>
 
             {/* Affiliates Section */}
-            <div className="space-y-6">
-              <div className="mb-4 flex items-center justify-between">
-                <h3 className="flex items-center gap-2 text-lg font-black text-gray-900">
-                  <FontAwesomeIcon
-                    icon={faShoppingCart}
-                    className="text-orange-500"
-                  />
+            <div className="space-y-space-lg">
+              <div className="mb-space-md flex items-center justify-between">
+                <h3 className="flex items-center gap-2 font-headline-md text-headline-md font-bold text-on-surface">
+                  <span className="material-symbols-outlined text-[20px] text-tertiary" aria-hidden="true">shopping_cart</span>
                   Affiliate Links
                 </h3>
                 <button
                   type="button"
                   onClick={addAffiliateLink}
-                  className="text-xs font-black text-blue-600 uppercase hover:underline"
+                  className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-secondary hover:underline"
                 >
                   + Add Retailer
                 </button>
               </div>
-              <div className="no-scrollbar max-h-[400px] space-y-4 overflow-y-auto pr-2">
+              <div className="no-scrollbar max-h-[400px] space-y-space-md overflow-y-auto pr-2">
                 {formData.affiliateLinks?.map((link, index) => (
                   <div
                     key={index}
-                    className="group relative space-y-3 rounded-2xl border border-gray-200 bg-white p-4 shadow-sm"
+                    className="group relative space-y-space-md rounded-xl border border-outline-variant bg-surface-container p-4 shadow-md md:shadow-none"
                   >
                     <button
                       type="button"
                       onClick={() => removeAffiliateLink(index)}
-                      className="absolute top-4 right-4 text-red-400 opacity-0 transition-all group-hover:opacity-100 hover:text-red-600"
+                      className="absolute top-4 right-4 rounded-lg p-2 text-error opacity-0 transition-opacity group-hover:opacity-100 hover:bg-error-container/15"
+                      aria-label="Remove retailer link"
                     >
-                      <FontAwesomeIcon icon={faTrash} />
+                      <span className="material-symbols-outlined text-[18px]" aria-hidden="true">delete</span>
                     </button>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-2 gap-space-md">
                       <div>
-                        <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+                        <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-outline">
                           Platform
                         </label>
                         <input
@@ -1115,11 +1090,11 @@ export default function DeviceForm({
                               e.target.value,
                             )
                           }
-                          className="w-full rounded-lg border border-gray-300 p-2 text-sm font-bold text-gray-900"
+                          className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm font-bold text-on-surface placeholder-outline"
                         />
                       </div>
                       <div>
-                        <label className="mb-1 block text-[10px] font-black text-gray-500 uppercase">
+                        <label className="mb-1 block font-label-xs text-label-xs font-bold uppercase text-outline">
                           Price ($)
                         </label>
                         <input
@@ -1133,13 +1108,13 @@ export default function DeviceForm({
                               parseFloat(e.target.value),
                             )
                           }
-                          className="w-full rounded-lg border border-gray-300 p-2 text-sm font-bold text-gray-900"
+                          className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm font-bold text-on-surface placeholder-outline tabular-nums"
                         />
                       </div>
                     </div>
                     <div>
                       <div className="mb-1 flex items-center justify-between">
-                        <label className="block text-[10px] font-black text-gray-500 uppercase">
+                        <label className="block font-label-xs text-label-xs font-bold uppercase text-outline">
                           Affiliate URL
                         </label>
                         <button
@@ -1149,12 +1124,9 @@ export default function DeviceForm({
                               generatorIndex === index ? null : index,
                             )
                           }
-                          className="text-[10px] font-black text-indigo-600 uppercase hover:underline"
+                          className="flex items-center gap-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-secondary hover:underline"
                         >
-                          <FontAwesomeIcon
-                            icon={faWandMagicSparkles}
-                            className="mr-1"
-                          />
+                          <span className="material-symbols-outlined text-[14px]" aria-hidden="true">auto_fix_high</span>
                           {generatorIndex === index ? 'Close' : 'Generate'}
                         </button>
                       </div>
@@ -1164,7 +1136,7 @@ export default function DeviceForm({
                         onChange={(e) =>
                           handleAffiliateChange(index, 'url', e.target.value)
                         }
-                        className="w-full rounded-lg border border-gray-300 p-2 text-sm font-medium text-gray-700"
+                        className="w-full rounded-lg border border-outline-variant bg-surface-container-lowest p-2 font-body-sm text-on-surface-variant placeholder-outline"
                       />
                     </div>
                     {generatorIndex === index && (
@@ -1194,8 +1166,8 @@ export default function DeviceForm({
                 ))}
                 {(!formData.affiliateLinks ||
                   formData.affiliateLinks.length === 0) && (
-                  <div className="rounded-2xl border border-gray-100 bg-gray-50 py-8 text-center">
-                    <p className="text-xs font-bold tracking-widest text-gray-400 uppercase">
+                  <div className="rounded-xl border border-outline-variant bg-surface-container py-8 text-center">
+                    <p className="font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
                       No affiliate links added
                     </p>
                   </div>
@@ -1205,21 +1177,21 @@ export default function DeviceForm({
           </div>
         </div>
 
-        <div className="mt-12 flex justify-end gap-4 border-t border-gray-100 pt-8">
+        <div className="mt-space-xl flex justify-end gap-space-md border-t border-outline-variant pt-space-lg">
           <button
             type="button"
             onClick={() => router.back()}
-            className="rounded-2xl px-8 py-4 text-sm font-black tracking-widest text-gray-500 uppercase transition-all hover:bg-gray-100"
+            className="rounded-lg px-space-lg py-3 font-label-sm text-label-sm font-bold uppercase tracking-widest text-on-surface-variant transition-colors hover:bg-surface-container hover:text-on-surface"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`transform rounded-2xl px-12 py-4 font-black tracking-widest text-white uppercase shadow-xl transition-all hover:-translate-y-1 ${
+            className={`rounded-lg px-space-xl py-3 font-label-sm text-label-sm font-bold uppercase tracking-widest transition-colors ${
               isSubmitting
-                ? 'scale-95 cursor-not-allowed bg-gray-400'
-                : 'bg-blue-600 shadow-blue-200 hover:bg-blue-700 active:scale-95'
+                ? 'bg-surface-container-highest text-outline'
+                : 'bg-primary-container text-on-primary-container hover:bg-inverse-primary'
             }`}
           >
             {isSubmitting
@@ -1233,3 +1205,9 @@ export default function DeviceForm({
     </div>
   )
 }
+
+
+
+
+
+

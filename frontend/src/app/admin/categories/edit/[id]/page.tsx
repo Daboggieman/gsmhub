@@ -24,12 +24,30 @@ export default function EditCategoryPage({ params }: { params: Promise<{ id: str
     fetchCategory();
   }, [id]);
 
-  if (loading) return <div>Loading...</div>;
-  if (!category) return <div>Category not found</div>;
+  if (loading)
+    return (
+      <div className="flex min-h-48 items-center justify-center gap-space-md font-label-md font-bold text-outline">
+        <span className="material-symbols-outlined progress_activity animate-spin text-[24px] text-secondary" aria-hidden="true"></span>
+        Loading...
+      </div>
+    );
+  if (!category)
+    return (
+      <div className="rounded-xl border border-error-container/40 bg-error-container/15 p-space-lg font-label-md font-bold text-error">
+        Category not found
+      </div>
+    );
 
   return (
     <div>
-      <h2 className="text-2xl font-bold mb-6">Edit Category</h2>
+      <div className="mb-space-lg">
+        <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Edit Category
+        </h1>
+        <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
+          Update category details
+        </p>
+      </div>
       <CategoryForm initialData={category} isEdit />
     </div>
   );

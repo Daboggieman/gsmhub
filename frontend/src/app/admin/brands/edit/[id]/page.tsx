@@ -24,11 +24,30 @@ export default function EditBrandPage({ params }: { params: Promise<{ id: string
     fetchBrand();
   }, [id]);
 
-  if (loading) return <div>Loading brand...</div>;
-  if (!brand) return <div>Brand not found</div>;
+  if (loading)
+    return (
+      <div className="flex min-h-48 items-center justify-center gap-space-md font-label-md font-bold text-outline">
+        <span className="material-symbols-outlined progress_activity animate-spin text-[24px] text-secondary" aria-hidden="true"></span>
+        Loading brand...
+      </div>
+    );
+  if (!brand)
+    return (
+      <div className="rounded-xl border border-error-container/40 bg-error-container/15 p-space-lg font-label-md font-bold text-error">
+        Brand not found
+      </div>
+    );
 
   return (
-    <div className="py-6">
+    <div>
+      <div className="mb-space-lg">
+        <h1 className="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">
+          Edit Brand
+        </h1>
+        <p className="mt-1 font-label-xs text-label-xs font-bold uppercase tracking-widest text-outline">
+          Update manufacturer profile
+        </p>
+      </div>
       <BrandForm initialData={brand} isEdit />
     </div>
   );

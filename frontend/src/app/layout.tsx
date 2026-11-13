@@ -4,11 +4,6 @@ import "./globals.css";
 import ClientLayout from "./client-layout";
 import PWARegistration from "@/components/pwa/PWARegistration";
 
-// Font Awesome Configuration (legacy icons — removed once all components are rebuilt)
-import { config } from '@fortawesome/fontawesome-svg-core';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-config.autoAddCss = false;
-
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
