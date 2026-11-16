@@ -1,0 +1,444 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]: "AD UNIT PLACEHOLDER [Slot: homepage-top]"
+  - banner [ref=e4]:
+    - generic [ref=e5]:
+      - button "Open menu" [ref=e6]:
+        - generic [ref=e7]: menu
+      - link "GSMHub home" [ref=e8] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e10]: developer_board
+        - generic [ref=e11]: GSMHub
+      - link "Search phones, specs..." [ref=e12] [cursor=pointer]:
+        - /url: /search
+        - generic [ref=e13]: search
+        - generic [ref=e14]: Search phones, specs...
+      - button "Switch to light theme" [ref=e16]:
+        - generic [ref=e17]: light_mode
+  - main [ref=e18]:
+    - generic [ref=e19]:
+      - generic [ref=e24]:
+        - heading "Device Info? we've got you covered" [level=1] [ref=e25]
+        - paragraph [ref=e26]: The most comprehensive database of Tech device specifications.
+        - generic [ref=e27]:
+          - link "Search Now" [ref=e28] [cursor=pointer]:
+            - /url: /search
+            - generic [ref=e29]: search
+            - text: Search Now
+          - link "Compare" [ref=e30] [cursor=pointer]:
+            - /url: /compare
+            - generic [ref=e31]: compare_arrows
+            - text: Compare
+      - generic [ref=e33]:
+        - complementary [ref=e34]:
+          - generic [ref=e35]:
+            - generic [ref=e36]:
+              - generic [ref=e37]: tune
+              - heading "Phone Finder" [level=3] [ref=e38]
+            - list [ref=e39]:
+              - listitem [ref=e40]:
+                - link "Samsung" [ref=e41] [cursor=pointer]:
+                  - /url: /search?brand=Samsung
+                  - text: Samsung
+                  - generic [ref=e42]: chevron_right
+              - listitem [ref=e43]:
+                - link "Apple" [ref=e44] [cursor=pointer]:
+                  - /url: /search?brand=Apple
+                  - text: Apple
+                  - generic [ref=e45]: chevron_right
+              - listitem [ref=e46]:
+                - link "Huawei" [ref=e47] [cursor=pointer]:
+                  - /url: /search?brand=Huawei
+                  - text: Huawei
+                  - generic [ref=e48]: chevron_right
+              - listitem [ref=e49]:
+                - link "Nokia" [ref=e50] [cursor=pointer]:
+                  - /url: /search?brand=Nokia
+                  - text: Nokia
+                  - generic [ref=e51]: chevron_right
+              - listitem [ref=e52]:
+                - link "Sony" [ref=e53] [cursor=pointer]:
+                  - /url: /search?brand=Sony
+                  - text: Sony
+                  - generic [ref=e54]: chevron_right
+              - listitem [ref=e55]:
+                - link "LG" [ref=e56] [cursor=pointer]:
+                  - /url: /search?brand=LG
+                  - text: LG
+                  - generic [ref=e57]: chevron_right
+              - listitem [ref=e58]:
+                - link "HTC" [ref=e59] [cursor=pointer]:
+                  - /url: /search?brand=HTC
+                  - text: HTC
+                  - generic [ref=e60]: chevron_right
+              - listitem [ref=e61]:
+                - link "Motorola" [ref=e62] [cursor=pointer]:
+                  - /url: /search?brand=Motorola
+                  - text: Motorola
+                  - generic [ref=e63]: chevron_right
+              - listitem [ref=e64]:
+                - link "Lenovo" [ref=e65] [cursor=pointer]:
+                  - /url: /search?brand=Lenovo
+                  - text: Lenovo
+                  - generic [ref=e66]: chevron_right
+              - listitem [ref=e67]:
+                - link "Xiaomi" [ref=e68] [cursor=pointer]:
+                  - /url: /search?brand=Xiaomi
+                  - text: Xiaomi
+                  - generic [ref=e69]: chevron_right
+              - listitem [ref=e70]:
+                - link "Google" [ref=e71] [cursor=pointer]:
+                  - /url: /search?brand=Google
+                  - text: Google
+                  - generic [ref=e72]: chevron_right
+              - listitem [ref=e73]:
+                - link "Honor" [ref=e74] [cursor=pointer]:
+                  - /url: /search?brand=Honor
+                  - text: Honor
+                  - generic [ref=e75]: chevron_right
+              - listitem [ref=e76]:
+                - link "Oppo" [ref=e77] [cursor=pointer]:
+                  - /url: /search?brand=Oppo
+                  - text: Oppo
+                  - generic [ref=e78]: chevron_right
+              - listitem [ref=e79]:
+                - link "Realme" [ref=e80] [cursor=pointer]:
+                  - /url: /search?brand=Realme
+                  - text: Realme
+                  - generic [ref=e81]: chevron_right
+              - listitem [ref=e82]:
+                - link "OnePlus" [ref=e83] [cursor=pointer]:
+                  - /url: /search?brand=OnePlus
+                  - text: OnePlus
+                  - generic [ref=e84]: chevron_right
+              - listitem [ref=e85]:
+                - link "Vivo" [ref=e86] [cursor=pointer]:
+                  - /url: /search?brand=Vivo
+                  - text: Vivo
+                  - generic [ref=e87]: chevron_right
+              - listitem [ref=e88]:
+                - link "Meizu" [ref=e89] [cursor=pointer]:
+                  - /url: /search?brand=Meizu
+                  - text: Meizu
+                  - generic [ref=e90]: chevron_right
+              - listitem [ref=e91]:
+                - link "Asus" [ref=e92] [cursor=pointer]:
+                  - /url: /search?brand=Asus
+                  - text: Asus
+                  - generic [ref=e93]: chevron_right
+              - listitem [ref=e94]:
+                - link "Tecno" [ref=e95] [cursor=pointer]:
+                  - /url: /search?brand=Tecno
+                  - text: Tecno
+                  - generic [ref=e96]: chevron_right
+              - listitem [ref=e97]:
+                - link "Infinix" [ref=e98] [cursor=pointer]:
+                  - /url: /search?brand=Infinix
+                  - text: Infinix
+                  - generic [ref=e99]: chevron_right
+            - link "All Brands" [ref=e101] [cursor=pointer]:
+              - /url: /search
+              - text: All Brands
+              - generic [ref=e102]: arrow_forward
+        - main [ref=e103]:
+          - generic [ref=e104]:
+            - link "Earbuds & Audio" [ref=e105] [cursor=pointer]:
+              - /url: /categories/earbuds-audio
+              - generic [ref=e107]: headphones
+              - generic [ref=e108]: Earbuds & Audio
+            - link "Laptops" [ref=e109] [cursor=pointer]:
+              - /url: /categories/laptops
+              - generic [ref=e111]: laptop_mac
+              - generic [ref=e112]: Laptops
+            - link "Other" [ref=e113] [cursor=pointer]:
+              - /url: /categories/other
+              - generic [ref=e115]: devices_other
+              - generic [ref=e116]: Other
+            - link "Smartphones" [ref=e117] [cursor=pointer]:
+              - /url: /categories/smartphones
+              - generic [ref=e119]: smartphone
+              - generic [ref=e120]: Smartphones
+            - link "Smartwatches" [ref=e121] [cursor=pointer]:
+              - /url: /categories/smartwatches
+              - generic [ref=e123]: watch
+              - generic [ref=e124]: Smartwatches
+            - link "Tablets" [ref=e125] [cursor=pointer]:
+              - /url: /categories/tablets
+              - generic [ref=e127]: tablet_mac
+              - generic [ref=e128]: Tablets
+          - generic [ref=e129]:
+            - generic [ref=e130]:
+              - heading "Latest Devices" [level=2] [ref=e131]:
+                - generic [ref=e132]: smartphone
+                - text: Latest Devices
+              - link "View All" [ref=e133] [cursor=pointer]:
+                - /url: /search
+            - generic [ref=e134]:
+              - link "Fitbit 40mm Fitbit Versa 4 (40mm) Display 40mm Availability Check Price" [ref=e135] [cursor=pointer]:
+                - /url: /devices/fitbit-versa-4-40mm
+                - generic [ref=e136]:
+                  - generic [ref=e138]: Fitbit
+                  - generic [ref=e139]:
+                    - generic [ref=e140]: mobile_off
+                    - generic [ref=e141]: 40mm
+                  - generic [ref=e142]:
+                    - text: Fitbit
+                    - heading "Versa 4 (40mm)" [level=3] [ref=e143]
+                  - generic [ref=e145]:
+                    - generic [ref=e146]:
+                      - generic [ref=e147]: smartphone
+                      - text: Display
+                    - generic [ref=e148]: 40mm
+                - generic [ref=e149]:
+                  - generic [ref=e150]:
+                    - generic [ref=e151]: Availability
+                    - text: Check Price
+                  - generic [ref=e152]: arrow_forward
+              - link "Fitbit 40mm Fitbit Sense 2 (40mm) Display 40mm Availability Check Price" [ref=e153] [cursor=pointer]:
+                - /url: /devices/fitbit-sense-2-40mm
+                - generic [ref=e154]:
+                  - generic [ref=e156]: Fitbit
+                  - generic [ref=e157]:
+                    - generic [ref=e158]: mobile_off
+                    - generic [ref=e159]: 40mm
+                  - generic [ref=e160]:
+                    - text: Fitbit
+                    - heading "Sense 2 (40mm)" [level=3] [ref=e161]
+                  - generic [ref=e163]:
+                    - generic [ref=e164]:
+                      - generic [ref=e165]: smartphone
+                      - text: Display
+                    - generic [ref=e166]: 40mm
+                - generic [ref=e167]:
+                  - generic [ref=e168]:
+                    - generic [ref=e169]: Availability
+                    - text: Check Price
+                  - generic [ref=e170]: arrow_forward
+              - link "Garmin 45mm Garmin Instinct 3 (45mm Solar) Display 45mm Availability Check Price" [ref=e171] [cursor=pointer]:
+                - /url: /devices/garmin-instinct-3-45mm-solar
+                - generic [ref=e172]:
+                  - generic [ref=e174]: Garmin
+                  - generic [ref=e175]:
+                    - generic [ref=e176]: mobile_off
+                    - generic [ref=e177]: 45mm
+                  - generic [ref=e178]:
+                    - text: Garmin
+                    - heading "Instinct 3 (45mm Solar)" [level=3] [ref=e179]
+                  - generic [ref=e181]:
+                    - generic [ref=e182]:
+                      - generic [ref=e183]: smartphone
+                      - text: Display
+                    - generic [ref=e184]: 45mm
+                - generic [ref=e185]:
+                  - generic [ref=e186]:
+                    - generic [ref=e187]: Availability
+                    - text: Check Price
+                  - generic [ref=e188]: arrow_forward
+              - link "Garmin 51mm Garmin Enduro 3 (51mm) Display 51mm Availability Check Price" [ref=e189] [cursor=pointer]:
+                - /url: /devices/garmin-enduro-3
+                - generic [ref=e190]:
+                  - generic [ref=e192]: Garmin
+                  - generic [ref=e193]:
+                    - generic [ref=e194]: mobile_off
+                    - generic [ref=e195]: 51mm
+                  - generic [ref=e196]:
+                    - text: Garmin
+                    - heading "Enduro 3 (51mm)" [level=3] [ref=e197]
+                  - generic [ref=e199]:
+                    - generic [ref=e200]:
+                      - generic [ref=e201]: smartphone
+                      - text: Display
+                    - generic [ref=e202]: 51mm
+                - generic [ref=e203]:
+                  - generic [ref=e204]:
+                    - generic [ref=e205]: Availability
+                    - text: Check Price
+                  - generic [ref=e206]: arrow_forward
+              - link "Garmin 47mm Garmin Forerunner 965 (47mm) Display 47mm Availability Check Price" [ref=e207] [cursor=pointer]:
+                - /url: /devices/garmin-forerunner-965-47mm
+                - generic [ref=e208]:
+                  - generic [ref=e210]: Garmin
+                  - generic [ref=e211]:
+                    - generic [ref=e212]: mobile_off
+                    - generic [ref=e213]: 47mm
+                  - generic [ref=e214]:
+                    - text: Garmin
+                    - heading "Forerunner 965 (47mm)" [level=3] [ref=e215]
+                  - generic [ref=e217]:
+                    - generic [ref=e218]:
+                      - generic [ref=e219]: smartphone
+                      - text: Display
+                    - generic [ref=e220]: 47mm
+                - generic [ref=e221]:
+                  - generic [ref=e222]:
+                    - generic [ref=e223]: Availability
+                    - text: Check Price
+                  - generic [ref=e224]: arrow_forward
+              - link "Garmin 45mm Garmin Venu 3 (45mm) Display 45mm Availability Check Price" [ref=e225] [cursor=pointer]:
+                - /url: /devices/garmin-venu-3-45mm
+                - generic [ref=e226]:
+                  - generic [ref=e228]: Garmin
+                  - generic [ref=e229]:
+                    - generic [ref=e230]: mobile_off
+                    - generic [ref=e231]: 45mm
+                  - generic [ref=e232]:
+                    - text: Garmin
+                    - heading "Venu 3 (45mm)" [level=3] [ref=e233]
+                  - generic [ref=e235]:
+                    - generic [ref=e236]:
+                      - generic [ref=e237]: smartphone
+                      - text: Display
+                    - generic [ref=e238]: 45mm
+                - generic [ref=e239]:
+                  - generic [ref=e240]:
+                    - generic [ref=e241]: Availability
+                    - text: Check Price
+                  - generic [ref=e242]: arrow_forward
+        - complementary [ref=e243]:
+          - generic [ref=e244]:
+            - generic [ref=e245]:
+              - generic [ref=e246]: trending_up
+              - heading "Top 10 by Interest" [level=3] [ref=e247]
+            - generic [ref=e248]:
+              - link "1 Fitbit Versa 4 (40mm) 2 hits" [ref=e249] [cursor=pointer]:
+                - /url: /devices/fitbit-versa-4-40mm
+                - generic [ref=e250]: "1"
+                - generic [ref=e253]: mobile_off
+                - generic [ref=e254]:
+                  - heading "Fitbit Versa 4 (40mm)" [level=4] [ref=e255]
+                  - paragraph [ref=e256]: 2 hits
+              - link "2 Fitbit Sense 2 (40mm) 0 hits" [ref=e259] [cursor=pointer]:
+                - /url: /devices/fitbit-sense-2-40mm
+                - generic [ref=e260]: "2"
+                - generic [ref=e263]: mobile_off
+                - generic [ref=e264]:
+                  - heading "Fitbit Sense 2 (40mm)" [level=4] [ref=e265]
+                  - paragraph [ref=e266]: 0 hits
+              - link "3 Garmin Instinct 3 (45mm Solar) 0 hits" [ref=e269] [cursor=pointer]:
+                - /url: /devices/garmin-instinct-3-45mm-solar
+                - generic [ref=e270]: "3"
+                - generic [ref=e273]: mobile_off
+                - generic [ref=e274]:
+                  - heading "Garmin Instinct 3 (45mm Solar)" [level=4] [ref=e275]
+                  - paragraph [ref=e276]: 0 hits
+              - link "4 Garmin Enduro 3 0 hits" [ref=e279] [cursor=pointer]:
+                - /url: /devices/garmin-enduro-3
+                - generic [ref=e280]: "4"
+                - generic [ref=e283]: mobile_off
+                - generic [ref=e284]:
+                  - heading "Garmin Enduro 3" [level=4] [ref=e285]
+                  - paragraph [ref=e286]: 0 hits
+              - link "5 Garmin Forerunner 965 (47mm) 0 hits" [ref=e289] [cursor=pointer]:
+                - /url: /devices/garmin-forerunner-965-47mm
+                - generic [ref=e290]: "5"
+                - generic [ref=e293]: mobile_off
+                - generic [ref=e294]:
+                  - heading "Garmin Forerunner 965 (47mm)" [level=4] [ref=e295]
+                  - paragraph [ref=e296]: 0 hits
+              - link "6 Garmin Venu 3 (45mm) 0 hits" [ref=e299] [cursor=pointer]:
+                - /url: /devices/garmin-venu-3-45mm
+                - generic [ref=e300]: "6"
+                - generic [ref=e303]: mobile_off
+                - generic [ref=e304]:
+                  - heading "Garmin Venu 3 (45mm)" [level=4] [ref=e305]
+                  - paragraph [ref=e306]: 0 hits
+              - link "7 Garmin Fenix 8 (47mm AMOLED) 0 hits" [ref=e309] [cursor=pointer]:
+                - /url: /devices/garmin-fenix-8-47mm-amoled
+                - generic [ref=e310]: "7"
+                - generic [ref=e313]: mobile_off
+                - generic [ref=e314]:
+                  - heading "Garmin Fenix 8 (47mm AMOLED)" [level=4] [ref=e315]
+                  - paragraph [ref=e316]: 0 hits
+              - link "8 Amazfit GTS 4 (42mm) 0 hits" [ref=e319] [cursor=pointer]:
+                - /url: /devices/amazfit-gts-4-42mm
+                - generic [ref=e320]: "8"
+                - generic [ref=e323]: mobile_off
+                - generic [ref=e324]:
+                  - heading "Amazfit GTS 4 (42mm)" [level=4] [ref=e325]
+                  - paragraph [ref=e326]: 0 hits
+              - link "9 Amazfit GTR 4 (46mm) 0 hits" [ref=e329] [cursor=pointer]:
+                - /url: /devices/amazfit-gtr-4-46mm
+                - generic [ref=e330]: "9"
+                - generic [ref=e333]: mobile_off
+                - generic [ref=e334]:
+                  - heading "Amazfit GTR 4 (46mm)" [level=4] [ref=e335]
+                  - paragraph [ref=e336]: 0 hits
+              - link "10 OnePlus Watch 2 0 hits" [ref=e339] [cursor=pointer]:
+                - /url: /devices/oneplus-watch-2
+                - generic [ref=e340]: "10"
+                - generic [ref=e343]: mobile_off
+                - generic [ref=e344]:
+                  - heading "OnePlus Watch 2" [level=4] [ref=e345]
+                  - paragraph [ref=e346]: 0 hits
+            - link "View Full Leaderboard" [ref=e350] [cursor=pointer]:
+              - /url: /search?filter=trending
+              - text: View Full Leaderboard
+              - generic [ref=e351]: arrow_forward
+  - contentinfo [ref=e352]:
+    - generic [ref=e353]:
+      - generic [ref=e354]:
+        - generic [ref=e355]:
+          - generic [ref=e356]:
+            - generic [ref=e358]: developer_board
+            - generic [ref=e359]: GSMHub
+          - paragraph [ref=e360]: High-fidelity technical specifications for smartphones, tablets, smartwatches and laptops — side-by-side comparisons and price tracking across the devices that matter.
+          - generic [ref=e361]:
+            - generic [ref=e362]: Spec Database
+            - generic [ref=e363]: Price Comparison
+        - generic [ref=e364]:
+          - paragraph [ref=e365]: Browse
+          - list [ref=e366]:
+            - listitem [ref=e367]:
+              - link "All Devices" [ref=e368] [cursor=pointer]:
+                - /url: /devices
+            - listitem [ref=e369]:
+              - link "Categories" [ref=e370] [cursor=pointer]:
+                - /url: /categories
+            - listitem [ref=e371]:
+              - link "Brands" [ref=e372] [cursor=pointer]:
+                - /url: /brands
+            - listitem [ref=e373]:
+              - link "Compare Devices" [ref=e374] [cursor=pointer]:
+                - /url: /compare
+            - listitem [ref=e375]:
+              - link "Saved Devices" [ref=e376] [cursor=pointer]:
+                - /url: /favorites
+        - generic [ref=e377]:
+          - paragraph [ref=e378]: Company
+          - list [ref=e379]:
+            - listitem [ref=e380]:
+              - link "About Us" [ref=e381] [cursor=pointer]:
+                - /url: /about
+            - listitem [ref=e382]:
+              - link "Contact Us" [ref=e383] [cursor=pointer]:
+                - /url: /contact
+        - generic [ref=e384]:
+          - paragraph [ref=e385]: Legal
+          - list [ref=e386]:
+            - listitem [ref=e387]:
+              - link "Privacy Policy" [ref=e388] [cursor=pointer]:
+                - /url: /privacy
+            - listitem [ref=e389]:
+              - link "Terms of Use" [ref=e390] [cursor=pointer]:
+                - /url: /terms
+            - listitem [ref=e391]:
+              - link "Contact" [ref=e392] [cursor=pointer]:
+                - /url: /contact
+      - paragraph [ref=e393]: "Affiliate Disclosure: GSMHub contains affiliate links. We may earn a commission when you make a purchase through them, at no extra cost to you. GSMHub is not affiliated with any device manufacturer or retailer."
+      - generic [ref=e394]:
+        - generic [ref=e395]:
+          - generic [ref=e396]: GSMHub
+          - generic [ref=e397]: © 2026 GSMHub. All rights reserved.
+        - generic [ref=e398]:
+          - link "Privacy" [ref=e399] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms" [ref=e400] [cursor=pointer]:
+            - /url: /terms
+          - link "Contact" [ref=e401] [cursor=pointer]:
+            - /url: /contact
+  - button "Open Next.js Dev Tools" [ref=e407] [cursor=pointer]:
+    - img [ref=e408]
+  - alert [ref=e411]
+```
