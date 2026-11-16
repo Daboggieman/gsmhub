@@ -1,7 +1,10 @@
 import { test, expect } from "@playwright/test";
 
-// Route is /admin/login (verified in app — no /admin/auth/login)
-const ADMIN_URL = process.env.E2E_ADMIN_URL || "http://localhost:3000/admin";
+// The admin layout gates every /admin/* route client-side: unauthenticated
+// visits land on /admin/login. /admin itself has no page (404), so target
+// the dashboard directly.
+const ADMIN_URL =
+  process.env.E2E_ADMIN_URL || "http://localhost:3000/admin/dashboard";
 const ADMIN_EMAIL =
   process.env.E2E_ADMIN_EMAIL || "admin@gsmhub.com";
 const ADMIN_PASSWORD =
@@ -19,13 +22,15 @@ test.describe("Admin Flow", () => {
     // Should redirect to login
     await expect(page.url()).toContain("/admin/login");
 
-    // Login
-    await page.getByPlaceholder(/email/i).fill(ADMIN_EMAIL);
-    await page.getByPlaceholder(/password/i).fill(ADMIN_PASSWORD);
-    await page.getByRole("button", { name: /login/i }).click();
+    // Login (placeholders are "you@example.com" / "••••••••" — target ids)
+    await page.locator("#email-address").fill(ADMIN_EMAIL);
+    await page.locator("#password").fill(ADMIN_PASSWORD);
+    await page.getByRole("button", { name: /sign in/i }).click();
 
     // Dashboard
     await expect(page.url()).toContain("/admin/dashboard");
-    await expect(page.getByText("Device Inventory")).toBeVisible();
+    await expect(
+      page.getByRole("heading", { name: /dashboard/i }),
+    ).toBeVisible();
   });
 });

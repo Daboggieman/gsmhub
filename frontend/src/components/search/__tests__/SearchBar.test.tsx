@@ -22,12 +22,12 @@ describe('SearchBar', () => {
 
   it('renders search input correctly', () => {
     render(<SearchBar />);
-    expect(screen.getByPlaceholderText(/search for phones/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/search phones/i)).toBeInTheDocument();
   });
 
   it('updates query on input change', () => {
     render(<SearchBar />);
-    const input = screen.getByPlaceholderText(/search for phones/i);
+    const input = screen.getByPlaceholderText(/search phones/i);
     fireEvent.change(input, { target: { value: 'iphone' } });
     expect(input).toHaveValue('iphone');
   });
@@ -39,7 +39,7 @@ describe('SearchBar', () => {
     (apiClient.searchDevices as Mock).mockResolvedValue(mockResults);
 
     render(<SearchBar />);
-    const input = screen.getByPlaceholderText(/search for phones/i);
+    const input = screen.getByPlaceholderText(/search phones/i);
     fireEvent.change(input, { target: { value: 'iphone' } });
 
     await act(async () => {
@@ -54,7 +54,7 @@ describe('SearchBar', () => {
     (apiClient.searchDevices as Mock).mockResolvedValue([]);
 
     render(<SearchBar />);
-    const input = screen.getByPlaceholderText(/search for phones/i);
+    const input = screen.getByPlaceholderText(/search phones/i);
     fireEvent.change(input, { target: { value: 'nonexistent' } });
 
     await act(async () => {
@@ -66,7 +66,7 @@ describe('SearchBar', () => {
 
   it('clears results when clearing input', async () => {
     render(<SearchBar />);
-    const input = screen.getByPlaceholderText(/search for phones/i);
+    const input = screen.getByPlaceholderText(/search phones/i);
     fireEvent.change(input, { target: { value: 'iphone' } });
     
     const clearButton = screen.queryByRole('button'); // This logic might need refinement based on implementation

@@ -26,8 +26,10 @@ describe('DeviceCard', () => {
   it('renders device details correctly', () => {
     render(<DeviceCard device={mockDevice} />);
     
+    // The restyled card renders the brand (pill + title kicker) and the
+    // display name (model preferred over full name) as separate elements.
+    expect(screen.getAllByText('Apple').length).toBeGreaterThan(0);
     expect(screen.getByText('iPhone 15 Pro')).toBeInTheDocument();
-    expect(screen.getByText('Apple iPhone 15 Pro')).toBeInTheDocument();
   });
 
   it('renders "Check Price" when latestPrice is missing', () => {
