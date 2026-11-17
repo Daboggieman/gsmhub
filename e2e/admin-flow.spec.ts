@@ -19,8 +19,9 @@ test.describe("Admin Flow", () => {
   test("should login and navigate to dashboard", async ({ page }) => {
     await page.goto(ADMIN_URL);
 
-    // Should redirect to login
-    await expect(page.url()).toContain("/admin/login");
+    // The redirect happens after hydration (client-side auth check), so
+    // wait for the URL rather than asserting immediately.
+    await page.waitForURL("**/admin/login", { timeout: 15000 });
 
     // Login (placeholders are "you@example.com" / "••••••••" — target ids)
     await page.locator("#email-address").fill(ADMIN_EMAIL);
@@ -28,7 +29,7 @@ test.describe("Admin Flow", () => {
     await page.getByRole("button", { name: /sign in/i }).click();
 
     // Dashboard
-    await expect(page.url()).toContain("/admin/dashboard");
+    await page.waitForURL("**/admin/dashboard", { timeout: 15000 });
     await expect(
       page.getByRole("heading", { name: /dashboard/i }),
     ).toBeVisible();
