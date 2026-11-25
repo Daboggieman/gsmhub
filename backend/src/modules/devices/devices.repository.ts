@@ -196,10 +196,33 @@ export class DevicesRepository {
       sortStage = { createdAt: -1 };
     }
 
-    const pipeline: any[] = [{ $match: query }, { $sort: sortStage }];
+    // Image-bearing devices lead every page: the ~1.4k catalog entries
+    // without a picture (laptops/earbuds — no free data source) must not
+    // dominate the default listing.
+    const pipeline: any[] = [
+      { $match: query },
+      {
+        $addFields: {
+          hasImage: {
+            $cond: [
+              {
+                $and: [
+                  { $ne: ['$imageUrl', null] },
+                  { $ne: ['$imageUrl', ''] },
+                ],
+              },
+              1,
+              0,
+            ],
+          },
+        },
+      },
+      { $sort: { hasImage: -1, ...sortStage } },
+    ];
     if (filters?.skip) pipeline.push({ $skip: filters.skip });
     if (filters?.limit) pipeline.push({ $limit: filters.limit });
     pipeline.push(
+      { $unset: 'hasImage' },
       ...this.latestPriceStages,
       {
         $lookup: {
@@ -324,6 +347,9 @@ export class DevicesRepository {
   async findPopular(limit: number): Promise<Device[]> {
     return this.deviceModel
       .aggregate([
+        // Homepage section — exclude imageless catalog entries so the
+        // cards always show a picture.
+        { $match: { imageUrl: { $nin: [null, ''] } } },
         {
           $project: {
             _id: 1,
@@ -371,6 +397,8 @@ export class DevicesRepository {
   async findTrending(limit: number): Promise<Device[]> {
     return this.deviceModel
       .aggregate([
+        // Homepage section — exclude imageless catalog entries.
+        { $match: { imageUrl: { $nin: [null, ''] } } },
         { $sort: { createdAt: -1 } },
         { $limit: limit },
         {
