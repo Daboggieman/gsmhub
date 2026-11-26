@@ -79,6 +79,7 @@ export class CategoriesService {
     id: string,
     updateCategoryDto: UpdateCategoryDto,
   ): Promise<Category> {
+    this.assertValidId(id);
     if (updateCategoryDto.name && !updateCategoryDto.slug) {
       updateCategoryDto.slug = generateSlug(updateCategoryDto.name);
     }
