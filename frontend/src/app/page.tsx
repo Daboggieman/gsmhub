@@ -188,7 +188,7 @@ export default async function Home() {
                     <div className="w-6 text-center font-headline-md text-label-md tabular-nums text-outline mr-space-sm group-hover:text-secondary transition-colors">
                       {index + 1}
                     </div>
-                    <div className="w-12 h-16 mr-space-md bg-surface-container rounded shrink-0 p-1">
+                    <div className="relative w-12 h-16 mr-space-md bg-surface-container rounded shrink-0 p-1">
                       {device.imageUrl ? (
                         <DeviceImage
                           src={device.imageUrl}

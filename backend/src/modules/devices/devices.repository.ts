@@ -203,17 +203,11 @@ export class DevicesRepository {
       { $match: query },
       {
         $addFields: {
+          // NB: aggregation $ne treats a MISSING field as ≠ null, so a
+          // plain null/'' check marks imageless docs as having an image.
+          // $ifNull collapses missing → '' first.
           hasImage: {
-            $cond: [
-              {
-                $and: [
-                  { $ne: ['$imageUrl', null] },
-                  { $ne: ['$imageUrl', ''] },
-                ],
-              },
-              1,
-              0,
-            ],
+            $cond: [{ $gt: [{ $ifNull: ['$imageUrl', ''] }, ''] }, 1, 0],
           },
         },
       },
