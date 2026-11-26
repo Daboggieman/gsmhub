@@ -4,6 +4,10 @@ import DeviceImage from '@/components/devices/DeviceImage';
 import { apiClient } from '@/lib/api';
 import Link from 'next/link';
 
+// Data pages must render per-request: a build-time prerender would bake in
+// whatever the API returns during the build (empty on cold-start deploys).
+export const dynamic = 'force-dynamic';
+
 async function getHomeData() {
   try {
     const [trendingDevices, popularDevices, categories, latestDevicesData] = await Promise.all([

@@ -1,84 +1,66 @@
-# Render Blueprint — GSMHUB (frontend + API + cache)
+# Render Blueprint — GSMHub (frontend + backend on free tier)
 #
-# Deploy: Render Dashboard → New → Blueprint → point at this repo, or
-# `render blueprint launch` from the repo root. Render prompts for the
-# `sync: false` values (Atlas MongoDB URI) during creation.
+# Deploy: push this repo to GitHub, then in the Render dashboard:
+#   New → Blueprint → pick the repo → Render reads this file.
+# Render assigns each web service the URL https://<name>.onrender.com —
+# the cross-references below assume those exact service names, so if a
+# name is taken (Render appends a hash), update the URLs to match.
 #
-# After the first deploy:
-#   1. Seed the database from your machine:
-#        pnpm install && pnpm --filter @gsmhub/shared build
-#        MONGO_URI=<atlas-uri> pnpm --filter backend exec ts-node -r tsconfig-paths/register --transpile-only src/seed.ts
-#        MONGO_URI=<atlas-uri> PHONEDB_JSON=<dataset> pnpm --filter backend exec ts-node ... src/seed-phonedb.ts
-#        MONGO_URI=<atlas-uri> PHONEDB_JSON=<dataset> pnpm --filter backend exec ts-node ... src/seed-prices.ts
-#   2. Set NEXT_PUBLIC_SITE_URL on the frontend service to its own
-#      onrender.com URL so robots.txt/sitemap advertise the right origin.
-# See docs/deployment.md for the full walkthrough.
+# Secrets marked `sync: false` are prompted for at apply time — paste:
+#   MONGO_URI  — the Atlas URI; include a db name segment (…mongodb.net/gsmhub?…)
+#                or Mongo falls back to the `test` database.
+#   JWT_SECRET — the same value used locally (backend/.env).
+#
+# Redis is intentionally not provisioned: redis.config.ts fails soft
+# (throwOnConnectError: false), so the API runs in cache-degraded mode
+# without it. To add caching later, create a free Upstash Redis and set
+# REDIS_URI (rediss://…) in the dashboard — no code change needed.
+
 services:
-  # NestJS API
+  # --- NestJS API -------------------------------------------------------
   - type: web
     name: gsmhub-api
     runtime: node
     plan: free
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @gsmhub/shared build && pnpm --filter backend build
-    startCommand: pnpm --filter backend start:prod
-    healthCheckPath: /health/live
+    rootDir: backend
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build
+    startCommand: pnpm run start:prod
+    healthCheckPath: /devices
     envVars:
       - key: NODE_VERSION
-        value: "22"
+        value: 22.22.1
       - key: NODE_ENV
         value: production
       - key: MONGO_URI
-        sync: false # Atlas free-cluster connection string — prompted at creation
-      # Auth cookie config: same-origin proxying keeps cookies first-party,
-      # so the defaults (lax / no domain) are correct here.
-      - key: FRONTEND_URL
-        fromService:
-          name: gsmhub-web
-          type: web
-          property: host
+        sync: false
       - key: JWT_SECRET
-        generateValue: true
-      - key: REDIS_URI
-        fromService:
-          name: gsmhub-cache
-          type: keyvalue
-          property: connectionString
+        sync: false
+      # CORS allow-list for the API — must equal the frontend's public URL.
+      - key: FRONTEND_URL
+        value: https://gsmhub-web.onrender.com
 
-  # Redis-compatible cache (Render Key Value, free plan)
-  - type: keyvalue
-    name: gsmhub-cache
-    plan: free
-    ipAllowList:
-      - source: 0.0.0.0/0 # free-plan KV has no private networking; open to the platform
-    maxmemoryPolicy: allkeys-lru
-    persistenceMode: off
-
-  # Next.js frontend (also proxies /api/* to the API — see next.config.ts)
+  # --- Next.js frontend ---------------------------------------------------
   - type: web
     name: gsmhub-web
     runtime: node
     plan: free
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm --filter @gsmhub/shared build && pnpm --filter frontend build
-    startCommand: pnpm --filter frontend start
+    rootDir: frontend
+    buildCommand: pnpm install --frozen-lockfile && pnpm run build
+    startCommand: pnpm run start
     envVars:
       - key: NODE_VERSION
-        value: "22"
+        value: 22.22.1
       - key: NODE_ENV
         value: production
-      # Server-side (SSR) calls to the API; the browser uses same-origin /api
-      # proxied by next.config.ts rewrites to this value.
+      # Must be set BEFORE the frontend build: Next bakes the /api rewrite
+      # target into the routes manifest at build time.
       - key: BACKEND_URL
-        fromService:
-          name: gsmhub-api
-          type: web
-          property: host
-      # Set after first deploy to the frontend's own onrender.com URL
-      # (used by robots.txt and sitemap.xml).
+        value: https://gsmhub-api.onrender.com
       - key: NEXT_PUBLIC_SITE_URL
-        sync: false
-      # Leave unset for now — set together with NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
-      # after AdSense approval (see docs/monetization-setup.md):
-      # - key: NEXT_PUBLIC_ADSENSE_ID
-      #   sync: false
-      # - key: NEXT_PUBLIC_ADSENSE_PUBLISHER_ID
-      #   sync: false
+        value: https://gsmhub-web.onrender.com
+      # phonedb.net serves an incomplete TLS chain; without this the image
+      # optimizer rejects every device photo (UNABLE_TO_VERIFY_LEAF_SIGNATURE).
+      # Path = repo-root certs/ dir; the repo is checked out at
+      # /opt/render/project/src regardless of rootDir.
+      - key: NODE_EXTRA_CA_CERTS
+        value: /opt/render/project/src/certs/rapidssl-g1.pem

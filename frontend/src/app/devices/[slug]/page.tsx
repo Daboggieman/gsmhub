@@ -13,6 +13,9 @@ import SocialShare from '@/components/devices/SocialShare';
 import SimilarDevices from '@/components/devices/SimilarDevices';
 import FavoriteButton from '@/components/users/FavoriteButton';
 
+// Render per-request — never bake build-time API data.
+export const dynamic = 'force-dynamic';
+
 async function getDeviceData(slug: string): Promise<{ device: Device; priceHistory: PriceHistory[] } | null> {
   try {
     const device = await apiClient.getDevice(slug);

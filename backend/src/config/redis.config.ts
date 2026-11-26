@@ -21,9 +21,14 @@ export const redisConfig = (): CacheModuleOptions => {
     throwOnErrors: false,
   });
   // Swallow cache-layer errors — a dead Redis must never break an API request.
-  keyv.on('error', (err) => {
-    console.warn(`[cache] Redis unavailable: ${(err as Error).message}`);
-  });
+  // Both emitters need a listener: the outer Keyv re-emits adapter errors,
+  // but the nested store (keyv.store) is a separate hookified emitter that
+  // THROWS on 'error' when it has no listeners of its own (observed as a
+  // process crash on ECONNRESET even with throwOnErrors: false).
+  const swallow = (err: Error) =>
+    console.warn(`[cache] Redis unavailable: ${err.message}`);
+  keyv.on('error', swallow);
+  (keyv.store as any)?.on?.('error', swallow);
   return {
     stores: [keyv],
     ttl: 3600 * 1000, // keyv expects milliseconds; 1 hour default TTL

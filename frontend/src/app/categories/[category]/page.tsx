@@ -7,6 +7,9 @@ import Pagination from '@/components/ui/Pagination';
 import SortDropdown from '@/components/ui/SortDropdown';
 import AdUnit from '@/components/ads/AdUnit';
 
+// Render per-request — never bake build-time API data.
+export const dynamic = 'force-dynamic';
+
 async function getCategoryData(slug: string, page: number = 1, sort: string = 'latest') {
   try {
     const category = await apiClient.getCategory(slug);

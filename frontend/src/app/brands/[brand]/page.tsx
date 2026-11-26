@@ -6,6 +6,9 @@ import Breadcrumbs from '@/components/layout/Breadcrumbs';
 import Pagination from '@/components/ui/Pagination';
 import SortDropdown from '@/components/ui/SortDropdown';
 
+// Render per-request — never bake build-time API data.
+export const dynamic = 'force-dynamic';
+
 async function getBrandData(brand: string, page: number = 1, sort: string = 'latest') {
   try {
     const limit = 24;
