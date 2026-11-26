@@ -4,7 +4,7 @@ import {
   ConflictException,
 } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Category, CategoryDocument } from './category.schema';
 import { CreateCategoryDto, UpdateCategoryDto } from './dto/category.dto';
 import { generateSlug } from '../../common/utils/slug.util';
@@ -15,6 +15,13 @@ export class CategoriesService {
   constructor(
     @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
   ) {}
+
+  /** 404 (not a 500 CastError) for malformed ObjectIds. */
+  private assertValidId(id: string): void {
+    if (!Types.ObjectId.isValid(id)) {
+      throw new NotFoundException(`Category with ID ${id} not found`);
+    }
+  }
 
   async create(createCategoryDto: CreateCategoryDto): Promise<Category> {
     const slug = createCategoryDto.slug || generateSlug(createCategoryDto.name);
@@ -52,6 +59,7 @@ export class CategoriesService {
   }
 
   async findOne(id: string): Promise<Category> {
+    this.assertValidId(id);
     const category = await this.categoryModel.findById(id).exec();
     if (!category) {
       throw new NotFoundException(`Category with ID ${id} not found`);
