@@ -13,7 +13,7 @@ Render dashboard → **New → Web Service** → connect this GitHub repo, then:
 | Name | `gsmhub-api` |
 | Language / Runtime | Node |
 | Root Directory | `backend` |
-| Build Command | `pnpm install --frozen-lockfile && pnpm run build` |
+| Build Command | `npm i -g pnpm@12 && pnpm install --frozen-lockfile && pnpm run build` |
 | Start Command | `pnpm run start:prod` |
 | Health Check Path | `/devices` |
 | Instance Type | Free |
@@ -37,7 +37,7 @@ Environment variables (dashboard → Environment):
 | Name | `gsmhub-web` |
 | Language / Runtime | Node |
 | Root Directory | `frontend` |
-| Build Command | `pnpm install --frozen-lockfile && pnpm run build` |
+| Build Command | `npm i -g pnpm@12 && pnpm install --frozen-lockfile && pnpm run build` |
 | Start Command | `pnpm run start` |
 | Instance Type | Free |
 

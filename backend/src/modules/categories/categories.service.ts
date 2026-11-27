@@ -117,6 +117,7 @@ export class CategoriesService {
   }
 
   async remove(id: string): Promise<void> {
+    this.assertValidId(id);
     const result = await this.categoryModel.findByIdAndDelete(id).exec();
     if (!result) {
       throw new NotFoundException(`Category with ID ${id} not found`);
